@@ -432,6 +432,54 @@
       font-weight: 800;
       color: #e2e8f0;
       flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .avatar-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* AVATAR GRANDE DE PERFIL */
+    .profile-avatar-wrap {
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      background: linear-gradient(145deg, #1b1e29, #08090d);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .profile-avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .btn-avatar-upload {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #e2e8f0;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
     }
 
     .user-meta {
@@ -624,18 +672,26 @@
       </defs>
     </svg>
 
-    <!-- PANTALLA DE REGISTRO INICIAL EN CERO -->
+    <!-- PANTALLA DE REGISTRO INICIAL -->
     <div id="onboardingScreen" class="onboarding-overlay">
       <div class="onboarding-card">
-        <div class="logo-box" style="width:72px; height:72px; margin:0 auto 14px; border-radius:18px;">
-          <svg width="50" height="50"><use href="#argon-crown-a"></use></svg>
+        <label class="profile-avatar-wrap" title="Subir foto de perfil">
+          <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
+          <svg id="onboardingAvatarSvg" width="50" height="50"><use href="#argon-crown-a"></use></svg>
+          <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
+        </label>
+        <div style="margin-bottom:12px;">
+          <label class="btn-avatar-upload">
+            📷 Elegir Foto de Perfil
+            <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
+          </label>
         </div>
         <div class="brand-title" style="font-size:22px; margin-bottom:6px;">ARGON</div>
-        <div style="font-size:12px; color:#94a3b8; margin-bottom:20px;">
+        <div style="font-size:12px; color:#94a3b8; margin-bottom:18px;">
           Crea tu cuenta oficial y recibe <strong>5,000 A-Coins</strong> de apertura en tu Bóveda.
         </div>
         <input type="text" id="regName" class="input-field" placeholder="Tu Nombre o Marca (ej. Alberto Soto)" />
-        <input type="text" id="regHandle" class="input-field" placeholder="Tu Usuario (ej. ALBERTO_VIP)" />
+        <input type="text" id="regHandle" class="input-field" placeholder="Tu Usuario (ej. BELTO43)" />
         <button class="btn-primary-platinum" onclick="window.completeRegistration()">
           ACTIVAR MI CUENTA EN ARGON
         </button>
@@ -775,13 +831,23 @@
       </div>
     </section>
 
-    <!-- 4. PERFIL -->
+    <!-- 4. PERFIL CON SUBIDA DE FOTO REAL -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
-        <div class="logo-box" style="width:64px; height:64px; margin:0 auto 10px;">
-          <svg width="44" height="44"><use href="#argon-crown-a"></use></svg>
+        <label class="profile-avatar-wrap" title="Toca para cambiar tu foto de perfil">
+          <img id="profileAvatarImg" src="" alt="Foto de perfil" style="display:none;" />
+          <svg id="profileAvatarSvg" width="46" height="46"><use href="#argon-crown-a"></use></svg>
+          <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
+        </label>
+
+        <div>
+          <label class="btn-avatar-upload">
+            📷 Cambiar Foto de Perfil
+            <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
+          </label>
         </div>
-        <div style="font-size:18px; font-weight:900;" id="profileName">MI CUENTA</div>
+
+        <div style="font-size:18px; font-weight:900; margin-top:8px;" id="profileName">MI CUENTA</div>
         <div style="font-size:12px; color:#94a3b8; margin-top:2px;" id="profileHandle">@USUARIO</div>
         <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:8px;" id="profileStatus">
           0 Suscriptores • Meta inicial: 1,000 (+10,000 AC)
@@ -910,6 +976,7 @@
       registered: false,
       userName: '',
       userHandle: '',
+      avatar: '',
       balance: 5000,
       subs: 0,
       subscribedTo: [],
@@ -940,6 +1007,25 @@
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
 
+    function renderAvatarElements() {
+      const profImg = document.getElementById('profileAvatarImg');
+      const profSvg = document.getElementById('profileAvatarSvg');
+      const onbImg = document.getElementById('onboardingAvatarImg');
+      const onbSvg = document.getElementById('onboardingAvatarSvg');
+
+      if (currentUser.avatar) {
+        if (profImg) { profImg.src = currentUser.avatar; profImg.style.display = 'block'; }
+        if (profSvg) profSvg.style.display = 'none';
+        if (onbImg) { onbImg.src = currentUser.avatar; onbImg.style.display = 'block'; }
+        if (onbSvg) onbSvg.style.display = 'none';
+      } else {
+        if (profImg) profImg.style.display = 'none';
+        if (profSvg) profSvg.style.display = 'block';
+        if (onbImg) onbImg.style.display = 'none';
+        if (onbSvg) onbSvg.style.display = 'block';
+      }
+    }
+
     function updateUI() {
       if (currentUser.registered) {
         document.getElementById('onboardingScreen').classList.add('hidden');
@@ -955,9 +1041,53 @@
       document.getElementById('vaultSubsCounter').textContent = (currentUser.subs || 0).toLocaleString() + ' / ' + target.toLocaleString();
       document.getElementById('vaultProgressBar').style.width = pct + '%';
       document.getElementById('profileStatus').textContent = (currentUser.subs || 0).toLocaleString() + ' Suscriptores • Meta: ' + target.toLocaleString();
+
+      renderAvatarElements();
     }
 
-    // COMPRESOR DE FOTOS PARA QUE SUBAN AL INSTANTE A FIREBASE
+    // SUBIR Y SINCRONIZAR FOTO DE PERFIL EN TIEMPO REAL
+    window.uploadAvatarPhoto = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = async function() {
+          const canvas = document.createElement('canvas');
+          const size = 260;
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          const minSide = Math.min(img.width, img.height);
+          const sx = (img.width - minSide) / 2;
+          const sy = (img.height - minSide) / 2;
+          ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+
+          const avatarDataUrl = canvas.toDataURL('image/jpeg', 0.78);
+          currentUser.avatar = avatarDataUrl;
+          saveLocalSession();
+          updateUI();
+          renderFeed();
+
+          if (currentUser.userHandle) {
+            try {
+              await setDoc(doc(db, "users", currentUser.userHandle), {
+                avatar: avatarDataUrl
+              }, { merge: true });
+              showToast('✓ Foto de perfil actualizada en vivo');
+            } catch (err) {
+              showToast('Foto guardada en tu perfil');
+            }
+          } else {
+            showToast('Foto lista para tu cuenta');
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    // COMPRESOR DE FOTOS PARA PUBLICACIONES DEL FEED
     window.previewSelectedPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -1008,6 +1138,7 @@
           await setDoc(userRef, {
             userName: cleanName,
             userHandle: cleanHandle,
+            avatar: currentUser.avatar || '',
             balance: 5000,
             subs: 0,
             rewarded1k: false,
@@ -1017,13 +1148,14 @@
           const data = snap.data();
           currentUser.balance = data.balance ?? 5000;
           currentUser.subs = data.subs ?? 0;
+          currentUser.avatar = currentUser.avatar || data.avatar || '';
           saveLocalSession();
           updateUI();
         }
         listenToMyUserDoc(cleanHandle);
         showToast('Cuenta @' + cleanHandle + ' activa en vivo');
       } catch (err) {
-        showToast('Activa Firestore Database en modo prueba en tu consola');
+        showToast('Error al sincronizar con Firebase');
       }
     };
 
@@ -1034,7 +1166,7 @@
           const data = snap.data();
           currentUser.balance = data.balance ?? currentUser.balance;
           currentUser.subs = data.subs ?? currentUser.subs;
-          // Bono automático al llegar a 1,000 suscriptores
+          if (data.avatar) currentUser.avatar = data.avatar;
           if (currentUser.subs >= 1000 && !data.rewarded1k) {
             updateDoc(doc(db, "users", handle), {
               balance: increment(10000),
@@ -1091,6 +1223,7 @@
         await addDoc(collection(db, "posts"), {
           handle: currentUser.userHandle,
           initials: currentUser.userName.slice(0, 2).toUpperCase(),
+          avatar: currentUser.avatar || '',
           image: photoToSave || '',
           caption: text,
           likes: 0,
@@ -1099,7 +1232,7 @@
         });
         showToast('Publicado en vivo en ARGON');
       } catch (e) {
-        showToast('Verifica que Firestore Database esté creado en Firebase');
+        showToast('Error al publicar');
       }
     };
 
@@ -1126,7 +1259,13 @@
         const isOwn = post.handle === currentUser.userHandle;
         const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
         const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
-        const authorSubs = (usersMap[post.handle] && usersMap[post.handle].subs) ? usersMap[post.handle].subs : 0;
+        const userDoc = usersMap[post.handle] || {};
+        const authorSubs = userDoc.subs ? userDoc.subs : 0;
+        const authorAvatar = userDoc.avatar || post.avatar || (isOwn ? currentUser.avatar : '');
+
+        const avatarInnerHtml = authorAvatar
+          ? `<img src="${authorAvatar}" alt="${post.handle}" />`
+          : (post.initials || 'AR');
 
         const subBtnLabel = isOwn
           ? 'Tu Perfil'
@@ -1140,7 +1279,7 @@
         card.innerHTML = `
           <div class="post-header">
             <div class="post-user-left">
-              <div class="avatar-circle">${post.initials || 'AR'}</div>
+              <div class="avatar-circle">${avatarInnerHtml}</div>
               <div class="user-meta">
                 <div class="user-handle">@${post.handle}</div>
                 <div class="user-subs-line">${authorSubs.toLocaleString()} Suscriptores</div>
@@ -1163,7 +1302,6 @@
       });
     }
 
-    // SUSCRIPCIÓN REAL ENTRE TELÉFONOS (+1 SUB AL AUTOR / +10 AC AL SUSCRIPTOR)
     window.toggleSubscribe = async function(targetHandle) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
