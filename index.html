@@ -688,7 +688,7 @@
       cursor: pointer;
     }
 
-    /* VENTANA MODAL DE MENSAJES DIRECTOS (DM) */
+    /* VENTANA MODAL DE MENSAJES DIRECTOS (DM) CON FOTOS */
     .dm-modal-overlay {
       position: fixed;
       inset: 0;
@@ -707,7 +707,7 @@
     .dm-sheet {
       width: 100%;
       max-width: 430px;
-      height: 82vh;
+      height: 84vh;
       background: #0b0d13;
       border-top: 1px solid rgba(255, 255, 255, 0.22);
       border-radius: 22px 22px 0 0;
@@ -801,16 +801,87 @@
     .dm-bubble-meta {
       font-size: 9px;
       opacity: 0.75;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       font-weight: 800;
     }
 
+    .dm-bubble-img {
+      width: 100%;
+      max-width: 220px;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+      display: block;
+      margin-bottom: 5px;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .dm-preview-bar {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #151924;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dm-preview-bar.active {
+      display: flex;
+    }
+
+    .dm-preview-img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #10b981;
+    }
+
     .dm-footer {
-      padding: 10px 14px 18px;
+      padding: 10px 12px 18px;
       background: #11141d;
       border-top: 1px solid var(--card-border);
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dm-photo-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* VISOR DE FOTO A PANTALLA COMPLETA */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 350;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .lightbox-overlay.open {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 100%;
+      max-height: 88vh;
+      border-radius: 14px;
+      object-fit: contain;
     }
 
     /* ESTILOS PANEL DE ADMINISTRADOR */
@@ -972,6 +1043,11 @@
   <div class="app-shell">
     <div id="toast" class="toast"></div>
 
+    <!-- VISOR DE FOTOS A PANTALLA COMPLETA -->
+    <div id="photoLightbox" class="lightbox-overlay" onclick="window.closePhotoLightbox()">
+      <img id="lightboxImg" src="" alt="Vista ampliada" />
+    </div>
+
     <!-- VECTOR DEL LOGO OFICIAL: OPCIÓN C - LA CORONA -->
     <svg width="0" height="0" style="position:absolute">
       <defs>
@@ -1020,7 +1096,7 @@
       </div>
     </div>
 
-    <!-- MODAL DE MENSAJES DIRECTOS PRIVADOS (DM) -->
+    <!-- MODAL DE MENSAJES DIRECTOS PRIVADOS (DM) CON ENVÍO DE FOTOS -->
     <div id="dmModal" class="dm-modal-overlay">
       <div class="dm-sheet">
         <div class="dm-header">
@@ -1035,8 +1111,21 @@
 
         <div class="dm-messages-box" id="dmMessagesBox"></div>
 
+        <!-- BARRA DE VISTA PREVIA DE FOTO EN DM -->
+        <div id="dmPhotoPreviewBar" class="dm-preview-bar">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <img id="dmPhotoPreviewThumb" class="dm-preview-img" src="" alt="Foto lista" />
+            <span style="font-size:11px; color:#34d399; font-weight:700;">📷 Foto lista para enviar</span>
+          </div>
+          <button class="btn-mini-danger" onclick="window.clearDmSelectedPhoto()">✕ Quitar</button>
+        </div>
+
         <div class="dm-footer">
-          <input type="text" id="dmTextInput" class="composer-input" placeholder="Escribe un mensaje directo privado..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
+          <label class="dm-photo-btn" title="Adjuntar foto al mensaje privado">
+            📷
+            <input type="file" id="dmPhotoInput" accept="image/*" style="display:none" onchange="window.previewDmPhoto(event)" />
+          </label>
+          <input type="text" id="dmTextInput" class="composer-input" placeholder="Mensaje o foto privada..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
           <button class="composer-btn" onclick="window.sendDirectMessage()">Enviar</button>
         </div>
       </div>
@@ -1218,7 +1307,7 @@
           PERSONAS SUSCRITAS A TU CUENTA
         </div>
         <div style="font-size:11px; color:#94a3b8; margin-bottom:8px;">
-          Toca cualquier suscriptor para enviarle un Mensaje Directo privado (✉️):
+          Toca cualquier suscriptor para enviarle texto o fotos por DM (✉️):
         </div>
         <div id="mySubscribersList" style="font-size:12px; color:#94a3b8;">
           Aún no aparecen suscriptores registrados en la lista.
@@ -1317,6 +1406,7 @@
     const LOCAL_USER_KEY = 'argon_live_user_v1';
     const ADMIN_HANDLES = ['BELTO43', 'ALBERTO_SOTO', 'ALBERTO', 'ADMIN'];
     let selectedPhotoDataUrl = '';
+    let selectedDmPhotoDataUrl = '';
     let openCommentDrawers = {};
     let activeDmPartner = '';
     let allDirectMessages = [];
@@ -1363,6 +1453,17 @@
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
 
+    window.openPhotoLightbox = function(imgSrc) {
+      if (!imgSrc) return;
+      document.getElementById('lightboxImg').src = imgSrc;
+      document.getElementById('photoLightbox').classList.add('open');
+    };
+
+    window.closePhotoLightbox = function() {
+      document.getElementById('photoLightbox').classList.remove('open');
+      document.getElementById('lightboxImg').src = '';
+    };
+
     function renderAvatarElements() {
       const profImg = document.getElementById('profileAvatarImg');
       const profSvg = document.getElementById('profileAvatarSvg');
@@ -1407,7 +1508,7 @@
       renderMySubscribers();
     }
 
-    // --- SISTEMA DE MENSAJES DIRECTOS PRIVADOS (DM) ---
+    // --- SISTEMA DE MENSAJES DIRECTOS PRIVADOS (DM) CON FOTOS ---
     window.openDirectMessages = function(partnerHandle) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -1422,11 +1523,45 @@
 
     window.closeDirectMessages = function() {
       document.getElementById('dmModal').classList.remove('open');
+      window.clearDmSelectedPhoto();
     };
 
     window.selectDmPartner = function(handle) {
       activeDmPartner = handle;
       renderDmModal();
+    };
+
+    // COMPRIMIR Y PREVISUALIZAR FOTO EN EL CHAT DM
+    window.previewDmPhoto = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxW = 680;
+          const scale = img.width > maxW ? maxW / img.width : 1;
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          selectedDmPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.72);
+
+          document.getElementById('dmPhotoPreviewThumb').src = selectedDmPhotoDataUrl;
+          document.getElementById('dmPhotoPreviewBar').classList.add('active');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.clearDmSelectedPhoto = function() {
+      selectedDmPhotoDataUrl = '';
+      const inp = document.getElementById('dmPhotoInput');
+      if (inp) inp.value = '';
+      const bar = document.getElementById('dmPhotoPreviewBar');
+      if (bar) bar.classList.remove('active');
     };
 
     function renderDmModal() {
@@ -1436,7 +1571,6 @@
       const subEl = document.getElementById('dmTargetSubtitle');
 
       const otherUsers = Object.keys(usersMap).filter(h => h !== currentUser.userHandle);
-      // También incluir autores de posts aunque aún no estén en usersMap
       livePosts.forEach(p => {
         if (p.handle && p.handle !== currentUser.userHandle && !otherUsers.includes(p.handle)) {
           otherUsers.push(p.handle);
@@ -1465,7 +1599,7 @@
       }
 
       titleEl.textContent = 'Chat privado con @' + activeDmPartner;
-      subEl.textContent = 'Conversación encriptada en tiempo real';
+      subEl.textContent = 'Texto y fotos en tiempo real';
 
       const conversation = allDirectMessages.filter(m =>
         (m.from === currentUser.userHandle && m.to === activeDmPartner) ||
@@ -1473,14 +1607,19 @@
       );
 
       if (conversation.length === 0) {
-        messagesBox.innerHTML = `<div style="font-size:12px; color:#64748b; text-align:center; margin-top:40px;">Aún no hay mensajes con @${activeDmPartner}. Escríbele el primero abajo.</div>`;
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#64748b; text-align:center; margin-top:40px;">Aún no hay mensajes con @${activeDmPartner}. Escríbele o envíale una foto abajo.</div>`;
       } else {
         messagesBox.innerHTML = conversation.map(m => {
           const isMine = m.from === currentUser.userHandle;
+          const imgHtml = m.image
+            ? `<img class="dm-bubble-img" src="${m.image}" alt="Foto privada" onclick="window.openPhotoLightbox('${m.image}')" />`
+            : '';
+          const txtHtml = m.text ? `<div>${m.text}</div>` : '';
           return `
             <div class="dm-bubble ${isMine ? 'mine' : 'theirs'}">
               <div class="dm-bubble-meta">@${m.from}</div>
-              <div>${m.text}</div>
+              ${imgHtml}
+              ${txtHtml}
             </div>
           `;
         }).join('');
@@ -1495,18 +1634,26 @@
       }
       const input = document.getElementById('dmTextInput');
       const text = input.value.trim();
-      if (!text) return;
+      const photoToSend = selectedDmPhotoDataUrl;
+
+      if (!text && !photoToSend) {
+        showToast('Escribe un mensaje o adjunta una foto (📷)');
+        return;
+      }
+
       input.value = '';
+      window.clearDmSelectedPhoto();
 
       try {
         await addDoc(collection(db, "messages"), {
           from: currentUser.userHandle,
           to: activeDmPartner,
           text: text,
+          image: photoToSend || '',
           createdAt: Date.now()
         });
       } catch (e) {
-        showToast('Error al enviar el mensaje');
+        showToast('Error al enviar el mensaje privado');
       }
     };
 
