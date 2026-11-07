@@ -105,7 +105,7 @@
       background: rgba(7, 8, 12, 0.9);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      padding: 12px 16px;
+      padding: 12px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -115,12 +115,12 @@
     .brand-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
     }
 
     .logo-box {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       border-radius: 11px;
       background: linear-gradient(145deg, #16181f, #07080b);
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -132,9 +132,9 @@
     }
 
     .brand-title {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 800;
-      letter-spacing: 2.5px;
+      letter-spacing: 2.2px;
       background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -147,29 +147,67 @@
       border-radius: 50%;
       background: #10b981;
       box-shadow: 0 0 8px #10b981;
-      margin-left: 6px;
+      margin-left: 5px;
       vertical-align: middle;
+    }
+
+    .top-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .inbox-btn {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #14161d, #090a0f);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .inbox-badge {
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      background: #10b981;
+      color: #04130e;
+      font-size: 9px;
+      font-weight: 900;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
     }
 
     .wallet-pill {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       background: linear-gradient(145deg, #14161d, #090a0f);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px 12px;
+      padding: 6px 11px;
       border-radius: 999px;
       cursor: pointer;
     }
 
     .wallet-amount {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       color: #fff;
     }
 
     .wallet-label {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 700;
       color: #94a3b8;
       letter-spacing: 0.5px;
@@ -408,7 +446,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
     }
 
     .post-user-left {
@@ -506,7 +544,7 @@
       flex-shrink: 0;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .btn-subscribe {
@@ -514,7 +552,7 @@
       color: #050507;
       border: none;
       border-radius: 999px;
-      padding: 7px 12px;
+      padding: 7px 11px;
       font-size: 11px;
       font-weight: 800;
       cursor: pointer;
@@ -525,6 +563,17 @@
       background: rgba(16, 185, 129, 0.15);
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-dm-icon {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #e2e8f0;
+      border-radius: 999px;
+      padding: 6px 9px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .post-image {
@@ -546,7 +595,7 @@
     .post-actions-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
     }
 
     .action-item {
@@ -639,6 +688,131 @@
       cursor: pointer;
     }
 
+    /* VENTANA MODAL DE MENSAJES DIRECTOS (DM) */
+    .dm-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 250;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .dm-modal-overlay.open {
+      display: flex;
+    }
+
+    .dm-sheet {
+      width: 100%;
+      max-width: 430px;
+      height: 82vh;
+      background: #0b0d13;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 22px 22px 0 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .dm-header {
+      padding: 13px 16px;
+      background: #11141d;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dm-close-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .dm-contacts-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 14px;
+      overflow-x: auto;
+      background: #0d0f17;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      flex-shrink: 0;
+    }
+
+    .dm-user-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #cbd5e1;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .dm-user-pill.active {
+      background: var(--emerald-bg);
+      border-color: #10b981;
+      color: #34d399;
+    }
+
+    .dm-messages-box {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .dm-bubble {
+      max-width: 78%;
+      padding: 9px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .dm-bubble.mine {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #04130e;
+      font-weight: 600;
+      border-bottom-right-radius: 3px;
+    }
+
+    .dm-bubble.theirs {
+      align-self: flex-start;
+      background: #1a1e29;
+      color: #f1f5f9;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom-left-radius: 3px;
+    }
+
+    .dm-bubble-meta {
+      font-size: 9px;
+      opacity: 0.75;
+      margin-bottom: 3px;
+      font-weight: 800;
+    }
+
+    .dm-footer {
+      padding: 10px 14px 18px;
+      background: #11141d;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      gap: 8px;
+    }
+
     /* ESTILOS PANEL DE ADMINISTRADOR */
     .admin-stats-grid {
       display: grid;
@@ -672,7 +846,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       padding: 10px;
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
@@ -686,7 +860,7 @@
       color: #34d399;
       font-size: 10px;
       font-weight: 800;
-      padding: 5px 8px;
+      padding: 6px 8px;
       border-radius: 8px;
       cursor: pointer;
       white-space: nowrap;
@@ -706,15 +880,16 @@
     .subscriber-chip {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.35);
       color: #34d399;
       font-size: 11px;
       font-weight: 800;
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 999px;
-      margin: 3px;
+      margin: 4px;
+      cursor: pointer;
     }
 
     .tier-item {
@@ -845,24 +1020,53 @@
       </div>
     </div>
 
+    <!-- MODAL DE MENSAJES DIRECTOS PRIVADOS (DM) -->
+    <div id="dmModal" class="dm-modal-overlay">
+      <div class="dm-sheet">
+        <div class="dm-header">
+          <div>
+            <div style="font-size:14px; font-weight:900; color:#fff;" id="dmTargetTitle">✉️ Mensajes Directos</div>
+            <div style="font-size:11px; color:#34d399;" id="dmTargetSubtitle">Selecciona un suscriptor o miembro abajo</div>
+          </div>
+          <button class="dm-close-btn" onclick="window.closeDirectMessages()">✕</button>
+        </div>
+
+        <div class="dm-contacts-bar" id="dmContactsBar"></div>
+
+        <div class="dm-messages-box" id="dmMessagesBox"></div>
+
+        <div class="dm-footer">
+          <input type="text" id="dmTextInput" class="composer-input" placeholder="Escribe un mensaje directo privado..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
+          <button class="composer-btn" onclick="window.sendDirectMessage()">Enviar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- CABECERA -->
     <header class="topbar">
       <div class="brand-wrap">
         <div class="logo-box">
-          <svg width="30" height="30"><use href="#argon-crown-a"></use></svg>
+          <svg width="28" height="28"><use href="#argon-crown-a"></use></svg>
         </div>
         <div>
           <span class="brand-title">ARGON</span><span class="live-dot" title="Conectado en tiempo real"></span>
         </div>
       </div>
 
-      <div class="wallet-pill" onclick="window.switchTab('boveda')">
-        <svg width="22" height="22" viewBox="0 0 40 40">
-          <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
-          <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
-        </svg>
-        <span class="wallet-amount" id="topBalance">5,000</span>
-        <span class="wallet-label">A-<br>COINS</span>
+      <div class="top-right-actions">
+        <button class="inbox-btn" onclick="window.openDirectMessages()" title="Mensajes Directos">
+          ✉️
+          <span id="inboxBadge" class="inbox-badge">0</span>
+        </button>
+
+        <div class="wallet-pill" onclick="window.switchTab('boveda')">
+          <svg width="20" height="20" viewBox="0 0 40 40">
+            <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
+            <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
+          </svg>
+          <span class="wallet-amount" id="topBalance">5,000</span>
+          <span class="wallet-label">A-<br>COINS</span>
+        </div>
       </div>
     </header>
 
@@ -917,7 +1121,7 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL CON COMENTARIOS DESPLEGABLES -->
+    <!-- 2. FEED EN TIEMPO REAL -->
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
@@ -1010,8 +1214,11 @@
       </div>
 
       <div class="glass-card">
-        <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:8px;">
+        <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">
           PERSONAS SUSCRITAS A TU CUENTA
+        </div>
+        <div style="font-size:11px; color:#94a3b8; margin-bottom:8px;">
+          Toca cualquier suscriptor para enviarle un Mensaje Directo privado (✉️):
         </div>
         <div id="mySubscribersList" style="font-size:12px; color:#94a3b8;">
           Aún no aparecen suscriptores registrados en la lista.
@@ -1025,7 +1232,7 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div>
             <div style="font-size:14px; font-weight:900; color:#fff;">👑 PANEL DE CONTROL ARGON</div>
-            <div style="font-size:11px; color:#94a3b8;">Monitoreo en vivo de usuarios, suscriptores y monedas</div>
+            <div style="font-size:11px; color:#94a3b8;">Monitoreo de usuarios, mensajes directos y monedas</div>
           </div>
           <span class="badge-active">ADMIN</span>
         </div>
@@ -1107,57 +1314,12 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ICONO E INSTALADOR NATIVO PWA (OPCIÓN C - LA CORONA)
-    (function setupInstallableApp() {
-      try {
-        const c = document.createElement('canvas');
-        c.width = 512;
-        c.height = 512;
-        const ctx = c.getContext('2d');
-        const bg = ctx.createLinearGradient(0, 0, 512, 512);
-        bg.addColorStop(0, '#161821');
-        bg.addColorStop(1, '#050507');
-        ctx.fillStyle = bg;
-        ctx.fillRect(0, 0, 512, 512);
-        ctx.strokeStyle = 'rgba(255,255,255,0.22)';
-        ctx.lineWidth = 10;
-        ctx.strokeRect(20, 20, 472, 472);
-
-        ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.moveTo(175, 165);
-        ctx.lineTo(160, 100);
-        ctx.lineTo(222, 136);
-        ctx.lineTo(256, 76);
-        ctx.lineTo(290, 136);
-        ctx.lineTo(352, 100);
-        ctx.lineTo(337, 165);
-        ctx.closePath();
-        ctx.fill();
-
-        [ [160, 86], [256, 62], [352, 86] ].forEach(pt => {
-          ctx.beginPath();
-          ctx.arc(pt[0], pt[1], 11, 0, Math.PI * 2);
-          ctx.fill();
-        });
-
-        ctx.font = 'bold 280px Georgia, serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'alphabetic';
-        ctx.fillText('A', 256, 415);
-
-        const iconDataUrl = c.toDataURL('image/png');
-        const appleIcon = document.createElement('link');
-        appleIcon.rel = 'apple-touch-icon';
-        appleIcon.href = iconDataUrl;
-        document.head.appendChild(appleIcon);
-      } catch (e) {}
-    })();
-
     const LOCAL_USER_KEY = 'argon_live_user_v1';
     const ADMIN_HANDLES = ['BELTO43', 'ALBERTO_SOTO', 'ALBERTO', 'ADMIN'];
     let selectedPhotoDataUrl = '';
     let openCommentDrawers = {};
+    let activeDmPartner = '';
+    let allDirectMessages = [];
 
     let currentUser = {
       registered: false,
@@ -1236,7 +1398,6 @@
       document.getElementById('vaultProgressBar').style.width = pct + '%';
       document.getElementById('profileStatus').textContent = (currentUser.subs || 0).toLocaleString() + ' Suscriptores • Meta: ' + target.toLocaleString();
 
-      // Mostrar pestaña ADMIN si es Alberto (@BELTO43)
       const adminNavBtn = document.getElementById('nav-admin');
       if (adminNavBtn) {
         adminNavBtn.style.display = isUserAdmin() ? 'flex' : 'none';
@@ -1246,11 +1407,113 @@
       renderMySubscribers();
     }
 
+    // --- SISTEMA DE MENSAJES DIRECTOS PRIVADOS (DM) ---
+    window.openDirectMessages = function(partnerHandle) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      if (partnerHandle && partnerHandle !== currentUser.userHandle) {
+        activeDmPartner = partnerHandle;
+      }
+      document.getElementById('dmModal').classList.add('open');
+      renderDmModal();
+    };
+
+    window.closeDirectMessages = function() {
+      document.getElementById('dmModal').classList.remove('open');
+    };
+
+    window.selectDmPartner = function(handle) {
+      activeDmPartner = handle;
+      renderDmModal();
+    };
+
+    function renderDmModal() {
+      const contactsBar = document.getElementById('dmContactsBar');
+      const messagesBox = document.getElementById('dmMessagesBox');
+      const titleEl = document.getElementById('dmTargetTitle');
+      const subEl = document.getElementById('dmTargetSubtitle');
+
+      const otherUsers = Object.keys(usersMap).filter(h => h !== currentUser.userHandle);
+      // También incluir autores de posts aunque aún no estén en usersMap
+      livePosts.forEach(p => {
+        if (p.handle && p.handle !== currentUser.userHandle && !otherUsers.includes(p.handle)) {
+          otherUsers.push(p.handle);
+        }
+      });
+
+      if (!activeDmPartner && otherUsers.length > 0) {
+        activeDmPartner = otherUsers[0];
+      }
+
+      if (otherUsers.length === 0) {
+        contactsBar.innerHTML = `<span style="font-size:11px; color:#94a3b8;">Aún no hay otros usuarios para chatear.</span>`;
+      } else {
+        contactsBar.innerHTML = otherUsers.map(h => `
+          <button class="dm-user-pill ${activeDmPartner === h ? 'active' : ''}" onclick="window.selectDmPartner('${h}')">
+            @${h}
+          </button>
+        `).join('');
+      }
+
+      if (!activeDmPartner) {
+        titleEl.textContent = '✉️ Mensajes Directos';
+        subEl.textContent = 'Selecciona un miembro';
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#64748b; text-align:center; margin-top:40px;">Elige un usuario arriba para conversar en privado.</div>`;
+        return;
+      }
+
+      titleEl.textContent = 'Chat privado con @' + activeDmPartner;
+      subEl.textContent = 'Conversación encriptada en tiempo real';
+
+      const conversation = allDirectMessages.filter(m =>
+        (m.from === currentUser.userHandle && m.to === activeDmPartner) ||
+        (m.from === activeDmPartner && m.to === currentUser.userHandle)
+      );
+
+      if (conversation.length === 0) {
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#64748b; text-align:center; margin-top:40px;">Aún no hay mensajes con @${activeDmPartner}. Escríbele el primero abajo.</div>`;
+      } else {
+        messagesBox.innerHTML = conversation.map(m => {
+          const isMine = m.from === currentUser.userHandle;
+          return `
+            <div class="dm-bubble ${isMine ? 'mine' : 'theirs'}">
+              <div class="dm-bubble-meta">@${m.from}</div>
+              <div>${m.text}</div>
+            </div>
+          `;
+        }).join('');
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+      }
+    }
+
+    window.sendDirectMessage = async function() {
+      if (!activeDmPartner) {
+        showToast('Selecciona primero a quién enviarle el mensaje');
+        return;
+      }
+      const input = document.getElementById('dmTextInput');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      try {
+        await addDoc(collection(db, "messages"), {
+          from: currentUser.userHandle,
+          to: activeDmPartner,
+          text: text,
+          createdAt: Date.now()
+        });
+      } catch (e) {
+        showToast('Error al enviar el mensaje');
+      }
+    };
+
     function renderMySubscribers() {
       const box = document.getElementById('mySubscribersList');
       if (!box) return;
 
-      // Buscar tanto en el documento del usuario como en quiénes lo tienen en subscribedTo
       const myDoc = usersMap[currentUser.userHandle] || {};
       const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
       const fromScan = [];
@@ -1262,17 +1525,20 @@
       const combined = Array.from(new Set([...fromDoc, ...fromScan]));
 
       if (combined.length === 0) {
-        box.innerHTML = `<span style="color:#94a3b8;">Tus nuevos suscriptores aparecerán listados aquí con su @usuario en tiempo real.</span>`;
+        box.innerHTML = `<span style="color:#94a3b8;">Tus nuevos suscriptores aparecerán aquí con botón directo de mensaje.</span>`;
         return;
       }
 
-      box.innerHTML = combined.map(h => `<span class="subscriber-chip">✓ @${h}</span>`).join('');
+      box.innerHTML = combined.map(h => `
+        <span class="subscriber-chip" onclick="window.openDirectMessages('${h}')">
+          ✉️ @${h}
+        </span>
+      `).join('');
     }
 
     function renderAdminAndLeaderboard() {
       const allUsers = Object.values(usersMap).sort((a, b) => (b.subs || 0) - (a.subs || 0));
 
-      // Ranking público en vivo
       const rankBox = document.getElementById('liveLeaderboardList');
       if (rankBox) {
         if (allUsers.length === 0) {
@@ -1287,13 +1553,15 @@
                   <div style="font-size:10px; color:#94a3b8;">${u.userName || ''}</div>
                 </div>
               </div>
-              <div style="font-size:12px; font-weight:800; color:#34d399;">${(u.subs || 0).toLocaleString()} Subs</div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; font-weight:800; color:#34d399;">${(u.subs || 0).toLocaleString()} Subs</span>
+                ${u.userHandle !== currentUser.userHandle ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${u.userHandle}')">✉️</button>` : ''}
+              </div>
             </div>
           `).join('');
         }
       }
 
-      // Panel de Administrador
       if (!isUserAdmin()) return;
 
       const totalCoins = allUsers.reduce((acc, u) => acc + (Number(u.balance) || 0), 0);
@@ -1320,7 +1588,10 @@
                 ${subsNames}
               </div>
             </div>
-            <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1,000 AC</button>
+            <div style="display:flex; gap:5px;">
+              <button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')">✉️ DM</button>
+              <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K AC</button>
+            </div>
           </div>
         `;
       }).join('');
@@ -1346,7 +1617,6 @@
       } catch (e) {}
     };
 
-    // SUBIR Y SINCRONIZAR FOTO DE PERFIL EN TIEMPO REAL
     window.uploadAvatarPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -1388,7 +1658,6 @@
       reader.readAsDataURL(file);
     };
 
-    // COMPRESOR DE FOTOS PARA PUBLICACIONES DEL FEED
     window.previewSelectedPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -1413,7 +1682,6 @@
       reader.readAsDataURL(file);
     };
 
-    // REGISTRO DE CUENTA REAL EN FIREBASE
     window.completeRegistration = async function() {
       const rawName = document.getElementById('regName').value.trim();
       const rawHandle = document.getElementById('regHandle').value.trim();
@@ -1484,7 +1752,6 @@
       });
     }
 
-    // ESCUCHAR USUARIOS Y PUBLICACIONES EN TIEMPO REAL
     function startRealtimeListeners() {
       onSnapshot(collection(db, "users"), (snap) => {
         usersMap = {};
@@ -1496,14 +1763,35 @@
         renderAdminAndLeaderboard();
       });
 
-      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-      onSnapshot(q, (snap) => {
+      const qPosts = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      onSnapshot(qPosts, (snap) => {
         livePosts = [];
         snap.forEach(d => {
           livePosts.push({ id: d.id, ...d.data() });
         });
         renderFeed();
         renderAdminAndLeaderboard();
+      });
+
+      const qMsgs = query(collection(db, "messages"), orderBy("createdAt", "asc"));
+      onSnapshot(qMsgs, (snap) => {
+        allDirectMessages = [];
+        snap.forEach(d => {
+          allDirectMessages.push({ id: d.id, ...d.data() });
+        });
+        const myIncoming = allDirectMessages.filter(m => m.to === currentUser.userHandle);
+        const badge = document.getElementById('inboxBadge');
+        if (badge) {
+          if (myIncoming.length > 0) {
+            badge.style.display = 'flex';
+            badge.textContent = myIncoming.length;
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+        if (document.getElementById('dmModal').classList.contains('open')) {
+          renderDmModal();
+        }
       });
     }
 
@@ -1545,13 +1833,11 @@
       }
     };
 
-    // ABRIR / CERRAR CAJÓN DE COMENTARIOS (PARA QUE NO MOLESTEN SI NO QUIERES VERLOS)
     window.toggleCommentsDrawer = function(postId) {
       openCommentDrawers[postId] = !openCommentDrawers[postId];
       renderFeed();
     };
 
-    // ENVIAR COMENTARIO EN VIVO
     window.submitComment = async function(postId) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -1618,6 +1904,10 @@
           : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
         const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
 
+        const dmQuickBtn = (!isOwn && post.id !== 'welcome')
+          ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar Mensaje Directo">✉️</button>`
+          : '';
+
         const adminDeleteBtn = (isUserAdmin() && post.id !== 'welcome')
           ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
           : '';
@@ -1647,6 +1937,7 @@
               </div>
             </div>
             <div class="sub-action-Wrap">
+              ${dmQuickBtn}
               <button class="${subBtnClass}" onclick="window.toggleSubscribe('${post.handle}')">${subBtnLabel}</button>
               ${adminDeleteBtn}
             </div>
@@ -1675,7 +1966,6 @@
       });
     }
 
-    // SUSCRIPCIÓN REAL GUARDANDO QUIÉN SE SUSCRIBIÓ A QUIÉN
     window.toggleSubscribe = async function(targetHandle) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
