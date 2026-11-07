@@ -171,9 +171,9 @@
     ];
 
     const TOPUP_PACKS = [
-      { id: 'pack_199', nameEs: 'Paquete Impulso Inicial', nameEn: 'Starter Boost Pack', priceUSD: 1.99, aCoins: 6000, bonusEs: '5,000 + 1,000 Gratis (Impulsa +30 seguidores)', bonusEn: '5,000 + 1,000 Free (Boosts +30 followers)' },
-      { id: 'pack_499', nameEs: 'Paquete Creador Pro', nameEn: 'Creator Pro Pack', priceUSD: 4.99, aCoins: 18000, bonusEs: 'Destaca tu cuenta en el muro principal', bonusEn: 'Highlight your profile on the main feed' },
-      { id: 'pack_1499', nameEs: 'Paquete Magnate Turbo', nameEn: 'Magnate Turbo Pack', priceUSD: 14.99, aCoins: 60000, bonusEs: 'Máxima aceleración de seguidores reales', bonusEn: 'Maximum real follower acceleration' }
+      { id: 'pack_199', nameEs: 'Paquete Impulso Inicial', nameEn: 'Starter Boost Pack', priceUSD: 1.99, aCoins: 6000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: '5,000 + 1,000 Gratis (Impulsa +30 seguidores)', bonusEn: '5,000 + 1,000 Free (Boosts +30 followers)' },
+      { id: 'pack_499', nameEs: 'Paquete Creador Pro', nameEn: 'Creator Pro Pack', priceUSD: 4.99, aCoins: 18000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: 'Destaca tu cuenta en el muro principal', bonusEn: 'Highlight your profile on the main feed' },
+      { id: 'pack_1499', nameEs: 'Paquete Magnate Turbo', nameEn: 'Magnate Turbo Pack', priceUSD: 14.99, aCoins: 60000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: 'Máxima aceleración de seguidores reales', bonusEn: 'Maximum real follower acceleration' }
     ];
 
     const OFFICIAL_WELCOME_POST = {
@@ -314,6 +314,23 @@
       useEffect(() => { try { localStorage.setItem('argon_bw_posts_v3', JSON.stringify(posts)); } catch {} }, [posts]);
       useEffect(() => { try { localStorage.setItem('argon_bw_members_v3', JSON.stringify(registeredMembers)); } catch {} }, [registeredMembers]);
       useEffect(() => { try { localStorage.setItem('argon_bw_stories_v3', JSON.stringify(stories)); } catch {} }, [stories]);
+
+      // Detector automático cuando el cliente regresa de pagar en Stripe (?pago=199)
+      useEffect(() => {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const pago = params.get('pago');
+          if (pago && currentUser) {
+            const addedCoins = pago === '499' ? 18000 : pago === '1499' ? 60000 : 6000;
+            setCurrentUser((prev) => prev ? { ...prev, aCoins: (prev.aCoins || 0) + addedCoins } : prev);
+            setToast({
+              title: lang === 'en' ? 'Stripe Payment Confirmed!' : '¡Pago en Stripe Confirmado!',
+              subtitle: `+${addedCoins.toLocaleString()} A-Coins`
+            });
+            window.history.replaceState({}, document.title, window.location.pathname);
+          }
+        } catch {}
+      }, []);
 
       const notify = (title, subtitle) => {
         setToast({ title, subtitle });
@@ -1131,9 +1148,12 @@
                     </div>
                     <button
                       onClick={() => {
-                        setCurrentUser((prev) => ({ ...prev, aCoins: prev.aCoins + pack.aCoins }));
-                        setShowTopUpModal(false);
-                        notify(`+${pack.aCoins.toLocaleString()} A-Coins`, `$${pack.priceUSD} USD`);
+                        if (pack.stripeUrl) {
+                          window.location.href = pack.stripeUrl;
+                        } else {
+                          setCurrentUser((prev) => ({ ...prev, aCoins: prev.aCoins + pack.aCoins }));
+                          setShowTopUpModal(false);
+                        }
                       }}
                       className="px-4 py-2 rounded-xl bg-zinc-950 text-white font-black text-xs cursor-pointer"
                     >
