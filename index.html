@@ -49,7 +49,7 @@
       display: flex;
       flex-direction: column;
       position: relative;
-      padding-bottom: 84px;
+      padding-bottom: 90px;
       border-left: 1px solid rgba(255, 255, 255, 0.06);
       border-right: 1px solid rgba(255, 255, 255, 0.06);
     }
@@ -504,6 +504,9 @@
 
     .sub-action-Wrap {
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .btn-subscribe {
@@ -526,7 +529,7 @@
 
     .post-image {
       width: 100%;
-      max-height: 360px;
+      max-height: 380px;
       object-fit: cover;
       display: block;
       background: #141720;
@@ -535,9 +538,15 @@
     .post-actions {
       display: flex;
       align-items: center;
-      gap: 18px;
+      justify-content: space-between;
       padding: 11px 14px 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .post-actions-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .action-item {
@@ -569,6 +578,143 @@
     .post-caption strong {
       color: #fff;
       margin-right: 5px;
+    }
+
+    /* SECCIÓN DESPLEGABLE DE COMENTARIOS */
+    .comments-drawer {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .comments-drawer.open {
+      display: block;
+    }
+
+    .comment-row {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-bottom: 7px;
+      line-height: 1.35;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.025);
+      padding: 6px 9px;
+      border-radius: 8px;
+    }
+
+    .comment-row strong {
+      color: #34d399;
+      margin-right: 4px;
+    }
+
+    .comment-input-wrap {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .comment-input {
+      flex: 1;
+      background: #07080c;
+      border: 1px solid var(--card-border);
+      border-radius: 9px;
+      padding: 8px 10px;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .comment-send-btn {
+      background: #ffffff;
+      color: #050507;
+      border: none;
+      border-radius: 9px;
+      padding: 0 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* ESTILOS PANEL DE ADMINISTRADOR */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .admin-stat-box {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 10px 6px;
+      text-align: center;
+    }
+
+    .admin-stat-num {
+      font-size: 18px;
+      font-weight: 900;
+      color: #34d399;
+    }
+
+    .admin-stat-label {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .admin-user-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 8px;
+    }
+
+    .btn-mini-admin {
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #34d399;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 5px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-mini-danger {
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fb7185;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 7px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .subscriber-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin: 3px;
     }
 
     .tier-item {
@@ -604,8 +750,8 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid var(--card-border);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      display: flex;
+      justify-content: space-around;
       padding: 8px 0 16px;
       z-index: 50;
     }
@@ -622,6 +768,7 @@
       font-weight: 800;
       letter-spacing: 0.6px;
       cursor: pointer;
+      flex: 1;
     }
 
     .nav-btn.active {
@@ -770,7 +917,7 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL -->
+    <!-- 2. FEED EN TIEMPO REAL CON COMENTARIOS DESPLEGABLES -->
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
@@ -789,8 +936,13 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. RANKING -->
+    <!-- 3. RANKING EN VIVO + METAS -->
     <section id="view-ranking" class="view-section">
+      <div class="glass-card">
+        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">TOP CREADORES EN TIEMPO REAL</div>
+        <div id="liveLeaderboardList"></div>
+      </div>
+
       <div class="glass-card">
         <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">METAS OFICIALES DE PATROCINIO</div>
         <div class="tier-item">
@@ -831,7 +983,7 @@
       </div>
     </section>
 
-    <!-- 4. PERFIL CON SUBIDA DE FOTO REAL -->
+    <!-- 4. PERFIL + QUIÉNES SE HAN SUSCRITO A MÍ -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <label class="profile-avatar-wrap" title="Toca para cambiar tu foto de perfil">
@@ -856,6 +1008,48 @@
           ↗ INVITAR PERSONAS A SUSCRIBIRSE
         </button>
       </div>
+
+      <div class="glass-card">
+        <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:8px;">
+          PERSONAS SUSCRITAS A TU CUENTA
+        </div>
+        <div id="mySubscribersList" style="font-size:12px; color:#94a3b8;">
+          Aún no aparecen suscriptores registrados en la lista.
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PANEL DE ADMINISTRADOR (EXCLUSIVO PARA ALBERTO / @BELTO43) -->
+    <section id="view-admin" class="view-section">
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <div style="font-size:14px; font-weight:900; color:#fff;">👑 PANEL DE CONTROL ARGON</div>
+            <div style="font-size:11px; color:#94a3b8;">Monitoreo en vivo de usuarios, suscriptores y monedas</div>
+          </div>
+          <span class="badge-active">ADMIN</span>
+        </div>
+
+        <div class="admin-stats-grid">
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="admTotalUsers">0</div>
+            <div class="admin-stat-label">USUARIOS</div>
+          </div>
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="admTotalPosts">0</div>
+            <div class="admin-stat-label">POSTS</div>
+          </div>
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="admTotalCoins">0</div>
+            <div class="admin-stat-label">A-COINS</div>
+          </div>
+        </div>
+
+        <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:8px;">
+          DIRECTORIO COMPLETO DE USUARIOS EN VIVO
+        </div>
+        <div id="adminUsersDirectory"></div>
+      </div>
     </section>
 
     <nav class="bottom-nav">
@@ -875,6 +1069,10 @@
         <span>◉</span>
         <span>PERFIL</span>
       </button>
+      <button class="nav-btn" id="nav-admin" style="display:none; color:#34d399;" onclick="window.switchTab('admin')">
+        <span>👑</span>
+        <span>ADMIN</span>
+      </button>
     </nav>
   </div>
 
@@ -889,10 +1087,12 @@
       getDoc,
       addDoc,
       updateDoc,
+      deleteDoc,
       onSnapshot,
       query,
       orderBy,
-      increment
+      increment,
+      arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -951,26 +1151,13 @@
         appleIcon.rel = 'apple-touch-icon';
         appleIcon.href = iconDataUrl;
         document.head.appendChild(appleIcon);
-
-        const manifest = {
-          name: 'ARGON',
-          short_name: 'ARGON',
-          start_url: './',
-          display: 'standalone',
-          background_color: '#050507',
-          theme_color: '#050507',
-          icons: [{ src: iconDataUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
-        const manifestLink = document.createElement('link');
-        manifestLink.rel = 'manifest';
-        manifestLink.href = URL.createObjectURL(manifestBlob);
-        document.head.appendChild(manifestLink);
       } catch (e) {}
     })();
 
     const LOCAL_USER_KEY = 'argon_live_user_v1';
+    const ADMIN_HANDLES = ['BELTO43', 'ALBERTO_SOTO', 'ALBERTO', 'ADMIN'];
     let selectedPhotoDataUrl = '';
+    let openCommentDrawers = {};
 
     let currentUser = {
       registered: false,
@@ -980,11 +1167,18 @@
       balance: 5000,
       subs: 0,
       subscribedTo: [],
+      subscribersList: [],
       likedPosts: []
     };
 
     let livePosts = [];
     let usersMap = {};
+
+    function isUserAdmin() {
+      const h = (currentUser.userHandle || '').toUpperCase();
+      const n = (currentUser.userName || '').toUpperCase();
+      return ADMIN_HANDLES.includes(h) || n.includes('ALBERTO SOTO');
+    }
 
     function loadLocalSession() {
       try {
@@ -1042,8 +1236,115 @@
       document.getElementById('vaultProgressBar').style.width = pct + '%';
       document.getElementById('profileStatus').textContent = (currentUser.subs || 0).toLocaleString() + ' Suscriptores • Meta: ' + target.toLocaleString();
 
+      // Mostrar pestaña ADMIN si es Alberto (@BELTO43)
+      const adminNavBtn = document.getElementById('nav-admin');
+      if (adminNavBtn) {
+        adminNavBtn.style.display = isUserAdmin() ? 'flex' : 'none';
+      }
+
       renderAvatarElements();
+      renderMySubscribers();
     }
+
+    function renderMySubscribers() {
+      const box = document.getElementById('mySubscribersList');
+      if (!box) return;
+
+      // Buscar tanto en el documento del usuario como en quiénes lo tienen en subscribedTo
+      const myDoc = usersMap[currentUser.userHandle] || {};
+      const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
+      const fromScan = [];
+      Object.values(usersMap).forEach(u => {
+        if (Array.isArray(u.subscribedTo) && u.subscribedTo.includes(currentUser.userHandle)) {
+          fromScan.push(u.userHandle);
+        }
+      });
+      const combined = Array.from(new Set([...fromDoc, ...fromScan]));
+
+      if (combined.length === 0) {
+        box.innerHTML = `<span style="color:#94a3b8;">Tus nuevos suscriptores aparecerán listados aquí con su @usuario en tiempo real.</span>`;
+        return;
+      }
+
+      box.innerHTML = combined.map(h => `<span class="subscriber-chip">✓ @${h}</span>`).join('');
+    }
+
+    function renderAdminAndLeaderboard() {
+      const allUsers = Object.values(usersMap).sort((a, b) => (b.subs || 0) - (a.subs || 0));
+
+      // Ranking público en vivo
+      const rankBox = document.getElementById('liveLeaderboardList');
+      if (rankBox) {
+        if (allUsers.length === 0) {
+          rankBox.innerHTML = '<div style="font-size:12px; color:#94a3b8;">Cargando creadores...</div>';
+        } else {
+          rankBox.innerHTML = allUsers.slice(0, 15).map((u, idx) => `
+            <div class="tier-item">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:12px; font-weight:900; color:#94a3b8;">#${idx + 1}</span>
+                <div>
+                  <div style="font-size:12px; font-weight:800; color:#fff;">@${u.userHandle || 'USER'}</div>
+                  <div style="font-size:10px; color:#94a3b8;">${u.userName || ''}</div>
+                </div>
+              </div>
+              <div style="font-size:12px; font-weight:800; color:#34d399;">${(u.subs || 0).toLocaleString()} Subs</div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // Panel de Administrador
+      if (!isUserAdmin()) return;
+
+      const totalCoins = allUsers.reduce((acc, u) => acc + (Number(u.balance) || 0), 0);
+      document.getElementById('admTotalUsers').textContent = allUsers.length.toLocaleString();
+      document.getElementById('admTotalPosts').textContent = livePosts.length.toLocaleString();
+      document.getElementById('admTotalCoins').textContent = totalCoins.toLocaleString();
+
+      const dirBox = document.getElementById('adminUsersDirectory');
+      if (!dirBox) return;
+
+      dirBox.innerHTML = allUsers.map(u => {
+        const subsList = Array.isArray(u.subscribersList) ? u.subscribersList : [];
+        const subsNames = subsList.length > 0 ? `Suscriptores: @${subsList.join(', @')}` : 'Sin lista detallada aún';
+        return `
+          <div class="admin-user-row">
+            <div style="min-width:0; flex:1;">
+              <div style="font-size:13px; font-weight:800; color:#fff;">
+                @${u.userHandle} <span style="font-size:11px; color:#94a3b8; font-weight:600;">(${u.userName || ''})</span>
+              </div>
+              <div style="font-size:11px; color:#34d399; font-weight:700; margin-top:2px;">
+                ${(u.subs || 0).toLocaleString()} Suscriptores • ${(u.balance || 0).toLocaleString()} AC
+              </div>
+              <div style="font-size:10px; color:#94a3b8; margin-top:2px;">
+                ${subsNames}
+              </div>
+            </div>
+            <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1,000 AC</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.adminGiveCoins = async function(targetHandle, amount) {
+      if (!isUserAdmin() || !targetHandle) return;
+      try {
+        await setDoc(doc(db, "users", targetHandle), {
+          balance: increment(amount)
+        }, { merge: true });
+        showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
+      } catch (e) {
+        showToast('Error al enviar monedas');
+      }
+    };
+
+    window.adminDeletePost = async function(postId) {
+      if (!isUserAdmin() || !postId) return;
+      try {
+        await deleteDoc(doc(db, "posts", postId));
+        showToast('Publicación eliminada por Admin');
+      } catch (e) {}
+    };
 
     // SUBIR Y SINCRONIZAR FOTO DE PERFIL EN TIEMPO REAL
     window.uploadAvatarPhoto = function(event) {
@@ -1141,6 +1442,8 @@
             avatar: currentUser.avatar || '',
             balance: 5000,
             subs: 0,
+            subscribersList: [],
+            subscribedTo: [],
             rewarded1k: false,
             createdAt: Date.now()
           });
@@ -1166,6 +1469,7 @@
           const data = snap.data();
           currentUser.balance = data.balance ?? currentUser.balance;
           currentUser.subs = data.subs ?? currentUser.subs;
+          currentUser.subscribersList = data.subscribersList || [];
           if (data.avatar) currentUser.avatar = data.avatar;
           if (currentUser.subs >= 1000 && !data.rewarded1k) {
             updateDoc(doc(db, "users", handle), {
@@ -1183,10 +1487,13 @@
     // ESCUCHAR USUARIOS Y PUBLICACIONES EN TIEMPO REAL
     function startRealtimeListeners() {
       onSnapshot(collection(db, "users"), (snap) => {
+        usersMap = {};
         snap.forEach(d => {
           usersMap[d.id] = d.data();
         });
         renderFeed();
+        renderMySubscribers();
+        renderAdminAndLeaderboard();
       });
 
       const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -1196,6 +1503,7 @@
           livePosts.push({ id: d.id, ...d.data() });
         });
         renderFeed();
+        renderAdminAndLeaderboard();
       });
     }
 
@@ -1228,11 +1536,48 @@
           caption: text,
           likes: 0,
           shares: 0,
+          comments: [],
           createdAt: Date.now()
         });
         showToast('Publicado en vivo en ARGON');
       } catch (e) {
         showToast('Error al publicar');
+      }
+    };
+
+    // ABRIR / CERRAR CAJÓN DE COMENTARIOS (PARA QUE NO MOLESTEN SI NO QUIERES VERLOS)
+    window.toggleCommentsDrawer = function(postId) {
+      openCommentDrawers[postId] = !openCommentDrawers[postId];
+      renderFeed();
+    };
+
+    // ENVIAR COMENTARIO EN VIVO
+    window.submitComment = async function(postId) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      const input = document.getElementById('comment-input-' + postId);
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      const newComment = {
+        author: currentUser.userHandle,
+        text: text,
+        createdAt: Date.now()
+      };
+
+      openCommentDrawers[postId] = true;
+
+      try {
+        await updateDoc(doc(db, "posts", postId), {
+          comments: arrayUnion(newComment)
+        });
+        showToast('Comentario publicado');
+      } catch (e) {
+        showToast('No se pudo publicar el comentario');
       }
     };
 
@@ -1248,7 +1593,8 @@
           image: '',
           caption: 'Bienvenido al tráfico en tiempo real de ARGON. Publica tu primera foto o estado, suma +10 A-Coins al suscribirte a otros miembros y llega a 1,000 suscriptores para desbloquear +10,000 A-Coins.',
           likes: 1,
-          shares: 0
+          shares: 0,
+          comments: []
         }
       ];
 
@@ -1272,9 +1618,24 @@
           : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
         const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
 
+        const adminDeleteBtn = (isUserAdmin() && post.id !== 'welcome')
+          ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
+          : '';
+
         const imgHtml = post.image
           ? `<img class="post-image" src="${post.image}" alt="${post.handle}" />`
           : '';
+
+        const commentsArr = Array.isArray(post.comments) ? post.comments : [];
+        const isDrawerOpen = !!openCommentDrawers[post.id];
+
+        const commentsListHtml = commentsArr.length > 0
+          ? commentsArr.map(c => `
+              <div class="comment-row">
+                <div><strong>@${c.author}</strong> ${c.text}</div>
+              </div>
+            `).join('')
+          : `<div style="font-size:11px; color:#64748b; margin-bottom:6px;">Sin comentarios aún. Sé el primero en comentar.</div>`;
 
         card.innerHTML = `
           <div class="post-header">
@@ -1287,21 +1648,34 @@
             </div>
             <div class="sub-action-Wrap">
               <button class="${subBtnClass}" onclick="window.toggleSubscribe('${post.handle}')">${subBtnLabel}</button>
+              ${adminDeleteBtn}
             </div>
           </div>
           ${imgHtml}
           <div class="post-actions">
-            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
-            <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ Compartir (<span>${post.shares || 0}</span>)</button>
+            <div class="post-actions-left">
+              <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
+              <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">💬 Comentar (<span>${commentsArr.length}</span>)</button>
+              <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ (<span>${post.shares || 0}</span>)</button>
+            </div>
           </div>
           <div class="post-body">
             <div class="post-caption"><strong>@${post.handle}</strong> ${post.caption || ''}</div>
+
+            <div class="comments-drawer ${isDrawerOpen ? 'open' : ''}">
+              ${commentsListHtml}
+              <div class="comment-input-wrap">
+                <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." />
+                <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
+              </div>
+            </div>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
+    // SUSCRIPCIÓN REAL GUARDANDO QUIÉN SE SUSCRIBIÓ A QUIÉN
     window.toggleSubscribe = async function(targetHandle) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -1321,8 +1695,15 @@
       showToast('+10 A-Coins acreditadas por suscribirte a @' + targetHandle);
 
       try {
-        await setDoc(doc(db, "users", targetHandle), { subs: increment(1) }, { merge: true });
-        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(10) }, { merge: true });
+        await setDoc(doc(db, "users", targetHandle), {
+          subs: increment(1),
+          subscribersList: arrayUnion(currentUser.userHandle)
+        }, { merge: true });
+
+        await setDoc(doc(db, "users", currentUser.userHandle), {
+          balance: increment(10),
+          subscribedTo: arrayUnion(targetHandle)
+        }, { merge: true });
       } catch (e) {}
     };
 
@@ -1375,12 +1756,16 @@
     };
 
     window.switchTab = function(tab) {
-      ['boveda', 'feed', 'ranking', 'perfil'].forEach(t => {
-        document.getElementById('view-' + t).classList.remove('active');
-        document.getElementById('nav-' + t).classList.remove('active');
+      ['boveda', 'feed', 'ranking', 'perfil', 'admin'].forEach(t => {
+        const v = document.getElementById('view-' + t);
+        const n = document.getElementById('nav-' + t);
+        if (v) v.classList.remove('active');
+        if (n) n.classList.remove('active');
       });
-      document.getElementById('view-' + tab).classList.add('active');
-      document.getElementById('nav-' + tab).classList.add('active');
+      const targetView = document.getElementById('view-' + tab);
+      const targetNav = document.getElementById('nav-' + tab);
+      if (targetView) targetView.classList.add('active');
+      if (targetNav) targetNav.classList.add('active');
     };
 
     loadLocalSession();
