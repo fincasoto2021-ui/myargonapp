@@ -3,1173 +3,972 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ARGON™ | Tu Tiempo y Tu Audiencia Valen (myargonapp.com)</title>
-  <meta name="description" content="ARGON™ - La red social donde tu atención y tus seguidores tienen valor real." />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>ARGON • Obsidian & Platinum Edition</title>
   <style>
-    body { font-family: 'Inter', sans-serif; background: #FFFFFF; color: #09090B; margin: 0; -webkit-font-smoothing: antialiased; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    :root {
+      --bg-obsidian: #050507;
+      --card-dark: #0d0e12;
+      --card-border: rgba(226, 232, 240, 0.14);
+      --platinum-light: #ffffff;
+      --platinum-mid: #cbd5e1;
+      --platinum-dark: #64748b;
+      --emerald: #10b981;
+      --emerald-bg: rgba(16, 185, 129, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-obsidian);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 0%, #171923 0%, #050507 65%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      padding-bottom: 84px;
+      border-left: 1px solid rgba(255, 255, 255, 0.06);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* TOP BAR */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(7, 8, 12, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 11px;
+      background: linear-gradient(145deg, #16181f, #07080b);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .wallet-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(145deg, #14161d, #090a0f);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .wallet-amount {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .wallet-label {
+      font-size: 9px;
+      font-weight: 700;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    /* VIEWS */
+    .view-section {
+      display: none;
+      padding: 14px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .view-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & PROGRESS */
+    .glass-card {
+      background: linear-gradient(165deg, rgba(24, 26, 34, 0.88) 0%, rgba(10, 11, 16, 0.96) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 15px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .progress-user {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      color: #fff;
+    }
+
+    .progress-subtext {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+
+    .progress-count {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--emerald);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 7px;
+      background: #1e2330;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #94a3b8 0%, #ffffff 60%, #10b981 100%);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* VAULT HEXAGON */
+    .vault-center {
+      text-align: center;
+      padding: 24px 14px;
+      position: relative;
+    }
+
+    .hex-coin-wrap {
+      width: 148px;
+      height: 148px;
+      margin: 10px auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85));
+    }
+
+    .vault-balance-num {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      background: linear-gradient(180deg, #ffffff 15%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .vault-balance-sub {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 4px;
+      margin-bottom: 14px;
+    }
+
+    .badge-active {
+      display: inline-block;
+      background: var(--emerald-bg);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.6px;
+    }
+
+    .pack-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    .pack-btn {
+      background: linear-gradient(160deg, #191c26, #0d0f15);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 13px;
+      padding: 12px 6px;
+      text-align: center;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.12s ease, border-color 0.2s ease;
+    }
+
+    .pack-btn:active {
+      transform: scale(0.96);
+    }
+
+    .pack-btn.vip {
+      border-color: rgba(16, 185, 129, 0.55);
+      box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.12);
+    }
+
+    .pack-ac {
+      font-size: 13px;
+      font-weight: 800;
+      display: block;
+    }
+
+    .pack-price {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 4px;
+      display: block;
+    }
+
+    .pack-btn.vip .pack-price {
+      color: #34d399;
+      font-weight: 700;
+    }
+
+    /* FEED POSTS ULTRA CLEAN */
+    .composer-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .composer-input {
+      flex: 1;
+      background: #0d0f15;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 11px 13px;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .composer-btn {
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      color: #050507;
+      border: none;
+      border-radius: 12px;
+      padding: 0 15px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .post-card {
+      background: #0b0c10;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    /* CABECERA CON COLUMNAS BLINDADAS (NUNCA SE MONTA EL TEXTO) */
+    .post-header {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .post-user-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .avatar-circle {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #252936, #101218);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #e2e8f0;
+      flex-shrink: 0;
+    }
+
+    .user-meta {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .user-handle {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-subs-line {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sponsor-tag {
+      display: inline-block;
+      margin-top: 3px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 7px;
+      border-radius: 6px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sub-action-Wrap {
+      flex-shrink: 0;
+    }
+
+    .btn-subscribe {
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      color: #050507;
+      border: none;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 3px 10px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-subscribe.subscribed {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      box-shadow: none;
+    }
+
+    .post-image {
+      width: 100%;
+      height: 255px;
+      object-fit: cover;
+      display: block;
+      background: #141720;
+    }
+
+    .post-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 11px 14px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .action-item {
+      background: none;
+      border: none;
+      color: #cbd5e1;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .action-item.liked {
+      color: #f43f5e;
+    }
+
+    .post-body {
+      padding: 9px 14px 13px;
+    }
+
+    .post-caption {
+      font-size: 12.5px;
+      line-height: 1.45;
+      color: #e2e8f0;
+      margin-bottom: 6px;
+    }
+
+    .post-caption strong {
+      color: #fff;
+      margin-right: 4px;
+    }
+
+    .comment-line {
+      font-size: 11.5px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    .comment-line strong {
+      color: #cbd5e1;
+      margin-right: 4px;
+    }
+
+    /* RANKING & PROFILE */
+    .tier-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      margin-bottom: 9px;
+    }
+
+    .tier-item.unlocked {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .btn-primary-platinum {
+      width: 100%;
+      padding: 13px;
+      border-radius: 13px;
+      border: none;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+      color: #050507;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* BOTTOM NAV */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      max-width: 430px;
+      background: rgba(7, 8, 12, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--card-border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 8px 0 12px;
+      z-index: 50;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      cursor: pointer;
+    }
+
+    .nav-btn.active {
+      color: #ffffff;
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      top: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(16, 185, 129, 0.95);
+      color: #04130e;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      z-index: 100;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+      display: none;
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
-  <div id="root"></div>
-
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
-
-    // Auto-detección de idioma según el celular/navegador del usuario
-    const detectBrowserLang = () => {
-      try {
-        const lang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
-        return lang.startsWith('en') ? 'en' : 'es';
-      } catch {
-        return 'es';
-      }
-    };
-
-    const TEXTS = {
-      es: {
-        badge: 'PLATAFORMA OFICIAL • MYARGONAPP.COM',
-        heroTitle: 'Tu tiempo ya no es gratis.',
-        heroSub: 'La nueva generación de red social donde tu atención, tus fotos y tus seguidores reales tienen valor económico desde el primer día.',
-        stat1Title: '+5,000 A-Coins',
-        stat1Sub: 'Bono de arranque al crear tu cuenta',
-        stat2Title: '100% Humanos',
-        stat2Sub: 'Cero bots • Valor real por seguidor',
-        stat3Title: 'Pagos Directos',
-        stat3Sub: 'Monetiza al subir a Rango Magnate',
-        tabRegister: 'Crear Cuenta Nueva',
-        tabLogin: 'Iniciar Sesión',
-        step1Title: 'Paso 1 de 2: Crea tu Cuenta',
-        step1Sub: 'En el siguiente paso podrás subir tu foto de perfil y portada.',
-        nameLabel: 'Nombre o @Usuario *',
-        namePlaceholder: 'Ej: @creador_oficial',
-        contactLabel: 'Correo Electrónico o Celular *',
-        contactPlaceholder: 'Ej: correo@ejemplo.com',
-        passLabel: 'Contraseña *',
-        catLabel: 'Categoría Principal',
-        nextBtn: 'Continuar: Subir Foto de Perfil →',
-        step2Title: 'Paso 2 de 2: Personaliza tu Perfil',
-        step2Sub: 'Toca la cámara para elegir tu foto desde la galería de tu teléfono.',
-        backBtn: '← Volver',
-        uploadCover: '📷 Cambiar Portada',
-        uploadAvatarLink: '📷 Toca aquí para subir tu Foto de Perfil',
-        bioLabel: 'Biografía / Mensaje de tu Perfil (Opcional)',
-        bioPlaceholder: 'Ej: ¡Sígueme en ARGON™ y gana +50 A-Coins!',
-        finishBtn: 'Entrar a ARGON™ (+5,000 A-Coins Gratis)',
-        loginBtn: 'Entrar a mi Cuenta',
-        inviteBtn: '📲 Invitar',
-        navFeed: 'Muro',
-        navGrow: 'Impulsar',
-        navWallet: 'Bóveda ($)',
-        navProfile: 'Perfil',
-        exitBtn: 'Salir',
-        editProfile: 'Editar Perfil',
-        realFollowers: 'Seguidores Reales',
-        myCoins: 'Mis A-Coins',
-        magnateGoal: 'Meta para Rango Magnate: 25,000 seguidores.',
-        activePioneers: 'Cuentas Oficiales Recientes',
-        addStory: 'Subir Historia',
-        postPlaceholder: '¿Qué quieres compartir hoy',
-        uploadPhotoBtn: '📷 Subir Foto',
-        rewardToggle: '🪙 Dar +50 A-Coins al seguirme',
-        publishBtn: 'Publicar',
-        followBtn: '+ Seguir (+50 A)',
-        likeBtn: 'Me gusta',
-        shareBtn: 'Compartir',
-        commentPlaceholder: 'Escribe un comentario...',
-        commentBtn: 'Enviar',
-        footerRights: '© 2026 ARGON™ • Todos los derechos reservados • Privacidad y Términos Oficiales'
-      },
-      en: {
-        badge: 'OFFICIAL PLATFORM • MYARGONAPP.COM',
-        heroTitle: 'Your time is no longer free.',
-        heroSub: 'The next-generation social network where your attention, photos, and real followers hold real economic value from day one.',
-        stat1Title: '+5,000 A-Coins',
-        stat1Sub: 'Free welcome bonus upon signup',
-        stat2Title: '100% Human',
-        stat2Sub: 'Zero bots • Real value per follower',
-        stat3Title: 'Direct Payouts',
-        stat3Sub: 'Monetize when you reach Magnate Rank',
-        tabRegister: 'Create New Account',
-        tabLogin: 'Sign In',
-        step1Title: 'Step 1 of 2: Create Your Account',
-        step1Sub: 'In the next step you will upload your profile & cover photos.',
-        nameLabel: 'Full Name or @Username *',
-        namePlaceholder: 'Ex: @official_creator',
-        contactLabel: 'Email or Mobile Number *',
-        contactPlaceholder: 'Ex: name@email.com',
-        passLabel: 'Password *',
-        catLabel: 'Primary Category',
-        nextBtn: 'Continue: Upload Profile Photo →',
-        step2Title: 'Step 2 of 2: Customize Your Profile',
-        step2Sub: 'Tap the camera icon to choose a photo from your phone gallery.',
-        backBtn: '← Back',
-        uploadCover: '📷 Change Cover',
-        uploadAvatarLink: '📷 Tap here to upload your Profile Photo',
-        bioLabel: 'Bio / Profile Headline (Optional)',
-        bioPlaceholder: 'Ex: Follow me on ARGON™ and earn +50 A-Coins!',
-        finishBtn: 'Enter ARGON™ (+5,000 Free A-Coins)',
-        loginBtn: 'Sign In to ARGON™',
-        inviteBtn: '📲 Invite',
-        navFeed: 'Feed',
-        navGrow: 'Boost',
-        navWallet: 'Vault ($)',
-        navProfile: 'Profile',
-        exitBtn: 'Log Out',
-        editProfile: 'Edit Profile',
-        realFollowers: 'Real Followers',
-        myCoins: 'My A-Coins',
-        magnateGoal: 'Goal for Magnate Rank: 25,000 followers.',
-        activePioneers: 'Recent Official Accounts',
-        addStory: 'Add Story',
-        postPlaceholder: 'What do you want to share today',
-        uploadPhotoBtn: '📷 Upload Photo',
-        rewardToggle: '🪙 Give +50 A-Coins for following me',
-        publishBtn: 'Post',
-        followBtn: '+ Follow (+50 A)',
-        likeBtn: 'Like',
-        shareBtn: 'Share',
-        commentPlaceholder: 'Write a comment...',
-        commentBtn: 'Send',
-        footerRights: '© 2026 ARGON™ • All rights reserved • Privacy & Official Terms'
-      }
-    };
-
-    const CATEGORIES = {
-      es: [
-        '🎵 Música & Entretenimiento',
-        '💼 Negocios & Finanzas',
-        '🛻 Motores & Autos',
-        '🎥 Creador Digital',
-        '🏀 Deportes & Fitness',
-        '✨ Estilo de Vida & Moda',
-        '🌎 Comunidad General'
-      ],
-      en: [
-        '🎵 Music & Entertainment',
-        '💼 Business & Finance',
-        '🛻 Motors & Cars',
-        '🎥 Digital Creator',
-        '🏀 Sports & Fitness',
-        '✨ Lifestyle & Fashion',
-        '🌎 General Community'
-      ]
-    };
-
-    const RANKS = [
-      { id: 'suscriptor', level: 1, nameEs: 'Suscriptor', nameEn: 'Subscriber', minFollowers: 0, icon: '●' },
-      { id: 'magnate', level: 2, nameEs: 'Magnate', nameEn: 'Magnate', minFollowers: 25000, icon: '🪙' },
-      { id: 'boss', level: 3, nameEs: 'Boss', nameEn: 'Boss', minFollowers: 100000, icon: '💎' },
-      { id: 'capo', level: 4, nameEs: 'Capo', nameEn: 'Capo', minFollowers: 500000, icon: '🖤' },
-      { id: 'leyenda', level: 5, nameEs: 'Leyenda', nameEn: 'Legend', minFollowers: 2000000, icon: '👑' }
-    ];
-
-    const TOPUP_PACKS = [
-      { id: 'pack_199', nameEs: 'Paquete Impulso Inicial', nameEn: 'Starter Boost Pack', priceUSD: 1.99, aCoins: 6000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: '5,000 + 1,000 Gratis (Impulsa +30 seguidores)', bonusEn: '5,000 + 1,000 Free (Boosts +30 followers)' },
-      { id: 'pack_499', nameEs: 'Paquete Creador Pro', nameEn: 'Creator Pro Pack', priceUSD: 4.99, aCoins: 18000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: 'Destaca tu cuenta en el muro principal', bonusEn: 'Highlight your profile on the main feed' },
-      { id: 'pack_1499', nameEs: 'Paquete Magnate Turbo', nameEn: 'Magnate Turbo Pack', priceUSD: 14.99, aCoins: 60000, stripeUrl: 'https://buy.stripe.com/9B628t9fF3TT8ei4ka7ok02', bonusEs: 'Máxima aceleración de seguidores reales', bonusEn: 'Maximum real follower acceleration' }
-    ];
-
-    const OFFICIAL_WELCOME_POST = {
-      id: 'post_official_argon',
-      author: 'ARGON Oficial',
-      handle: '@argon',
-      rankBadge: '✔️ Cuenta Oficial',
-      avatar: 'https://ui-avatars.com/api/?name=ARGON&background=09090B&color=FFFFFF&bold=true&size=256',
-      followers: 1,
-      time: 'Oficial',
-      contentEs: 'Bienvenido a ARGON™ (myargonapp.com). Aquí tu tiempo, tus fotos y tu audiencia tienen valor real. Sube tu primera foto al muro, invita a tus amigos y gana +50 A-Coins por cada cuenta que sigas.',
-      contentEn: 'Welcome to ARGON™ (myargonapp.com). Here your time, your photos, and your audience hold real value. Upload your first photo to the feed, invite your friends, and earn +50 A-Coins for every account you follow.',
-      image: null,
-      likes: 1,
-      likedByMe: false,
-      payingForFollow: true,
-      followedByMe: false,
-      comments: []
-    };
-
-    function compressImageFile(file, maxWidth = 850, quality = 0.8) {
-      return new Promise((resolve) => {
-        if (!file) return resolve(null);
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            if (width > maxWidth) {
-              height = Math.round((height * maxWidth) / width);
-              width = maxWidth;
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            resolve(canvas.toDataURL('image/jpeg', quality));
-          };
-          img.onerror = () => resolve(event.target.result);
-          img.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function App() {
-      const [lang, setLang] = useState(detectBrowserLang);
-      const t = TEXTS[lang] || TEXTS.es;
-
-      const [activeTab, setActiveTab] = useState('inicio');
-      const [toast, setToast] = useState(null);
-      const [authMode, setAuthMode] = useState('register');
-      const [onboardingStep, setOnboardingStep] = useState(1);
-
-      const [currentUser, setCurrentUser] = useState(() => {
-        try {
-          const saved = localStorage.getItem('argon_bw_user_v3');
-          return saved ? JSON.parse(saved) : null;
-        } catch { return null; }
-      });
-
-      const [regForm, setRegForm] = useState({
-        name: '',
-        emailOrPhone: '',
-        password: '',
-        category: CATEGORIES[lang]?.[0] || '🎵 Música & Entretenimiento',
-        bio: '',
-        avatarPreview: '',
-        coverPreview: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=80'
-      });
-
-      const [loginForm, setLoginForm] = useState({ emailOrPhone: '', password: '' });
-
-      const [registeredMembers, setRegisteredMembers] = useState(() => {
-        try {
-          const saved = localStorage.getItem('argon_bw_members_v3');
-          if (saved) return JSON.parse(saved);
-        } catch {}
-        return [
-          {
-            id: 'official_argon',
-            name: 'ARGON Oficial ✔️',
-            category: 'Plataforma Oficial',
-            avatar: 'https://ui-avatars.com/api/?name=ARGON&background=09090B&color=FFFFFF&bold=true&size=256',
-            followers: 1
-          }
-        ];
-      });
-
-      const [stories, setStories] = useState(() => {
-        try {
-          const saved = localStorage.getItem('argon_bw_stories_v3');
-          if (saved) return JSON.parse(saved);
-        } catch {}
-        return [
-          {
-            id: 'st_official',
-            author: 'ARGON Oficial',
-            avatar: 'https://ui-avatars.com/api/?name=ARGON&background=09090B&color=FFFFFF&bold=true&size=256',
-            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80'
-          }
-        ];
-      });
-
-      const [activeStoryModal, setActiveStoryModal] = useState(null);
-
-      const [posts, setPosts] = useState(() => {
-        try {
-          const saved = localStorage.getItem('argon_bw_posts_v3');
-          if (saved) return JSON.parse(saved);
-        } catch {}
-        return [OFFICIAL_WELCOME_POST];
-      });
-
-      const [newPostText, setNewPostText] = useState('');
-      const [newPostImage, setNewPostImage] = useState(null);
-      const [offer50OnPost, setOffer50OnPost] = useState(true);
-      const [commentInputs, setCommentInputs] = useState({});
-      const [showTopUpModal, setShowTopUpModal] = useState(false);
-      const [showEditProfileModal, setShowEditProfileModal] = useState(false);
-
-      const regAvatarInputRef = useRef(null);
-      const regCoverInputRef = useRef(null);
-      const postImageInputRef = useRef(null);
-      const storyImageInputRef = useRef(null);
-      const editAvatarInputRef = useRef(null);
-      const editCoverInputRef = useRef(null);
-
-      useEffect(() => {
-        try {
-          if (currentUser) localStorage.setItem('argon_bw_user_v3', JSON.stringify(currentUser));
-          else localStorage.removeItem('argon_bw_user_v3');
-        } catch {}
-      }, [currentUser]);
-
-      useEffect(() => { try { localStorage.setItem('argon_bw_posts_v3', JSON.stringify(posts)); } catch {} }, [posts]);
-      useEffect(() => { try { localStorage.setItem('argon_bw_members_v3', JSON.stringify(registeredMembers)); } catch {} }, [registeredMembers]);
-      useEffect(() => { try { localStorage.setItem('argon_bw_stories_v3', JSON.stringify(stories)); } catch {} }, [stories]);
-
-      // Detector automático cuando el cliente regresa de pagar en Stripe (?pago=199)
-      useEffect(() => {
-        try {
-          const params = new URLSearchParams(window.location.search);
-          const pago = params.get('pago');
-          if (pago && currentUser) {
-            const addedCoins = pago === '499' ? 18000 : pago === '1499' ? 60000 : 6000;
-            setCurrentUser((prev) => prev ? { ...prev, aCoins: (prev.aCoins || 0) + addedCoins } : prev);
-            setToast({
-              title: lang === 'en' ? 'Stripe Payment Confirmed!' : '¡Pago en Stripe Confirmado!',
-              subtitle: `+${addedCoins.toLocaleString()} A-Coins`
-            });
-            window.history.replaceState({}, document.title, window.location.pathname);
-          }
-        } catch {}
-      }, []);
-
-      const notify = (title, subtitle) => {
-        setToast({ title, subtitle });
-        setTimeout(() => setToast(null), 3200);
-      };
-
-      const handleSelectRegAvatar = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 450, 0.82);
-        if (dataUrl) {
-          setRegForm((prev) => ({ ...prev, avatarPreview: dataUrl }));
-          notify(lang === 'en' ? 'Profile photo ready' : 'Foto de perfil lista', '✓');
-        }
-      };
-
-      const handleSelectRegCover = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 1000, 0.8);
-        if (dataUrl) {
-          setRegForm((prev) => ({ ...prev, coverPreview: dataUrl }));
-          notify(lang === 'en' ? 'Cover photo ready' : 'Foto de portada lista', '✓');
-        }
-      };
-
-      const handleCompleteRegistration = (e) => {
-        e.preventDefault();
-        const finalAvatar = regForm.avatarPreview || `https://ui-avatars.com/api/?name=${encodeURIComponent(regForm.name.trim())}&background=09090B&color=FFFFFF&bold=true&size=256`;
-
-        const newUser = {
-          id: 'u_' + Date.now(),
-          name: regForm.name.trim(),
-          emailOrPhone: regForm.emailOrPhone.trim(),
-          category: regForm.category,
-          bio: regForm.bio.trim() || `${regForm.category} • ARGON™`,
-          avatar: finalAvatar,
-          cover: regForm.coverPreview,
-          aCoins: 5000,
-          followers: 0,
-          usdBalance: 0.0
-        };
-
-        setCurrentUser(newUser);
-        setRegisteredMembers((prev) => [{ id: newUser.id, name: newUser.name, category: newUser.category, avatar: newUser.avatar, followers: 0 }, ...prev]);
-        setOnboardingStep(1);
-        notify(lang === 'en' ? 'Welcome to ARGON™!' : '¡Bienvenido a ARGON™!', '+5,000 A-Coins');
-      };
-
-      const handleShareWhatsApp = () => {
-        const name = currentUser ? currentUser.name : 'ARGON™';
-        const text = lang === 'en'
-          ? `Follow my official profile on ARGON™ (${name})! Sign up free at https://www.myargonapp.com and claim +5,000 A-Coins 🚀`
-          : `¡Sígueme en mi perfil oficial de ARGON™ (${name})! Entra gratis a https://www.myargonapp.com y reclama +5,000 A-Coins 🚀`;
-        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
-      };
-
-      // PANTALLA DE REGISTRO EN BLANCO Y NEGRO PURO (ESTILO INSTAGRAM / THREADS)
-      if (!currentUser) {
-        return (
-          <div className="min-h-screen bg-white text-zinc-950 flex flex-col justify-between p-4 sm:p-8">
-            {toast && (
-              <div className="fixed bottom-5 left-5 z-50 max-w-sm bg-zinc-950 text-white px-4 py-3 rounded-2xl shadow-2xl border border-zinc-800">
-                <p className="font-black text-sm">🪙 {toast.title}</p>
-                <p className="text-xs text-zinc-300">{toast.subtitle}</p>
-              </div>
-            )}
-
-            {/* Barra superior limpia con selector de idioma ES / EN */}
-            <div className="max-w-5xl mx-auto w-full flex items-center justify-between pb-4 border-b border-zinc-200">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-zinc-950 text-white flex items-center justify-center font-black text-base">
-                  A
-                </div>
-                <span className="font-black text-xl tracking-tight text-zinc-950">ARGON™</span>
-              </div>
-              <button
-                onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-                className="px-3 py-1.5 rounded-full border border-zinc-300 hover:border-zinc-950 text-xs font-black cursor-pointer"
-              >
-                🌐 {lang === 'es' ? 'ES / EN' : 'EN / ES'}
-              </button>
-            </div>
-
-            <div className="max-w-5xl mx-auto w-full my-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center py-8">
-              <div className="lg:col-span-5 space-y-5">
-                <span className="inline-block px-3 py-1 rounded-full bg-zinc-100 border border-zinc-300 text-zinc-800 text-[11px] font-black tracking-wide">
-                  {t.badge}
-                </span>
-                <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-zinc-950 leading-none">
-                  {t.heroTitle}
-                </h1>
-                <p className="text-zinc-600 text-sm sm:text-base leading-relaxed">
-                  {t.heroSub}
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
-                  <div className="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200">
-                    <strong className="text-zinc-950 text-sm block font-black">{t.stat1Title}</strong>
-                    <span className="text-[11px] text-zinc-500">{t.stat1Sub}</span>
-                  </div>
-                  <div className="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200">
-                    <strong className="text-zinc-950 text-sm block font-black">{t.stat2Title}</strong>
-                    <span className="text-[11px] text-zinc-500">{t.stat2Sub}</span>
-                  </div>
-                  <div className="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200">
-                    <strong className="text-zinc-950 text-sm block font-black">{t.stat3Title}</strong>
-                    <span className="text-[11px] text-zinc-500">{t.stat3Sub}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="lg:col-span-7">
-                <div className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-zinc-900 shadow-xl space-y-5">
-                  <div className="flex gap-2 p-1 rounded-2xl bg-zinc-100 border border-zinc-200">
-                    <button
-                      type="button"
-                      onClick={() => { setAuthMode('register'); setOnboardingStep(1); }}
-                      className={`flex-1 py-2.5 rounded-xl font-black text-xs cursor-pointer transition ${authMode === 'register' ? 'bg-zinc-950 text-white' : 'text-zinc-600'}`}
-                    >
-                      {t.tabRegister}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setAuthMode('login')}
-                      className={`flex-1 py-2.5 rounded-xl font-black text-xs cursor-pointer transition ${authMode === 'login' ? 'bg-zinc-950 text-white' : 'text-zinc-600'}`}
-                    >
-                      {t.tabLogin}
-                    </button>
-                  </div>
-
-                  {authMode === 'login' ? (
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        const found = registeredMembers.find((m) => m.name.toLowerCase() === loginForm.emailOrPhone.trim().toLowerCase());
-                        if (found) {
-                          setCurrentUser({
-                            id: found.id,
-                            name: found.name,
-                            category: found.category,
-                            bio: 'ARGON™',
-                            avatar: found.avatar,
-                            cover: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=80',
-                            aCoins: 5000,
-                            followers: found.followers || 0,
-                            usdBalance: 0
-                          });
-                        } else {
-                          setAuthMode('register');
-                        }
-                      }}
-                      className="space-y-4 text-xs"
-                    >
-                      <div>
-                        <label className="block font-bold text-zinc-800 mb-1">{t.nameLabel}</label>
-                        <input
-                          type="text"
-                          required
-                          value={loginForm.emailOrPhone}
-                          onChange={(e) => setLoginForm({ ...loginForm, emailOrPhone: e.target.value })}
-                          placeholder={t.namePlaceholder}
-                          className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold focus:border-zinc-950 focus:outline-none"
-                        />
-                      </div>
-                      <div>
-                        <label className="block font-bold text-zinc-800 mb-1">{t.passLabel}</label>
-                        <input
-                          type="password"
-                          required
-                          value={loginForm.password}
-                          onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
-                          placeholder="••••••••"
-                          className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold focus:border-zinc-950 focus:outline-none"
-                        />
-                      </div>
-                      <button type="submit" className="w-full py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-sm cursor-pointer">
-                        {t.loginBtn}
-                      </button>
-                    </form>
-                  ) : onboardingStep === 1 ? (
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (!regForm.name.trim() || !regForm.emailOrPhone.trim() || !regForm.password.trim()) return;
-                        setOnboardingStep(2);
-                      }}
-                      className="space-y-4 text-xs"
-                    >
-                      <div className="flex justify-between items-center border-b border-zinc-200 pb-2.5">
-                        <div>
-                          <h2 className="text-base font-black text-zinc-950">{t.step1Title}</h2>
-                          <p className="text-zinc-500">{t.step1Sub}</p>
-                        </div>
-                        <span className="px-2.5 py-1 rounded-full bg-zinc-950 text-white font-black">1 / 2</span>
-                      </div>
-
-                      <div>
-                        <label className="block font-bold text-zinc-800 mb-1">{t.nameLabel}</label>
-                        <input
-                          type="text"
-                          required
-                          value={regForm.name}
-                          onChange={(e) => setRegForm({ ...regForm, name: e.target.value })}
-                          placeholder={t.namePlaceholder}
-                          className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold focus:border-zinc-950 focus:outline-none"
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block font-bold text-zinc-800 mb-1">{t.contactLabel}</label>
-                          <input
-                            type="text"
-                            required
-                            value={regForm.emailOrPhone}
-                            onChange={(e) => setRegForm({ ...regForm, emailOrPhone: e.target.value })}
-                            placeholder={t.contactPlaceholder}
-                            className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold focus:border-zinc-950 focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block font-bold text-zinc-800 mb-1">{t.passLabel}</label>
-                          <input
-                            type="password"
-                            required
-                            value={regForm.password}
-                            onChange={(e) => setRegForm({ ...regForm, password: e.target.value })}
-                            placeholder="••••••••"
-                            className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold focus:border-zinc-950 focus:outline-none"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block font-bold text-zinc-800 mb-1">{t.catLabel}</label>
-                        <select
-                          value={regForm.category}
-                          onChange={(e) => setRegForm({ ...regForm, category: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-semibold"
-                        >
-                          {(CATEGORIES[lang] || CATEGORIES.es).map((c, i) => <option key={i} value={c}>{c}</option>)}
-                        </select>
-                      </div>
-
-                      <button type="submit" className="w-full py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-sm cursor-pointer">
-                        {t.nextBtn}
-                      </button>
-                    </form>
-                  ) : (
-                    <form onSubmit={handleCompleteRegistration} className="space-y-4 text-xs">
-                      <div className="flex justify-between items-center border-b border-zinc-200 pb-2.5">
-                        <div>
-                          <h2 className="text-base font-black text-zinc-950">{t.step2Title}</h2>
-                          <p className="text-zinc-500">{t.step2Sub}</p>
-                        </div>
-                        <button type="button" onClick={() => setOnboardingStep(1)} className="text-zinc-950 font-black underline cursor-pointer">
-                          {t.backBtn}
-                        </button>
-                      </div>
-
-                      <div className="rounded-2xl overflow-hidden border border-zinc-300 bg-zinc-50">
-                        <div
-                          className="h-28 bg-cover bg-center relative flex items-end justify-end p-2.5"
-                          style={{ backgroundImage: `url(${regForm.coverPreview})` }}
-                        >
-                          <input ref={regCoverInputRef} type="file" accept="image/*" onChange={handleSelectRegCover} className="hidden" />
-                          <button
-                            type="button"
-                            onClick={() => regCoverInputRef.current?.click()}
-                            className="px-3 py-1.5 rounded-xl bg-black/80 text-white font-bold text-[11px] cursor-pointer"
-                          >
-                            {t.uploadCover}
-                          </button>
-                        </div>
-
-                        <div className="px-4 pb-4 flex items-end gap-3 -mt-8">
-                          <div className="relative">
-                            <img
-                              src={regForm.avatarPreview || `https://ui-avatars.com/api/?name=${encodeURIComponent(regForm.name || 'U')}&background=09090B&color=FFFFFF&bold=true&size=256`}
-                              className="w-20 h-20 rounded-full object-cover ring-4 ring-white border-2 border-zinc-950"
-                            />
-                            <input ref={regAvatarInputRef} type="file" accept="image/*" onChange={handleSelectRegAvatar} className="hidden" />
-                            <button
-                              type="button"
-                              onClick={() => regAvatarInputRef.current?.click()}
-                              className="absolute bottom-0 right-0 w-8 h-8 rounded-full bg-zinc-950 text-white flex items-center justify-center font-black shadow cursor-pointer"
-                            >
-                              📷
-                            </button>
-                          </div>
-                          <div className="pb-1">
-                            <p className="font-black text-sm text-zinc-950">{regForm.name}</p>
-                            <button type="button" onClick={() => regAvatarInputRef.current?.click()} className="text-zinc-950 font-black underline cursor-pointer">
-                              {t.uploadAvatarLink}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block font-bold text-zinc-800 mb-1">{t.bioLabel}</label>
-                        <input
-                          type="text"
-                          value={regForm.bio}
-                          onChange={(e) => setRegForm({ ...regForm, bio: e.target.value })}
-                          placeholder={t.bioPlaceholder}
-                          className="w-full px-3.5 py-3 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950"
-                        />
-                      </div>
-
-                      <button type="submit" className="w-full py-3.5 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-sm cursor-pointer">
-                        {t.finishBtn}
-                      </button>
-                    </form>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <footer className="max-w-5xl mx-auto w-full pt-4 border-t border-zinc-200 text-center text-xs text-zinc-400">
-              {t.footerRights}
-            </footer>
-          </div>
-        );
-      }
-
-      const currentRank = RANKS.slice().reverse().find((r) => currentUser.followers >= r.minFollowers) || RANKS[0];
-      const rankLabel = lang === 'en' ? currentRank.nameEn : currentRank.nameEs;
-
-      const handleCreatePost = (e) => {
-        e.preventDefault();
-        if (!newPostText.trim() && !newPostImage) return;
-        const newPost = {
-          id: 'p_' + Date.now(),
-          author: currentUser.name,
-          rankBadge: `${currentRank.icon} ${rankLabel}`,
-          avatar: currentUser.avatar,
-          followers: currentUser.followers,
-          time: lang === 'en' ? 'Just now' : 'Justo ahora',
-          content: newPostText.trim(),
-          image: newPostImage,
-          likes: 0,
-          likedByMe: false,
-          payingForFollow: offer50OnPost,
-          followedByMe: true,
-          comments: []
-        };
-        setPosts([newPost, ...posts]);
-        setNewPostText('');
-        setNewPostImage(null);
-        notify(lang === 'en' ? 'Posted on ARGON™' : 'Publicado en ARGON™', '✓');
-      };
-
-      const handleUpdateCurrentAvatar = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 450, 0.82);
-        if (dataUrl) {
-          setCurrentUser({ ...currentUser, avatar: dataUrl });
-          setRegisteredMembers((prev) => prev.map((m) => (m.id === currentUser.id ? { ...m, avatar: dataUrl } : m)));
-          notify(lang === 'en' ? 'Profile photo updated' : 'Foto de perfil actualizada', '✓');
-        }
-      };
-
-      const handleUpdateCurrentCover = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 1000, 0.8);
-        if (dataUrl) {
-          setCurrentUser({ ...currentUser, cover: dataUrl });
-          notify(lang === 'en' ? 'Cover photo updated' : 'Portada actualizada', '✓');
-        }
-      };
-
-      const handleUploadStory = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 800, 0.8);
-        if (dataUrl) {
-          setStories([{ id: 'st_' + Date.now(), author: currentUser.name, avatar: currentUser.avatar, image: dataUrl }, ...stories]);
-          notify(lang === 'en' ? 'Story uploaded!' : '¡Historia subida!', '✓');
-        }
-      };
-
-      const handleSelectPostPhoto = async (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        const dataUrl = await compressImageFile(file, 900, 0.82);
-        if (dataUrl) {
-          setNewPostImage(dataUrl);
-        }
-      };
-
-      const handleAddComment = (postId) => {
-        const txt = (commentInputs[postId] || '').trim();
-        if (!txt) return;
-        setPosts(posts.map((p) => p.id === postId ? { ...p, comments: [...(p.comments || []), { id: 'c_' + Date.now(), author: currentUser.name, text: txt }] } : p));
-        setCommentInputs({ ...commentInputs, [postId]: '' });
-      };
-
-      return (
-        <div className="min-h-screen bg-zinc-50 text-zinc-950">
-          {toast && (
-            <div className="fixed bottom-5 left-5 z-50 max-w-sm bg-zinc-950 text-white px-4 py-3 rounded-2xl shadow-2xl">
-              <p className="font-black text-sm">🪙 {toast.title}</p>
-              <p className="text-xs text-zinc-300">{toast.subtitle}</p>
-            </div>
-          )}
-
-          <input ref={editAvatarInputRef} type="file" accept="image/*" onChange={handleUpdateCurrentAvatar} className="hidden" />
-          <input ref={editCoverInputRef} type="file" accept="image/*" onChange={handleUpdateCurrentCover} className="hidden" />
-          <input ref={storyImageInputRef} type="file" accept="image/*" onChange={handleUploadStory} className="hidden" />
-          <input ref={postImageInputRef} type="file" accept="image/*" onChange={handleSelectPostPhoto} className="hidden" />
-
-          {/* CABECERA BLANCO Y NEGRO ESTILO INSTAGRAM / THREADS */}
-          <header className="sticky top-0 z-40 h-16 bg-white/95 backdrop-blur border-b border-zinc-200 px-3 sm:px-6 flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5">
-              <div onClick={() => setActiveTab('inicio')} className="flex items-center gap-2 cursor-pointer">
-                <div className="w-9 h-9 rounded-full bg-zinc-950 text-white flex items-center justify-center font-black">A</div>
-                <span className="font-black text-lg tracking-tight text-zinc-950">ARGON™</span>
-              </div>
-              <button onClick={handleShareWhatsApp} className="px-3 py-1.5 rounded-full bg-zinc-950 text-white font-bold text-xs cursor-pointer">
-                {t.inviteBtn}
-              </button>
-            </div>
-
-            <nav className="flex items-center h-full gap-1 sm:gap-3">
-              {[
-                { id: 'inicio', label: t.navFeed },
-                { id: 'impulsar', label: t.navGrow },
-                { id: 'boveda', label: t.navWallet },
-                { id: 'perfil', label: t.navProfile }
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`h-full px-2.5 sm:px-3 border-b-2 font-bold text-xs sm:text-sm cursor-pointer ${
-                    activeTab === tab.id ? 'border-zinc-950 text-zinc-950 font-black' : 'border-transparent text-zinc-400 hover:text-zinc-800'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setLang(lang === 'es' ? 'en' : 'es')}
-                className="px-2.5 py-1.5 rounded-full border border-zinc-300 text-[11px] font-black cursor-pointer"
-              >
-                {lang.toUpperCase()}
-              </button>
-              <button
-                onClick={() => setShowTopUpModal(true)}
-                className="px-3 py-1.5 rounded-full bg-zinc-950 text-white font-black text-xs cursor-pointer"
-              >
-                🪙 {currentUser.aCoins.toLocaleString()} A
-              </button>
-              <button
-                onClick={() => setCurrentUser(null)}
-                className="px-2.5 py-1.5 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-700 text-xs font-bold cursor-pointer"
-              >
-                {t.exitBtn}
-              </button>
-            </div>
-          </header>
-
-          <div className="max-w-5xl mx-auto px-3 sm:px-6 py-5 grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* COLUMNA IZQUIERDA */}
-            <aside className="lg:col-span-4 space-y-4">
-              <div className="rounded-2xl bg-white border border-zinc-200 overflow-hidden shadow-sm">
-                <div
-                  className="h-24 bg-cover bg-center relative flex items-start justify-end p-2"
-                  style={{ backgroundImage: `url(${currentUser.cover})` }}
-                >
-                  <button
-                    onClick={() => editCoverInputRef.current?.click()}
-                    className="px-2.5 py-1 rounded-lg bg-black/75 text-white text-[10px] font-bold cursor-pointer"
-                  >
-                    {t.uploadCover}
-                  </button>
-                </div>
-
-                <div className="p-4 pt-0">
-                  <div className="flex items-end justify-between -mt-8">
-                    <div className="relative">
-                      <img src={currentUser.avatar} className="w-16 h-16 rounded-full object-cover ring-4 ring-white border border-zinc-300" />
-                      <button
-                        onClick={() => editAvatarInputRef.current?.click()}
-                        className="absolute bottom-0 right-0 w-6 h-6 rounded-full bg-zinc-950 text-white flex items-center justify-center text-xs shadow cursor-pointer"
-                      >
-                        📷
-                      </button>
-                    </div>
-                    <button
-                      onClick={() => setShowEditProfileModal(true)}
-                      className="px-3 py-1.5 rounded-xl border border-zinc-300 hover:border-zinc-950 text-xs font-bold text-zinc-900 cursor-pointer"
-                    >
-                      {t.editProfile}
-                    </button>
-                  </div>
-
-                  <h2 className="font-black text-base mt-2 text-zinc-950">{currentUser.name} ✔️</h2>
-                  <span className="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-zinc-100 border border-zinc-300 text-zinc-900">
-                    {currentRank.icon} {rankLabel}
-                  </span>
-                  <p className="text-xs text-zinc-600 mt-2">{currentUser.bio}</p>
-
-                  <div className="text-xs space-y-1.5 pt-3 mt-3 border-t border-zinc-200">
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">{t.realFollowers}:</span>
-                      <strong className="text-zinc-950">{currentUser.followers.toLocaleString()}</strong>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-zinc-500">{t.myCoins}:</span>
-                      <strong className="text-zinc-950">🪙 {currentUser.aCoins.toLocaleString()}</strong>
-                    </div>
-                    <p className="text-[11px] text-zinc-400 pt-1">{t.magnateGoal}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-zinc-200 space-y-2.5 text-xs shadow-sm">
-                <h3 className="font-black text-zinc-950 uppercase tracking-wide">{t.activePioneers}</h3>
-                {registeredMembers.map((m) => (
-                  <div key={m.id} className="p-2 rounded-xl bg-zinc-50 border border-zinc-200/70 flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 truncate">
-                      <img src={m.avatar} className="w-8 h-8 rounded-full object-cover border border-zinc-300" />
-                      <div className="truncate">
-                        <p className="font-bold text-zinc-950 truncate">{m.name}</p>
-                        <p className="text-[10px] text-zinc-500 truncate">{m.category}</p>
-                      </div>
-                    </div>
-                    <span className="text-zinc-950 font-bold shrink-0">{m.followers}</span>
-                  </div>
-                ))}
-              </div>
-            </aside>
-
-            {/* COLUMNA CENTRAL */}
-            <main className="lg:col-span-8 space-y-4">
-              {activeTab === 'inicio' && (
-                <>
-                  {/* HISTORIAS */}
-                  <div className="flex gap-3 overflow-x-auto pb-1 no-scrollbar">
-                    <div
-                      onClick={() => storyImageInputRef.current?.click()}
-                      className="shrink-0 w-28 h-44 rounded-2xl bg-white border-2 border-dashed border-zinc-300 hover:border-zinc-950 flex flex-col items-center justify-between p-3 cursor-pointer"
-                    >
-                      <img src={currentUser.avatar} className="w-12 h-12 rounded-full object-cover border border-zinc-300 mt-1" />
-                      <div className="w-8 h-8 rounded-full bg-zinc-950 text-white flex items-center justify-center font-black">+</div>
-                      <span className="text-[11px] font-black text-zinc-900 text-center">{t.addStory}</span>
-                    </div>
-
-                    {stories.map((st) => (
-                      <div
-                        key={st.id}
-                        onClick={() => setActiveStoryModal(st)}
-                        className="shrink-0 w-28 h-44 rounded-2xl bg-cover bg-center relative overflow-hidden border border-zinc-300 cursor-pointer flex flex-col justify-between p-2.5"
-                        style={{ backgroundImage: `url(${st.image})` }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/80" />
-                        <img src={st.avatar} className="relative z-10 w-8 h-8 rounded-full object-cover ring-2 ring-white" />
-                        <p className="relative z-10 text-[11px] font-black text-white truncate">{st.author}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* PUBLICADOR */}
-                  <form onSubmit={handleCreatePost} className="p-4 rounded-2xl bg-white border border-zinc-200 shadow-sm space-y-3">
-                    <div className="flex items-center gap-3">
-                      <img src={currentUser.avatar} className="w-10 h-10 rounded-full object-cover border border-zinc-300" />
-                      <input
-                        type="text"
-                        value={newPostText}
-                        onChange={(e) => setNewPostText(e.target.value)}
-                        placeholder={`${t.postPlaceholder}, ${currentUser.name}?`}
-                        className="w-full px-4 py-2.5 rounded-full bg-zinc-100 text-sm text-zinc-950 placeholder-zinc-400 focus:outline-none"
-                      />
-                    </div>
-
-                    {newPostImage && (
-                      <div className="relative rounded-2xl overflow-hidden border border-zinc-200">
-                        <img src={newPostImage} className="w-full max-h-80 object-cover" />
-                        <button
-                          type="button"
-                          onClick={() => setNewPostImage(null)}
-                          className="absolute top-2 right-2 px-2.5 py-1 rounded-full bg-black/80 text-white text-xs font-bold cursor-pointer"
-                        >
-                          ✕
-                        </button>
-                      </div>
-                    )}
-
-                    <div className="flex flex-wrap justify-between items-center gap-2 pt-2 border-t border-zinc-100">
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => postImageInputRef.current?.click()}
-                          className="px-3.5 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-bold text-xs cursor-pointer"
-                        >
-                          {t.uploadPhotoBtn}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setOffer50OnPost(!offer50OnPost)}
-                          className={`px-3 py-2 rounded-xl text-xs font-bold border cursor-pointer ${
-                            offer50OnPost ? 'bg-zinc-950 text-white border-zinc-950' : 'border-zinc-300 text-zinc-500'
-                          }`}
-                        >
-                          {t.rewardToggle}
-                        </button>
-                      </div>
-                      <button type="submit" className="px-5 py-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-xs cursor-pointer">
-                        {t.publishBtn}
-                      </button>
-                    </div>
-                  </form>
-
-                  {/* MURO DE PUBLICACIONES */}
-                  {posts.map((post) => {
-                    const postText = post.content || (lang === 'en' ? post.contentEn : post.contentEs);
-                    return (
-                      <article key={post.id} className="rounded-2xl bg-white border border-zinc-200 shadow-sm overflow-hidden">
-                        <div className="p-4 flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-3">
-                            <img src={post.avatar} className="w-10 h-10 rounded-full object-cover border border-zinc-300" />
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <h3 className="font-black text-sm text-zinc-950">{post.author}</h3>
-                                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-zinc-100 border border-zinc-300 text-zinc-800">
-                                  {post.rankBadge}
-                                </span>
-                              </div>
-                              <p className="text-xs text-zinc-400">{post.followers} {t.realFollowers.toLowerCase()} • {post.time}</p>
-                            </div>
-                          </div>
-                          {post.payingForFollow && !post.followedByMe && (
-                            <button
-                              onClick={() => {
-                                setPosts(posts.map((p) => (p.id === post.id ? { ...p, followedByMe: true, followers: p.followers + 1 } : p)));
-                                setCurrentUser((prev) => ({ ...prev, aCoins: prev.aCoins + 50 }));
-                                notify('+50 A-Coins', `${post.author}`);
-                              }}
-                              className="px-3.5 py-1.5 rounded-full bg-zinc-950 hover:bg-zinc-800 text-white font-black text-xs cursor-pointer"
-                            >
-                              {t.followBtn}
-                            </button>
-                          )}
-                        </div>
-
-                        {postText && <p className="px-4 pb-3 text-sm leading-relaxed text-zinc-800">{postText}</p>}
-                        {post.image && <img src={post.image} className="w-full max-h-[460px] object-cover border-t border-b border-zinc-100" />}
-
-                        <div className="p-3 px-4 space-y-2.5">
-                          <div className="flex items-center gap-5 text-xs font-bold text-zinc-500">
-                            <button
-                              onClick={() => {
-                                setPosts(posts.map((p) => p.id === post.id ? { ...p, likedByMe: !p.likedByMe, likes: p.likedByMe ? p.likes - 1 : p.likes + 1 } : p));
-                              }}
-                              className={`cursor-pointer ${post.likedByMe ? 'text-zinc-950 font-black' : 'hover:text-zinc-950'}`}
-                            >
-                              ♥ {t.likeBtn} ({post.likes})
-                            </button>
-                            <button onClick={handleShareWhatsApp} className="hover:text-zinc-950 cursor-pointer">
-                              ↗ {t.shareBtn}
-                            </button>
-                          </div>
-
-                          {(post.comments || []).length > 0 && (
-                            <div className="space-y-1 pt-2 border-t border-zinc-100">
-                              {post.comments.map((c) => (
-                                <div key={c.id} className="px-3 py-1.5 rounded-xl bg-zinc-50 text-xs">
-                                  <strong className="text-zinc-950">{c.author}: </strong>
-                                  <span className="text-zinc-700">{c.text}</span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-
-                          <div className="flex gap-2 pt-1">
-                            <input
-                              type="text"
-                              value={commentInputs[post.id] || ''}
-                              onChange={(e) => setCommentInputs({ ...commentInputs, [post.id]: e.target.value })}
-                              placeholder={t.commentPlaceholder}
-                              className="flex-1 px-3.5 py-2 rounded-full bg-zinc-100 text-xs text-zinc-950 focus:outline-none"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => handleAddComment(post.id)}
-                              className="px-4 py-2 rounded-full bg-zinc-950 text-white font-bold text-xs cursor-pointer"
-                            >
-                              {t.commentBtn}
-                            </button>
-                          </div>
-                        </div>
-                      </article>
-                    );
-                  })}
-                </>
-              )}
-
-              {activeTab === 'impulsar' && (
-                <div className="p-6 rounded-2xl bg-white border border-zinc-200 space-y-4">
-                  <h2 className="font-black text-lg text-zinc-950">
-                    {lang === 'en' ? 'Boost Your Account with A-Coins (200 A-Coins per Real Follower)' : 'Impulsa tu Cuenta con A-Coins (200 A-Coins por Seguidor Real)'}
-                  </h2>
-                  <div className="grid grid-cols-3 gap-3">
-                    {[
-                      { qty: 10, cost: 2000 },
-                      { qty: 25, cost: 5000 },
-                      { qty: 100, cost: 20000 }
-                    ].map((b, i) => (
-                      <button
-                        key={i}
-                        onClick={() => {
-                          if (currentUser.aCoins < b.cost) {
-                            setShowTopUpModal(true);
-                            return;
-                          }
-                          setCurrentUser((prev) => ({ ...prev, aCoins: prev.aCoins - b.cost, followers: prev.followers + b.qty }));
-                          notify(`+${b.qty}`, `-${b.cost.toLocaleString()} A-Coins`);
-                        }}
-                        className="p-4 rounded-2xl bg-zinc-950 hover:bg-zinc-800 text-white font-black text-xs cursor-pointer"
-                      >
-                        +{b.qty} {t.realFollowers}
-                        <span className="block text-[10px] text-zinc-300 mt-1">-{b.cost.toLocaleString()} A-Coins</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'boveda' && (
-                <div className="p-6 rounded-2xl bg-white border border-zinc-200 space-y-3">
-                  <h2 className="font-black text-xl text-zinc-950">Stripe Vault: ${currentUser.usdBalance.toFixed(2)} USD</h2>
-                  <p className="text-xs text-zinc-600">
-                    {lang === 'en'
-                      ? 'Reach 25,000 real followers (Magnate Rank) to unlock direct brand sponsorships paid via Stripe (80% Creator / 20% Platform).'
-                      : 'Al alcanzar 25,000 seguidores reales (Rango Magnate), desbloqueas los patrocinios directos de marcas pagados por Stripe (80% Creador / 20% Plataforma).'}
-                  </p>
-                </div>
-              )}
-
-              {activeTab === 'perfil' && (
-                <div className="p-6 rounded-2xl bg-white border border-zinc-200 space-y-3">
-                  <h2 className="font-black text-xl text-zinc-950">{currentUser.name} ✔️</h2>
-                  <p className="text-xs text-zinc-500">{currentUser.category}</p>
-                  <p className="text-sm text-zinc-800">{currentUser.bio}</p>
-                </div>
-              )}
-            </main>
-          </div>
-
-          {showEditProfileModal && (
-            <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-              <div className="w-full max-w-md rounded-2xl bg-white border border-zinc-300 p-5 space-y-3 text-xs">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-black text-base text-zinc-950">{t.editProfile}</h3>
-                  <button onClick={() => setShowEditProfileModal(false)} className="text-zinc-500 font-bold">✕</button>
-                </div>
-                <div>
-                  <label className="block font-bold text-zinc-700 mb-1">{t.nameLabel}</label>
-                  <input
-                    type="text"
-                    value={currentUser.name}
-                    onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950 font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block font-bold text-zinc-700 mb-1">{t.bioLabel}</label>
-                  <input
-                    type="text"
-                    value={currentUser.bio}
-                    onChange={(e) => setCurrentUser({ ...currentUser, bio: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-50 border border-zinc-300 text-zinc-950"
-                  />
-                </div>
-                <button
-                  onClick={() => setShowEditProfileModal(false)}
-                  className="w-full py-3 rounded-xl bg-zinc-950 text-white font-black cursor-pointer"
-                >
-                  ✓
-                </button>
-              </div>
-            </div>
-          )}
-
-          {activeStoryModal && (
-            <div onClick={() => setActiveStoryModal(null)} className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
-              <div className="max-w-sm w-full rounded-3xl overflow-hidden bg-white">
-                <img src={activeStoryModal.image} className="w-full h-[460px] object-cover" />
-                <div className="p-4 flex justify-between items-center">
-                  <p className="font-black text-sm text-zinc-950">{activeStoryModal.author}</p>
-                  <button className="px-3 py-1 rounded-lg bg-zinc-100 text-xs font-bold">✕</button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {showTopUpModal && (
-            <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
-              <div className="w-full max-w-md rounded-2xl bg-white border border-zinc-300 p-5 space-y-3">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-black text-zinc-950">Stripe • A-Coins</h3>
-                  <button onClick={() => setShowTopUpModal(false)} className="text-zinc-500 font-bold">✕</button>
-                </div>
-                {TOPUP_PACKS.map((pack) => (
-                  <div key={pack.id} className="p-3.5 rounded-xl bg-zinc-50 border border-zinc-200 flex justify-between items-center">
-                    <div>
-                      <p className="font-black text-sm text-zinc-950">+{pack.aCoins.toLocaleString()} A-Coins</p>
-                      <p className="text-[11px] text-zinc-500">{lang === 'en' ? pack.bonusEn : pack.bonusEs}</p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        if (pack.stripeUrl) {
-                          window.location.href = pack.stripeUrl;
-                        } else {
-                          setCurrentUser((prev) => ({ ...prev, aCoins: prev.aCoins + pack.aCoins }));
-                          setShowTopUpModal(false);
-                        }
-                      }}
-                      className="px-4 py-2 rounded-xl bg-zinc-950 text-white font-black text-xs cursor-pointer"
-                    >
-                      ${pack.priceUSD} USD
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+  <div class="app-shell">
+    <div id="toast" class="toast"></div>
+
+    <!-- DEFINICIÓN VECTORIAL DEL LOGO OFICIAL: OPCIÓN C - LA CORONA -->
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="55%" stop-color="#e2e8f0" />
+          <stop offset="100%" stop-color="#94a3b8" />
+        </linearGradient>
+        <symbol id="argon-crown-a" viewBox="0 0 100 100">
+          <!-- Corona Imperial de 3 puntas y perlas (Opción C) -->
+          <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
+            <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGrad)" />
+            <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="url(#platGrad)" />
+            <circle cx="30" cy="12.5" r="2.3" fill="#ffffff" />
+            <circle cx="50" cy="7.5" r="2.6" fill="#ffffff" />
+            <circle cx="70" cy="12.5" r="2.3" fill="#ffffff" />
+          </g>
+          <!-- A Serif con cinta curva envolvente (Opción C) -->
+          <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGrad)" />
+          <!-- Cinta estilizada que cruza la A -->
+          <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- CABECERA FIJA -->
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="logo-box">
+          <svg width="30" height="30"><use href="#argon-crown-a"></use></svg>
         </div>
-      );
+        <div>
+          <div class="brand-title" id="headerTitle">ARGON</div>
+        </div>
+      </div>
+
+      <div class="wallet-pill" onclick="switchTab('boveda')">
+        <svg width="22" height="22" viewBox="0 0 40 40">
+          <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
+          <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
+        </svg>
+        <span class="wallet-amount" id="topBalance">5,020</span>
+        <span class="wallet-label">A-<br>COINS</span>
+      </div>
+    </header>
+
+    <!-- 1. VISTA BÓVEDA -->
+    <section id="view-boveda" class="view-section">
+      <div class="glass-card">
+        <div class="progress-header">
+          <div>
+            <div class="progress-user" id="vaultUserName">PEDRO RIVERA</div>
+            <div class="progress-subtext" id="vaultNextGoal">1K = +10,000 AC • 5K = $2.00/día Sponsors</div>
+          </div>
+          <div class="progress-count" id="vaultSubsCounter">850 / 1,000</div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="vaultProgressBar" style="width: 85%;"></div>
+        </div>
+      </div>
+
+      <div class="glass-card vault-center">
+        <div style="font-size:11px; font-weight:800; letter-spacing:2px; color:#94a3b8;">BÓVEDA CENTRAL ARGON</div>
+        <div class="hex-coin-wrap">
+          <svg width="144" height="144" viewBox="0 0 120 120">
+            <polygon points="60,5 110,32 110,88 60,115 10,88 10,32" fill="#0d0f15" stroke="url(#platGrad)" stroke-width="4" />
+            <polygon points="60,13 102,36 102,84 60,107 18,84 18,36" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" />
+            <use href="#argon-crown-a" x="21" y="16" width="78" height="78"></use>
+          </svg>
+        </div>
+        <div class="vault-balance-num" id="vaultBigBalance">5,020</div>
+        <div class="vault-balance-sub">A-COINS DISPONIBLES</div>
+        <div class="badge-active">✓ BONO DE APERTURA ACTIVO</div>
+      </div>
+
+      <div class="glass-card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:11px; font-weight:800; color:#94a3b8; letter-spacing:1px;">RECARGA RÁPIDA (STRIPE)</span>
+          <span style="font-size:10px; color:#64748b;">Entrega inmediata</span>
+        </div>
+        <div class="pack-grid">
+          <button class="pack-btn" onclick="buyPack(1000, '$1.99')">
+            <span class="pack-ac">+1,000 AC</span>
+            <span class="pack-price">$1.99</span>
+          </button>
+          <button class="pack-btn vip" onclick="buyPack(3500, '$4.99')">
+            <span class="pack-ac">+3,500 AC</span>
+            <span class="pack-price">$4.99 • VIP</span>
+          </button>
+          <button class="pack-btn" onclick="buyPack(12000, '$14.99')">
+            <span class="pack-ac">+12,000 AC</span>
+            <span class="pack-price">$14.99</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. VISTA FEED (ACTIVA POR DEFECTO CON 22 PERSONAS) -->
+    <section id="view-feed" class="view-section active">
+      <div class="composer-box">
+        <input type="text" id="newPostInput" class="composer-input" placeholder="Publicar en el tráfico de ARGON..." />
+        <button class="composer-btn" onclick="publishPost()">Publicar</button>
+      </div>
+
+      <div id="feedContainer"></div>
+    </section>
+
+    <!-- 3. VISTA RANKING -->
+    <section id="view-ranking" class="view-section">
+      <div class="glass-card">
+        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">ESCALERA OFICIAL DE PATROCINIOS</div>
+        <div class="tier-item">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:#fff;">1,000 Suscriptores • Rango Semilla</div>
+            <div style="font-size:11px; color:#94a3b8;">Patrocinado por la Bóveda de ARGON</div>
+          </div>
+          <div style="font-size:12px; font-weight:800; color:#34d399;">+10,000 AC</div>
+        </div>
+        <div class="tier-item unlocked">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:#fff;">5,000 Suscriptores • Rango Socio</div>
+            <div style="font-size:11px; color:#94a3b8;">Negocios locales, Dealers, Barberías VIP</div>
+          </div>
+          <div style="font-size:12px; font-weight:800; color:#34d399;">$2.00 / día</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:#fff;">10,000 Suscriptores • Embajador</div>
+            <div style="font-size:11px; color:#94a3b8;">Marcas regionales y música</div>
+          </div>
+          <div style="font-size:12px; font-weight:800; color:#34d399;">$5.00 / día</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:#fff;">20,000 Suscriptores • Magnate</div>
+            <div style="font-size:11px; color:#94a3b8;">Campañas premium fijas</div>
+          </div>
+          <div style="font-size:12px; font-weight:800; color:#34d399;">$15.00 / día</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div style="font-size:12px; font-weight:800; color:#fff;">100,000 Suscriptores • Imperio</div>
+            <div style="font-size:11px; color:#94a3b8;">Contratos directos de marca</div>
+          </div>
+          <div style="font-size:12px; font-weight:800; color:#34d399;">$50.00+ / día</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. VISTA PERFIL -->
+    <section id="view-perfil" class="view-section">
+      <div class="glass-card" style="text-align:center;">
+        <div class="logo-box" style="width:64px; height:64px; margin:0 auto 10px;">
+          <svg width="44" height="44"><use href="#argon-crown-a"></use></svg>
+        </div>
+        <div style="font-size:18px; font-weight:900;" id="profileName">PEDRO RIVERA</div>
+        <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:4px;" id="profileStatus">
+          850 Suscriptores • Rumbo a 1,000 (+10,000 AC)
+        </div>
+        <button class="btn-primary-platinum" onclick="simulateNewSubscribers()">
+          ⚡ SIMULAR +50 SUSCRIPTORES NUEVOS
+        </button>
+      </div>
+
+      <div class="glass-card">
+        <div style="font-size:12px; font-weight:800; margin-bottom:8px;">CAMBIAR NOMBRE DEL TITULAR</div>
+        <div class="composer-box" style="margin-bottom:0;">
+          <input type="text" id="changeNameInput" class="composer-input" placeholder="Escribe tu nombre..." />
+          <button class="composer-btn" onclick="updateOwnerName()">Guardar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <nav class="bottom-nav">
+      <button class="nav-btn" id="nav-boveda" onclick="switchTab('boveda')">
+        <span>▣</span>
+        <span>BÓVEDA</span>
+      </button>
+      <button class="nav-btn active" id="nav-feed" onclick="switchTab('feed')">
+        <span>▤</span>
+        <span>FEED</span>
+      </button>
+      <button class="nav-btn" id="nav-ranking" onclick="switchTab('ranking')">
+        <span>▥</span>
+        <span>RANKING</span>
+      </button>
+      <button class="nav-btn" id="nav-perfil" onclick="switchTab('perfil')">
+        <span>◉</span>
+        <span>PERFIL</span>
+      </button>
+    </nav>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'argon_master_state_v1';
+
+    const defaultPosts = [
+      { id: 1, handle: 'CARLOS_VIP', initials: 'CV', subs: '5.4K Suscriptores', sponsor: 'Sponsor: Exotic Motors ($2/día)', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80', likes: 428, shares: 94, caption: 'Ya pasamos los 5,000 suscriptores y activos facturando con patrocinador diario. ¡Suscríbanse para que cobren sus +10 A-Coins!', commentUser: 'YANKEE_4X4', commentText: 'Duro hermano, esa máquina está a otro nivel.', subscribed: false, liked: false },
+      { id: 2, handle: 'VALERIA_FIT', initials: 'VF', subs: '920 Suscriptores', sponsor: '', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80', likes: 219, shares: 31, caption: 'A solo 80 suscriptores de llegar a los 1,000 para recibir el bono de +10,000 A-Coins.', commentUser: 'PEDRO_RIVERA', commentText: '¡Hoy llegas a los 1,000 fijo!', subscribed: false, liked: false },
+      { id: 3, handle: 'DON_CAFE', initials: 'DC', subs: '11.8K Suscriptores', sponsor: 'Sponsor: Reserva Gourmet ($5/día)', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80', likes: 615, shares: 112, caption: 'Café de altura recién colado. Ya en el escalón de 10K cobrando $5 diarios limpios.', commentUser: 'SOFIA_LUX', commentText: 'El mejor aroma de la mañana.', subscribed: true, liked: false },
+      { id: 4, handle: 'BARBER_KING', initials: 'BK', subs: '6.1K Suscriptores', sponsor: 'Sponsor: Platinum Blade ($2/día)', image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80', likes: 380, shares: 44, caption: 'Recorte limpio para el fin de semana. Sigan la cuenta y llévense sus +10 A-Coins al instante.', commentUser: 'CARLOS_VIP', commentText: 'Separame turno para mañana.', subscribed: false, liked: false },
+      { id: 5, handle: 'STUDIO_URBANO', initials: 'SU', subs: '24.5K Suscriptores', sponsor: 'Sponsor: Neon Beats ($15/día)', image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80', likes: 940, shares: 215, caption: 'Masterizando el próximo palo en la consola. Rango Magnate encendido.', commentUser: 'DJ_KRONOS', commentText: 'Ese ritmo rompe las bocinas.', subscribed: false, liked: false },
+      { id: 6, handle: 'NAUTICA_VIP', initials: 'NV', subs: '104K Suscriptores', sponsor: 'Sponsor: Marina Yachts ($50/día)', image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=800&q=80', likes: 2450, shares: 510, caption: 'Domingo en el agua. Rango Imperio demostrado en ARGON.', commentUser: 'VALERIA_FIT', commentText: 'Meta desbloqueada.', subscribed: false, liked: false },
+      { id: 7, handle: 'OFFROAD_4X4', initials: 'OR', subs: '4.8K Suscriptores', sponsor: '', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80', likes: 310, shares: 52, caption: 'A ley de 200 suscriptores para prender los patrocinadores de los 5,000. ¡Apoyen que hay +10 AC activos!', commentUser: 'DON_CAFE', commentText: 'Esa guagua está impecable.', subscribed: false, liked: false },
+      { id: 8, handle: 'RELOJES_PLATINUM', initials: 'RP', subs: '14.2K Suscriptores', sponsor: 'Sponsor: Chrono Vault ($5/día)', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80', likes: 520, shares: 88, caption: 'Precisión en acero y platino. Cada suscriptor nuevo suma +10 A-Coins directo a su bóveda.', commentUser: 'BARBER_KING', commentText: 'Fino de verdad.', subscribed: false, liked: false }
+    ];
+
+    let state = {
+      userName: 'PEDRO RIVERA',
+      balance: 5020,
+      subs: 850,
+      rewarded1k: false,
+      posts: defaultPosts
+    };
+
+    function loadState() {
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          state = Object.assign({}, state, parsed);
+        }
+      } catch (e) {}
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        t.style.display = 'none';
+      }, 2400);
+    }
+
+    function updateHeaderAndVault() {
+      document.getElementById('topBalance').textContent = state.balance.toLocaleString();
+      document.getElementById('vaultBigBalance').textContent = state.balance.toLocaleString();
+      document.getElementById('vaultUserName').textContent = state.userName;
+      document.getElementById('profileName').textContent = state.userName;
+
+      const target = state.subs < 1000 ? 1000 : 5000;
+      const pct = Math.min(100, Math.round((state.subs / target) * 100));
+      document.getElementById('vaultSubsCounter').textContent = state.subs.toLocaleString() + ' / ' + target.toLocaleString();
+      document.getElementById('vaultProgressBar').style.width = pct + '%';
+
+      if (state.subs < 1000) {
+        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rumbo a 1,000 (+10,000 AC)';
+      } else if (state.subs < 5000) {
+        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rumbo a 5,000 ($2.00/día Sponsors)';
+      } else {
+        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rango Socio Activo ($2.00/día)';
+      }
+    }
+
+    function renderFeed() {
+      const container = document.getElementById('feedContainer');
+      container.innerHTML = '';
+
+      state.posts.forEach(post => {
+        const card = document.createElement('article');
+        card.className = 'post-card';
+
+        const sponsorBadge = post.sponsor
+          ? `<div class="sponsor-tag">${post.sponsor}</div>`
+          : '';
+
+        const subBtnLabel = post.subscribed ? '✓ Suscrito' : '+ Suscribirse (+10 AC)';
+        const subBtnClass = post.subscribed ? 'btn-subscribe subscribed' : 'btn-subscribe';
+
+        card.innerHTML = `
+          <div class="post-header">
+            <div class="post-user-left">
+              <div class="avatar-circle">${post.initials}</div>
+              <div class="user-meta">
+                <div class="user-handle">${post.handle}</div>
+                <div class="user-subs-line">${post.subs}</div>
+                ${sponsorBadge}
+              </div>
+            </div>
+            <div class="sub-action-Wrap">
+              <button class="${subBtnClass}" onclick="toggleSubscribe(${post.id})">${subBtnLabel}</button>
+            </div>
+          </div>
+
+          <img class="post-image" src="${post.image}" alt="${post.handle}" loading="lazy" />
+
+          <div class="post-actions">
+            <button class="action-item ${post.liked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
+              ♥ <span>${post.likes}</span>
+            </button>
+            <button class="action-item">
+              💬 <span>1</span>
+            </button>
+            <button class="action-item" onclick="sharePost('${post.handle}', ${post.id})">
+              ↗ Compartir (<span>${post.shares}</span>)
+            </button>
+          </div>
+
+          <div class="post-body">
+            <div class="post-caption"><strong>${post.handle}</strong> ${post.caption}</div>
+            <div class="comment-line"><strong>${post.commentUser}</strong> ${post.commentText}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleSubscribe(postId) {
+      const post = state.posts.find(p => p.id === postId);
+      if (!post) return;
+      if (post.subscribed) {
+        showToast('Ya cobraste las +10 A-Coins de ' + post.handle);
+        return;
+      }
+      post.subscribed = true;
+      state.balance += 10;
+      saveState();
+      updateHeaderAndVault();
+      renderFeed();
+      showToast('+10 A-Coins acreditadas en tu Bóveda');
+    }
+
+    function toggleLike(postId) {
+      const post = state.posts.find(p => p.id === postId);
+      if (!post) return;
+      post.liked = !post.liked;
+      post.likes += post.liked ? 1 : -1;
+      saveState();
+      renderFeed();
+    }
+
+    function sharePost(handle, postId) {
+      const post = state.posts.find(p => p.id === postId);
+      if (post) {
+        post.shares += 1;
+        saveState();
+        renderFeed();
+      }
+      showToast('Enlace de ' + handle + ' copiado para compartir gratis');
+    }
+
+    function publishPost() {
+      const input = document.getElementById('newPostInput');
+      const text = input.value.trim();
+      if (!text) return;
+      state.posts.unshift({
+        id: Date.now(),
+        handle: state.userName.replace(/\s+/g, '_').toUpperCase(),
+        initials: state.userName.slice(0, 2).toUpperCase(),
+        subs: state.subs + ' Suscriptores',
+        sponsor: state.subs >= 5000 ? 'Sponsor Activo ($2/día)' : '',
+        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+        likes: 1,
+        shares: 0,
+        caption: text,
+        commentUser: 'ARGON_BOT',
+        commentText: 'Publicación activa con +10 A-Coins por suscriptor.',
+        subscribed: true,
+        liked: true
+      });
+      input.value = '';
+      saveState();
+      renderFeed();
+      showToast('Publicado en el Feed de ARGON');
+    }
+
+    function simulateNewSubscribers() {
+      state.subs += 50;
+      if (state.subs >= 1000 && !state.rewarded1k) {
+        state.rewarded1k = true;
+        state.balance += 10000;
+        showToast('¡META 1,000 SUBS! Recibiste +10,000 A-Coins');
+      } else {
+        showToast('+50 Suscriptores nuevos sumados a tu perfil');
+      }
+      saveState();
+      updateHeaderAndVault();
+    }
+
+    function buyPack(amount, price) {
+      state.balance += amount;
+      saveState();
+      updateHeaderAndVault();
+      showToast('Recarga de +' + amount.toLocaleString() + ' AC (' + price + ') completada');
+    }
+
+    function updateOwnerName() {
+      const input = document.getElementById('changeNameInput');
+      const val = input.value.trim().toUpperCase();
+      if (!val) return;
+      state.userName = val;
+      input.value = '';
+      saveState();
+      updateHeaderAndVault();
+      showToast('Titular actualizado a ' + val);
+    }
+
+    function switchTab(tab) {
+      ['boveda', 'feed', 'ranking', 'perfil'].forEach(t => {
+        document.getElementById('view-' + t).classList.remove('active');
+        document.getElementById('nav-' + t).classList.remove('active');
+      });
+      document.getElementById('view-' + tab).classList.add('active');
+      document.getElementById('nav-' + tab).classList.add('active');
+    }
+
+    loadState();
+    updateHeaderAndVault();
+    renderFeed();
   </script>
 </body>
 </html>
