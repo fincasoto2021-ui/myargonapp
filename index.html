@@ -2,8 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ARGON • Obsidian & Platinum Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>ARGON</title>
+
+  <!-- CONFIGURACIÓN APP NATIVA (PWA) -->
+  <meta name="theme-color" content="#050507" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ARGON" />
+
   <style>
     :root {
       --bg-obsidian: #050507;
@@ -46,7 +54,50 @@
       border-right: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    /* TOP BAR */
+    /* PANTALLA DE REGISTRO DESDE CERO */
+    .onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 15%, #1a1d29 0%, #050507 70%);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .onboarding-overlay.hidden {
+      display: none;
+    }
+
+    .onboarding-card {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(165deg, rgba(24, 26, 34, 0.96) 0%, rgba(8, 9, 13, 0.99) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+    }
+
+    .input-field {
+      width: 100%;
+      background: #090a0f;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 13px 14px;
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: #cbd5e1;
+    }
+
+    /* CABECERA */
     .topbar {
       position: sticky;
       top: 0;
@@ -89,6 +140,17 @@
       -webkit-text-fill-color: transparent;
     }
 
+    .live-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
     .wallet-pill {
       display: flex;
       align-items: center;
@@ -114,7 +176,6 @@
       line-height: 1;
     }
 
-    /* VIEWS */
     .view-section {
       display: none;
       padding: 14px;
@@ -130,7 +191,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* CARDS & PROGRESS */
     .glass-card {
       background: linear-gradient(165deg, rgba(24, 26, 34, 0.88) 0%, rgba(10, 11, 16, 0.96) 100%);
       border: 1px solid var(--card-border);
@@ -181,11 +241,9 @@
       transition: width 0.35s ease;
     }
 
-    /* VAULT HEXAGON */
     .vault-center {
       text-align: center;
       padding: 24px 14px;
-      position: relative;
     }
 
     .hex-coin-wrap {
@@ -243,11 +301,6 @@
       text-align: center;
       color: #fff;
       cursor: pointer;
-      transition: transform 0.12s ease, border-color 0.2s ease;
-    }
-
-    .pack-btn:active {
-      transform: scale(0.96);
     }
 
     .pack-btn.vip {
@@ -273,35 +326,74 @@
       font-weight: 700;
     }
 
-    /* FEED POSTS ULTRA CLEAN */
-    .composer-box {
+    /* CAJA DE PUBLICACIÓN REAL CON FOTO */
+    .composer-card {
+      background: #0b0c10;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .composer-row {
       display: flex;
       gap: 8px;
-      margin-bottom: 14px;
     }
 
     .composer-input {
       flex: 1;
-      background: #0d0f15;
+      background: #07080c;
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 11px 13px;
+      border-radius: 11px;
+      padding: 10px 12px;
       color: #fff;
       font-size: 13px;
       outline: none;
+    }
+
+    .composer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .photo-upload-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 7px 12px;
+      border-radius: 9px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .composer-btn {
       background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
       color: #050507;
       border: none;
-      border-radius: 12px;
-      padding: 0 15px;
+      border-radius: 9px;
+      padding: 8px 16px;
       font-weight: 800;
       font-size: 12px;
       cursor: pointer;
     }
 
+    .preview-thumb {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 10px;
+      display: none;
+      border: 1px solid var(--card-border);
+    }
+
+    /* TARJETAS DEL FEED */
     .post-card {
       background: #0b0c10;
       border: 1px solid var(--card-border);
@@ -311,7 +403,6 @@
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
-    /* CABECERA CON COLUMNAS BLINDADAS (NUNCA SE MONTA EL TEXTO) */
     .post-header {
       padding: 12px 14px;
       display: flex;
@@ -361,25 +452,6 @@
       font-size: 11px;
       color: #94a3b8;
       margin-top: 1px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .sponsor-tag {
-      display: inline-block;
-      margin-top: 3px;
-      font-size: 10px;
-      font-weight: 700;
-      color: #34d399;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      padding: 2px 7px;
-      border-radius: 6px;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .sub-action-Wrap {
@@ -396,19 +468,17 @@
       font-weight: 800;
       cursor: pointer;
       white-space: nowrap;
-      box-shadow: 0 3px 10px rgba(255, 255, 255, 0.15);
     }
 
     .btn-subscribe.subscribed {
       background: rgba(16, 185, 129, 0.15);
       color: #34d399;
       border: 1px solid rgba(16, 185, 129, 0.4);
-      box-shadow: none;
     }
 
     .post-image {
       width: 100%;
-      height: 255px;
+      max-height: 360px;
       object-fit: cover;
       display: block;
       background: #141720;
@@ -439,33 +509,20 @@
     }
 
     .post-body {
-      padding: 9px 14px 13px;
+      padding: 10px 14px 13px;
     }
 
     .post-caption {
-      font-size: 12.5px;
+      font-size: 13px;
       line-height: 1.45;
       color: #e2e8f0;
-      margin-bottom: 6px;
     }
 
     .post-caption strong {
       color: #fff;
-      margin-right: 4px;
+      margin-right: 5px;
     }
 
-    .comment-line {
-      font-size: 11.5px;
-      color: #94a3b8;
-      margin-top: 4px;
-    }
-
-    .comment-line strong {
-      color: #cbd5e1;
-      margin-right: 4px;
-    }
-
-    /* RANKING & PROFILE */
     .tier-item {
       display: flex;
       justify-content: space-between;
@@ -475,11 +532,6 @@
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.07);
       margin-bottom: 9px;
-    }
-
-    .tier-item.unlocked {
-      border-color: rgba(16, 185, 129, 0.45);
-      background: rgba(16, 185, 129, 0.08);
     }
 
     .btn-primary-platinum {
@@ -495,7 +547,6 @@
       margin-top: 10px;
     }
 
-    /* BOTTOM NAV */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -507,7 +558,7 @@
       border-top: 1px solid var(--card-border);
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      padding: 8px 0 12px;
+      padding: 8px 0 16px;
       z-index: 50;
     }
 
@@ -529,7 +580,6 @@
       color: #ffffff;
     }
 
-    /* TOAST */
     .toast {
       position: fixed;
       top: 72px;
@@ -541,7 +591,7 @@
       font-size: 12px;
       padding: 9px 16px;
       border-radius: 999px;
-      z-index: 100;
+      z-index: 300;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
       display: none;
       white-space: nowrap;
@@ -552,7 +602,7 @@
   <div class="app-shell">
     <div id="toast" class="toast"></div>
 
-    <!-- DEFINICIÓN VECTORIAL DEL LOGO OFICIAL: OPCIÓN C - LA CORONA -->
+    <!-- VECTOR DEL LOGO OFICIAL: OPCIÓN C - LA CORONA -->
     <svg width="0" height="0" style="position:absolute">
       <defs>
         <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -561,7 +611,6 @@
           <stop offset="100%" stop-color="#94a3b8" />
         </linearGradient>
         <symbol id="argon-crown-a" viewBox="0 0 100 100">
-          <!-- Corona Imperial de 3 puntas y perlas (Opción C) -->
           <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
             <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGrad)" />
             <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="url(#platGrad)" />
@@ -569,47 +618,63 @@
             <circle cx="50" cy="7.5" r="2.6" fill="#ffffff" />
             <circle cx="70" cy="12.5" r="2.3" fill="#ffffff" />
           </g>
-          <!-- A Serif con cinta curva envolvente (Opción C) -->
           <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGrad)" />
-          <!-- Cinta estilizada que cruza la A -->
           <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
         </symbol>
       </defs>
     </svg>
 
-    <!-- CABECERA FIJA -->
+    <!-- PANTALLA DE REGISTRO INICIAL EN CERO -->
+    <div id="onboardingScreen" class="onboarding-overlay">
+      <div class="onboarding-card">
+        <div class="logo-box" style="width:72px; height:72px; margin:0 auto 14px; border-radius:18px;">
+          <svg width="50" height="50"><use href="#argon-crown-a"></use></svg>
+        </div>
+        <div class="brand-title" style="font-size:22px; margin-bottom:6px;">ARGON</div>
+        <div style="font-size:12px; color:#94a3b8; margin-bottom:20px;">
+          Crea tu cuenta oficial y recibe <strong>5,000 A-Coins</strong> de apertura en tu Bóveda.
+        </div>
+        <input type="text" id="regName" class="input-field" placeholder="Tu Nombre o Marca (ej. Alberto Soto)" />
+        <input type="text" id="regHandle" class="input-field" placeholder="Tu Usuario (ej. ALBERTO_VIP)" />
+        <button class="btn-primary-platinum" onclick="window.completeRegistration()">
+          ACTIVAR MI CUENTA EN ARGON
+        </button>
+      </div>
+    </div>
+
+    <!-- CABECERA -->
     <header class="topbar">
       <div class="brand-wrap">
         <div class="logo-box">
           <svg width="30" height="30"><use href="#argon-crown-a"></use></svg>
         </div>
         <div>
-          <div class="brand-title" id="headerTitle">ARGON</div>
+          <span class="brand-title">ARGON</span><span class="live-dot" title="Conectado en tiempo real"></span>
         </div>
       </div>
 
-      <div class="wallet-pill" onclick="switchTab('boveda')">
+      <div class="wallet-pill" onclick="window.switchTab('boveda')">
         <svg width="22" height="22" viewBox="0 0 40 40">
           <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
           <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
         </svg>
-        <span class="wallet-amount" id="topBalance">5,020</span>
+        <span class="wallet-amount" id="topBalance">5,000</span>
         <span class="wallet-label">A-<br>COINS</span>
       </div>
     </header>
 
-    <!-- 1. VISTA BÓVEDA -->
+    <!-- 1. BÓVEDA -->
     <section id="view-boveda" class="view-section">
       <div class="glass-card">
         <div class="progress-header">
           <div>
-            <div class="progress-user" id="vaultUserName">PEDRO RIVERA</div>
-            <div class="progress-subtext" id="vaultNextGoal">1K = +10,000 AC • 5K = $2.00/día Sponsors</div>
+            <div class="progress-user" id="vaultUserName">MI CUENTA</div>
+            <div class="progress-subtext">1K = +10,000 AC • 5K = $2.00/día Sponsors</div>
           </div>
-          <div class="progress-count" id="vaultSubsCounter">850 / 1,000</div>
+          <div class="progress-count" id="vaultSubsCounter">0 / 1,000</div>
         </div>
         <div class="progress-track">
-          <div class="progress-fill" id="vaultProgressBar" style="width: 85%;"></div>
+          <div class="progress-fill" id="vaultProgressBar" style="width: 0%;"></div>
         </div>
       </div>
 
@@ -622,26 +687,26 @@
             <use href="#argon-crown-a" x="21" y="16" width="78" height="78"></use>
           </svg>
         </div>
-        <div class="vault-balance-num" id="vaultBigBalance">5,020</div>
+        <div class="vault-balance-num" id="vaultBigBalance">5,000</div>
         <div class="vault-balance-sub">A-COINS DISPONIBLES</div>
-        <div class="badge-active">✓ BONO DE APERTURA ACTIVO</div>
+        <div class="badge-active">✓ CONECTADO EN TIEMPO REAL</div>
       </div>
 
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:11px; font-weight:800; color:#94a3b8; letter-spacing:1px;">RECARGA RÁPIDA (STRIPE)</span>
-          <span style="font-size:10px; color:#64748b;">Entrega inmediata</span>
+          <span style="font-size:11px; font-weight:800; color:#94a3b8; letter-spacing:1px;">RECARGAR A-COINS</span>
+          <span style="font-size:10px; color:#64748b;">Acreditación inmediata</span>
         </div>
         <div class="pack-grid">
-          <button class="pack-btn" onclick="buyPack(1000, '$1.99')">
+          <button class="pack-btn" onclick="window.buyPack(1000, '$1.99')">
             <span class="pack-ac">+1,000 AC</span>
             <span class="pack-price">$1.99</span>
           </button>
-          <button class="pack-btn vip" onclick="buyPack(3500, '$4.99')">
+          <button class="pack-btn vip" onclick="window.buyPack(3500, '$4.99')">
             <span class="pack-ac">+3,500 AC</span>
             <span class="pack-price">$4.99 • VIP</span>
           </button>
-          <button class="pack-btn" onclick="buyPack(12000, '$14.99')">
+          <button class="pack-btn" onclick="window.buyPack(12000, '$14.99')">
             <span class="pack-ac">+12,000 AC</span>
             <span class="pack-price">$14.99</span>
           </button>
@@ -649,38 +714,47 @@
       </div>
     </section>
 
-    <!-- 2. VISTA FEED (ACTIVA POR DEFECTO CON 22 PERSONAS) -->
+    <!-- 2. FEED EN TIEMPO REAL -->
     <section id="view-feed" class="view-section active">
-      <div class="composer-box">
-        <input type="text" id="newPostInput" class="composer-input" placeholder="Publicar en el tráfico de ARGON..." />
-        <button class="composer-btn" onclick="publishPost()">Publicar</button>
+      <div class="composer-card">
+        <div class="composer-row">
+          <input type="text" id="newPostInput" class="composer-input" placeholder="Publica en vivo en el Feed de ARGON..." />
+        </div>
+        <img id="photoPreview" class="preview-thumb" alt="Vista previa" />
+        <div class="composer-actions">
+          <label class="photo-upload-label">
+            📷 Subir Foto
+            <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="window.previewSelectedPhoto(event)" />
+          </label>
+          <button class="composer-btn" onclick="window.publishPost()">Publicar ahora</button>
+        </div>
       </div>
 
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. VISTA RANKING -->
+    <!-- 3. RANKING -->
     <section id="view-ranking" class="view-section">
       <div class="glass-card">
-        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">ESCALERA OFICIAL DE PATROCINIOS</div>
+        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">METAS OFICIALES DE PATROCINIO</div>
         <div class="tier-item">
           <div>
             <div style="font-size:12px; font-weight:800; color:#fff;">1,000 Suscriptores • Rango Semilla</div>
-            <div style="font-size:11px; color:#94a3b8;">Patrocinado por la Bóveda de ARGON</div>
+            <div style="font-size:11px; color:#94a3b8;">Bono directo de la Bóveda ARGON</div>
           </div>
           <div style="font-size:12px; font-weight:800; color:#34d399;">+10,000 AC</div>
         </div>
-        <div class="tier-item unlocked">
+        <div class="tier-item">
           <div>
             <div style="font-size:12px; font-weight:800; color:#fff;">5,000 Suscriptores • Rango Socio</div>
-            <div style="font-size:11px; color:#94a3b8;">Negocios locales, Dealers, Barberías VIP</div>
+            <div style="font-size:11px; color:#94a3b8;">Patrocinios comerciales activos</div>
           </div>
           <div style="font-size:12px; font-weight:800; color:#34d399;">$2.00 / día</div>
         </div>
         <div class="tier-item">
           <div>
             <div style="font-size:12px; font-weight:800; color:#fff;">10,000 Suscriptores • Embajador</div>
-            <div style="font-size:11px; color:#94a3b8;">Marcas regionales y música</div>
+            <div style="font-size:11px; color:#94a3b8;">Marcas regionales</div>
           </div>
           <div style="font-size:12px; font-weight:800; color:#34d399;">$5.00 / día</div>
         </div>
@@ -701,86 +775,160 @@
       </div>
     </section>
 
-    <!-- 4. VISTA PERFIL -->
+    <!-- 4. PERFIL -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="logo-box" style="width:64px; height:64px; margin:0 auto 10px;">
           <svg width="44" height="44"><use href="#argon-crown-a"></use></svg>
         </div>
-        <div style="font-size:18px; font-weight:900;" id="profileName">PEDRO RIVERA</div>
-        <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:4px;" id="profileStatus">
-          850 Suscriptores • Rumbo a 1,000 (+10,000 AC)
+        <div style="font-size:18px; font-weight:900;" id="profileName">MI CUENTA</div>
+        <div style="font-size:12px; color:#94a3b8; margin-top:2px;" id="profileHandle">@USUARIO</div>
+        <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:8px;" id="profileStatus">
+          0 Suscriptores • Meta inicial: 1,000 (+10,000 AC)
         </div>
-        <button class="btn-primary-platinum" onclick="simulateNewSubscribers()">
-          ⚡ SIMULAR +50 SUSCRIPTORES NUEVOS
+        <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
+          ↗ INVITAR PERSONAS A SUSCRIBIRSE
         </button>
-      </div>
-
-      <div class="glass-card">
-        <div style="font-size:12px; font-weight:800; margin-bottom:8px;">CAMBIAR NOMBRE DEL TITULAR</div>
-        <div class="composer-box" style="margin-bottom:0;">
-          <input type="text" id="changeNameInput" class="composer-input" placeholder="Escribe tu nombre..." />
-          <button class="composer-btn" onclick="updateOwnerName()">Guardar</button>
-        </div>
       </div>
     </section>
 
-    <!-- NAVEGACIÓN INFERIOR -->
     <nav class="bottom-nav">
-      <button class="nav-btn" id="nav-boveda" onclick="switchTab('boveda')">
+      <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')">
         <span>▣</span>
         <span>BÓVEDA</span>
       </button>
-      <button class="nav-btn active" id="nav-feed" onclick="switchTab('feed')">
+      <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')">
         <span>▤</span>
         <span>FEED</span>
       </button>
-      <button class="nav-btn" id="nav-ranking" onclick="switchTab('ranking')">
+      <button class="nav-btn" id="nav-ranking" onclick="window.switchTab('ranking')">
         <span>▥</span>
         <span>RANKING</span>
       </button>
-      <button class="nav-btn" id="nav-perfil" onclick="switchTab('perfil')">
+      <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')">
         <span>◉</span>
         <span>PERFIL</span>
       </button>
     </nav>
   </div>
 
-  <script>
-    const STORAGE_KEY = 'argon_master_state_v1';
+  <!-- CONEXIÓN OFICIAL A FIREBASE (argon-ab4fe) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      getDoc,
+      addDoc,
+      updateDoc,
+      onSnapshot,
+      query,
+      orderBy,
+      increment
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const defaultPosts = [
-      { id: 1, handle: 'CARLOS_VIP', initials: 'CV', subs: '5.4K Suscriptores', sponsor: 'Sponsor: Exotic Motors ($2/día)', image: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80', likes: 428, shares: 94, caption: 'Ya pasamos los 5,000 suscriptores y activos facturando con patrocinador diario. ¡Suscríbanse para que cobren sus +10 A-Coins!', commentUser: 'YANKEE_4X4', commentText: 'Duro hermano, esa máquina está a otro nivel.', subscribed: false, liked: false },
-      { id: 2, handle: 'VALERIA_FIT', initials: 'VF', subs: '920 Suscriptores', sponsor: '', image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80', likes: 219, shares: 31, caption: 'A solo 80 suscriptores de llegar a los 1,000 para recibir el bono de +10,000 A-Coins.', commentUser: 'PEDRO_RIVERA', commentText: '¡Hoy llegas a los 1,000 fijo!', subscribed: false, liked: false },
-      { id: 3, handle: 'DON_CAFE', initials: 'DC', subs: '11.8K Suscriptores', sponsor: 'Sponsor: Reserva Gourmet ($5/día)', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80', likes: 615, shares: 112, caption: 'Café de altura recién colado. Ya en el escalón de 10K cobrando $5 diarios limpios.', commentUser: 'SOFIA_LUX', commentText: 'El mejor aroma de la mañana.', subscribed: true, liked: false },
-      { id: 4, handle: 'BARBER_KING', initials: 'BK', subs: '6.1K Suscriptores', sponsor: 'Sponsor: Platinum Blade ($2/día)', image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=80', likes: 380, shares: 44, caption: 'Recorte limpio para el fin de semana. Sigan la cuenta y llévense sus +10 A-Coins al instante.', commentUser: 'CARLOS_VIP', commentText: 'Separame turno para mañana.', subscribed: false, liked: false },
-      { id: 5, handle: 'STUDIO_URBANO', initials: 'SU', subs: '24.5K Suscriptores', sponsor: 'Sponsor: Neon Beats ($15/día)', image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80', likes: 940, shares: 215, caption: 'Masterizando el próximo palo en la consola. Rango Magnate encendido.', commentUser: 'DJ_KRONOS', commentText: 'Ese ritmo rompe las bocinas.', subscribed: false, liked: false },
-      { id: 6, handle: 'NAUTICA_VIP', initials: 'NV', subs: '104K Suscriptores', sponsor: 'Sponsor: Marina Yachts ($50/día)', image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=800&q=80', likes: 2450, shares: 510, caption: 'Domingo en el agua. Rango Imperio demostrado en ARGON.', commentUser: 'VALERIA_FIT', commentText: 'Meta desbloqueada.', subscribed: false, liked: false },
-      { id: 7, handle: 'OFFROAD_4X4', initials: 'OR', subs: '4.8K Suscriptores', sponsor: '', image: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80', likes: 310, shares: 52, caption: 'A ley de 200 suscriptores para prender los patrocinadores de los 5,000. ¡Apoyen que hay +10 AC activos!', commentUser: 'DON_CAFE', commentText: 'Esa guagua está impecable.', subscribed: false, liked: false },
-      { id: 8, handle: 'RELOJES_PLATINUM', initials: 'RP', subs: '14.2K Suscriptores', sponsor: 'Sponsor: Chrono Vault ($5/día)', image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80', likes: 520, shares: 88, caption: 'Precisión en acero y platino. Cada suscriptor nuevo suma +10 A-Coins directo a su bóveda.', commentUser: 'BARBER_KING', commentText: 'Fino de verdad.', subscribed: false, liked: false }
-    ];
-
-    let state = {
-      userName: 'PEDRO RIVERA',
-      balance: 5020,
-      subs: 850,
-      rewarded1k: false,
-      posts: defaultPosts
+    const firebaseConfig = {
+      apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
+      authDomain: "argon-ab4fe.firebaseapp.com",
+      projectId: "argon-ab4fe",
+      storageBucket: "argon-ab4fe.firebasestorage.app",
+      messagingSenderId: "598726555507",
+      appId: "1:598726555507:web:f9cf75a06ffa0bd57f3706"
     };
 
-    function loadState() {
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // ICONO E INSTALADOR NATIVO PWA (OPCIÓN C - LA CORONA)
+    (function setupInstallableApp() {
       try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          state = Object.assign({}, state, parsed);
-        }
+        const c = document.createElement('canvas');
+        c.width = 512;
+        c.height = 512;
+        const ctx = c.getContext('2d');
+        const bg = ctx.createLinearGradient(0, 0, 512, 512);
+        bg.addColorStop(0, '#161821');
+        bg.addColorStop(1, '#050507');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, 512, 512);
+        ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(20, 20, 472, 472);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.moveTo(175, 165);
+        ctx.lineTo(160, 100);
+        ctx.lineTo(222, 136);
+        ctx.lineTo(256, 76);
+        ctx.lineTo(290, 136);
+        ctx.lineTo(352, 100);
+        ctx.lineTo(337, 165);
+        ctx.closePath();
+        ctx.fill();
+
+        [ [160, 86], [256, 62], [352, 86] ].forEach(pt => {
+          ctx.beginPath();
+          ctx.arc(pt[0], pt[1], 11, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        ctx.font = 'bold 280px Georgia, serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'alphabetic';
+        ctx.fillText('A', 256, 415);
+
+        const iconDataUrl = c.toDataURL('image/png');
+        const appleIcon = document.createElement('link');
+        appleIcon.rel = 'apple-touch-icon';
+        appleIcon.href = iconDataUrl;
+        document.head.appendChild(appleIcon);
+
+        const manifest = {
+          name: 'ARGON',
+          short_name: 'ARGON',
+          start_url: './',
+          display: 'standalone',
+          background_color: '#050507',
+          theme_color: '#050507',
+          icons: [{ src: iconDataUrl, sizes: '512x512', type: 'image/png', purpose: 'any maskable' }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = URL.createObjectURL(manifestBlob);
+        document.head.appendChild(manifestLink);
+      } catch (e) {}
+    })();
+
+    const LOCAL_USER_KEY = 'argon_live_user_v1';
+    let selectedPhotoDataUrl = '';
+
+    let currentUser = {
+      registered: false,
+      userName: '',
+      userHandle: '',
+      balance: 5000,
+      subs: 0,
+      subscribedTo: [],
+      likedPosts: []
+    };
+
+    let livePosts = [];
+    let usersMap = {};
+
+    function loadLocalSession() {
+      try {
+        const saved = localStorage.getItem(LOCAL_USER_KEY);
+        if (saved) currentUser = Object.assign({}, currentUser, JSON.parse(saved));
       } catch (e) {}
     }
 
-    function saveState() {
+    function saveLocalSession() {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(currentUser));
       } catch (e) {}
     }
 
@@ -789,186 +937,320 @@
       t.textContent = msg;
       t.style.display = 'block';
       clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => {
-        t.style.display = 'none';
-      }, 2400);
+      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
 
-    function updateHeaderAndVault() {
-      document.getElementById('topBalance').textContent = state.balance.toLocaleString();
-      document.getElementById('vaultBigBalance').textContent = state.balance.toLocaleString();
-      document.getElementById('vaultUserName').textContent = state.userName;
-      document.getElementById('profileName').textContent = state.userName;
-
-      const target = state.subs < 1000 ? 1000 : 5000;
-      const pct = Math.min(100, Math.round((state.subs / target) * 100));
-      document.getElementById('vaultSubsCounter').textContent = state.subs.toLocaleString() + ' / ' + target.toLocaleString();
-      document.getElementById('vaultProgressBar').style.width = pct + '%';
-
-      if (state.subs < 1000) {
-        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rumbo a 1,000 (+10,000 AC)';
-      } else if (state.subs < 5000) {
-        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rumbo a 5,000 ($2.00/día Sponsors)';
-      } else {
-        document.getElementById('profileStatus').textContent = state.subs.toLocaleString() + ' Suscriptores • Rango Socio Activo ($2.00/día)';
+    function updateUI() {
+      if (currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.add('hidden');
       }
+      document.getElementById('topBalance').textContent = (currentUser.balance || 0).toLocaleString();
+      document.getElementById('vaultBigBalance').textContent = (currentUser.balance || 0).toLocaleString();
+      document.getElementById('vaultUserName').textContent = currentUser.userName || 'MI CUENTA';
+      document.getElementById('profileName').textContent = currentUser.userName || 'MI CUENTA';
+      document.getElementById('profileHandle').textContent = '@' + (currentUser.userHandle || 'USUARIO');
+
+      const target = currentUser.subs < 1000 ? 1000 : 5000;
+      const pct = Math.min(100, Math.round(((currentUser.subs || 0) / target) * 100));
+      document.getElementById('vaultSubsCounter').textContent = (currentUser.subs || 0).toLocaleString() + ' / ' + target.toLocaleString();
+      document.getElementById('vaultProgressBar').style.width = pct + '%';
+      document.getElementById('profileStatus').textContent = (currentUser.subs || 0).toLocaleString() + ' Suscriptores • Meta: ' + target.toLocaleString();
     }
+
+    // COMPRESOR DE FOTOS PARA QUE SUBAN AL INSTANTE A FIREBASE
+    window.previewSelectedPhoto = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxW = 720;
+          const scale = img.width > maxW ? maxW / img.width : 1;
+          canvas.width = img.width * scale;
+          canvas.height = img.height * scale;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          selectedPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.72);
+          const preview = document.getElementById('photoPreview');
+          preview.src = selectedPhotoDataUrl;
+          preview.style.display = 'block';
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    // REGISTRO DE CUENTA REAL EN FIREBASE
+    window.completeRegistration = async function() {
+      const rawName = document.getElementById('regName').value.trim();
+      const rawHandle = document.getElementById('regHandle').value.trim();
+      if (!rawName) {
+        showToast('Escribe tu nombre para activar la cuenta');
+        return;
+      }
+      const cleanName = rawName.toUpperCase();
+      const cleanHandle = (rawHandle || rawName).replace(/\s+/g, '_').replace(/^@/, '').toUpperCase();
+
+      currentUser.userName = cleanName;
+      currentUser.userHandle = cleanHandle;
+      currentUser.registered = true;
+
+      document.getElementById('onboardingScreen').classList.add('hidden');
+      saveLocalSession();
+      updateUI();
+
+      try {
+        const userRef = doc(db, "users", cleanHandle);
+        const snap = await getDoc(userRef);
+        if (!snap.exists()) {
+          await setDoc(userRef, {
+            userName: cleanName,
+            userHandle: cleanHandle,
+            balance: 5000,
+            subs: 0,
+            rewarded1k: false,
+            createdAt: Date.now()
+          });
+        } else {
+          const data = snap.data();
+          currentUser.balance = data.balance ?? 5000;
+          currentUser.subs = data.subs ?? 0;
+          saveLocalSession();
+          updateUI();
+        }
+        listenToMyUserDoc(cleanHandle);
+        showToast('Cuenta @' + cleanHandle + ' activa en vivo');
+      } catch (err) {
+        showToast('Activa Firestore Database en modo prueba en tu consola');
+      }
+    };
+
+    function listenToMyUserDoc(handle) {
+      if (!handle) return;
+      onSnapshot(doc(db, "users", handle), (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          currentUser.balance = data.balance ?? currentUser.balance;
+          currentUser.subs = data.subs ?? currentUser.subs;
+          // Bono automático al llegar a 1,000 suscriptores
+          if (currentUser.subs >= 1000 && !data.rewarded1k) {
+            updateDoc(doc(db, "users", handle), {
+              balance: increment(10000),
+              rewarded1k: true
+            });
+            showToast('¡META 1,000 SUBS! +10,000 A-Coins acreditadas');
+          }
+          saveLocalSession();
+          updateUI();
+        }
+      });
+    }
+
+    // ESCUCHAR USUARIOS Y PUBLICACIONES EN TIEMPO REAL
+    function startRealtimeListeners() {
+      onSnapshot(collection(db, "users"), (snap) => {
+        snap.forEach(d => {
+          usersMap[d.id] = d.data();
+        });
+        renderFeed();
+      });
+
+      const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      onSnapshot(q, (snap) => {
+        livePosts = [];
+        snap.forEach(d => {
+          livePosts.push({ id: d.id, ...d.data() });
+        });
+        renderFeed();
+      });
+    }
+
+    window.publishPost = async function() {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      const input = document.getElementById('newPostInput');
+      const text = input.value.trim();
+      if (!text && !selectedPhotoDataUrl) {
+        showToast('Escribe un mensaje o sube una foto');
+        return;
+      }
+
+      const photoToSave = selectedPhotoDataUrl;
+      input.value = '';
+      selectedPhotoDataUrl = '';
+      document.getElementById('photoInput').value = '';
+      const preview = document.getElementById('photoPreview');
+      preview.style.display = 'none';
+      preview.src = '';
+
+      try {
+        await addDoc(collection(db, "posts"), {
+          handle: currentUser.userHandle,
+          initials: currentUser.userName.slice(0, 2).toUpperCase(),
+          image: photoToSave || '',
+          caption: text,
+          likes: 0,
+          shares: 0,
+          createdAt: Date.now()
+        });
+        showToast('Publicado en vivo en ARGON');
+      } catch (e) {
+        showToast('Verifica que Firestore Database esté creado en Firebase');
+      }
+    };
 
     function renderFeed() {
       const container = document.getElementById('feedContainer');
       container.innerHTML = '';
 
-      state.posts.forEach(post => {
+      const postsToShow = livePosts.length > 0 ? livePosts : [
+        {
+          id: 'welcome',
+          handle: 'ARGON_OFICIAL',
+          initials: 'AR',
+          image: '',
+          caption: 'Bienvenido al tráfico en tiempo real de ARGON. Publica tu primera foto o estado, suma +10 A-Coins al suscribirte a otros miembros y llega a 1,000 suscriptores para desbloquear +10,000 A-Coins.',
+          likes: 1,
+          shares: 0
+        }
+      ];
+
+      postsToShow.forEach(post => {
         const card = document.createElement('article');
         card.className = 'post-card';
 
-        const sponsorBadge = post.sponsor
-          ? `<div class="sponsor-tag">${post.sponsor}</div>`
-          : '';
+        const isOwn = post.handle === currentUser.userHandle;
+        const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
+        const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
+        const authorSubs = (usersMap[post.handle] && usersMap[post.handle].subs) ? usersMap[post.handle].subs : 0;
 
-        const subBtnLabel = post.subscribed ? '✓ Suscrito' : '+ Suscribirse (+10 AC)';
-        const subBtnClass = post.subscribed ? 'btn-subscribe subscribed' : 'btn-subscribe';
+        const subBtnLabel = isOwn
+          ? 'Tu Perfil'
+          : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
+        const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
+
+        const imgHtml = post.image
+          ? `<img class="post-image" src="${post.image}" alt="${post.handle}" />`
+          : '';
 
         card.innerHTML = `
           <div class="post-header">
             <div class="post-user-left">
-              <div class="avatar-circle">${post.initials}</div>
+              <div class="avatar-circle">${post.initials || 'AR'}</div>
               <div class="user-meta">
-                <div class="user-handle">${post.handle}</div>
-                <div class="user-subs-line">${post.subs}</div>
-                ${sponsorBadge}
+                <div class="user-handle">@${post.handle}</div>
+                <div class="user-subs-line">${authorSubs.toLocaleString()} Suscriptores</div>
               </div>
             </div>
             <div class="sub-action-Wrap">
-              <button class="${subBtnClass}" onclick="toggleSubscribe(${post.id})">${subBtnLabel}</button>
+              <button class="${subBtnClass}" onclick="window.toggleSubscribe('${post.handle}')">${subBtnLabel}</button>
             </div>
           </div>
-
-          <img class="post-image" src="${post.image}" alt="${post.handle}" loading="lazy" />
-
+          ${imgHtml}
           <div class="post-actions">
-            <button class="action-item ${post.liked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
-              ♥ <span>${post.likes}</span>
-            </button>
-            <button class="action-item">
-              💬 <span>1</span>
-            </button>
-            <button class="action-item" onclick="sharePost('${post.handle}', ${post.id})">
-              ↗ Compartir (<span>${post.shares}</span>)
-            </button>
+            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
+            <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ Compartir (<span>${post.shares || 0}</span>)</button>
           </div>
-
           <div class="post-body">
-            <div class="post-caption"><strong>${post.handle}</strong> ${post.caption}</div>
-            <div class="comment-line"><strong>${post.commentUser}</strong> ${post.commentText}</div>
+            <div class="post-caption"><strong>@${post.handle}</strong> ${post.caption || ''}</div>
           </div>
         `;
         container.appendChild(card);
       });
     }
 
-    function toggleSubscribe(postId) {
-      const post = state.posts.find(p => p.id === postId);
-      if (!post) return;
-      if (post.subscribed) {
-        showToast('Ya cobraste las +10 A-Coins de ' + post.handle);
+    // SUSCRIPCIÓN REAL ENTRE TELÉFONOS (+1 SUB AL AUTOR / +10 AC AL SUSCRIPTOR)
+    window.toggleSubscribe = async function(targetHandle) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
         return;
       }
-      post.subscribed = true;
-      state.balance += 10;
-      saveState();
-      updateHeaderAndVault();
-      renderFeed();
-      showToast('+10 A-Coins acreditadas en tu Bóveda');
-    }
-
-    function toggleLike(postId) {
-      const post = state.posts.find(p => p.id === postId);
-      if (!post) return;
-      post.liked = !post.liked;
-      post.likes += post.liked ? 1 : -1;
-      saveState();
-      renderFeed();
-    }
-
-    function sharePost(handle, postId) {
-      const post = state.posts.find(p => p.id === postId);
-      if (post) {
-        post.shares += 1;
-        saveState();
-        renderFeed();
+      if (!targetHandle || targetHandle === currentUser.userHandle) return;
+      if ((currentUser.subscribedTo || []).includes(targetHandle)) {
+        showToast('Ya estás suscrito a @' + targetHandle);
+        return;
       }
-      showToast('Enlace de ' + handle + ' copiado para compartir gratis');
-    }
 
-    function publishPost() {
-      const input = document.getElementById('newPostInput');
-      const text = input.value.trim();
-      if (!text) return;
-      state.posts.unshift({
-        id: Date.now(),
-        handle: state.userName.replace(/\s+/g, '_').toUpperCase(),
-        initials: state.userName.slice(0, 2).toUpperCase(),
-        subs: state.subs + ' Suscriptores',
-        sponsor: state.subs >= 5000 ? 'Sponsor Activo ($2/día)' : '',
-        image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
-        likes: 1,
-        shares: 0,
-        caption: text,
-        commentUser: 'ARGON_BOT',
-        commentText: 'Publicación activa con +10 A-Coins por suscriptor.',
-        subscribed: true,
-        liked: true
-      });
-      input.value = '';
-      saveState();
+      currentUser.subscribedTo.push(targetHandle);
+      currentUser.balance += 10;
+      saveLocalSession();
+      updateUI();
       renderFeed();
-      showToast('Publicado en el Feed de ARGON');
-    }
+      showToast('+10 A-Coins acreditadas por suscribirte a @' + targetHandle);
 
-    function simulateNewSubscribers() {
-      state.subs += 50;
-      if (state.subs >= 1000 && !state.rewarded1k) {
-        state.rewarded1k = true;
-        state.balance += 10000;
-        showToast('¡META 1,000 SUBS! Recibiste +10,000 A-Coins');
+      try {
+        await setDoc(doc(db, "users", targetHandle), { subs: increment(1) }, { merge: true });
+        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(10) }, { merge: true });
+      } catch (e) {}
+    };
+
+    window.toggleLike = async function(postId) {
+      if (!postId || postId === 'welcome') return;
+      if ((currentUser.likedPosts || []).includes(postId)) return;
+      currentUser.likedPosts.push(postId);
+      saveLocalSession();
+      renderFeed();
+      try {
+        await updateDoc(doc(db, "posts", postId), { likes: increment(1) });
+      } catch (e) {}
+    };
+
+    window.sharePost = async function(handle, postId) {
+      if (postId && postId !== 'welcome') {
+        try { await updateDoc(doc(db, "posts", postId), { shares: increment(1) }); } catch (e) {}
+      }
+      if (navigator.share) {
+        navigator.share({ title: 'ARGON', text: 'Sígueme en ARGON (@' + handle + ')', url: window.location.href }).catch(() => {});
       } else {
-        showToast('+50 Suscriptores nuevos sumados a tu perfil');
+        navigator.clipboard && navigator.clipboard.writeText(window.location.href);
+        showToast('Link de invitación copiado');
       }
-      saveState();
-      updateHeaderAndVault();
-    }
+    };
 
-    function buyPack(amount, price) {
-      state.balance += amount;
-      saveState();
-      updateHeaderAndVault();
-      showToast('Recarga de +' + amount.toLocaleString() + ' AC (' + price + ') completada');
-    }
+    window.shareMyProfileLink = function() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'ARGON • @' + currentUser.userHandle,
+          text: 'Suscríbete a mi cuenta @' + currentUser.userHandle + ' en ARGON y recibe +10 A-Coins.',
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        navigator.clipboard && navigator.clipboard.writeText(window.location.href);
+        showToast('Link de invitación copiado');
+      }
+    };
 
-    function updateOwnerName() {
-      const input = document.getElementById('changeNameInput');
-      const val = input.value.trim().toUpperCase();
-      if (!val) return;
-      state.userName = val;
-      input.value = '';
-      saveState();
-      updateHeaderAndVault();
-      showToast('Titular actualizado a ' + val);
-    }
+    window.buyPack = async function(amount, price) {
+      currentUser.balance += amount;
+      saveLocalSession();
+      updateUI();
+      showToast('Recarga de +' + amount.toLocaleString() + ' AC (' + price + ')');
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(amount) }, { merge: true });
+        } catch (e) {}
+      }
+    };
 
-    function switchTab(tab) {
+    window.switchTab = function(tab) {
       ['boveda', 'feed', 'ranking', 'perfil'].forEach(t => {
         document.getElementById('view-' + t).classList.remove('active');
         document.getElementById('nav-' + t).classList.remove('active');
       });
       document.getElementById('view-' + tab).classList.add('active');
       document.getElementById('nav-' + tab).classList.add('active');
-    }
+    };
 
-    loadState();
-    updateHeaderAndVault();
-    renderFeed();
+    loadLocalSession();
+    updateUI();
+    if (currentUser.registered && currentUser.userHandle) {
+      listenToMyUserDoc(currentUser.userHandle);
+    }
+    startRealtimeListeners();
   </script>
 </body>
 </html>
