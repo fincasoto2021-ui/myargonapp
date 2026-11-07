@@ -116,6 +116,7 @@
       display: flex;
       align-items: center;
       gap: 9px;
+      cursor: pointer;
     }
 
     .logo-box {
@@ -455,14 +456,15 @@
       gap: 10px;
       flex: 1;
       min-width: 0;
+      cursor: pointer;
     }
 
     .avatar-circle {
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: linear-gradient(145deg, #252936, #101218);
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -480,21 +482,31 @@
       display: block;
     }
 
-    /* AVATAR GRANDE DE PERFIL */
+    /* ESTILO PERFIL TIPO FACEBOOK / INSTAGRAM */
+    .fb-cover-banner {
+      height: 95px;
+      border-radius: 14px 14px 0 0;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #064e3b 100%);
+      margin: -15px -15px 0 -15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      position: relative;
+    }
+
     .profile-avatar-wrap {
-      width: 86px;
-      height: 86px;
+      width: 92px;
+      height: 92px;
       border-radius: 50%;
-      margin: 0 auto 12px;
+      margin: -46px auto 10px;
       background: linear-gradient(145deg, #1b1e29, #08090d);
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+      border: 3px solid #050507;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85), 0 0 0 1.5px rgba(255, 255, 255, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       position: relative;
       cursor: pointer;
+      z-index: 2;
     }
 
     .profile-avatar-wrap img {
@@ -504,11 +516,34 @@
       display: block;
     }
 
+    .ig-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 14px 0;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ig-stat-num {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .ig-stat-lbl {
+      font-size: 10px;
+      color: #94a3b8;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
     .btn-avatar-upload {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 6px;
       margin-bottom: 4px;
       background: rgba(255, 255, 255, 0.07);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -582,6 +617,7 @@
       object-fit: cover;
       display: block;
       background: #141720;
+      cursor: pointer;
     }
 
     .post-actions {
@@ -627,6 +663,7 @@
     .post-caption strong {
       color: #fff;
       margin-right: 5px;
+      cursor: pointer;
     }
 
     /* SECCIÓN DESPLEGABLE DE COMENTARIOS */
@@ -658,6 +695,7 @@
     .comment-row strong {
       color: #34d399;
       margin-right: 4px;
+      cursor: pointer;
     }
 
     .comment-input-wrap {
@@ -688,13 +726,59 @@
       cursor: pointer;
     }
 
+    /* MODAL DE PERFIL PÚBLICO DE CUALQUIER USUARIO (ESTILO FACEBOOK / IG) */
+    .user-profile-modal {
+      position: fixed;
+      inset: 0;
+      background: #050507;
+      z-index: 240;
+      display: none;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .user-profile-modal.open {
+      display: flex;
+    }
+
+    .upm-inner {
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+
+    .upm-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7, 8, 12, 0.92);
+      backdrop-filter: blur(14px);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .upm-back-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
     /* VENTANA MODAL DE MENSAJES DIRECTOS (DM) CON FOTOS */
     .dm-modal-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(8px);
-      z-index: 250;
+      z-index: 260;
       display: none;
       align-items: flex-end;
       justify-content: center;
@@ -1070,10 +1154,10 @@
       </defs>
     </svg>
 
-    <!-- PANTALLA DE REGISTRO INICIAL -->
+    <!-- PANTALLA DE REGISTRO INICIAL CON AUTO-SUSCRIPCIÓN AL INVITADOR -->
     <div id="onboardingScreen" class="onboarding-overlay">
       <div class="onboarding-card">
-        <label class="profile-avatar-wrap" title="Subir foto de perfil">
+        <label class="profile-avatar-wrap" style="margin-top:0;" title="Subir foto de perfil">
           <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
           <svg id="onboardingAvatarSvg" width="50" height="50"><use href="#argon-crown-a"></use></svg>
           <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
@@ -1085,14 +1169,58 @@
           </label>
         </div>
         <div class="brand-title" style="font-size:22px; margin-bottom:6px;">ARGON</div>
+        <div id="referralWelcomeBanner" style="font-size:12px; color:#34d399; font-weight:700; margin-bottom:8px;"></div>
         <div style="font-size:12px; color:#94a3b8; margin-bottom:18px;">
-          Crea tu cuenta oficial y recibe <strong>5,000 A-Coins</strong> de apertura en tu Bóveda.
+          Crea tu cuenta oficial y recibe <strong>5,000 A-Coins</strong> de apertura + auto-suscripción oficial.
         </div>
         <input type="text" id="regName" class="input-field" placeholder="Tu Nombre o Marca (ej. Alberto Soto)" />
         <input type="text" id="regHandle" class="input-field" placeholder="Tu Usuario (ej. BELTO43)" />
         <button class="btn-primary-platinum" onclick="window.completeRegistration()">
           ACTIVAR MI CUENTA EN ARGON
         </button>
+      </div>
+    </div>
+
+    <!-- MODAL DE PERFIL PÚBLICO DE CUALQUIER USUARIO (ESTILO FACEBOOK / INSTAGRAM) -->
+    <div id="publicProfileModal" class="user-profile-modal">
+      <div class="upm-inner">
+        <div class="upm-topbar">
+          <button class="upm-back-btn" onclick="window.closePublicProfile()">← Volver</button>
+          <div style="font-size:14px; font-weight:900; color:#fff;" id="upmHeaderHandle">@USUARIO</div>
+          <div style="width:65px;"></div>
+        </div>
+
+        <div style="padding:14px;">
+          <div class="glass-card" style="text-align:center;">
+            <div class="fb-cover-banner"></div>
+            <div class="profile-avatar-wrap" id="upmAvatarBox"></div>
+
+            <div style="font-size:19px; font-weight:900; color:#fff;" id="upmFullName">USUARIO</div>
+            <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:2px;" id="upmHandleSub">@USUARIO</div>
+
+            <div class="ig-stats-row">
+              <div>
+                <div class="ig-stat-num" id="upmStatPosts">0</div>
+                <div class="ig-stat-lbl">POSTS</div>
+              </div>
+              <div>
+                <div class="ig-stat-num" id="upmStatSubs">0</div>
+                <div class="ig-stat-lbl">SUSCRIPTORES</div>
+              </div>
+              <div>
+                <div class="ig-stat-num" id="upmStatFollowing">0</div>
+                <div class="ig-stat-lbl">SIGUIENDO</div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:8px; justify-content:center;" id="upmActionButtons"></div>
+          </div>
+
+          <div style="font-size:12px; font-weight:800; color:#94a3b8; letter-spacing:1px; margin:12px 4px 10px;">
+            PUBLICACIONES EN EL MURO DE ESTE PERFIL
+          </div>
+          <div id="upmWallPosts"></div>
+        </div>
       </div>
     </div>
 
@@ -1133,7 +1261,7 @@
 
     <!-- CABECERA -->
     <header class="topbar">
-      <div class="brand-wrap">
+      <div class="brand-wrap" onclick="window.switchTab('feed')">
         <div class="logo-box">
           <svg width="28" height="28"><use href="#argon-crown-a"></use></svg>
         </div>
@@ -1214,7 +1342,7 @@
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
-          <input type="text" id="newPostInput" class="composer-input" placeholder="Publica en vivo en el Feed de ARGON..." />
+          <input type="text" id="newPostInput" class="composer-input" placeholder="¿Qué estás pensando publicar en ARGON?" />
         </div>
         <img id="photoPreview" class="preview-thumb" alt="Vista previa" />
         <div class="composer-actions">
@@ -1232,7 +1360,8 @@
     <!-- 3. RANKING EN VIVO + METAS -->
     <section id="view-ranking" class="view-section">
       <div class="glass-card">
-        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#fff;">TOP CREADORES EN TIEMPO REAL</div>
+        <div style="font-size:13px; font-weight:800; margin-bottom:4px; color:#fff;">TOP CREADORES EN TIEMPO REAL</div>
+        <div style="font-size:11px; color:#94a3b8; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
         <div id="liveLeaderboardList"></div>
       </div>
 
@@ -1276,9 +1405,10 @@
       </div>
     </section>
 
-    <!-- 4. PERFIL + QUIÉNES SE HAN SUSCRITO A MÍ -->
+    <!-- 4. MI PERFIL ESTILO FACEBOOK / INSTAGRAM -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
+        <div class="fb-cover-banner"></div>
         <label class="profile-avatar-wrap" title="Toca para cambiar tu foto de perfil">
           <img id="profileAvatarImg" src="" alt="Foto de perfil" style="display:none;" />
           <svg id="profileAvatarSvg" width="46" height="46"><use href="#argon-crown-a"></use></svg>
@@ -1292,27 +1422,45 @@
           </label>
         </div>
 
-        <div style="font-size:18px; font-weight:900; margin-top:8px;" id="profileName">MI CUENTA</div>
-        <div style="font-size:12px; color:#94a3b8; margin-top:2px;" id="profileHandle">@USUARIO</div>
-        <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:8px;" id="profileStatus">
-          0 Suscriptores • Meta inicial: 1,000 (+10,000 AC)
+        <div style="font-size:18px; font-weight:900; margin-top:6px;" id="profileName">MI CUENTA</div>
+        <div style="font-size:12px; color:#34d399; font-weight:700; margin-top:2px;" id="profileHandle">@USUARIO</div>
+
+        <div class="ig-stats-row">
+          <div>
+            <div class="ig-stat-num" id="myStatPosts">0</div>
+            <div class="ig-stat-lbl">POSTS</div>
+          </div>
+          <div>
+            <div class="ig-stat-num" id="myStatSubs">0</div>
+            <div class="ig-stat-lbl">SUSCRIPTORES</div>
+          </div>
+          <div>
+            <div class="ig-stat-num" id="myStatFollowing">0</div>
+            <div class="ig-stat-lbl">SIGUIENDO</div>
+          </div>
         </div>
+
         <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
-          ↗ INVITAR PERSONAS A SUSCRIBIRSE
+          ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
       </div>
 
       <div class="glass-card">
         <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:4px;">
-          PERSONAS SUSCRITAS A TU CUENTA
+          COMUNIDAD Y SUSCRIPTORES (TOCA PARA VER PERFIL)
         </div>
         <div style="font-size:11px; color:#94a3b8; margin-bottom:8px;">
-          Toca cualquier suscriptor para enviarle texto o fotos por DM (✉️):
+          Toca cualquier miembro para entrar a su perfil o enviarle mensaje:
         </div>
         <div id="mySubscribersList" style="font-size:12px; color:#94a3b8;">
-          Aún no aparecen suscriptores registrados en la lista.
+          Cargando comunidad...
         </div>
       </div>
+
+      <div style="font-size:12px; font-weight:800; color:#94a3b8; letter-spacing:1px; margin:10px 4px;">
+        MIS PUBLICACIONES EN MI MURO
+      </div>
+      <div id="myOwnPostsWall"></div>
     </section>
 
     <!-- 5. PANEL DE ADMINISTRADOR (EXCLUSIVO PARA ALBERTO / @BELTO43) -->
@@ -1321,7 +1469,7 @@
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div>
             <div style="font-size:14px; font-weight:900; color:#fff;">👑 PANEL DE CONTROL ARGON</div>
-            <div style="font-size:11px; color:#94a3b8;">Monitoreo de usuarios, mensajes directos y monedas</div>
+            <div style="font-size:11px; color:#94a3b8;">Toca cualquier usuario para abrir su perfil completo</div>
           </div>
           <span class="badge-active">ADMIN</span>
         </div>
@@ -1341,8 +1489,12 @@
           </div>
         </div>
 
+        <button class="btn-primary-platinum" style="margin-bottom:14px; background:linear-gradient(180deg, #34d399 0%, #10b981 100%);" onclick="window.adminSyncAllToFounder()">
+          ⚡ VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)
+        </button>
+
         <div style="font-size:12px; font-weight:800; color:#fff; margin-bottom:8px;">
-          DIRECTORIO COMPLETO DE USUARIOS EN VIVO
+          DIRECTORIO COMPLETO DE USUARIOS (TOCA PARA VER PERFIL)
         </div>
         <div id="adminUsersDirectory"></div>
       </div>
@@ -1404,11 +1556,18 @@
     const db = getFirestore(app);
 
     const LOCAL_USER_KEY = 'argon_live_user_v1';
+    const FOUNDER_HANDLE = 'BELTO43';
     const ADMIN_HANDLES = ['BELTO43', 'ALBERTO_SOTO', 'ALBERTO', 'ADMIN'];
+
+    // Detectar quién invitó por link (?ref=USUARIO) o por defecto el fundador BELTO43
+    const urlParams = new URLSearchParams(window.location.search);
+    const invitedByParam = (urlParams.get('ref') || FOUNDER_HANDLE).replace(/^@/, '').toUpperCase();
+
     let selectedPhotoDataUrl = '';
     let selectedDmPhotoDataUrl = '';
     let openCommentDrawers = {};
     let activeDmPartner = '';
+    let viewedPublicHandle = '';
     let allDirectMessages = [];
 
     let currentUser = {
@@ -1425,6 +1584,11 @@
 
     let livePosts = [];
     let usersMap = {};
+
+    const refBanner = document.getElementById('referralWelcomeBanner');
+    if (refBanner && invitedByParam) {
+      refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
+    }
 
     function isUserAdmin() {
       const h = (currentUser.userHandle || '').toUpperCase();
@@ -1450,7 +1614,7 @@
       t.textContent = msg;
       t.style.display = 'block';
       clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2500);
+      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2600);
     }
 
     window.openPhotoLightbox = function(imgSrc) {
@@ -1463,6 +1627,74 @@
       document.getElementById('photoLightbox').classList.remove('open');
       document.getElementById('lightboxImg').src = '';
     };
+
+    // --- ABRIR EL PERFIL PÚBLICO DE CUALQUIER PERSONA (COMO EN FACEBOOK / IG) ---
+    window.openUserProfile = function(handle) {
+      if (!handle) return;
+      const cleanH = handle.replace(/^@/, '').toUpperCase();
+      viewedPublicHandle = cleanH;
+      document.getElementById('publicProfileModal').classList.add('open');
+      renderPublicProfileModal();
+    };
+
+    window.closePublicProfile = function() {
+      document.getElementById('publicProfileModal').classList.remove('open');
+      viewedPublicHandle = '';
+    };
+
+    function renderPublicProfileModal() {
+      if (!viewedPublicHandle) return;
+      const uDoc = usersMap[viewedPublicHandle] || {};
+      const userPosts = livePosts.filter(p => p.handle === viewedPublicHandle);
+
+      const displayName = uDoc.userName || viewedPublicHandle;
+      const avatarSrc = uDoc.avatar || (userPosts[0] && userPosts[0].avatar) || '';
+      const subsCount = uDoc.subs || (Array.isArray(uDoc.subscribersList) ? uDoc.subscribersList.length : 0);
+      const followingCount = Array.isArray(uDoc.subscribedTo) ? uDoc.subscribedTo.length : 0;
+
+      document.getElementById('upmHeaderHandle').textContent = '@' + viewedPublicHandle;
+      document.getElementById('upmFullName').textContent = displayName;
+      document.getElementById('upmHandleSub').textContent = '@' + viewedPublicHandle;
+      document.getElementById('upmStatPosts').textContent = userPosts.length.toLocaleString();
+      document.getElementById('upmStatSubs').textContent = subsCount.toLocaleString();
+      document.getElementById('upmStatFollowing').textContent = followingCount.toLocaleString();
+
+      const avBox = document.getElementById('upmAvatarBox');
+      if (avatarSrc) {
+        avBox.innerHTML = `<img src="${avatarSrc}" alt="${viewedPublicHandle}" onclick="window.openPhotoLightbox('${avatarSrc}')" />`;
+      } else {
+        avBox.innerHTML = `<span style="font-size:26px; font-weight:900; color:#fff;">${viewedPublicHandle.slice(0, 2)}</span>`;
+      }
+
+      const actionsBox = document.getElementById('upmActionButtons');
+      const isMe = viewedPublicHandle === currentUser.userHandle;
+      const alreadySub = (currentUser.subscribedTo || []).includes(viewedPublicHandle);
+
+      if (isMe) {
+        actionsBox.innerHTML = `
+          <button class="btn-subscribe subscribed" onclick="window.closePublicProfile(); window.switchTab('perfil');">Editar Mi Perfil</button>
+        `;
+      } else {
+        actionsBox.innerHTML = `
+          <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" style="padding:10px 18px; font-size:12px;" onclick="window.toggleSubscribe('${viewedPublicHandle}')">
+            ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
+          </button>
+          <button class="btn-dm-icon" style="padding:10px 16px; font-size:12px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');">
+            ✉️ Enviar Mensaje
+          </button>
+        `;
+      }
+
+      const wallBox = document.getElementById('upmWallPosts');
+      if (userPosts.length === 0) {
+        wallBox.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#94a3b8;">@${viewedPublicHandle} aún no tiene publicaciones en su muro.</div>`;
+      } else {
+        wallBox.innerHTML = '';
+        userPosts.forEach(post => {
+          wallBox.appendChild(buildPostCardElement(post));
+        });
+      }
+    }
 
     function renderAvatarElements() {
       const profImg = document.getElementById('profileAvatarImg');
@@ -1497,7 +1729,15 @@
       const pct = Math.min(100, Math.round(((currentUser.subs || 0) / target) * 100));
       document.getElementById('vaultSubsCounter').textContent = (currentUser.subs || 0).toLocaleString() + ' / ' + target.toLocaleString();
       document.getElementById('vaultProgressBar').style.width = pct + '%';
-      document.getElementById('profileStatus').textContent = (currentUser.subs || 0).toLocaleString() + ' Suscriptores • Meta: ' + target.toLocaleString();
+
+      const myPostsCount = livePosts.filter(p => p.handle === currentUser.userHandle).length;
+      const myFollowingCount = (currentUser.subscribedTo || []).length;
+      const elMyPosts = document.getElementById('myStatPosts');
+      const elMySubs = document.getElementById('myStatSubs');
+      const elMyFol = document.getElementById('myStatFollowing');
+      if (elMyPosts) elMyPosts.textContent = myPostsCount.toLocaleString();
+      if (elMySubs) elMySubs.textContent = (currentUser.subs || 0).toLocaleString();
+      if (elMyFol) elMyFol.textContent = myFollowingCount.toLocaleString();
 
       const adminNavBtn = document.getElementById('nav-admin');
       if (adminNavBtn) {
@@ -1531,7 +1771,6 @@
       renderDmModal();
     };
 
-    // COMPRIMIR Y PREVISUALIZAR FOTO EN EL CHAT DM
     window.previewDmPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -1564,18 +1803,20 @@
       if (bar) bar.classList.remove('active');
     };
 
+    function getAllKnownHandles() {
+      const setH = new Set(Object.keys(usersMap));
+      livePosts.forEach(p => { if (p.handle) setH.add(p.handle); });
+      setH.delete('ARGON_OFICIAL');
+      return Array.from(setH);
+    }
+
     function renderDmModal() {
       const contactsBar = document.getElementById('dmContactsBar');
       const messagesBox = document.getElementById('dmMessagesBox');
       const titleEl = document.getElementById('dmTargetTitle');
       const subEl = document.getElementById('dmTargetSubtitle');
 
-      const otherUsers = Object.keys(usersMap).filter(h => h !== currentUser.userHandle);
-      livePosts.forEach(p => {
-        if (p.handle && p.handle !== currentUser.userHandle && !otherUsers.includes(p.handle)) {
-          otherUsers.push(p.handle);
-        }
-      });
+      const otherUsers = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
 
       if (!activeDmPartner && otherUsers.length > 0) {
         activeDmPartner = otherUsers[0];
@@ -1598,8 +1839,8 @@
         return;
       }
 
-      titleEl.textContent = 'Chat privado con @' + activeDmPartner;
-      subEl.textContent = 'Texto y fotos en tiempo real';
+      titleEl.innerHTML = `Chat con <span style="text-decoration:underline; cursor:pointer;" onclick="window.closeDirectMessages(); window.openUserProfile('${activeDmPartner}');">@${activeDmPartner}</span>`;
+      subEl.textContent = 'Toca su @usuario arriba para ver su perfil';
 
       const conversation = allDirectMessages.filter(m =>
         (m.from === currentUser.userHandle && m.to === activeDmPartner) ||
@@ -1663,28 +1904,54 @@
 
       const myDoc = usersMap[currentUser.userHandle] || {};
       const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
-      const fromScan = [];
-      Object.values(usersMap).forEach(u => {
-        if (Array.isArray(u.subscribedTo) && u.subscribedTo.includes(currentUser.userHandle)) {
-          fromScan.push(u.userHandle);
-        }
-      });
-      const combined = Array.from(new Set([...fromDoc, ...fromScan]));
+      const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
+      const combined = Array.from(new Set([...fromDoc, ...allKnown]));
 
       if (combined.length === 0) {
-        box.innerHTML = `<span style="color:#94a3b8;">Tus nuevos suscriptores aparecerán aquí con botón directo de mensaje.</span>`;
+        box.innerHTML = `<span style="color:#94a3b8;">Aún no hay otros miembros visibles.</span>`;
         return;
       }
 
-      box.innerHTML = combined.map(h => `
-        <span class="subscriber-chip" onclick="window.openDirectMessages('${h}')">
-          ✉️ @${h}
-        </span>
-      `).join('');
+      box.innerHTML = combined.map(h => {
+        const isSubToMe = fromDoc.includes(h);
+        return `
+          <span class="subscriber-chip" onclick="window.openUserProfile('${h}')">
+            👤 @${h} ${isSubToMe ? '✓' : ''}
+          </span>
+        `;
+      }).join('');
     }
 
+    // BOTÓN DE ADMIN PARA VINCULAR A TODOS LOS USUARIOS EXISTENTES (COMO @STR4WBERRY) A @BELTO43
+    window.adminSyncAllToFounder = async function() {
+      if (!isUserAdmin()) return;
+      const allHandles = getAllKnownHandles().filter(h => h !== FOUNDER_HANDLE);
+      if (allHandles.length === 0) {
+        showToast('No hay otros usuarios para vincular aún');
+        return;
+      }
+      try {
+        for (const h of allHandles) {
+          await setDoc(doc(db, "users", h), {
+            userHandle: h,
+            subscribedTo: arrayUnion(FOUNDER_HANDLE)
+          }, { merge: true });
+        }
+        await setDoc(doc(db, "users", FOUNDER_HANDLE), {
+          subs: allHandles.length,
+          subscribersList: arrayUnion(...allHandles)
+        }, { merge: true });
+        showToast(`✓ ${allHandles.length} miembros suscritos a @${FOUNDER_HANDLE}`);
+      } catch (e) {
+        showToast('Error al sincronizar suscriptores');
+      }
+    };
+
     function renderAdminAndLeaderboard() {
-      const allUsers = Object.values(usersMap).sort((a, b) => (b.subs || 0) - (a.subs || 0));
+      const allHandles = getAllKnownHandles();
+      const allUsers = allHandles.map(h => {
+        return Object.assign({ userHandle: h, userName: h, subs: 0, balance: 5000 }, usersMap[h] || {});
+      }).sort((a, b) => (b.subs || 0) - (a.subs || 0));
 
       const rankBox = document.getElementById('liveLeaderboardList');
       if (rankBox) {
@@ -1692,17 +1959,16 @@
           rankBox.innerHTML = '<div style="font-size:12px; color:#94a3b8;">Cargando creadores...</div>';
         } else {
           rankBox.innerHTML = allUsers.slice(0, 15).map((u, idx) => `
-            <div class="tier-item">
+            <div class="tier-item" style="cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
               <div style="display:flex; align-items:center; gap:10px;">
                 <span style="font-size:12px; font-weight:900; color:#94a3b8;">#${idx + 1}</span>
                 <div>
-                  <div style="font-size:12px; font-weight:800; color:#fff;">@${u.userHandle || 'USER'}</div>
-                  <div style="font-size:10px; color:#94a3b8;">${u.userName || ''}</div>
+                  <div style="font-size:12px; font-weight:800; color:#fff;">@${u.userHandle}</div>
+                  <div style="font-size:10px; color:#94a3b8;">${u.userName || ''} • Ver Perfil</div>
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:12px; font-weight:800; color:#34d399;">${(u.subs || 0).toLocaleString()} Subs</span>
-                ${u.userHandle !== currentUser.userHandle ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${u.userHandle}')">✉️</button>` : ''}
               </div>
             </div>
           `).join('');
@@ -1721,12 +1987,12 @@
 
       dirBox.innerHTML = allUsers.map(u => {
         const subsList = Array.isArray(u.subscribersList) ? u.subscribersList : [];
-        const subsNames = subsList.length > 0 ? `Suscriptores: @${subsList.join(', @')}` : 'Sin lista detallada aún';
+        const subsNames = subsList.length > 0 ? `Suscriptores: @${subsList.join(', @')}` : 'Toca para abrir su perfil';
         return `
           <div class="admin-user-row">
-            <div style="min-width:0; flex:1;">
-              <div style="font-size:13px; font-weight:800; color:#fff;">
-                @${u.userHandle} <span style="font-size:11px; color:#94a3b8; font-weight:600;">(${u.userName || ''})</span>
+            <div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
+              <div style="font-size:13px; font-weight:800; color:#fff; text-decoration:underline;">
+                👤 @${u.userHandle} <span style="font-size:11px; color:#94a3b8; font-weight:600;">(${u.userName || ''})</span>
               </div>
               <div style="font-size:11px; color:#34d399; font-weight:700; margin-top:2px;">
                 ${(u.subs || 0).toLocaleString()} Suscriptores • ${(u.balance || 0).toLocaleString()} AC
@@ -1736,8 +2002,9 @@
               </div>
             </div>
             <div style="display:flex; gap:5px;">
-              <button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')">✉️ DM</button>
-              <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K AC</button>
+              <button class="btn-mini-admin" onclick="window.openUserProfile('${u.userHandle}')">Perfil</button>
+              <button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')">✉️</button>
+              <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K</button>
             </div>
           </div>
         `;
@@ -1796,8 +2063,6 @@
             } catch (err) {
               showToast('Foto guardada en tu perfil');
             }
-          } else {
-            showToast('Foto lista para tu cuenta');
           }
         };
         img.src = e.target.result;
@@ -1829,6 +2094,7 @@
       reader.readAsDataURL(file);
     };
 
+    // REGISTRO DE CUENTA REAL + AUTO-SUSCRIPCIÓN AUTOMÁTICA A QUIEN ENVIÓ EL LINK
     window.completeRegistration = async function() {
       const rawName = document.getElementById('regName').value.trim();
       const rawHandle = document.getElementById('regHandle').value.trim();
@@ -1843,6 +2109,13 @@
       currentUser.userHandle = cleanHandle;
       currentUser.registered = true;
 
+      const inviter = (invitedByParam && invitedByParam !== cleanHandle) ? invitedByParam : '';
+      const initialSubscribedTo = inviter ? [inviter] : [];
+      const initialBalance = inviter ? 5010 : 5000;
+
+      currentUser.subscribedTo = initialSubscribedTo;
+      currentUser.balance = initialBalance;
+
       document.getElementById('onboardingScreen').classList.add('hidden');
       saveLocalSession();
       updateUI();
@@ -1855,23 +2128,33 @@
             userName: cleanName,
             userHandle: cleanHandle,
             avatar: currentUser.avatar || '',
-            balance: 5000,
+            balance: initialBalance,
             subs: 0,
             subscribersList: [],
-            subscribedTo: [],
+            subscribedTo: initialSubscribedTo,
+            invitedBy: inviter,
             rewarded1k: false,
             createdAt: Date.now()
           });
+
+          // Auto-suscribir automáticamente al creador que envió el link (o a BELTO43)
+          if (inviter) {
+            await setDoc(doc(db, "users", inviter), {
+              subs: increment(1),
+              subscribersList: arrayUnion(cleanHandle)
+            }, { merge: true });
+          }
         } else {
           const data = snap.data();
-          currentUser.balance = data.balance ?? 5000;
+          currentUser.balance = data.balance ?? initialBalance;
           currentUser.subs = data.subs ?? 0;
           currentUser.avatar = currentUser.avatar || data.avatar || '';
+          currentUser.subscribedTo = data.subscribedTo || initialSubscribedTo;
           saveLocalSession();
           updateUI();
         }
         listenToMyUserDoc(cleanHandle);
-        showToast('Cuenta @' + cleanHandle + ' activa en vivo');
+        showToast(inviter ? `¡Bienvenido! Auto-suscrito a @${inviter} (+10 AC)` : `Cuenta @${cleanHandle} activa`);
       } catch (err) {
         showToast('Error al sincronizar con Firebase');
       }
@@ -1885,6 +2168,7 @@
           currentUser.balance = data.balance ?? currentUser.balance;
           currentUser.subs = data.subs ?? currentUser.subs;
           currentUser.subscribersList = data.subscribersList || [];
+          currentUser.subscribedTo = data.subscribedTo || currentUser.subscribedTo || [];
           if (data.avatar) currentUser.avatar = data.avatar;
           if (currentUser.subs >= 1000 && !data.rewarded1k) {
             updateDoc(doc(db, "users", handle), {
@@ -1908,6 +2192,7 @@
         renderFeed();
         renderMySubscribers();
         renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
       });
 
       const qPosts = query(collection(db, "posts"), orderBy("createdAt", "desc"));
@@ -1918,6 +2203,8 @@
         });
         renderFeed();
         renderAdminAndLeaderboard();
+        updateUI();
+        if (viewedPublicHandle) renderPublicProfileModal();
       });
 
       const qMsgs = query(collection(db, "messages"), orderBy("createdAt", "asc"));
@@ -1983,6 +2270,7 @@
     window.toggleCommentsDrawer = function(postId) {
       openCommentDrawers[postId] = !openCommentDrawers[postId];
       renderFeed();
+      if (viewedPublicHandle) renderPublicProfileModal();
     };
 
     window.submitComment = async function(postId) {
@@ -2014,103 +2302,120 @@
       }
     };
 
+    function buildPostCardElement(post) {
+      const card = document.createElement('article');
+      card.className = 'post-card';
+
+      const isOwn = post.handle === currentUser.userHandle;
+      const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
+      const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
+      const userDoc = usersMap[post.handle] || {};
+      const authorSubs = userDoc.subs ? userDoc.subs : 0;
+      const authorAvatar = userDoc.avatar || post.avatar || (isOwn ? currentUser.avatar : '');
+
+      const avatarInnerHtml = authorAvatar
+        ? `<img src="${authorAvatar}" alt="${post.handle}" />`
+        : (post.initials || post.handle.slice(0, 2) || 'AR');
+
+      const subBtnLabel = isOwn
+        ? 'Mi Perfil'
+        : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
+      const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
+
+      const dmQuickBtn = (!isOwn && post.id !== 'welcome')
+        ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar Mensaje Directo">✉️</button>`
+        : '';
+
+      const adminDeleteBtn = (isUserAdmin() && post.id !== 'welcome')
+        ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
+        : '';
+
+      const imgHtml = post.image
+        ? `<img class="post-image" src="${post.image}" alt="${post.handle}" onclick="window.openPhotoLightbox('${post.image}')" />`
+        : '';
+
+      const commentsArr = Array.isArray(post.comments) ? post.comments : [];
+      const isDrawerOpen = !!openCommentDrawers[post.id];
+
+      const commentsListHtml = commentsArr.length > 0
+        ? commentsArr.map(c => `
+            <div class="comment-row">
+              <div><strong onclick="window.openUserProfile('${c.author}')">@${c.author}</strong> ${c.text}</div>
+            </div>
+          `).join('')
+        : `<div style="font-size:11px; color:#64748b; margin-bottom:6px;">Sin comentarios aún. Sé el primero en comentar.</div>`;
+
+      card.innerHTML = `
+        <div class="post-header">
+          <div class="post-user-left" onclick="window.openUserProfile('${post.handle}')" title="Toca para ver el perfil de @${post.handle}">
+            <div class="avatar-circle">${avatarInnerHtml}</div>
+            <div class="user-meta">
+              <div class="user-handle">@${post.handle}</div>
+              <div class="user-subs-line">${authorSubs.toLocaleString()} Suscriptores • Ver Perfil</div>
+            </div>
+          </div>
+          <div class="sub-action-Wrap">
+            ${dmQuickBtn}
+            <button class="${subBtnClass}" onclick="${isOwn ? `window.openUserProfile('${post.handle}')` : `window.toggleSubscribe('${post.handle}')`}">${subBtnLabel}</button>
+            ${adminDeleteBtn}
+          </div>
+        </div>
+        ${imgHtml}
+        <div class="post-actions">
+          <div class="post-actions-left">
+            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
+            <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">💬 Comentar (<span>${commentsArr.length}</span>)</button>
+            <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ (<span>${post.shares || 0}</span>)</button>
+          </div>
+        </div>
+        <div class="post-body">
+          <div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${post.handle}</strong> ${post.caption || ''}</div>
+
+          <div class="comments-drawer ${isDrawerOpen ? 'open' : ''}">
+            ${commentsListHtml}
+            <div class="comment-input-wrap">
+              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." />
+              <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
+            </div>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
     function renderFeed() {
       const container = document.getElementById('feedContainer');
-      container.innerHTML = '';
+      if (container) {
+        container.innerHTML = '';
+        const postsToShow = livePosts.length > 0 ? livePosts : [
+          {
+            id: 'welcome',
+            handle: 'BELTO43',
+            initials: 'AL',
+            image: '',
+            caption: 'Bienvenidos a ARGON. Toca el nombre o foto de cualquier persona para entrar a su perfil completo, comentar o enviarle mensajes directos.',
+            likes: 1,
+            shares: 0,
+            comments: []
+          }
+        ];
+        postsToShow.forEach(post => {
+          container.appendChild(buildPostCardElement(post));
+        });
+      }
 
-      const postsToShow = livePosts.length > 0 ? livePosts : [
-        {
-          id: 'welcome',
-          handle: 'ARGON_OFICIAL',
-          initials: 'AR',
-          image: '',
-          caption: 'Bienvenido al tráfico en tiempo real de ARGON. Publica tu primera foto o estado, suma +10 A-Coins al suscribirte a otros miembros y llega a 1,000 suscriptores para desbloquear +10,000 A-Coins.',
-          likes: 1,
-          shares: 0,
-          comments: []
+      const myWall = document.getElementById('myOwnPostsWall');
+      if (myWall) {
+        const mine = livePosts.filter(p => p.handle === currentUser.userHandle);
+        if (mine.length === 0) {
+          myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#94a3b8;">Aún no has subido publicaciones a tu muro.</div>`;
+        } else {
+          myWall.innerHTML = '';
+          mine.forEach(post => {
+            myWall.appendChild(buildPostCardElement(post));
+          });
         }
-      ];
-
-      postsToShow.forEach(post => {
-        const card = document.createElement('article');
-        card.className = 'post-card';
-
-        const isOwn = post.handle === currentUser.userHandle;
-        const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
-        const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
-        const userDoc = usersMap[post.handle] || {};
-        const authorSubs = userDoc.subs ? userDoc.subs : 0;
-        const authorAvatar = userDoc.avatar || post.avatar || (isOwn ? currentUser.avatar : '');
-
-        const avatarInnerHtml = authorAvatar
-          ? `<img src="${authorAvatar}" alt="${post.handle}" />`
-          : (post.initials || 'AR');
-
-        const subBtnLabel = isOwn
-          ? 'Tu Perfil'
-          : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
-        const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
-
-        const dmQuickBtn = (!isOwn && post.id !== 'welcome')
-          ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar Mensaje Directo">✉️</button>`
-          : '';
-
-        const adminDeleteBtn = (isUserAdmin() && post.id !== 'welcome')
-          ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
-          : '';
-
-        const imgHtml = post.image
-          ? `<img class="post-image" src="${post.image}" alt="${post.handle}" />`
-          : '';
-
-        const commentsArr = Array.isArray(post.comments) ? post.comments : [];
-        const isDrawerOpen = !!openCommentDrawers[post.id];
-
-        const commentsListHtml = commentsArr.length > 0
-          ? commentsArr.map(c => `
-              <div class="comment-row">
-                <div><strong>@${c.author}</strong> ${c.text}</div>
-              </div>
-            `).join('')
-          : `<div style="font-size:11px; color:#64748b; margin-bottom:6px;">Sin comentarios aún. Sé el primero en comentar.</div>`;
-
-        card.innerHTML = `
-          <div class="post-header">
-            <div class="post-user-left">
-              <div class="avatar-circle">${avatarInnerHtml}</div>
-              <div class="user-meta">
-                <div class="user-handle">@${post.handle}</div>
-                <div class="user-subs-line">${authorSubs.toLocaleString()} Suscriptores</div>
-              </div>
-            </div>
-            <div class="sub-action-Wrap">
-              ${dmQuickBtn}
-              <button class="${subBtnClass}" onclick="window.toggleSubscribe('${post.handle}')">${subBtnLabel}</button>
-              ${adminDeleteBtn}
-            </div>
-          </div>
-          ${imgHtml}
-          <div class="post-actions">
-            <div class="post-actions-left">
-              <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
-              <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">💬 Comentar (<span>${commentsArr.length}</span>)</button>
-              <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ (<span>${post.shares || 0}</span>)</button>
-            </div>
-          </div>
-          <div class="post-body">
-            <div class="post-caption"><strong>@${post.handle}</strong> ${post.caption || ''}</div>
-
-            <div class="comments-drawer ${isDrawerOpen ? 'open' : ''}">
-              ${commentsListHtml}
-              <div class="comment-input-wrap">
-                <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." />
-                <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
-              </div>
-            </div>
-          </div>
-        `;
-        container.appendChild(card);
-      });
+      }
     }
 
     window.toggleSubscribe = async function(targetHandle) {
@@ -2129,6 +2434,7 @@
       saveLocalSession();
       updateUI();
       renderFeed();
+      if (viewedPublicHandle) renderPublicProfileModal();
       showToast('+10 A-Coins acreditadas por suscribirte a @' + targetHandle);
 
       try {
@@ -2155,28 +2461,36 @@
       } catch (e) {}
     };
 
+    function getMyInviteUrl() {
+      const base = window.location.origin + window.location.pathname;
+      const myH = currentUser.userHandle || FOUNDER_HANDLE;
+      return `${base}?ref=${encodeURIComponent(myH)}`;
+    }
+
     window.sharePost = async function(handle, postId) {
       if (postId && postId !== 'welcome') {
         try { await updateDoc(doc(db, "posts", postId), { shares: increment(1) }); } catch (e) {}
       }
+      const shareUrl = getMyInviteUrl();
       if (navigator.share) {
-        navigator.share({ title: 'ARGON', text: 'Sígueme en ARGON (@' + handle + ')', url: window.location.href }).catch(() => {});
+        navigator.share({ title: 'ARGON', text: 'Entra al perfil de @' + handle + ' en ARGON:', url: shareUrl }).catch(() => {});
       } else {
-        navigator.clipboard && navigator.clipboard.writeText(window.location.href);
-        showToast('Link de invitación copiado');
+        navigator.clipboard && navigator.clipboard.writeText(shareUrl);
+        showToast('Link con auto-suscripción copiado');
       }
     };
 
     window.shareMyProfileLink = function() {
+      const shareUrl = getMyInviteUrl();
       if (navigator.share) {
         navigator.share({
           title: 'ARGON • @' + currentUser.userHandle,
-          text: 'Suscríbete a mi cuenta @' + currentUser.userHandle + ' en ARGON y recibe +10 A-Coins.',
-          url: window.location.href
+          text: 'Entra a ARGON con mi link oficial y quedarás suscrito a @' + currentUser.userHandle + ' con +5,010 A-Coins:',
+          url: shareUrl
         }).catch(() => {});
       } else {
-        navigator.clipboard && navigator.clipboard.writeText(window.location.href);
-        showToast('Link de invitación copiado');
+        navigator.clipboard && navigator.clipboard.writeText(shareUrl);
+        showToast('Link con auto-suscripción copiado');
       }
     };
 
@@ -2193,6 +2507,7 @@
     };
 
     window.switchTab = function(tab) {
+      window.closePublicProfile();
       ['boveda', 'feed', 'ranking', 'perfil', 'admin'].forEach(t => {
         const v = document.getElementById('view-' + t);
         const n = document.getElementById('nav-' + t);
