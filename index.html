@@ -12,7 +12,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ARGON" />
-  <link rel="apple-touch-icon" href="https://placehold.co/192x192/050507/10b981.png?text=ARGON" />
+  <link rel="apple-touch-icon" href="https://res.cloudinary.com/gsnwa8d1/image/upload/w_192,h_192,c_fill/sample.png" />
 
   <style>
     :root {
@@ -2150,6 +2150,20 @@
           </div>
         </div>
 
+        <!-- GENERADOR OFICIAL DEL LOGO 512x512 PARA MANIFEST Y GOOGLE PLAY -->
+        <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.35); border-radius:14px; padding:12px; margin-bottom:14px;">
+          <div style="font-size:12px; font-weight:900; color:#34d399; margin-bottom:4px;">
+            🛡️ LOGO OFICIAL 512x512 (GOOGLE PLAY & CELULAR)
+          </div>
+          <div style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">
+            Toca abajo para generar el logo de la Corona de ARGON en 512x512 PNG, subirlo a tu Cloudinary y obtener el link oficial para tu manifest.json:
+          </div>
+          <button class="btn-primary-platinum" style="margin-top:0; background:linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);" onclick="window.generateAndUploadOfficialIcon()">
+            👑 GENERAR Y SUBIR LOGO 512x512 AHORA
+          </button>
+          <input type="text" id="generatedIconUrlBox" class="input-field" style="display:none; margin-top:10px; margin-bottom:0; font-size:11px; color:#34d399;" readonly onclick="this.select()" />
+        </div>
+
         <button class="btn-primary-platinum" style="margin-bottom:14px; background:linear-gradient(180deg, #34d399 0%, #10b981 100%);" onclick="window.adminSyncAllToFounder()">
           ⚡ VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)
         </button>
@@ -2273,6 +2287,77 @@
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
 
+    // FUNCIÓN QUE DIBUJA EL LOGO OFICIAL 512x512 PNG Y LO SUBE A CLOUDINARY
+    window.generateAndUploadOfficialIcon = async function() {
+      showToast('Dibujando logo oficial 512x512...');
+      const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 100 100">
+        <rect width="100" height="100" rx="22" fill="#050507"/>
+        <polygon points="50,6 91,28 91,72 50,94 9,72 9,28" fill="#0d0f15" stroke="#e2e8f0" stroke-width="3"/>
+        <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
+          <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="#ffffff" />
+          <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="#cbd5e1" />
+          <circle cx="30" cy="12.5" r="2.3" fill="#10b981" />
+          <circle cx="50" cy="7.5" r="2.6" fill="#10b981" />
+          <circle cx="70" cy="12.5" r="2.3" fill="#10b981" />
+        </g>
+        <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="#ffffff" />
+        <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#10b981" />
+      </svg>`;
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, 512, 512);
+        URL.revokeObjectURL(url);
+
+        canvas.toBlob(async (pngBlob) => {
+          // 1. Descarga local de respaldo (icon.png)
+          const dlLink = document.createElement('a');
+          dlLink.href = URL.createObjectURL(pngBlob);
+          dlLink.download = 'icon.png';
+          document.body.appendChild(dlLink);
+          dlLink.click();
+          document.body.removeChild(dlLink);
+
+          // 2. Subida automática a Cloudinary para obtener link PNG permanente
+          try {
+            const fd = new FormData();
+            fd.append('file', pngBlob, 'argon_icon_512.png');
+            fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+              method: 'POST',
+              body: fd
+            });
+            const data = await res.json();
+            if (data && data.secure_url) {
+              const box = document.getElementById('generatedIconUrlBox');
+              if (box) {
+                box.style.display = 'block';
+                box.value = data.secure_url;
+              }
+              if (navigator.clipboard) {
+                navigator.clipboard.writeText(data.secure_url).catch(() => {});
+              }
+              showToast('✓ ¡Logo subido y link copiado!');
+            } else {
+              showToast('✓ Logo icon.png descargado en tu celular');
+            }
+          } catch (e) {
+            showToast('✓ Logo icon.png descargado en tu celular');
+          }
+        }, 'image/png');
+      };
+      img.src = url;
+    };
+
     const firebaseConfig = {
       apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
       authDomain: "argon-ab4fe.firebaseapp.com",
@@ -2353,7 +2438,6 @@
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
 
-    // CARRUSEL Y REPRODUCTOR DE SHORTS VERTICALES
     function getShortVideoPosts() {
       const vids = livePosts.filter(p => !!(p.video || p.videoId));
       return vids.length > 0 ? vids : livePosts.filter(p => !!(p.video || p.videoId || p.image));
@@ -2438,7 +2522,6 @@
       renderActiveShortInPlayer();
     };
 
-    // Deslizar hacia arriba/abajo con el dedo en el reproductor de Shorts
     let touchStartY = 0;
     const stageArea = document.getElementById('shortsStageArea');
     if (stageArea) {
