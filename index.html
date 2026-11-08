@@ -34,6 +34,10 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     }
 
+    html, body {
+      overscroll-behavior-y: none;
+    }
+
     body {
       background-color: var(--bg-obsidian);
       color: #f8fafc;
@@ -54,6 +58,33 @@
       padding-bottom: 90px;
       border-left: 1px solid rgba(255, 255, 255, 0.06);
       border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* INDICADOR BURSÁTIL EN VIVO */
+    .live-ticker-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 999px;
+      letter-spacing: 0.8px;
+      transition: all 0.3s ease;
+    }
+
+    .live-ticker-badge.up {
+      background: rgba(16, 185, 129, 0.16);
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      color: #34d399;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
+    }
+
+    .live-ticker-badge.down {
+      background: rgba(244, 63, 94, 0.16);
+      border: 1px solid rgba(244, 63, 94, 0.45);
+      color: #fb7185;
+      box-shadow: 0 0 14px rgba(244, 63, 94, 0.25);
     }
 
     /* 1. PANTALLA DE CARGA: CARGANDO BÓVEDA */
@@ -152,7 +183,7 @@
       font-weight: 700;
     }
 
-    /* 2. PANTALLA DE TARJETA METÁLICA VIP 3D (CREA TU IDENTIDAD DE IMPERIO) */
+    /* 2. PANTALLA DE BIENVENIDA */
     .onboarding-overlay {
       position: fixed;
       inset: 0;
@@ -492,6 +523,7 @@
       font-size: 13px;
       font-weight: 800;
       color: #fff;
+      font-variant-numeric: tabular-nums;
     }
 
     .wallet-label {
@@ -651,7 +683,7 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.9);
     }
 
-    /* REPRODUCTOR DE SHORTS A PANTALLA COMPLETA (TIKTOK / REELS) */
+    /* REPRODUCTOR DE SHORTS A PANTALLA COMPLETA */
     .shorts-fullscreen-modal {
       position: fixed;
       inset: 0;
@@ -805,39 +837,6 @@
       background: linear-gradient(90deg, #94a3b8 0%, #ffffff 60%, #10b981 100%);
       border-radius: 999px;
       transition: width 0.35s ease;
-    }
-
-    .vault-center {
-      text-align: center;
-      padding: 24px 14px;
-    }
-
-    .hex-coin-wrap {
-      width: 148px;
-      height: 148px;
-      margin: 10px auto 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.85));
-    }
-
-    .vault-balance-num {
-      font-size: 40px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      background: linear-gradient(180deg, #ffffff 15%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .vault-balance-sub {
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: #94a3b8;
-      font-weight: 700;
-      margin-top: 4px;
-      margin-bottom: 14px;
     }
 
     .badge-active {
@@ -1912,7 +1911,7 @@
       </div>
     </div>
 
-    <!-- 2. PANTALLA DE BIENVENIDA CON TARJETA METÁLICA VIP 3D -->
+    <!-- 2. PANTALLA DE BIENVENIDA PARA NUEVOS USUARIOS -->
     <div id="onboardingScreen" class="onboarding-overlay hidden">
       <div class="vip-onboarding-wrap">
         <svg class="vip-top-crown" viewBox="0 0 100 60">
@@ -1930,7 +1929,7 @@
 
         <div id="referralWelcomeBanner" style="font-size:11.5px; color:#34d399; font-weight:800; margin-bottom:12px;"></div>
 
-        <!-- TARJETA METÁLICA 3D -->
+        <!-- TARJETA METÁLICA 3D DE REGISTRO -->
         <div class="vip-metal-card-stage">
           <div class="vip-metal-card">
             <div class="vip-card-top-row">
@@ -1970,15 +1969,7 @@
         </div>
 
         <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">
-          ACTIVAR MI PASE VIP &gt;
-        </button>
-
-        <button
-          id="closeVipPreviewBtn"
-          style="display:none; margin-top:12px; background:none; border:none; color:#94a3b8; font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;"
-          onclick="document.getElementById('onboardingScreen').classList.add('hidden')"
-        >
-          Volver a mi cuenta activa
+          ENTRAR A ARGON &gt;
         </button>
       </div>
     </div>
@@ -2153,7 +2144,7 @@
       </div>
     </header>
 
-    <!-- 1. BÓVEDA -->
+    <!-- 1. BÓVEDA CON TARJETA METÁLICA 3D Y NÚMERO EN VIVO -->
     <section id="view-boveda" class="view-section">
       <div class="glass-card">
         <div class="progress-header">
@@ -2168,18 +2159,45 @@
         </div>
       </div>
 
-      <div class="glass-card vault-center">
-        <div style="font-size:11px; font-weight:800; letter-spacing:2px; color:#94a3b8;">BÓVEDA CENTRAL ARGON</div>
-        <div class="hex-coin-wrap">
-          <svg width="144" height="144" viewBox="0 0 120 120">
-            <polygon points="60,5 110,32 110,88 60,115 10,88 10,32" fill="#0d0f15" stroke="url(#platGrad)" stroke-width="4" />
-            <polygon points="60,13 102,36 102,84 60,107 18,84 18,36" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" />
-            <use href="#argon-crown-a" x="21" y="16" width="78" height="78"></use>
-          </svg>
+      <!-- TARJETA METÁLICA OFICIAL DE LA BÓVEDA -->
+      <div class="vip-metal-card-stage" style="margin: 18px 0 22px; padding: 0 4px;">
+        <div class="vip-metal-card" id="vaultMetalCard">
+          <div class="vip-card-top-row">
+            <div class="vip-card-brand">
+              <svg width="30" height="20" viewBox="0 0 100 60">
+                <use href="#argon-crown-only"></use>
+              </svg>
+              <span class="vip-card-brand-txt">ARGON</span>
+            </div>
+            <div class="vip-emv-chip">A</div>
+          </div>
+
+          <!-- NÚMERO BURSÁTIL VIVO GRABADO EN EL METAL -->
+          <div style="text-align:center; padding: 6px 0 10px;">
+            <div style="font-size:10px; font-weight:800; letter-spacing:2.5px; color:#94a3b8; margin-bottom:4px;">
+              BÓVEDA CENTRAL • A-COINS
+            </div>
+            <div id="vaultBigBalance" style="font-size:36px; font-weight:900; letter-spacing:1.5px; color:#ffffff; text-shadow: 0 3px 6px rgba(0,0,0,0.95), 0 -1px 1px rgba(255,255,255,0.4); font-variant-numeric: tabular-nums;">
+              5,000
+            </div>
+            <div style="margin-top:6px;">
+              <span id="vaultLiveTicker" class="live-ticker-badge up">▲ +10 AC • EN VIVO</span>
+            </div>
+          </div>
+
+          <!-- IDENTIDAD GRABADA EN RELIEVE -->
+          <div id="vaultCardEngravedName" class="vip-engraved-preview" style="font-size:19px; padding:4px 0 2px;">
+            ALBERTO SOTO
+          </div>
+          <div id="vaultCardEngravedHandle" style="text-align:center; font-size:11px; font-weight:800; letter-spacing:2px; color:#34d399; margin-bottom:4px;">
+            @BELTO43
+          </div>
+
+          <div class="vip-card-bonus-lip">
+            <span class="live-dot" style="margin-right:4px;"></span>
+            <span>Bóveda conectada en tiempo real</span>
+          </div>
         </div>
-        <div class="vault-balance-num" id="vaultBigBalance">5,000</div>
-        <div class="vault-balance-sub">A-COINS DISPONIBLES</div>
-        <div class="badge-active">✓ CONECTADO EN TIEMPO REAL</div>
       </div>
 
       <div class="glass-card">
@@ -2194,7 +2212,7 @@
           </button>
           <button class="pack-btn vip" onclick="window.buyPack(3500, '$4.99')">
             <span class="pack-ac">+3,500 AC</span>
-            <span class="pack-price">$4.99 • VIP</span>
+            <span class="pack-price">$4.99</span>
           </button>
           <button class="pack-btn" onclick="window.buyPack(12000, '$14.99')">
             <span class="pack-ac">+12,000 AC</span>
@@ -2299,7 +2317,7 @@
       </div>
     </section>
 
-    <!-- 4. MI PERFIL (SIN BOTÓN VERDE DE DESCARGAR APP) -->
+    <!-- 4. MI PERFIL LIMPIO -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2336,13 +2354,6 @@
 
         <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
-        </button>
-
-        <button
-          style="margin-top:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); color:#cbd5e1; width:100%; padding:10px; border-radius:12px; font-size:11.5px; font-weight:800; cursor:pointer;"
-          onclick="window.openVipCardPreview()"
-        >
-          💳 VER MI TARJETA METÁLICA VIP
         </button>
       </div>
 
@@ -2491,6 +2502,7 @@
     let pendingDeletePostId = '';
     const videoBlobCache = {};
     let currentShortIndex = 0;
+    let previousLiveBalance = null;
 
     let currentUser = {
       registered: false,
@@ -2512,25 +2524,11 @@
       refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
     }
 
-    // GRABADO EN VIVO EN LA TARJETA METÁLICA VIP
+    // GRABADO EN VIVO EN LA TARJETA METÁLICA DE BIENVENIDA
     window.updateVipCardPreview = function(val) {
       const clean = (val || '').trim().toUpperCase().replace(/\s+/g, '_');
       const el = document.getElementById('vipEngravedText');
       if (el) el.textContent = clean || 'LEX_ARGON';
-    };
-
-    window.openVipCardPreview = function() {
-      const nameInput = document.getElementById('regName');
-      const handleInput = document.getElementById('regHandle');
-      const engraved = document.getElementById('vipEngravedText');
-      const closeBtn = document.getElementById('closeVipPreviewBtn');
-
-      if (nameInput && currentUser.userName) nameInput.value = currentUser.userName;
-      if (handleInput && currentUser.userHandle) handleInput.value = currentUser.userHandle;
-      if (engraved) engraved.textContent = currentUser.userHandle || currentUser.userName || 'BELTO43';
-      if (closeBtn) closeBtn.style.display = 'inline-block';
-
-      document.getElementById('onboardingScreen').classList.remove('hidden');
     };
 
     // ANIMACIÓN DE CARGANDO BÓVEDA (0% -> 100%) AL ABRIR LA APP
@@ -2586,6 +2584,19 @@
       t.style.display = 'block';
       clearTimeout(window._toastTimer);
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    function animateLiveBalance(el, startVal, endVal, duration = 650) {
+      if (!el) return;
+      const startTime = performance.now();
+      function tick(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(startVal + (endVal - startVal) * eased);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     }
 
     function getShortVideoPosts() {
@@ -2995,11 +3006,41 @@
       if (currentUser.registered) {
         document.getElementById('onboardingScreen').classList.add('hidden');
       }
-      document.getElementById('topBalance').textContent = (currentUser.balance || 0).toLocaleString();
-      document.getElementById('vaultBigBalance').textContent = (currentUser.balance || 0).toLocaleString();
+
+      const newBal = Number(currentUser.balance) || 0;
+      const topBalEl = document.getElementById('topBalance');
+      const vaultBalEl = document.getElementById('vaultBigBalance');
+      const tickerEl = document.getElementById('vaultLiveTicker');
+
+      if (previousLiveBalance !== null && previousLiveBalance !== newBal) {
+        const diff = newBal - previousLiveBalance;
+        const pct = previousLiveBalance > 0 ? ((Math.abs(diff) / previousLiveBalance) * 100).toFixed(2) : '0.01';
+        animateLiveBalance(vaultBalEl, previousLiveBalance, newBal);
+        animateLiveBalance(topBalEl, previousLiveBalance, newBal);
+
+        if (tickerEl) {
+          if (diff > 0) {
+            tickerEl.className = 'live-ticker-badge up';
+            tickerEl.textContent = `▲ +${diff.toLocaleString()} AC (+${pct}%)`;
+          } else {
+            tickerEl.className = 'live-ticker-badge down';
+            tickerEl.textContent = `▼ ${diff.toLocaleString()} AC (-${pct}%)`;
+          }
+        }
+      } else {
+        if (topBalEl) topBalEl.textContent = newBal.toLocaleString();
+        if (vaultBalEl) vaultBalEl.textContent = newBal.toLocaleString();
+      }
+      previousLiveBalance = newBal;
+
       document.getElementById('vaultUserName').textContent = currentUser.userName || 'MI CUENTA';
       document.getElementById('profileName').textContent = currentUser.userName || 'MI CUENTA';
       document.getElementById('profileHandle').textContent = '@' + (currentUser.userHandle || 'USUARIO');
+
+      const cardNameEl = document.getElementById('vaultCardEngravedName');
+      const cardHandleEl = document.getElementById('vaultCardEngravedHandle');
+      if (cardNameEl) cardNameEl.textContent = currentUser.userName || 'ALBERTO SOTO';
+      if (cardHandleEl) cardHandleEl.textContent = '@' + (currentUser.userHandle || 'BELTO43');
 
       const target = currentUser.subs < 1000 ? 1000 : 5000;
       const pct = Math.min(100, Math.round(((currentUser.subs || 0) / target) * 100));
@@ -3860,7 +3901,7 @@
             }, { merge: true });
           }
         }
-        showToast(`👑 Pase VIP activado: Bienvenido @${cleanHandle}`);
+        showToast(`👑 Bienvenido a ARGON @${cleanHandle}`);
       } catch (e) {
         showToast(`👑 Bienvenido a ARGON @${cleanHandle}`);
       }
