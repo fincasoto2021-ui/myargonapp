@@ -3,17 +3,23 @@
   "short_name": "ARGON",
   "description": "ARGON Web Application",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#121212",
+  "background_color": "#050507",
+  "theme_color": "#050507",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/icon (3).png",
+      "src": "/icon%20(3).png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon%20(3).png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
-
