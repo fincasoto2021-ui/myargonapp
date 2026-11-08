@@ -11,22 +11,22 @@
   "theme_color": "#050507",
   "icons": [
     {
-      "src": "https://res.cloudinary.com/gsnwa8d1/image/upload/w_192,h_192,c_fill,b_rgb:050507,r_max/v1/ sample.png",
+      "src": "https://res.cloudinary.com/gsnwa8d1/image/upload/w_192,h_192,c_ pad,b_rgb:050507/l_text:Arial_42_bold:ARGON,co_rgb:10b981/sample.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://placehold.co/192x192/050507/10b981.png?text=ARGON",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://placehold.co/512x512/050507/10b981.png?text=ARGON",
+      "src": "https://res.cloudinary.com/gsnwa8d1/image/upload/w_512,h_512,c_pad,b_rgb:050507/l_text:Arial_110_bold:ARGON,co_rgb:10b981/sample.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "https://res.cloudinary.com/gsnwa8d1/image/upload/w_512,h_512,c_pad,b_rgb:050507/l_text:Arial_110_bold:ARGON,co_rgb:10b981/sample.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
