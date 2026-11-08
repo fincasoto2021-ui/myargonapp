@@ -58,20 +58,6 @@
       border-right: 1px solid #dadde1;
     }
 
-    /* ADAPTACIÓN DE TEXTOS AL TEMA BLANCO */
-    .glass-card [style*="color:#fff"],
-    .post-card [style*="color:#fff"],
-    .dm-sheet [style*="color:#fff"],
-    .upm-inner [style*="color:#fff"] { color: #050505 !important; }
-
-    .glass-card [style*="color:#cbd5e1"],
-    .post-card [style*="color:#cbd5e1"],
-    .dm-sheet [style*="color:#cbd5e1"] { color: #374151 !important; }
-
-    .glass-card [style*="color:#94a3b8"],
-    .post-card [style*="color:#94a3b8"],
-    .dm-sheet [style*="color:#94a3b8"] { color: #65676b !important; }
-
     .live-ticker-badge {
       display: inline-flex;
       align-items: center;
@@ -94,6 +80,25 @@
       background: rgba(244, 63, 94, 0.2);
       border: 1px solid rgba(244, 63, 94, 0.55);
       color: #fb7185;
+    }
+
+    /* BANNER DE VERIFICACIÓN DE EDAD Y EMAIL PENDIENTE */
+    .compliance-alert-bar {
+      background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 100%);
+      border-bottom: 1px solid #f59e0b;
+      padding: 9px 14px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #92400e;
+      cursor: pointer;
+    }
+
+    .compliance-alert-bar.show {
+      display: flex;
     }
 
     /* 1. PANTALLA DE CARGA */
@@ -1523,15 +1528,37 @@
       cursor: pointer;
     }
 
+    /* RANGOS Y LEADERBOARD NÍTIDOS SOBRE BLANCO */
     .tier-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 12px;
       border-radius: 13px;
-      background: #f7f8fa;
-      border: 1px solid #dadde1;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
       margin-bottom: 9px;
+      color: #050505;
+    }
+
+    .rank-title-text {
+      font-size: 13px;
+      font-weight: 900;
+      color: #050505;
+    }
+
+    .rank-sub-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    .rank-reward-text {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #059669;
+      white-space: nowrap;
     }
 
     .btn-primary-platinum {
@@ -1718,7 +1745,7 @@
               id="regEmail"
               class="vip-card-input-box"
               style="font-size:11px; padding:8px 10px; margin-bottom:4px; text-transform:lowercase;"
-              placeholder="CORREO ELECTRÓNICO (VERIFICACIÓN)"
+              placeholder="CORREO ELECTRÓNICO (OBLIGATORIO)"
             />
 
             <div id="vipEngravedText" class="vip-engraved-preview">LEX_ARGON</div>
@@ -1733,13 +1760,49 @@
         <label class="age-compliance-box">
           <input type="checkbox" id="regAgeCheck" />
           <span>
-            Confirmo que soy <strong>mayor de 18 años</strong>, he verificado mi correo electrónico y acepto el
+            Confirmo bajo juramento que soy <strong>mayor de 18 años</strong>, ingreso mi correo electrónico real y acepto el
             <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Reglamento Oficial y Política de Privacidad</span> de ARGON.
           </span>
         </label>
 
         <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">
           ENTRAR A ARGON &gt;
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL DE VERIFICACIÓN REGLAMENTARIA DE CORREO Y EDAD (+18) PARA CUENTAS EXISTENTES -->
+    <div id="ageEmailVerifyModal" class="confirm-modal-overlay">
+      <div class="confirm-card" style="max-width:365px; text-align:left;">
+        <div style="text-align:center; margin-bottom:10px;">
+          <span style="font-size:28px;">🛡️</span>
+          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Verificación Reglamentaria (+18)</div>
+          <div style="font-size:11.5px; color:#65676b; margin-top:3px;">
+            Por normativa oficial de seguridad y Google Play, vincula tu correo electrónico y confirma tu mayoría de edad.
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px;">
+          <label style="font-size:11px; font-weight:800; color:#050505; display:block; margin-bottom:4px;">CORREO ELECTRÓNICO OFICIAL:</label>
+          <input
+            type="email"
+            id="verifyModalEmailInput"
+            class="composer-input"
+            style="width:100%; border-radius:10px; font-size:13px;"
+            placeholder="ejemplo@correo.com"
+          />
+        </div>
+
+        <label class="age-compliance-box" style="margin-bottom:14px;">
+          <input type="checkbox" id="verifyModalAgeCheck" />
+          <span>
+            Certifico que tengo <strong>18 años o más</strong> y acepto el
+            <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Reglamento Oficial</span>.
+          </span>
+        </label>
+
+        <button class="btn-primary-platinum" style="margin-top:0;" onclick="window.saveExistingUserVerification()">
+          ✓ CERTIFICAR MI CUENTA (+18)
         </button>
       </div>
     </div>
@@ -1944,6 +2007,12 @@
       </div>
     </header>
 
+    <!-- BARRA DE AVISO SI FALTA VERIFICAR CORREO Y EDAD (+18) -->
+    <div id="complianceAlertBar" class="compliance-alert-bar" onclick="window.openAgeEmailVerifyModal()">
+      <span>🛡️ Reglamentario: Verifica tu correo y edad (+18)</span>
+      <span style="background:#f59e0b; color:#fff; padding:4px 9px; border-radius:999px; font-size:10px;">Verificar →</span>
+    </div>
+
     <!-- 1. BÓVEDA CON TARJETA METÁLICA 3D Y NÚMERO EN VIVO -->
     <section id="view-boveda" class="view-section">
       <div class="glass-card">
@@ -2073,50 +2142,50 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. RANKING EN VIVO + LOS 5 RANGOS OFICIALES -->
+    <!-- 3. RANKING EN VIVO + LOS 5 RANGOS OFICIALES (TEXTO NÍTIDO SOBRE BLANCO) -->
     <section id="view-ranking" class="view-section">
       <div class="glass-card">
-        <div style="font-size:13px; font-weight:800; margin-bottom:4px; color:#050505;">TOP CREADORES EN TIEMPO REAL</div>
-        <div style="font-size:11px; color:#65676b; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
+        <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">TOP CREADORES EN TIEMPO REAL</div>
+        <div style="font-size:11.5px; color:#475569; font-weight:600; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
         <div id="liveLeaderboardList"></div>
       </div>
 
       <div class="glass-card">
-        <div style="font-size:13px; font-weight:800; margin-bottom:10px; color:#050505;">RANGOS OFICIALES DE IMPERIO ARGON</div>
+        <div style="font-size:14px; font-weight:900; margin-bottom:10px; color:#050505;">RANGOS OFICIALES DE IMPERIO ARGON</div>
         <div class="tier-item">
           <div>
-            <div style="font-size:12px; font-weight:800; color:#050505;">🥉 1,000 Suscriptores • Bronce</div>
-            <div style="font-size:11px; color:#65676b;">Insignia Bronce + Impulso de página en ARGON</div>
+            <div class="rank-title-text">🥉 1,000 Suscriptores • Bronce</div>
+            <div class="rank-sub-text">Insignia Bronce + Impulso de página en ARGON</div>
           </div>
-          <div style="font-size:12px; font-weight:800; color:#059669;">+10,000 AC</div>
+          <div class="rank-reward-text">+10,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div style="font-size:12px; font-weight:800; color:#050505;">⚙️ 5,000 Suscriptores • Titanio</div>
-            <div style="font-size:11px; color:#65676b;">Acceso al Directorio de Patrocinios Comerciales</div>
+            <div class="rank-title-text">⚙️ 5,000 Suscriptores • Titanio</div>
+            <div class="rank-sub-text">Acceso al Directorio de Patrocinios Comerciales</div>
           </div>
-          <div style="font-size:12px; font-weight:800; color:#059669;">+25,000 AC</div>
+          <div class="rank-reward-text">+25,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div style="font-size:12px; font-weight:800; color:#050505;">💿 10,000 Suscriptores • Platino</div>
-            <div style="font-size:11px; color:#65676b;">Elegible para Campañas de Marcas Regionales</div>
+            <div class="rank-title-text">💿 10,000 Suscriptores • Platino</div>
+            <div class="rank-sub-text">Elegible para Campañas de Marcas Regionales</div>
           </div>
-          <div style="font-size:12px; font-weight:800; color:#059669;">+50,000 AC</div>
+          <div class="rank-reward-text">+50,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div style="font-size:12px; font-weight:800; color:#050505;">💎 20,000 Suscriptores • Diamante</div>
-            <div style="font-size:11px; color:#65676b;">Prioridad en Patrocinios Comerciales Premium</div>
+            <div class="rank-title-text">💎 20,000 Suscriptores • Diamante</div>
+            <div class="rank-sub-text">Prioridad en Patrocinios Comerciales Premium</div>
           </div>
-          <div style="font-size:12px; font-weight:800; color:#059669;">+100,000 AC</div>
+          <div class="rank-reward-text">+100,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div style="font-size:12px; font-weight:800; color:#050505;">👑 100,000 Suscriptores • Argon</div>
-            <div style="font-size:11px; color:#65676b;">Socio Oficial • Contratos Directos de Imperio</div>
+            <div class="rank-title-text">👑 100,000 Suscriptores • Argon</div>
+            <div class="rank-sub-text">Socio Oficial • Contratos Directos de Imperio</div>
           </div>
-          <div style="font-size:12px; font-weight:800; color:#059669;">+500,000 AC</div>
+          <div class="rank-reward-text">+500,000 AC</div>
         </div>
       </div>
     </section>
@@ -2140,7 +2209,7 @@
 
         <div style="font-size:18px; font-weight:900; margin-top:6px; color:#050505;" id="profileName">MI CUENTA</div>
         <div style="font-size:12px; color:#059669; font-weight:800; margin-top:2px;" id="profileHandle">@USUARIO</div>
-        <div style="font-size:11px; color:#65676b; margin-top:3px;" id="profileVerifiedEmail"></div>
+        <div style="font-size:11.5px; color:#059669; font-weight:800; margin-top:4px; cursor:pointer;" id="profileVerifiedEmail" onclick="window.openAgeEmailVerifyModal()"></div>
 
         <div class="ig-stats-row">
           <div>
@@ -2166,7 +2235,7 @@
         </button>
 
         <div style="margin-top:12px;">
-          <span style="font-size:11px; color:#65676b; text-decoration:underline; cursor:pointer;" onclick="window.openLegalModal()">
+          <span style="font-size:11px; color:#475569; text-decoration:underline; font-weight:700; cursor:pointer;" onclick="window.openLegalModal()">
             ⚖️ Ver Reglamento Oficial, Edad (+18) y Privacidad
           </span>
         </div>
@@ -2335,17 +2404,66 @@
     let livePosts = [];
     let usersMap = {};
 
+    function pushAppHistoryState() {
+      try {
+        window.history.pushState({ argonInApp: true }, "", window.location.href);
+      } catch (e) {}
+    }
+
     const refBanner = document.getElementById('referralWelcomeBanner');
     if (refBanner && invitedByParam) {
       refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
     }
 
     window.openLegalModal = function() {
+      pushAppHistoryState();
       document.getElementById('legalTermsModal').classList.add('open');
     };
 
     window.closeLegalModal = function() {
       document.getElementById('legalTermsModal').classList.remove('open');
+    };
+
+    window.openAgeEmailVerifyModal = function() {
+      pushAppHistoryState();
+      const inp = document.getElementById('verifyModalEmailInput');
+      const chk = document.getElementById('verifyModalAgeCheck');
+      if (inp) inp.value = currentUser.email || '';
+      if (chk) chk.checked = !!currentUser.ageVerified;
+      document.getElementById('ageEmailVerifyModal').classList.add('open');
+    };
+
+    window.saveExistingUserVerification = async function() {
+      const emailVal = (document.getElementById('verifyModalEmailInput').value || '').trim().toLowerCase();
+      const ageChecked = document.getElementById('verifyModalAgeCheck').checked;
+
+      if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
+        showToast('⚠️ Ingresa un correo electrónico válido');
+        return;
+      }
+      if (!ageChecked) {
+        showToast('⚠️ Debes confirmar que eres mayor de 18 años');
+        return;
+      }
+
+      currentUser.email = emailVal;
+      currentUser.ageVerified = true;
+      saveLocalSession();
+      document.getElementById('ageEmailVerifyModal').classList.remove('open');
+      updateUI();
+
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            email: emailVal,
+            ageVerified: true,
+            updatedAt: Date.now()
+          }, { merge: true });
+          showToast('✓ Correo y mayoría de edad (+18) verificados');
+        } catch (e) {
+          showToast('✓ Verificación guardada');
+        }
+      }
     };
 
     function getUserRankTitle(subsCount) {
@@ -2391,6 +2509,8 @@
             splash.classList.add('hidden');
             if (!currentUser.registered) {
               document.getElementById('onboardingScreen').classList.remove('hidden');
+            } else if (!currentUser.email || !currentUser.ageVerified) {
+              window.openAgeEmailVerifyModal();
             }
           }, 260);
         } else {
@@ -2592,6 +2712,7 @@
         showToast('🎬 Sube el primer Short tocando "+ Subir Short"');
         return;
       }
+      pushAppHistoryState();
       currentShortIndex = Math.max(0, Math.min(index, shortsList.length - 1));
       document.getElementById('shortsFullscreenModal').classList.add('open');
       renderActiveShortInPlayer();
@@ -2707,6 +2828,7 @@
       const isMine = authorHandle === currentUser.userHandle;
       if (!isMine && !isUserAdmin()) return;
 
+      pushAppHistoryState();
       pendingDeletePostId = postId;
       document.getElementById('confirmModalTitle').textContent = '¿Estás seguro?';
       document.getElementById('confirmModalDesc').textContent = isMine
@@ -2796,6 +2918,7 @@
         document.getElementById('onboardingScreen').classList.remove('hidden');
         return;
       }
+      pushAppHistoryState();
       lastSeenNotifTime = Date.now();
       localStorage.setItem('argon_last_notif_ts', String(lastSeenNotifTime));
       const badge = document.getElementById('notifBadge');
@@ -2842,6 +2965,7 @@
 
     window.openPhotoLightbox = function(imgSrc) {
       if (!imgSrc) return;
+      pushAppHistoryState();
       document.getElementById('lightboxImg').src = imgSrc;
       document.getElementById('photoLightbox').classList.add('open');
     };
@@ -2853,6 +2977,7 @@
 
     window.openUserProfile = function(handle) {
       if (!handle) return;
+      pushAppHistoryState();
       const cleanH = handle.replace(/^@/, '').toUpperCase();
       viewedPublicHandle = cleanH;
       document.getElementById('publicProfileModal').classList.add('open');
@@ -2948,6 +3073,12 @@
         document.getElementById('onboardingScreen').classList.add('hidden');
       }
 
+      const alertBar = document.getElementById('complianceAlertBar');
+      if (alertBar) {
+        const needsVerify = currentUser.registered && (!currentUser.email || !currentUser.ageVerified);
+        alertBar.classList.toggle('show', needsVerify);
+      }
+
       const newBal = Number(currentUser.balance) || 0;
       const topBalEl = document.getElementById('topBalance');
       const vaultBalEl = document.getElementById('vaultBigBalance');
@@ -2984,7 +3115,13 @@
 
       const emailEl = document.getElementById('profileVerifiedEmail');
       if (emailEl) {
-        emailEl.textContent = currentUser.email ? `✓ Email verificado (${currentUser.email}) • +18` : '✓ Cuenta verificada (+18)';
+        if (currentUser.email && currentUser.ageVerified) {
+          emailEl.style.color = '#059669';
+          emailEl.textContent = `✓ Email verificado (${currentUser.email}) • +18`;
+        } else {
+          emailEl.style.color = '#d97706';
+          emailEl.textContent = `⚠️ Toca aquí para verificar tu Correo y Edad (+18)`;
+        }
       }
 
       const cardNameEl = document.getElementById('vaultCardEngravedName');
@@ -3021,6 +3158,7 @@
         document.getElementById('onboardingScreen').classList.remove('hidden');
         return;
       }
+      pushAppHistoryState();
       if (partnerHandle && partnerHandle !== currentUser.userHandle) {
         activeDmPartner = partnerHandle;
       }
@@ -3222,19 +3360,19 @@
       const rankBox = document.getElementById('liveLeaderboardList');
       if (rankBox) {
         if (allUsers.length === 0) {
-          rankBox.innerHTML = '<div style="font-size:12px; color:#65676b;">Cargando creadores...</div>';
+          rankBox.innerHTML = '<div style="font-size:12px; color:#475569;">Cargando creadores...</div>';
         } else {
           rankBox.innerHTML = allUsers.slice(0, 15).map((u, idx) => `
             <div class="tier-item" style="cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
               <div style="display:flex; align-items:center; gap:10px;">
-                <span style="font-size:12px; font-weight:900; color:#65676b;">#${idx + 1}</span>
+                <span style="font-size:13px; font-weight:900; color:#059669;">#${idx + 1}</span>
                 <div>
-                  <div style="font-size:12px; font-weight:800; color:#050505;">@${u.userHandle}</div>
-                  <div style="font-size:10px; color:#65676b;">${u.userName || ''} • ${getUserRankTitle(u.subs)}</div>
+                  <div class="rank-title-text">@${u.userHandle}</div>
+                  <div class="rank-sub-text">${u.userName || ''} • ${getUserRankTitle(u.subs)}</div>
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:12px; font-weight:800; color:#059669;">${(u.subs || 0).toLocaleString()} Subs</span>
+                <span class="rank-reward-text">${(u.subs || 0).toLocaleString()} Subs</span>
               </div>
             </div>
           `).join('');
@@ -3253,8 +3391,8 @@
 
       dirBox.innerHTML = allUsers.map(u => {
         const subsList = Array.isArray(u.subscribersList) ? u.subscribersList : [];
-        const emailInfo = u.email ? `✉️ ${u.email} (+18)` : 'Verificado';
-        const subsNames = subsList.length > 0 ? `Suscriptores: @${subsList.join(', @')}` : emailInfo;
+        const emailInfo = u.email ? `✉️ ${u.email} (+18)` : '⚠️ Sin correo verificado';
+        const subsNames = subsList.length > 0 ? `${emailInfo} • Subs: @${subsList.join(', @')}` : emailInfo;
         return `
           <div class="admin-user-row">
             <div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
@@ -3264,7 +3402,7 @@
               <div style="font-size:11px; color:#059669; font-weight:700; margin-top:2px;">
                 ${(u.subs || 0).toLocaleString()} Subs • ${(u.balance || 0).toLocaleString()} AC • ${getUserRankTitle(u.subs)}
               </div>
-              <div style="font-size:10px; color:#65676b; margin-top:2px;">
+              <div style="font-size:10px; color:#475569; margin-top:2px;">
                 ${subsNames}
               </div>
             </div>
@@ -3454,6 +3592,11 @@
     window.publishPost = async function() {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+
+      if (!currentUser.email || !currentUser.ageVerified) {
+        window.openAgeEmailVerifyModal();
         return;
       }
 
@@ -3893,6 +4036,7 @@
     };
 
     window.switchTab = function(tabName) {
+      pushAppHistoryState();
       const views = ['feed', 'boveda', 'ranking', 'perfil', 'admin'];
       views.forEach(v => {
         const sec = document.getElementById(`view-${v}`);
@@ -3914,6 +4058,7 @@
             if (typeof data.subs === 'number') currentUser.subs = data.subs;
             if (data.avatar) currentUser.avatar = data.avatar;
             if (data.email) currentUser.email = data.email;
+            if (typeof data.ageVerified === 'boolean') currentUser.ageVerified = data.ageVerified;
             if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
             if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
             if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
@@ -3982,17 +4127,12 @@
     runVaultSplashAnimation();
     startRealtimeListeners();
 
-    // PROTECTOR NATIVO DEL BOTÓN "ATRÁS" (<) DE ANDROID
-    function pushAppHistoryState() {
-      try {
-        window.history.pushState({ argonInApp: true }, "", window.location.href);
-      } catch (e) {}
+    // PROTECTOR REFORZADO DEL BOTÓN "ATRÁS" (<) DE ANDROID
+    for (let i = 0; i < 4; i++) {
+      pushAppHistoryState();
     }
 
-    pushAppHistoryState();
-    pushAppHistoryState();
-
-    document.addEventListener('click', function() {
+    document.addEventListener('touchstart', function() {
       if (!window.history.state || !window.history.state.argonInApp) {
         pushAppHistoryState();
       }
@@ -4018,7 +4158,8 @@
         { id: 'dmModal', closeFn: window.closeDirectMessages },
         { id: 'notifModal', closeFn: window.closeNotificationsModal },
         { id: 'legalTermsModal', closeFn: window.closeLegalModal },
-        { id: 'confirmDeleteModal', closeFn: window.closeConfirmModal }
+        { id: 'confirmDeleteModal', closeFn: window.closeConfirmModal },
+        { id: 'ageEmailVerifyModal', closeFn: () => document.getElementById('ageEmailVerifyModal').classList.remove('open') }
       ];
 
       for (const m of openModals) {
