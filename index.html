@@ -1057,6 +1057,95 @@
       flex-shrink: 0;
     }
 
+    /* MODAL ELEGANTE DE CONFIRMACIÓN PARA BORRAR */
+    .confirm-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 7, 0.84);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.18s ease;
+    }
+
+    .confirm-modal-overlay.open {
+      display: flex;
+    }
+
+    .confirm-card {
+      width: 100%;
+      max-width: 340px;
+      background: linear-gradient(165deg, rgba(25, 28, 38, 0.98) 0%, rgba(10, 11, 16, 0.99) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 24px;
+      padding: 24px 20px 20px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92), 0 0 0 1px rgba(244, 63, 94, 0.18);
+      transform: scale(1);
+    }
+
+    .confirm-icon-ring {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.22) 0%, rgba(244, 63, 94, 0.05) 70%);
+      border: 1.5px solid rgba(244, 63, 94, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 0 24px rgba(244, 63, 94, 0.25);
+    }
+
+    .confirm-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+
+    .confirm-desc {
+      font-size: 12.5px;
+      color: #94a3b8;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+
+    .confirm-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-confirm-cancel {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #e2e8f0;
+      border-radius: 13px;
+      padding: 12px 10px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-confirm-delete {
+      background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      border-radius: 13px;
+      padding: 12px 10px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(244, 63, 94, 0.35);
+    }
+
     /* VISOR DE FOTO A PANTALLA COMPLETA */
     .lightbox-overlay {
       position: fixed;
@@ -1238,6 +1327,21 @@
 <body>
   <div class="app-shell">
     <div id="toast" class="toast"></div>
+
+    <!-- MODAL ELEGANTE DE CONFIRMACIÓN PARA BORRAR -->
+    <div id="confirmDeleteModal" class="confirm-modal-overlay">
+      <div class="confirm-card">
+        <div class="confirm-icon-ring">🗑️</div>
+        <div class="confirm-title" id="confirmModalTitle">¿Estás seguro?</div>
+        <div class="confirm-desc" id="confirmModalDesc">
+          Esta publicación se eliminará permanentemente de ARGON y no se podrá recuperar.
+        </div>
+        <div class="confirm-actions">
+          <button class="btn-confirm-cancel" onclick="window.closeConfirmModal()">Cancelar</button>
+          <button class="btn-confirm-delete" id="confirmModalActionBtn" onclick="window.executeConfirmedDelete()">Sí, eliminar</button>
+        </div>
+      </div>
+    </div>
 
     <!-- VISOR DE FOTOS A PANTALLA COMPLETA -->
     <div id="photoLightbox" class="lightbox-overlay" onclick="window.closePhotoLightbox()">
@@ -1677,7 +1781,7 @@
     </nav>
   </div>
 
-  <!-- MOTOR OFICIAL FIREBASE FIRESTORE CON PARTICIÓN AUTOMÁTICA DE VIDEOS (SIN BLOQUEOS DE CORS NI STORAGE) -->
+  <!-- MOTOR OFICIAL FIREBASE FIRESTORE CON PARTICIÓN AUTOMÁTICA DE VIDEOS Y CONFIRMACIÓN DE BORRADO -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1727,7 +1831,10 @@
     let allNotifications = [];
     let lastSeenNotifTime = Number(localStorage.getItem('argon_last_notif_ts') || 0);
 
-    // Memoria caché para no descargar dos veces el mismo video
+    // Variables del modal de confirmación de borrado
+    let pendingDeletePostId = '';
+    let pendingDeleteCallback = null;
+
     const videoBlobCache = {};
 
     let currentUser = {
@@ -1776,6 +1883,46 @@
       clearTimeout(window._toastTimer);
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
+
+    // --- FUNCIONES DEL MODAL ELEGANTE DE CONFIRMACIÓN ---
+    window.askConfirmDeletePost = function(postId, authorHandle) {
+      if (!postId || postId === 'welcome') return;
+      const isMine = authorHandle === currentUser.userHandle;
+      if (!isMine && !isUserAdmin()) return;
+
+      pendingDeletePostId = postId;
+      document.getElementById('confirmModalTitle').textContent = '¿Estás seguro?';
+      document.getElementById('confirmModalDesc').textContent = isMine
+        ? 'Tu publicación se eliminará permanentemente de tu muro y del feed de ARGON.'
+        : `Vas a eliminar permanentemente la publicación de @${authorHandle} como Administrador.`;
+      document.getElementById('confirmDeleteModal').classList.add('open');
+    };
+
+    window.closeConfirmModal = function() {
+      pendingDeletePostId = '';
+      pendingDeleteCallback = null;
+      document.getElementById('confirmDeleteModal').classList.remove('open');
+    };
+
+    window.executeConfirmedDelete = async function() {
+      const postId = pendingDeletePostId;
+      window.closeConfirmModal();
+      if (!postId) return;
+
+      try {
+        const postObj = livePosts.find(p => p.id === postId);
+        // Si tenía paquetes de video en video_chunks, borrarlos también para limpiar espacio
+        if (postObj && postObj.videoId && postObj.chunkCount) {
+          for (let i = 0; i < postObj.chunkCount; i++) {
+            deleteDoc(doc(db, "video_chunks", `${postObj.videoId}_${i}`)).catch(() => {});
+          }
+        }
+        await deleteDoc(doc(db, "posts", postId));
+        showToast('🗑️ Publicación eliminada correctamente');
+      } catch (e) {
+        showToast('No se pudo eliminar la publicación');
+      }
+    };
 
     function playNotificationSound() {
       try {
@@ -2281,14 +2428,6 @@
       }
     };
 
-    window.adminDeletePost = async function(postId) {
-      if (!isUserAdmin() || !postId) return;
-      try {
-        await deleteDoc(doc(db, "posts", postId));
-        showToast('Publicación eliminada por Admin');
-      } catch (e) {}
-    };
-
     window.uploadAvatarPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -2361,7 +2500,6 @@
       const file = event.target.files && event.target.files[0];
       if (!file) return;
 
-      // Soporta videos de hasta 30 MB divididos automáticamente en Firestore
       if (file.size > 30 * 1024 * 1024) {
         showToast('Elige un video menor a 30 MB');
         event.target.value = '';
@@ -2388,13 +2526,11 @@
         reader.readAsDataURL(file);
       });
 
-      // Si el video pesa menos de 650 KB en Base64, cabe en el mismo post directamente
       if (dataUrl.length <= 650000) {
         onProgress(100);
         return { directDataUrl: dataUrl, videoId: '', chunkCount: 0 };
       }
 
-      // Dividir en bloques seguros de 650,000 caracteres (~650 KB por documento de Firestore)
       const chunkSize = 650000;
       const totalChunks = Math.ceil(dataUrl.length / chunkSize);
       const videoId = 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
@@ -2411,12 +2547,10 @@
         onProgress(pct);
       }
 
-      // Guardar en caché local inmediatamente para reproducción instantánea
       videoBlobCache[videoId] = URL.createObjectURL(file);
       return { directDataUrl: '', videoId: videoId, chunkCount: totalChunks };
     }
 
-    // RECONSTRUIR Y REPRODUCIR EL VIDEO DESDE LOS PAQUETES DE FIRESTORE
     async function hydrateChunkedVideo(videoId, chunkCount, containerEl) {
       if (!videoId || !containerEl) return;
 
@@ -2639,7 +2773,6 @@
       });
     }
 
-    // PUBLICAR FOTO O VIDEO EN PAQUETES DENTRO DE FIRESTORE + NOTIFICAR A SUSCRIPTORES
     window.publishPost = async function() {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -2799,8 +2932,9 @@
         ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar Mensaje Directo">✉️</button>`
         : '';
 
-      const adminDeleteBtn = (isUserAdmin() && post.id !== 'welcome')
-        ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
+      // Tanto el dueño de la publicación como el Admin pueden borrarla (con ventana de "¿Estás seguro?")
+      const canDeleteBtn = ((isOwn || isUserAdmin()) && post.id !== 'welcome')
+        ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')" title="Eliminar publicación">🗑️</button>`
         : '';
 
       const hasVideo = !!(post.video || post.videoId);
@@ -2835,7 +2969,7 @@
           <div class="sub-action-Wrap">
             ${dmQuickBtn}
             <button class="${subBtnClass}" onclick="${isOwn ? `window.openUserProfile('${post.handle}')` : `window.toggleSubscribe('${post.handle}')`}">${subBtnLabel}</button>
-            ${adminDeleteBtn}
+            ${canDeleteBtn}
           </div>
         </div>
         ${videoHtml}
@@ -2860,7 +2994,6 @@
         </div>
       `;
 
-      // Si el post tiene un video guardado por paquetes en Firestore, ensamblarlo automáticamente
       if (post.videoId && !post.video) {
         const slot = card.querySelector('.video-slot');
         hydrateChunkedVideo(post.videoId, post.chunkCount, slot);
