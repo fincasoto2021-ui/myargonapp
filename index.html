@@ -3981,6 +3981,66 @@
     updateUI();
     runVaultSplashAnimation();
     startRealtimeListeners();
+
+    // PROTECTOR NATIVO DEL BOTÓN "ATRÁS" (<) DE ANDROID
+    function pushAppHistoryState() {
+      try {
+        window.history.pushState({ argonInApp: true }, "", window.location.href);
+      } catch (e) {}
+    }
+
+    pushAppHistoryState();
+    pushAppHistoryState();
+
+    document.addEventListener('click', function() {
+      if (!window.history.state || !window.history.state.argonInApp) {
+        pushAppHistoryState();
+      }
+    }, { passive: true });
+
+    window.addEventListener('popstate', function() {
+      const shortsModal = document.getElementById('shortsFullscreenModal');
+      if (shortsModal && shortsModal.classList.contains('open')) {
+        window.closeShortsPlayer();
+        pushAppHistoryState();
+        return;
+      }
+
+      const lightbox = document.getElementById('photoLightbox');
+      if (lightbox && lightbox.classList.contains('open')) {
+        window.closePhotoLightbox();
+        pushAppHistoryState();
+        return;
+      }
+
+      const openModals = [
+        { id: 'publicProfileModal', closeFn: window.closePublicProfile },
+        { id: 'dmModal', closeFn: window.closeDirectMessages },
+        { id: 'notifModal', closeFn: window.closeNotificationsModal },
+        { id: 'legalTermsModal', closeFn: window.closeLegalModal },
+        { id: 'confirmDeleteModal', closeFn: window.closeConfirmModal }
+      ];
+
+      for (const m of openModals) {
+        const el = document.getElementById(m.id);
+        if (el && el.classList.contains('open')) {
+          if (typeof m.closeFn === 'function') m.closeFn();
+          pushAppHistoryState();
+          return;
+        }
+      }
+
+      const feedSec = document.getElementById('view-feed');
+      if (feedSec && !feedSec.classList.contains('active')) {
+        window.switchTab('feed');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        pushAppHistoryState();
+        return;
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      pushAppHistoryState();
+    });
   </script>
 </body>
 </html>
