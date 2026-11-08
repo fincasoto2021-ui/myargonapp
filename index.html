@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>ARGON</title>
 
-  <!-- CONFIGURACIÓN APP NATIVA (PWA) -->
+  <!-- CONFIGURACIÓN APP NATIVA (PWA + GOOGLE PLAY) -->
+  <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#050507" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,18 +154,33 @@
     .top-right-actions {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
+    }
+
+    .install-top-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #04130e;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
     }
 
     .inbox-btn {
       position: relative;
-      width: 36px;
-      height: 36px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       background: linear-gradient(145deg, #14161d, #090a0f);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 15px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -196,16 +212,16 @@
     .wallet-pill {
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       background: linear-gradient(145deg, #14161d, #090a0f);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 6px 11px;
+      padding: 5px 10px;
       border-radius: 999px;
       cursor: pointer;
     }
 
     .wallet-amount {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: #fff;
     }
@@ -1316,6 +1332,20 @@
   <div class="app-shell">
     <div id="toast" class="toast"></div>
 
+    <!-- MODAL DE INSTRUCCIÓN PARA INSTALAR EN IPHONE / ANDROID -->
+    <div id="installGuideModal" class="confirm-modal-overlay">
+      <div class="confirm-card">
+        <div class="confirm-icon-ring" style="border-color:rgba(16,185,129,0.5); box-shadow:0 0 24px rgba(16,185,129,0.25);">📲</div>
+        <div class="confirm-title">Instalar App ARGON</div>
+        <div class="confirm-desc" id="installGuideText">
+          Para instalar ARGON en tu pantalla de inicio:<br><br>
+          • <strong>En Android (Chrome):</strong> Toca los 3 puntitos <strong>(⋮)</strong> arriba a la derecha y selecciona <strong>"Instalar aplicación"</strong>.<br><br>
+          • <strong>En iPhone (Safari):</strong> Toca el botón <strong>Compartir (↑)</strong> abajo y selecciona <strong>"Agregar a Inicio"</strong>.
+        </div>
+        <button class="btn-primary-platinum" onclick="document.getElementById('installGuideModal').classList.remove('open')">Entendido</button>
+      </div>
+    </div>
+
     <!-- MODAL ELEGANTE DE CONFIRMACIÓN PARA BORRAR -->
     <div id="confirmDeleteModal" class="confirm-modal-overlay">
       <div class="confirm-card">
@@ -1494,6 +1524,10 @@
       </div>
 
       <div class="top-right-actions">
+        <button id="topInstallAppBtn" class="install-top-btn" onclick="window.triggerAppInstall()" title="Descargar App en el celular">
+          📲 APP
+        </button>
+
         <button class="inbox-btn" onclick="window.openNotificationsModal()" title="Notificaciones de Suscriptores">
           🔔
           <span id="notifBadge" class="inbox-badge notif-badge">0</span>
@@ -1505,7 +1539,7 @@
         </button>
 
         <div class="wallet-pill" onclick="window.switchTab('boveda')">
-          <svg width="20" height="20" viewBox="0 0 40 40">
+          <svg width="18" height="18" viewBox="0 0 40 40">
             <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
             <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
           </svg>
@@ -1685,6 +1719,9 @@
         <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
+        <button class="btn-primary-platinum" style="background:linear-gradient(135deg, #10b981, #059669); color:#04130e; margin-top:8px;" onclick="window.triggerAppInstall()">
+          📲 INSTALAR APP ARGON EN EL CELULAR
+        </button>
       </div>
 
       <div class="glass-card">
@@ -1766,7 +1803,7 @@
     </nav>
   </div>
 
-  <!-- MOTOR OFICIAL: CLOUDINARY CDN (gsnwa8d1) + FIREBASE FIRESTORE -->
+  <!-- MOTOR OFICIAL: PWA + CLOUDINARY CDN (gsnwa8d1) + FIREBASE FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1786,6 +1823,31 @@
       increment,
       arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // REGISTRO DE SERVICE WORKER PARA INSTALACIÓN Y GOOGLE PLAY
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+    });
+
+    window.triggerAppInstall = async function() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          deferredInstallPrompt = null;
+        }
+      } else {
+        document.getElementById('installGuideModal').classList.add('open');
+      }
+    };
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
