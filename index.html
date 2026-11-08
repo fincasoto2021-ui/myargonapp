@@ -305,6 +305,246 @@
       cursor: pointer;
     }
 
+    /* CARRUSEL ESTILO STORIES / SHORTS VERTICALES */
+    .shorts-tray-wrap {
+      margin-bottom: 16px;
+    }
+
+    .shorts-tray-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+
+    .shorts-tray-title {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .shorts-tray-scroll {
+      display: flex;
+      gap: 9px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .shorts-tray-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .short-card-item {
+      width: 106px;
+      height: 178px;
+      border-radius: 16px;
+      background: linear-gradient(160deg, #181c26, #08090d);
+      border: 1.5px solid rgba(255, 255, 255, 0.16);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .short-card-item.create-card {
+      border-color: rgba(16, 185, 129, 0.45);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #131722 0%, #07090e 100%);
+    }
+
+    .short-create-top {
+      height: 62%;
+      width: 100%;
+      background: radial-gradient(circle at 50% 30%, #1e293b, #090b10);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .short-create-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .short-plus-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 3px solid #07090e;
+      color: #04130e;
+      font-size: 22px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: -18px auto 0;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.45);
+    }
+
+    .short-create-label {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: #fff;
+      padding: 0 6px 10px;
+      line-height: 1.2;
+    }
+
+    .short-thumb-video,
+    .short-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.88);
+    }
+
+    .short-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px;
+    }
+
+    .short-mini-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #10b981;
+      background: #0d0f15;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .short-mini-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .short-card-handle {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+    }
+
+    /* REPRODUCTOR DE SHORTS A PANTALLA COMPLETA (TIKTOK / REELS) */
+    .shorts-fullscreen-modal {
+      position: fixed;
+      inset: 0;
+      background: #000000;
+      z-index: 320;
+      display: none;
+      flex-direction: column;
+    }
+
+    .shorts-fullscreen-modal.open {
+      display: flex;
+    }
+
+    .shorts-fs-topbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 100%);
+    }
+
+    .shorts-fs-stage {
+      flex: 1;
+      width: 100%;
+      max-width: 430px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .shorts-fs-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .shorts-fs-right-rail {
+      position: absolute;
+      right: 12px;
+      bottom: 95px;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .short-rail-btn {
+      background: rgba(15, 18, 26, 0.72);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .short-rail-lbl {
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 3px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+    }
+
+    .shorts-fs-bottom-info {
+      position: absolute;
+      left: 14px;
+      right: 76px;
+      bottom: 28px;
+      z-index: 20;
+      pointer-events: auto;
+    }
+
     .view-section {
       display: none;
       padding: 14px;
@@ -455,25 +695,47 @@
       font-weight: 700;
     }
 
+    /* BARRA DE PUBLICAR ESTILO "¿QUÉ TIENES EN MENTE?" CON AVATAR REDONDO */
     .composer-card {
       background: #0b0c10;
       border: 1px solid var(--card-border);
       border-radius: 16px;
       padding: 12px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .composer-row {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .composer-avatar-mini {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #222634, #0d0f16);
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .composer-avatar-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .composer-input {
       flex: 1;
       background: #07080c;
       border: 1px solid var(--card-border);
-      border-radius: 11px;
-      padding: 10px 12px;
+      border-radius: 999px;
+      padding: 10px 14px;
       color: #fff;
       font-size: 13px;
       outline: none;
@@ -1403,6 +1665,28 @@
   <div class="app-shell">
     <div id="toast" class="toast"></div>
 
+    <!-- REPRODUCTOR VERTICAL DE SHORTS A PANTALLA COMPLETA -->
+    <div id="shortsFullscreenModal" class="shorts-fullscreen-modal">
+      <div class="shorts-fs-topbar">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:15px; font-weight:900; letter-spacing:1.5px; color:#fff;">🎬 ARGON SHORTS</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="upm-back-btn" onclick="window.prevShortVideo()">↑ Ant</button>
+          <button class="upm-back-btn" onclick="window.nextShortVideo()">↓ Sig</button>
+          <button class="dm-close-btn" onclick="window.closeShortsPlayer()">✕</button>
+        </div>
+      </div>
+
+      <div class="shorts-fs-stage" id="shortsStageArea">
+        <video id="shortsFsVideoEl" class="shorts-fs-video" playsinline controls loop></video>
+
+        <div class="shorts-fs-right-rail" id="shortsRightRail"></div>
+
+        <div class="shorts-fs-bottom-info" id="shortsBottomInfo"></div>
+      </div>
+    </div>
+
     <!-- MODAL DE INSTRUCCIÓN SOLO PARA IPHONE (SAFARI) -->
     <div id="installGuideModal" class="confirm-modal-overlay">
       <div class="confirm-card">
@@ -1682,11 +1966,16 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL -->
+    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS -->
     <section id="view-feed" class="view-section active">
+      <!-- CAJA DE PUBLICACIÓN ESTILO "¿QUÉ TIENES EN MENTE?" CON AVATAR REDONDO -->
       <div class="composer-card">
         <div class="composer-row">
-          <input type="text" id="newPostInput" class="composer-input" placeholder="¿Qué foto o video vas a publicar hoy en ARGON?" />
+          <div class="composer-avatar-mini" onclick="window.switchTab('perfil')" title="Ir a mi perfil">
+            <img id="composerAvatarImg" src="" alt="" style="display:none;" />
+            <svg id="composerAvatarSvg" width="22" height="22"><use href="#argon-crown-a"></use></svg>
+          </div>
+          <input type="text" id="newPostInput" class="composer-input" placeholder="¿Qué tienes en mente publicar hoy?" />
         </div>
 
         <img id="photoPreview" class="preview-thumb" alt="Vista previa foto" />
@@ -1704,12 +1993,23 @@
               <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="window.previewSelectedPhoto(event)" />
             </label>
             <label class="video-upload-label">
-              🎬 Subir Video
+              🎬 Subir Short / Video
               <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event)" />
             </label>
           </div>
-          <button id="publishBtn" class="composer-btn" onclick="window.publishPost()">Publicar ahora</button>
+          <button id="publishBtn" class="composer-btn" onclick="window.publishPost()">Publicar</button>
         </div>
+      </div>
+
+      <!-- CARRUSEL VERTICAL DE SHORTS / STORIES -->
+      <div class="shorts-tray-wrap">
+        <div class="shorts-tray-header">
+          <div class="shorts-tray-title">
+            <span style="color:#10b981;">▶</span> ARGON SHORTS & DESTACADOS
+          </div>
+          <span style="font-size:10.5px; color:#34d399; font-weight:800; cursor:pointer;" onclick="window.openShortsPlayer(0)">Ver pantalla completa →</span>
+        </div>
+        <div class="shorts-tray-scroll" id="shortsTrayScroll"></div>
       </div>
 
       <div id="feedContainer"></div>
@@ -1862,13 +2162,17 @@
     </section>
 
     <nav class="bottom-nav">
-      <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')">
-        <span>▣</span>
-        <span>BÓVEDA</span>
-      </button>
       <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')">
         <span>▤</span>
         <span>FEED</span>
+      </button>
+      <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)">
+        <span>🎬</span>
+        <span>SHORTS</span>
+      </button>
+      <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')">
+        <span>▣</span>
+        <span>BÓVEDA</span>
       </button>
       <button class="nav-btn" id="nav-ranking" onclick="window.switchTab('ranking')">
         <span>▥</span>
@@ -1885,7 +2189,7 @@
     </nav>
   </div>
 
-  <!-- MOTOR OFICIAL: PWA + CLOUDINARY CDN (gsnwa8d1) + FIREBASE FIRESTORE -->
+  <!-- MOTOR OFICIAL: PWA + SHORTS + CLOUDINARY CDN (gsnwa8d1) + FIREBASE FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1912,7 +2216,6 @@
       });
     }
 
-    // OCULTAR BANNER SI YA ESTÁ ABIERTA COMO APP INSTALADA
     const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     const vipBannerEl = document.getElementById('vipInstallBanner');
     if (isStandaloneApp && vipBannerEl) {
@@ -1939,7 +2242,6 @@
     });
 
     window.triggerAppInstall = async function() {
-      // 1. Si Chrome ya tiene listo el instalador nativo de 1 toque, lo lanza directo
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
         const { outcome } = await deferredInstallPrompt.userChoice;
@@ -1950,7 +2252,6 @@
         return;
       }
 
-      // 2. Si el usuario está en Android dentro de un visor interno (WhatsApp, IG, etc.), salta directo a Chrome oficial
       const ua = navigator.userAgent || '';
       const isAndroid = /android/i.test(ua);
       const isIOS = /iPhone|iPad|iPod/i.test(ua);
@@ -2003,6 +2304,7 @@
 
     let pendingDeletePostId = '';
     const videoBlobCache = {};
+    let currentShortIndex = 0;
 
     let currentUser = {
       registered: false,
@@ -2049,6 +2351,170 @@
       t.style.display = 'block';
       clearTimeout(window._toastTimer);
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    // CARRUSEL Y REPRODUCTOR DE SHORTS VERTICALES
+    function getShortVideoPosts() {
+      const vids = livePosts.filter(p => !!(p.video || p.videoId));
+      return vids.length > 0 ? vids : livePosts.filter(p => !!(p.video || p.videoId || p.image));
+    }
+
+    function renderShortsTray() {
+      const tray = document.getElementById('shortsTrayScroll');
+      if (!tray) return;
+
+      const myAvatarHtml = currentUser.avatar
+        ? `<img src="${currentUser.avatar}" alt="Yo" />`
+        : `<svg width="38" height="38"><use href="#argon-crown-a"></use></svg>`;
+
+      const createCardHtml = `
+        <label class="short-card-item create-card" title="Subir un nuevo Short">
+          <div class="short-create-top">${myAvatarHtml}</div>
+          <div class="short-plus-circle">+</div>
+          <div class="short-create-label">Subir Short</div>
+          <input type="file" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event)" />
+        </label>
+      `;
+
+      const items = getShortVideoPosts().slice(0, 15);
+      const cardsHtml = items.map((post, idx) => {
+        const uDoc = usersMap[post.handle] || {};
+        const avSrc = uDoc.avatar || post.avatar || '';
+        const miniAv = avSrc
+          ? `<img src="${avSrc}" alt="${post.handle}" />`
+          : (post.handle || 'AR').slice(0, 2);
+
+        const mediaPreview = post.video
+          ? `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`
+          : (post.image
+              ? `<img class="short-thumb-img" src="${post.image}" alt="${post.handle}" />`
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;">🎬</div>`);
+
+        return `
+          <div class="short-card-item" onclick="window.openShortsPlayer(${idx})">
+            ${mediaPreview}
+            <div class="short-card-overlay">
+              <div class="short-mini-avatar">${miniAv}</div>
+              <div class="short-card-handle">@${post.handle}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      tray.innerHTML = createCardHtml + cardsHtml;
+    }
+
+    window.openShortsPlayer = function(index = 0) {
+      const shortsList = getShortVideoPosts();
+      if (shortsList.length === 0) {
+        showToast('🎬 Sube el primer Short tocando "+ Subir Short"');
+        return;
+      }
+      currentShortIndex = Math.max(0, Math.min(index, shortsList.length - 1));
+      document.getElementById('shortsFullscreenModal').classList.add('open');
+      renderActiveShortInPlayer();
+    };
+
+    window.closeShortsPlayer = function() {
+      const vidEl = document.getElementById('shortsFsVideoEl');
+      if (vidEl) {
+        vidEl.pause();
+        vidEl.src = '';
+      }
+      document.getElementById('shortsFullscreenModal').classList.remove('open');
+    };
+
+    window.nextShortVideo = function() {
+      const shortsList = getShortVideoPosts();
+      if (shortsList.length === 0) return;
+      currentShortIndex = (currentShortIndex + 1) % shortsList.length;
+      renderActiveShortInPlayer();
+    };
+
+    window.prevShortVideo = function() {
+      const shortsList = getShortVideoPosts();
+      if (shortsList.length === 0) return;
+      currentShortIndex = (currentShortIndex - 1 + shortsList.length) % shortsList.length;
+      renderActiveShortInPlayer();
+    };
+
+    // Deslizar hacia arriba/abajo con el dedo en el reproductor de Shorts
+    let touchStartY = 0;
+    const stageArea = document.getElementById('shortsStageArea');
+    if (stageArea) {
+      stageArea.addEventListener('touchstart', (e) => {
+        touchStartY = e.changedTouches[0].screenY;
+      }, { passive: true });
+      stageArea.addEventListener('touchend', (e) => {
+        const diffY = touchStartY - e.changedTouches[0].screenY;
+        if (Math.abs(diffY) > 55) {
+          if (diffY > 0) window.nextShortVideo();
+          else window.prevShortVideo();
+        }
+      }, { passive: true });
+    }
+
+    async function renderActiveShortInPlayer() {
+      const shortsList = getShortVideoPosts();
+      const post = shortsList[currentShortIndex];
+      if (!post) return;
+
+      const vidEl = document.getElementById('shortsFsVideoEl');
+      const railEl = document.getElementById('shortsRightRail');
+      const bottomEl = document.getElementById('shortsBottomInfo');
+
+      if (post.video) {
+        vidEl.style.display = 'block';
+        vidEl.src = post.video;
+        vidEl.play().catch(() => {});
+      } else if (post.videoId) {
+        vidEl.style.display = 'block';
+        if (videoBlobCache[post.videoId]) {
+          vidEl.src = videoBlobCache[post.videoId];
+          vidEl.play().catch(() => {});
+        } else {
+          const dummyDiv = document.createElement('div');
+          await hydrateChunkedVideo(post.videoId, post.chunkCount, dummyDiv);
+          if (videoBlobCache[post.videoId]) {
+            vidEl.src = videoBlobCache[post.videoId];
+            vidEl.play().catch(() => {});
+          }
+        }
+      }
+
+      const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
+      const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
+      const isOwn = post.handle === currentUser.userHandle;
+      const commentsCount = Array.isArray(post.comments) ? post.comments.length : 0;
+
+      railEl.innerHTML = `
+        <div style="text-align:center;">
+          <button class="short-rail-btn" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLike('${post.id}'); setTimeout(()=>window.openShortsPlayer(${currentShortIndex}), 150);">♥</button>
+          <div class="short-rail-lbl">${post.likes || 0}</div>
+        </div>
+        <div style="text-align:center;">
+          <button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');">💬</button>
+          <div class="short-rail-lbl">${commentsCount}</div>
+        </div>
+        <div style="text-align:center;">
+          <button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')">↗</button>
+          <div class="short-rail-lbl">Enviar</div>
+        </div>
+      `;
+
+      bottomEl.innerHTML = `
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <span style="font-size:15px; font-weight:900; color:#fff; cursor:pointer; text-shadow:0 2px 6px #000;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${post.handle}</span>
+          ${!isOwn ? `
+            <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}'); setTimeout(()=>window.openShortsPlayer(${currentShortIndex}), 200);">
+              ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
+            </button>
+          ` : ''}
+        </div>
+        <div style="font-size:13px; color:#f1f5f9; text-shadow:0 2px 6px #000; line-height:1.35;">
+          ${post.caption || ''}
+        </div>
+      `;
     }
 
     window.askConfirmDeletePost = function(postId, authorHandle) {
@@ -2272,17 +2738,23 @@
       const profSvg = document.getElementById('profileAvatarSvg');
       const onbImg = document.getElementById('onboardingAvatarImg');
       const onbSvg = document.getElementById('onboardingAvatarSvg');
+      const compImg = document.getElementById('composerAvatarImg');
+      const compSvg = document.getElementById('composerAvatarSvg');
 
       if (currentUser.avatar) {
         if (profImg) { profImg.src = currentUser.avatar; profImg.style.display = 'block'; }
         if (profSvg) profSvg.style.display = 'none';
         if (onbImg) { onbImg.src = currentUser.avatar; onbImg.style.display = 'block'; }
         if (onbSvg) onbSvg.style.display = 'none';
+        if (compImg) { compImg.src = currentUser.avatar; compImg.style.display = 'block'; }
+        if (compSvg) compSvg.style.display = 'none';
       } else {
         if (profImg) profImg.style.display = 'none';
         if (profSvg) profSvg.style.display = 'block';
         if (onbImg) onbImg.style.display = 'none';
         if (onbSvg) onbSvg.style.display = 'block';
+        if (compImg) compImg.style.display = 'none';
+        if (compSvg) compSvg.style.display = 'block';
       }
     }
 
@@ -2317,6 +2789,7 @@
 
       renderAvatarElements();
       renderMySubscribers();
+      renderShortsTray();
     }
 
     window.openDirectMessages = function(partnerHandle) {
@@ -2678,7 +3151,7 @@
       const vidPrev = document.getElementById('videoPreview');
       vidPrev.src = URL.createObjectURL(file);
       vidPrev.style.display = 'block';
-      showToast('🎬 Video listo. Toca Publicar ahora');
+      showToast('🎬 Short listo. Toca el botón Publicar');
     };
 
     async function uploadVideoToCloudinaryOrFallback(file, onProgress) {
@@ -2899,6 +3372,7 @@
         renderFeed();
         renderMySubscribers();
         renderAdminAndLeaderboard();
+        renderShortsTray();
         if (viewedPublicHandle) renderPublicProfileModal();
       });
 
@@ -2909,6 +3383,7 @@
           livePosts.push({ id: d.id, ...d.data() });
         });
         renderFeed();
+        renderShortsTray();
         renderAdminAndLeaderboard();
         updateUI();
         if (viewedPublicHandle) renderPublicProfileModal();
@@ -2984,7 +3459,7 @@
       const input = document.getElementById('newPostInput');
       const text = input.value.trim();
       if (!text && !selectedPhotoDataUrl && !selectedVideoFile) {
-        showToast('Escribe un mensaje, sube una foto o selecciona un video');
+        showToast('Escribe un mensaje, sube una foto o selecciona un Short');
         return;
       }
 
@@ -3003,11 +3478,11 @@
           progWrap.style.display = 'block';
           statusTxt.style.display = 'block';
           progBar.style.width = '5%';
-          statusTxt.textContent = 'Subiendo video en alta velocidad... 5%';
+          statusTxt.textContent = 'Subiendo Short en alta velocidad... 5%';
 
           const res = await uploadVideoToCloudinaryOrFallback(selectedVideoFile, (pct) => {
             progBar.style.width = pct + '%';
-            statusTxt.textContent = `Subiendo video a ARGON... ${pct}%`;
+            statusTxt.textContent = `Subiendo Short a ARGON... ${pct}%`;
           });
           directVideoData = res.directDataUrl;
           chunkedVideoId = res.videoId;
@@ -3051,12 +3526,12 @@
           toList: mySubs,
           type: isVideoPost ? 'video' : 'post',
           text: isVideoPost
-            ? `Subió un nuevo video: "${(text || 'Ver video ahora').slice(0, 45)}"`
+            ? `Subió un nuevo Short: "${(text || 'Ver video ahora').slice(0, 45)}"`
             : `Publicó en su muro: "${(text || 'Nueva foto').slice(0, 45)}"`,
           postId: docRef.id
         });
 
-        showToast(isVideoPost ? '🎬 ¡Video publicado con éxito en ARGON!' : '✓ Publicado en vivo');
+        showToast(isVideoPost ? '🎬 ¡Short publicado en el carrusel y en el muro!' : '✓ Publicado en vivo');
       } catch (e) {
         console.error(e);
         showToast('Error de conexión al guardar. Intenta de nuevo.');
@@ -3215,7 +3690,7 @@
             initials: 'AL',
             image: '',
             video: '',
-            caption: 'Bienvenidos a ARGON. Ya puedes subir videos 🎬, recibir notificaciones en vivo 🔔 en la campana superior y tocar cualquier perfil.',
+            caption: 'Bienvenidos a ARGON. Ya puedes subir Shorts 🎬 en el carrusel superior, verlos a pantalla completa y recibir notificaciones en vivo 🔔.',
             likes: 1,
             shares: 0,
             comments: []
@@ -3336,6 +3811,7 @@
 
     window.switchTab = function(tab) {
       window.closePublicProfile();
+      window.closeShortsPlayer();
       ['boveda', 'feed', 'ranking', 'perfil', 'admin'].forEach(t => {
         const v = document.getElementById('view-' + t);
         const n = document.getElementById('nav-' + t);
