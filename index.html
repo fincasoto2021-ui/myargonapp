@@ -12,7 +12,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ARGON" />
-  <link rel="apple-touch-icon" href="/icon.png" />
+  <link rel="apple-touch-icon" href="/icon%20(3).png" />
 
   <style>
     :root {
@@ -3821,10 +3821,12 @@
 
     loadLocalSession();
     updateUI();
-    if (currentUser.registered && currentUser.userHandle) {
-      listenToMyUserDoc(currentUser.userHandle);
-    }
-    startRealtimeListeners();
+    setTimeout(() => {
+      if (currentUser.registered && currentUser.userHandle) {
+        listenToMyUserDoc(currentUser.userHandle);
+      }
+      startRealtimeListeners();
+    }, 3500);
   </script>
 </body>
 </html>
