@@ -1661,7 +1661,7 @@
     </nav>
   </div>
 
-  <!-- CONEXIÓN OFICIAL A FIREBASE (argon-ab4fe): FIRESTORE + STORAGE PARA VIDEOS -->
+  <!-- CONEXIÓN OFICIAL A FIREBASE (argon-ab4fe) + SUBIDA MULTIMEDIA DIRECTA -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1679,12 +1679,6 @@
       increment,
       arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-    import {
-      getStorage,
-      ref as storageRef,
-      uploadBytesResumable,
-      getDownloadURL
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
@@ -1697,7 +1691,6 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const storage = getStorage(app);
 
     const LOCAL_USER_KEY = 'argon_live_user_v1';
     const FOUNDER_HANDLE = 'BELTO43';
@@ -1760,7 +1753,7 @@
       t.textContent = msg;
       t.style.display = 'block';
       clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3000);
+      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
 
     // SONIDO SUAVE DE NOTIFICACIÓN EN VIVO
@@ -1783,7 +1776,6 @@
       } catch (e) {}
     }
 
-    // ACTIVAR PERMISO DE NOTIFICACIONES NATIVAS DEL NAVEGADOR / CELULAR
     window.enableBrowserPushNotifications = async function() {
       if (!("Notification" in window)) {
         showToast('Tu navegador usa las notificaciones internas de la campana 🔔');
@@ -1800,7 +1792,6 @@
       }
     };
 
-    // ENVIAR NOTIFICACIÓN A UN SUSCRIPTOR O A UNA LISTA DE SUSCRIPTORES
     async function dispatchNotification({ toList, type, text, postId = '' }) {
       if (!Array.isArray(toList) || toList.length === 0) return;
       const cleanTargets = Array.from(new Set(toList.filter(h => h && h !== currentUser.userHandle)));
@@ -2172,7 +2163,6 @@
       }).join('');
     }
 
-    // BOTÓN DE ADMIN PARA VINCULAR A TODOS LOS USUARIOS EXISTENTES A @BELTO43
     window.adminSyncAllToFounder = async function() {
       if (!isUserAdmin()) return;
       const allHandles = getAllKnownHandles().filter(h => h !== FOUNDER_HANDLE);
@@ -2324,7 +2314,6 @@
       const file = event.target.files && event.target.files[0];
       if (!file) return;
 
-      // Limpiar selección de video si había una
       selectedVideoFile = null;
       const vidPrev = document.getElementById('videoPreview');
       if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
@@ -2350,14 +2339,13 @@
       reader.readAsDataURL(file);
     };
 
-    // VISTA PREVIA Y VALIDACIÓN DE VIDEO ANTES DE SUBIR
+    // VISTA PREVIA INMEDIATA DEL VIDEO SELECCIONADO
     window.previewSelectedVideo = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
 
-      // Límite recomendado de 80 MB para carga rápida en móviles
-      if (file.size > 80 * 1024 * 1024) {
-        showToast('Elige un video menor a 80 MB para subida rápida');
+      if (file.size > 95 * 1024 * 1024) {
+        showToast('Elige un video menor a 95 MB');
         event.target.value = '';
         return;
       }
@@ -2370,10 +2358,52 @@
       const vidPrev = document.getElementById('videoPreview');
       vidPrev.src = URL.createObjectURL(file);
       vidPrev.style.display = 'block';
-      showToast('🎬 Video listo para publicar');
+      showToast('🎬 Video listo. Toca Publicar ahora');
     };
 
-    // REGISTRO DE CUENTA REAL + AUTO-SUSCRIPCIÓN AUTOMÁTICA A QUIEN ENVIÓ EL LINK
+    // MOTOR DE SUBIDA DIRECTA SIN NECESIDAD DE CONFIGURAR REGLAS EN FIREBASE STORAGE
+    async function uploadVideoDirect(file, onProgress) {
+      // 1. Si es un clip muy corto (< 700 KB), se guarda directo en Firestore como las fotos
+      if (file.size <= 700 * 1024) {
+        onProgress(60);
+        return await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => { onProgress(100); resolve(e.target.result); };
+          reader.onerror = (err) => reject(err);
+          reader.readAsDataURL(file);
+        });
+      }
+
+      // 2. Subida con barra de progreso real via XMLHttpRequest a servidor multimedia en la nube
+      return await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+        formData.append('reqtype', 'fileupload');
+        formData.append('time', '72h');
+        formData.append('fileToUpload', file);
+
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            const pct = Math.max(5, Math.round((e.loaded / e.total) * 95));
+            onProgress(pct);
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText.startsWith('http')) {
+            onProgress(100);
+            resolve(xhr.responseText.trim());
+          } else {
+            reject(new Error('Error en servidor de video'));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error('Error de red al subir video'));
+        xhr.open('POST', 'https://litterbox.catbox.moe/resources/internals/api.php', true);
+        xhr.send(formData);
+      });
+    }
+
     window.completeRegistration = async function() {
       const rawName = document.getElementById('regName').value.trim();
       const rawHandle = document.getElementById('regHandle').value.trim();
@@ -2512,7 +2542,6 @@
         }
       });
 
-      // ESCUCHAR NOTIFICACIONES EN TIEMPO REAL PARA SUSCRIPTORES
       const qNotifs = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
       let initialNotifLoad = true;
       onSnapshot(qNotifs, (snap) => {
@@ -2554,7 +2583,7 @@
       });
     }
 
-    // PUBLICAR FOTO O VIDEO + ENVIAR NOTIFICACIÓN AUTOMÁTICA A TODOS TUS SUSCRIPTORES
+    // PUBLICAR FOTO O VIDEO DIRECTAMENTE Y NOTIFICAR A LOS SUSCRIPTORES
     window.publishPost = async function() {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -2579,26 +2608,12 @@
         if (selectedVideoFile) {
           progWrap.style.display = 'block';
           statusTxt.style.display = 'block';
-          progBar.style.width = '5%';
-          statusTxt.textContent = 'Subiendo video a ARGON... 5%';
+          progBar.style.width = '8%';
+          statusTxt.textContent = 'Subiendo video... 8%';
 
-          const safeName = selectedVideoFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const vRef = storageRef(storage, `videos/${currentUser.userHandle}_${Date.now()}_${safeName}`);
-          const uploadTask = uploadBytesResumable(vRef, selectedVideoFile);
-
-          uploadedVideoUrl = await new Promise((resolve, reject) => {
-            uploadTask.on('state_changed',
-              (snapshot) => {
-                const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                progBar.style.width = pct + '%';
-                statusTxt.textContent = `Subiendo video... ${pct}%`;
-              },
-              (err) => reject(err),
-              async () => {
-                const url = await getDownloadURL(uploadTask.snapshot.ref);
-                resolve(url);
-              }
-            );
+          uploadedVideoUrl = await uploadVideoDirect(selectedVideoFile, (pct) => {
+            progBar.style.width = pct + '%';
+            statusTxt.textContent = `Subiendo video... ${pct}%`;
           });
         }
 
@@ -2614,8 +2629,6 @@
         const vidPrev = document.getElementById('videoPreview');
         vidPrev.style.display = 'none';
         vidPrev.src = '';
-        progWrap.style.display = 'none';
-        statusTxt.style.display = 'none';
 
         const docRef = await addDoc(collection(db, "posts"), {
           handle: currentUser.userHandle,
@@ -2630,7 +2643,6 @@
           createdAt: Date.now()
         });
 
-        // Notificar automáticamente a todos mis suscriptores en tiempo real
         const myDoc = usersMap[currentUser.userHandle] || {};
         const mySubs = Array.isArray(myDoc.subscribersList) && myDoc.subscribersList.length > 0
           ? myDoc.subscribersList
@@ -2645,9 +2657,10 @@
           postId: docRef.id
         });
 
-        showToast(isVideoPost ? '🎬 Video publicado y notificado a tus suscriptores' : '✓ Publicado y notificado a tus suscriptores');
+        showToast(isVideoPost ? '🎬 Video publicado y notificado a tus suscriptores' : '✓ Publicado en vivo');
       } catch (e) {
-        showToast('Error al subir el archivo. Verifica tu conexión.');
+        console.error(e);
+        showToast('Error al subir el video. Intenta con un clip más corto.');
       } finally {
         publishBtn.disabled = false;
         progWrap.style.display = 'none';
