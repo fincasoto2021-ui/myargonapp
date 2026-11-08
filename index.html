@@ -12,6 +12,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="ARGON" />
+  <link rel="apple-touch-icon" href="https://placehold.co/192x192/050507/10b981.png?text=ARGON" />
 
   <style>
     :root {
@@ -154,33 +155,18 @@
     .top-right-actions {
       display: flex;
       align-items: center;
-      gap: 6px;
-    }
-
-    .install-top-btn {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #04130e;
-      border: none;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 10px;
-      font-weight: 900;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
+      gap: 7px;
     }
 
     .inbox-btn {
       position: relative;
-      width: 35px;
-      height: 35px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: linear-gradient(145deg, #14161d, #090a0f);
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -212,16 +198,16 @@
     .wallet-pill {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       background: linear-gradient(145deg, #14161d, #090a0f);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 5px 10px;
+      padding: 6px 11px;
       border-radius: 999px;
       cursor: pointer;
     }
 
     .wallet-amount {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
       color: #fff;
     }
@@ -232,6 +218,91 @@
       color: #94a3b8;
       letter-spacing: 0.5px;
       line-height: 1;
+    }
+
+    /* BANNER VIP DE DESCARGA DE APP */
+    .vip-app-banner {
+      margin: 12px 14px 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(20, 24, 34, 0.96) 0%, rgba(9, 13, 19, 0.98) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.42);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65), inset 0 0 18px rgba(16, 185, 129, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .vip-app-banner.hidden {
+      display: none !important;
+    }
+
+    .vip-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .vip-banner-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #161922, #06070a);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+
+    .vip-banner-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.4px;
+    }
+
+    .vip-banner-sub {
+      font-size: 10.5px;
+      color: #34d399;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .vip-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-vip-install {
+      background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+      color: #04130e;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn-vip-close {
+      background: rgba(255, 255, 255, 0.06);
+      border: none;
+      color: #94a3b8;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
     }
 
     .view-section {
@@ -1332,17 +1403,15 @@
   <div class="app-shell">
     <div id="toast" class="toast"></div>
 
-    <!-- MODAL DE INSTRUCCIÓN PARA INSTALAR EN IPHONE / ANDROID -->
+    <!-- MODAL DE INSTRUCCIÓN SOLO PARA IPHONE (SAFARI) -->
     <div id="installGuideModal" class="confirm-modal-overlay">
       <div class="confirm-card">
         <div class="confirm-icon-ring" style="border-color:rgba(16,185,129,0.5); box-shadow:0 0 24px rgba(16,185,129,0.25);">📲</div>
         <div class="confirm-title">Instalar App ARGON</div>
         <div class="confirm-desc" id="installGuideText">
-          Para instalar ARGON en tu pantalla de inicio:<br><br>
-          • <strong>En Android (Chrome):</strong> Toca los 3 puntitos <strong>(⋮)</strong> arriba a la derecha y selecciona <strong>"Instalar aplicación"</strong>.<br><br>
-          • <strong>En iPhone (Safari):</strong> Toca el botón <strong>Compartir (↑)</strong> abajo y selecciona <strong>"Agregar a Inicio"</strong>.
+          En iPhone toca el botón <strong>Compartir (↑)</strong> en la barra inferior y selecciona <strong>"Agregar a Inicio"</strong>.
         </div>
-        <button class="btn-primary-platinum" onclick="document.getElementById('installGuideModal').classList.remove('open')">Entendido</button>
+        <button class="btn-primary-platinum" onclick="document.getElementById('installGuideModal').classList.remove('open')">Listo</button>
       </div>
     </div>
 
@@ -1512,7 +1581,7 @@
       </div>
     </div>
 
-    <!-- CABECERA -->
+    <!-- CABECERA LIMPIA Y ELEGANTE -->
     <header class="topbar">
       <div class="brand-wrap" onclick="window.switchTab('feed')">
         <div class="logo-box">
@@ -1524,10 +1593,6 @@
       </div>
 
       <div class="top-right-actions">
-        <button id="topInstallAppBtn" class="install-top-btn" onclick="window.triggerAppInstall()" title="Descargar App en el celular">
-          📲 APP
-        </button>
-
         <button class="inbox-btn" onclick="window.openNotificationsModal()" title="Notificaciones de Suscriptores">
           🔔
           <span id="notifBadge" class="inbox-badge notif-badge">0</span>
@@ -1539,7 +1604,7 @@
         </button>
 
         <div class="wallet-pill" onclick="window.switchTab('boveda')">
-          <svg width="18" height="18" viewBox="0 0 40 40">
+          <svg width="20" height="20" viewBox="0 0 40 40">
             <polygon points="20,2 36,11 36,29 20,38 4,29 4,11" fill="#13161f" stroke="url(#platGrad)" stroke-width="2.5"/>
             <use href="#argon-crown-a" x="6" y="5" width="28" height="28"></use>
           </svg>
@@ -1548,6 +1613,23 @@
         </div>
       </div>
     </header>
+
+    <!-- TARJETA VIP DE DESCARGA DIRECTA (SE OCULTA SOLA AL INSTALAR) -->
+    <div id="vipInstallBanner" class="vip-app-banner">
+      <div class="vip-banner-left">
+        <div class="vip-banner-icon">
+          <svg width="26" height="26"><use href="#argon-crown-a"></use></svg>
+        </div>
+        <div>
+          <div class="vip-banner-title">ARGON • App Oficial</div>
+          <div class="vip-banner-sub">Instálala directo en tu celular</div>
+        </div>
+      </div>
+      <div class="vip-banner-actions">
+        <button class="btn-vip-install" onclick="window.triggerAppInstall()">⬇ INSTALAR</button>
+        <button class="btn-vip-close" onclick="window.dismissInstallBanner()" title="Ocultar">✕</button>
+      </div>
+    </div>
 
     <!-- 1. BÓVEDA -->
     <section id="view-boveda" class="view-section">
@@ -1719,8 +1801,8 @@
         <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
-        <button class="btn-primary-platinum" style="background:linear-gradient(135deg, #10b981, #059669); color:#04130e; margin-top:8px;" onclick="window.triggerAppInstall()">
-          📲 INSTALAR APP ARGON EN EL CELULAR
+        <button class="btn-primary-platinum" style="background:linear-gradient(180deg, #34d399 0%, #10b981 100%); color:#04130e; margin-top:8px;" onclick="window.triggerAppInstall()">
+          ⬇ DESCARGAR APP EN MI CELULAR
         </button>
       </div>
 
@@ -1824,29 +1906,67 @@
       arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // REGISTRO DE SERVICE WORKER PARA INSTALACIÓN Y GOOGLE PLAY
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js').catch(() => {});
       });
     }
 
+    // OCULTAR BANNER SI YA ESTÁ ABIERTA COMO APP INSTALADA
+    const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    const vipBannerEl = document.getElementById('vipInstallBanner');
+    if (isStandaloneApp && vipBannerEl) {
+      vipBannerEl.classList.add('hidden');
+    }
+
+    window.dismissInstallBanner = function() {
+      if (vipBannerEl) vipBannerEl.classList.add('hidden');
+    };
+
     let deferredInstallPrompt = null;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredInstallPrompt = e;
+      if (vipBannerEl && !isStandaloneApp) {
+        vipBannerEl.classList.remove('hidden');
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      if (vipBannerEl) vipBannerEl.classList.add('hidden');
+      showToast('✓ ¡App ARGON instalada en tu celular!');
     });
 
     window.triggerAppInstall = async function() {
+      // 1. Si Chrome ya tiene listo el instalador nativo de 1 toque, lo lanza directo
       if (deferredInstallPrompt) {
         deferredInstallPrompt.prompt();
         const { outcome } = await deferredInstallPrompt.userChoice;
         if (outcome === 'accepted') {
           deferredInstallPrompt = null;
+          if (vipBannerEl) vipBannerEl.classList.add('hidden');
         }
-      } else {
-        document.getElementById('installGuideModal').classList.add('open');
+        return;
       }
+
+      // 2. Si el usuario está en Android dentro de un visor interno (WhatsApp, IG, etc.), salta directo a Chrome oficial
+      const ua = navigator.userAgent || '';
+      const isAndroid = /android/i.test(ua);
+      const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+      if (isAndroid) {
+        const cleanUrl = window.location.href.replace(/^https?:\/\//, '');
+        window.location.href = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
+        return;
+      }
+
+      if (isIOS) {
+        document.getElementById('installGuideModal').classList.add('open');
+        return;
+      }
+
+      showToast('Abre myargonapp.com en Google Chrome para instalar directo');
     };
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
