@@ -1,0 +1,25 @@
+{
+  "name": "ARGON",
+  "short_name": "ARGON",
+  "description": "Red social de creadores, videos y bóveda A-Coins en tiempo real.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%23050507'/><polygon points='256,28 468,142 468,370 256,484 44,370 44,142' fill='%230d0f15' stroke='%23e2e8f0' stroke-width='16'/><path d='M175 150 L160 85 L220 120 L256 60 L292 120 L352 85 L337 150 Z' fill='%23ffffff'/><path d='M256 185 L140 420 L195 420 L220 355 L292 355 L317 420 L372 420 Z M232 315 L256 245 L280 315 Z' fill='%23ffffff'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='110' fill='%23050507'/><polygon points='256,28 468,142 468,370 256,484 44,370 44,142' fill='%230d0f15' stroke='%23e2e8f0' stroke-width='16'/><path d='M175 150 L160 85 L220 120 L256 60 L292 120 L352 85 L337 150 Z' fill='%23ffffff'/><path d='M256 185 L140 420 L195 420 L220 355 L292 355 L317 420 L372 420 Z M232 315 L256 245 L280 315 Z' fill='%23ffffff'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
