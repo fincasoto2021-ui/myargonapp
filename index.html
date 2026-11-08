@@ -696,6 +696,22 @@
       outline: none;
     }
 
+    .video-loading-placeholder {
+      width: 100%;
+      height: 220px;
+      background: #0d0f17;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #34d399;
+      font-size: 12px;
+      font-weight: 800;
+      gap: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
     .post-actions {
       display: flex;
       align-items: center;
@@ -1661,7 +1677,7 @@
     </nav>
   </div>
 
-  <!-- CONEXIÓN OFICIAL A FIREBASE (argon-ab4fe) + SUBIDA MULTIMEDIA DIRECTA -->
+  <!-- MOTOR OFICIAL FIREBASE FIRESTORE CON PARTICIÓN AUTOMÁTICA DE VIDEOS (SIN BLOQUEOS DE CORS NI STORAGE) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -1670,11 +1686,13 @@
       doc,
       setDoc,
       getDoc,
+      getDocs,
       addDoc,
       updateDoc,
       deleteDoc,
       onSnapshot,
       query,
+      where,
       orderBy,
       increment,
       arrayUnion
@@ -1708,6 +1726,9 @@
     let allDirectMessages = [];
     let allNotifications = [];
     let lastSeenNotifTime = Number(localStorage.getItem('argon_last_notif_ts') || 0);
+
+    // Memoria caché para no descargar dos veces el mismo video
+    const videoBlobCache = {};
 
     let currentUser = {
       registered: false,
@@ -1756,7 +1777,6 @@
       window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
     }
 
-    // SONIDO SUAVE DE NOTIFICACIÓN EN VIVO
     function playNotificationSound() {
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -1869,7 +1889,6 @@
       document.getElementById('lightboxImg').src = '';
     };
 
-    // --- ABRIR EL PERFIL PÚBLICO DE CUALQUIER PERSONA ---
     window.openUserProfile = function(handle) {
       if (!handle) return;
       const cleanH = handle.replace(/^@/, '').toUpperCase();
@@ -1989,7 +2008,6 @@
       renderMySubscribers();
     }
 
-    // --- SISTEMA DE MENSAJES DIRECTOS PRIVADOS (DM) CON FOTOS ---
     window.openDirectMessages = function(partnerHandle) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -2339,13 +2357,13 @@
       reader.readAsDataURL(file);
     };
 
-    // VISTA PREVIA INMEDIATA DEL VIDEO SELECCIONADO
     window.previewSelectedVideo = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
 
-      if (file.size > 95 * 1024 * 1024) {
-        showToast('Elige un video menor a 95 MB');
+      // Soporta videos de hasta 30 MB divididos automáticamente en Firestore
+      if (file.size > 30 * 1024 * 1024) {
+        showToast('Elige un video menor a 30 MB');
         event.target.value = '';
         return;
       }
@@ -2358,50 +2376,88 @@
       const vidPrev = document.getElementById('videoPreview');
       vidPrev.src = URL.createObjectURL(file);
       vidPrev.style.display = 'block';
-      showToast('🎬 Video listo. Toca Publicar ahora');
+      showToast('🎬 Video cargado. Toca Publicar ahora');
     };
 
-    // MOTOR DE SUBIDA DIRECTA SIN NECESIDAD DE CONFIGURAR REGLAS EN FIREBASE STORAGE
-    async function uploadVideoDirect(file, onProgress) {
-      // 1. Si es un clip muy corto (< 700 KB), se guarda directo en Firestore como las fotos
-      if (file.size <= 700 * 1024) {
-        onProgress(60);
-        return await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (e) => { onProgress(100); resolve(e.target.result); };
-          reader.onerror = (err) => reject(err);
-          reader.readAsDataURL(file);
-        });
+    // --- MOTOR NATIVO DE SUBIDA DE VIDEO EN PAQUETES (CHUNKS) DIRECTO A TU FIRESTORE ---
+    async function uploadVideoToFirestoreChunks(file, onProgress) {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+      });
+
+      // Si el video pesa menos de 650 KB en Base64, cabe en el mismo post directamente
+      if (dataUrl.length <= 650000) {
+        onProgress(100);
+        return { directDataUrl: dataUrl, videoId: '', chunkCount: 0 };
       }
 
-      // 2. Subida con barra de progreso real via XMLHttpRequest a servidor multimedia en la nube
-      return await new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        const formData = new FormData();
-        formData.append('reqtype', 'fileupload');
-        formData.append('time', '72h');
-        formData.append('fileToUpload', file);
+      // Dividir en bloques seguros de 650,000 caracteres (~650 KB por documento de Firestore)
+      const chunkSize = 650000;
+      const totalChunks = Math.ceil(dataUrl.length / chunkSize);
+      const videoId = 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
 
-        xhr.upload.onprogress = (e) => {
-          if (e.lengthComputable) {
-            const pct = Math.max(5, Math.round((e.loaded / e.total) * 95));
-            onProgress(pct);
+      for (let i = 0; i < totalChunks; i++) {
+        const slice = dataUrl.slice(i * chunkSize, (i + 1) * chunkSize);
+        await setDoc(doc(db, "video_chunks", `${videoId}_${i}`), {
+          videoId: videoId,
+          index: i,
+          data: slice,
+          createdAt: Date.now()
+        });
+        const pct = Math.round(((i + 1) / totalChunks) * 100);
+        onProgress(pct);
+      }
+
+      // Guardar en caché local inmediatamente para reproducción instantánea
+      videoBlobCache[videoId] = URL.createObjectURL(file);
+      return { directDataUrl: '', videoId: videoId, chunkCount: totalChunks };
+    }
+
+    // RECONSTRUIR Y REPRODUCIR EL VIDEO DESDE LOS PAQUETES DE FIRESTORE
+    async function hydrateChunkedVideo(videoId, chunkCount, containerEl) {
+      if (!videoId || !containerEl) return;
+
+      if (videoBlobCache[videoId]) {
+        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata"></video>`;
+        return;
+      }
+
+      try {
+        const chunks = [];
+        if (chunkCount && chunkCount > 0) {
+          const promises = [];
+          for (let i = 0; i < chunkCount; i++) {
+            promises.push(getDoc(doc(db, "video_chunks", `${videoId}_${i}`)));
           }
-        };
+          const snaps = await Promise.all(promises);
+          snaps.forEach(s => {
+            if (s.exists()) chunks.push(s.data());
+          });
+        } else {
+          const q = query(collection(db, "video_chunks"), where("videoId", "==", videoId));
+          const snap = await getDocs(q);
+          snap.forEach(d => chunks.push(d.data()));
+        }
 
-        xhr.onload = () => {
-          if (xhr.status >= 200 && xhr.status < 300 && xhr.responseText.startsWith('http')) {
-            onProgress(100);
-            resolve(xhr.responseText.trim());
-          } else {
-            reject(new Error('Error en servidor de video'));
-          }
-        };
+        if (chunks.length === 0) {
+          containerEl.innerHTML = `<div class="video-loading-placeholder">⚠️ Video no disponible</div>`;
+          return;
+        }
 
-        xhr.onerror = () => reject(new Error('Error de red al subir video'));
-        xhr.open('POST', 'https://litterbox.catbox.moe/resources/internals/api.php', true);
-        xhr.send(formData);
-      });
+        chunks.sort((a, b) => a.index - b.index);
+        const fullDataUrl = chunks.map(c => c.data).join('');
+        const res = await fetch(fullDataUrl);
+        const blob = await res.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        videoBlobCache[videoId] = blobUrl;
+
+        containerEl.innerHTML = `<video class="post-video" src="${blobUrl}" controls playsinline preload="metadata"></video>`;
+      } catch (err) {
+        containerEl.innerHTML = `<div class="video-loading-placeholder">Error al cargar video</div>`;
+      }
     }
 
     window.completeRegistration = async function() {
@@ -2583,7 +2639,7 @@
       });
     }
 
-    // PUBLICAR FOTO O VIDEO DIRECTAMENTE Y NOTIFICAR A LOS SUSCRIPTORES
+    // PUBLICAR FOTO O VIDEO EN PAQUETES DENTRO DE FIRESTORE + NOTIFICAR A SUSCRIPTORES
     window.publishPost = async function() {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -2602,23 +2658,28 @@
       const statusTxt = document.getElementById('uploadStatusText');
 
       publishBtn.disabled = true;
-      let uploadedVideoUrl = '';
+      let directVideoData = '';
+      let chunkedVideoId = '';
+      let chunkCount = 0;
 
       try {
         if (selectedVideoFile) {
           progWrap.style.display = 'block';
           statusTxt.style.display = 'block';
-          progBar.style.width = '8%';
-          statusTxt.textContent = 'Subiendo video... 8%';
+          progBar.style.width = '5%';
+          statusTxt.textContent = 'Procesando y subiendo video a ARGON... 5%';
 
-          uploadedVideoUrl = await uploadVideoDirect(selectedVideoFile, (pct) => {
+          const res = await uploadVideoToFirestoreChunks(selectedVideoFile, (pct) => {
             progBar.style.width = pct + '%';
-            statusTxt.textContent = `Subiendo video... ${pct}%`;
+            statusTxt.textContent = `Subiendo video a ARGON... ${pct}%`;
           });
+          directVideoData = res.directDataUrl;
+          chunkedVideoId = res.videoId;
+          chunkCount = res.chunkCount;
         }
 
         const photoToSave = selectedPhotoDataUrl;
-        const isVideoPost = !!uploadedVideoUrl;
+        const isVideoPost = !!(directVideoData || chunkedVideoId);
 
         input.value = '';
         selectedPhotoDataUrl = '';
@@ -2635,7 +2696,9 @@
           initials: currentUser.userName.slice(0, 2).toUpperCase(),
           avatar: currentUser.avatar || '',
           image: photoToSave || '',
-          video: uploadedVideoUrl || '',
+          video: directVideoData || '',
+          videoId: chunkedVideoId || '',
+          chunkCount: chunkCount || 0,
           caption: text,
           likes: 0,
           shares: 0,
@@ -2657,10 +2720,10 @@
           postId: docRef.id
         });
 
-        showToast(isVideoPost ? '🎬 Video publicado y notificado a tus suscriptores' : '✓ Publicado en vivo');
+        showToast(isVideoPost ? '🎬 ¡Video publicado con éxito en ARGON!' : '✓ Publicado en vivo');
       } catch (e) {
         console.error(e);
-        showToast('Error al subir el video. Intenta con un clip más corto.');
+        showToast('Error de conexión al guardar. Intenta de nuevo.');
       } finally {
         publishBtn.disabled = false;
         progWrap.style.display = 'none';
@@ -2740,11 +2803,12 @@
         ? `<button class="btn-mini-danger" onclick="window.adminDeletePost('${post.id}')" title="Borrar post">🗑️</button>`
         : '';
 
+      const hasVideo = !!(post.video || post.videoId);
       const videoHtml = post.video
         ? `<video class="post-video" src="${post.video}" controls playsinline preload="metadata"></video>`
-        : '';
+        : (post.videoId ? `<div class="video-slot"><div class="video-loading-placeholder">🎬 Cargando video...</div></div>` : '');
 
-      const imgHtml = (!post.video && post.image)
+      const imgHtml = (!hasVideo && post.image)
         ? `<img class="post-image" src="${post.image}" alt="${post.handle}" onclick="window.openPhotoLightbox('${post.image}')" />`
         : '';
 
@@ -2795,6 +2859,13 @@
           </div>
         </div>
       `;
+
+      // Si el post tiene un video guardado por paquetes en Firestore, ensamblarlo automáticamente
+      if (post.videoId && !post.video) {
+        const slot = card.querySelector('.video-slot');
+        hydrateChunkedVideo(post.videoId, post.chunkCount, slot);
+      }
+
       return card;
     }
 
