@@ -56,46 +56,328 @@
       border-right: 1px solid rgba(255, 255, 255, 0.06);
     }
 
+    /* 1. PANTALLA DE CARGA: CARGANDO BÓVEDA */
+    .vault-splash-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 42%, #11131a 0%, #030305 70%);
+      z-index: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 64px 32px 34px;
+      transition: opacity 0.45s ease, visibility 0.45s ease;
+    }
+
+    .vault-splash-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-center-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+
+    .splash-crown-glow {
+      width: 150px;
+      height: 150px;
+      filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.28));
+      animation: crownPulse 2.2s infinite ease-in-out;
+    }
+
+    @keyframes crownPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 22px rgba(255, 255, 255, 0.22)); }
+      50% { transform: scale(1.04); filter: drop-shadow(0 0 36px rgba(255, 255, 255, 0.45)); }
+    }
+
+    .splash-title {
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: 7px;
+      margin-top: 8px;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 55%, #64748b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+    }
+
+    .splash-bottom-box {
+      width: 100%;
+      max-width: 310px;
+    }
+
+    .splash-bar-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    .splash-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #64748b 0%, #ffffff 80%, #e2e8f0 100%);
+      box-shadow: 0 0 14px #ffffff;
+      border-radius: 999px;
+      transition: width 0.08s linear;
+    }
+
+    .splash-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 9px;
+      font-size: 11.5px;
+      color: #94a3b8;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+
+    .splash-copy {
+      text-align: center;
+      font-size: 10px;
+      color: #475569;
+      letter-spacing: 2px;
+      margin-top: 28px;
+      font-weight: 700;
+    }
+
+    /* 2. PANTALLA DE TARJETA METÁLICA VIP 3D (CREA TU IDENTIDAD DE IMPERIO) */
     .onboarding-overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at 50% 15%, #1a1d29 0%, #050507 70%);
-      z-index: 200;
+      background: radial-gradient(circle at 50% 12%, #171a24 0%, #040406 72%);
+      z-index: 500;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 18px;
+      overflow-y: auto;
     }
 
     .onboarding-overlay.hidden {
       display: none;
     }
 
-    .onboarding-card {
+    .vip-onboarding-wrap {
       width: 100%;
-      max-width: 380px;
-      background: linear-gradient(165deg, rgba(24, 26, 34, 0.96) 0%, rgba(8, 9, 13, 0.99) 100%);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 24px;
-      padding: 28px 22px;
+      max-width: 390px;
       text-align: center;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .input-field {
+    .vip-top-crown {
+      width: 74px;
+      height: 74px;
+      filter: drop-shadow(0 6px 18px rgba(255, 255, 255, 0.25));
+      margin-bottom: 2px;
+    }
+
+    .vip-main-logo-text {
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: 7px;
+      font-family: "Didot", "Bodoni MT", "Times New Roman", serif;
+      background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 65%, #64748b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .vip-empire-subtitle {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 2.4px;
+      color: #94a3b8;
+      margin-bottom: 18px;
+      text-transform: uppercase;
+    }
+
+    /* TARJETA METÁLICA INCLINADA EN 3D */
+    .vip-metal-card-stage {
       width: 100%;
-      background: #090a0f;
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 13px 14px;
-      color: #fff;
-      font-size: 14px;
-      margin-bottom: 12px;
-      outline: none;
+      perspective: 1100px;
+      margin-bottom: 18px;
     }
 
-    .input-field:focus {
-      border-color: #cbd5e1;
+    .vip-metal-card {
+      width: 100%;
+      border-radius: 20px;
+      padding: 20px 20px 18px;
+      background:
+        radial-gradient(circle at 18% 15%, rgba(255, 255, 255, 0.16) 0%, transparent 48%),
+        repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px),
+        linear-gradient(145deg, #242834 0%, #101218 52%, #07080c 100%);
+      border: 1.5px solid rgba(226, 232, 240, 0.35);
+      box-shadow:
+        0 26px 50px rgba(0, 0, 0, 0.92),
+        0 6px 0 rgba(148, 163, 184, 0.18),
+        inset 0 1px 2px rgba(255, 255, 255, 0.42);
+      transform: rotate(-3.5deg);
+      transition: transform 0.3s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vip-metal-card:focus-within {
+      transform: rotate(0deg) scale(1.01);
+    }
+
+    .vip-card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .vip-card-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vip-card-brand-txt {
+      font-size: 18px;
+      font-family: "Didot", "Bodoni MT", "Times New Roman", serif;
+      letter-spacing: 3.5px;
+      color: #e2e8f0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.85);
+    }
+
+    .vip-emv-chip {
+      width: 46px;
+      height: 36px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 50%, #e2e8f0 100%);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.45), 0 2px 8px rgba(0, 0, 0, 0.6);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 900;
+      color: #1e293b;
+    }
+
+    .vip-emv-chip::before,
+    .vip-emv-chip::after {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(30, 41, 59, 0.35);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .vip-card-input-box {
+      width: 100%;
+      background: rgba(6, 7, 11, 0.68);
+      border: 1px solid rgba(226, 232, 240, 0.24);
+      border-radius: 10px;
+      padding: 10px 12px;
+      color: #ffffff;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-align: center;
+      text-transform: uppercase;
+      outline: none;
+      margin-bottom: 8px;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.85);
+    }
+
+    .vip-card-input-box::placeholder {
+      color: #94a3b8;
+      letter-spacing: 1.2px;
+    }
+
+    .vip-card-input-box:focus {
+      border-color: #ffffff;
+    }
+
+    .vip-engraved-preview {
+      text-align: center;
+      font-size: 23px;
+      font-family: "Didot", "Bodoni MT", "Times New Roman", serif;
+      letter-spacing: 3px;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      padding: 8px 0 4px;
+      text-shadow: 0 2px 3px rgba(0, 0, 0, 0.95), 0 -1px 1px rgba(255, 255, 255, 0.35);
+      min-height: 38px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .vip-card-bonus-lip {
+      margin-top: 10px;
+      margin-left: -20px;
+      margin-right: -20px;
+      margin-bottom: -18px;
+      padding: 10px 16px;
+      background: rgba(5, 6, 9, 0.88);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #cbd5e1;
+    }
+
+    .vip-avatar-mini-picker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .vip-avatar-mini-picker img {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn-activate-vip-pass {
+      width: 100%;
+      padding: 15px 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(30, 34, 45, 0.96) 0%, rgba(10, 12, 18, 0.99) 100%);
+      border: 1.5px solid rgba(226, 232, 240, 0.45);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+    }
+
+    .btn-activate-vip-pass:active {
+      transform: scale(0.99);
     }
 
     .topbar {
@@ -218,91 +500,6 @@
       color: #94a3b8;
       letter-spacing: 0.5px;
       line-height: 1;
-    }
-
-    /* BANNER VIP DE DESCARGA DE APP */
-    .vip-app-banner {
-      margin: 12px 14px 0;
-      padding: 12px 14px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(20, 24, 34, 0.96) 0%, rgba(9, 13, 19, 0.98) 100%);
-      border: 1px solid rgba(16, 185, 129, 0.42);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65), inset 0 0 18px rgba(16, 185, 129, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .vip-app-banner.hidden {
-      display: none !important;
-    }
-
-    .vip-banner-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
-
-    .vip-banner-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(145deg, #161922, #06070a);
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-    }
-
-    .vip-banner-title {
-      font-size: 12.5px;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: 0.4px;
-    }
-
-    .vip-banner-sub {
-      font-size: 10.5px;
-      color: #34d399;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-
-    .vip-banner-actions {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .btn-vip-install {
-      background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
-      color: #04130e;
-      border: none;
-      border-radius: 999px;
-      padding: 8px 14px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.4px;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-      white-space: nowrap;
-    }
-
-    .btn-vip-close {
-      background: rgba(255, 255, 255, 0.06);
-      border: none;
-      color: #94a3b8;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      font-size: 11px;
-      font-weight: 800;
-      cursor: pointer;
     }
 
     /* CARRUSEL ESTILO STORIES / SHORTS VERTICALES */
@@ -1653,7 +1850,7 @@
       font-size: 12px;
       padding: 9px 16px;
       border-radius: 999px;
-      z-index: 300;
+      z-index: 700;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
       display: none;
       white-space: nowrap;
@@ -1663,6 +1860,128 @@
 <body>
   <div class="app-shell">
     <div id="toast" class="toast"></div>
+
+    <!-- VECTOR DEL LOGO OFICIAL - CORONA PLATINO -->
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" />
+          <stop offset="55%" stop-color="#e2e8f0" />
+          <stop offset="100%" stop-color="#94a3b8" />
+        </linearGradient>
+        <symbol id="argon-crown-a" viewBox="0 0 100 100">
+          <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
+            <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGrad)" />
+            <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="url(#platGrad)" />
+            <circle cx="30" cy="12.5" r="2.3" fill="#ffffff" />
+            <circle cx="50" cy="7.5" r="2.6" fill="#ffffff" />
+            <circle cx="70" cy="12.5" r="2.3" fill="#ffffff" />
+          </g>
+          <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGrad)" />
+          <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
+        </symbol>
+        <symbol id="argon-crown-only" viewBox="0 0 100 60">
+          <path d="M18 46 L12 18 L34 32 L50 8 L66 32 L88 18 L82 46 Z" fill="url(#platGrad)" />
+          <rect x="18" y="49" width="64" height="5.5" rx="2.5" fill="url(#platGrad)" />
+          <circle cx="12" cy="13" r="3.5" fill="#ffffff" />
+          <circle cx="50" cy="4.5" r="4.2" fill="#ffffff" />
+          <circle cx="88" cy="13" r="3.5" fill="#ffffff" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- 1. PANTALLA DE CARGA ANIMADA: CARGANDO BÓVEDA -->
+    <div id="vaultSplashScreen" class="vault-splash-screen">
+      <div style="height:10px;"></div>
+      <div class="splash-center-logo">
+        <svg class="splash-crown-glow" viewBox="0 0 100 60">
+          <use href="#argon-crown-only"></use>
+        </svg>
+        <div class="splash-title">ARGON</div>
+      </div>
+
+      <div class="splash-bottom-box">
+        <div class="splash-bar-track">
+          <div id="splashBarFill" class="splash-bar-fill"></div>
+        </div>
+        <div class="splash-meta-row">
+          <span>Cargando bóveda...</span>
+          <span id="splashPctText">0%</span>
+        </div>
+        <div class="splash-copy">ARGON © 2026</div>
+      </div>
+    </div>
+
+    <!-- 2. PANTALLA DE BIENVENIDA CON TARJETA METÁLICA VIP 3D -->
+    <div id="onboardingScreen" class="onboarding-overlay hidden">
+      <div class="vip-onboarding-wrap">
+        <svg class="vip-top-crown" viewBox="0 0 100 60">
+          <use href="#argon-crown-only"></use>
+        </svg>
+        <div class="vip-main-logo-text">ARGON</div>
+        <div class="vip-empire-subtitle">CREA TU IDENTIDAD DE IMPERIO</div>
+
+        <label class="vip-avatar-mini-picker" title="Subir foto de perfil opcional">
+          <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
+          <span id="onboardingAvatarIcon">📷</span>
+          <span>Elegir Foto de Perfil</span>
+          <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
+        </label>
+
+        <div id="referralWelcomeBanner" style="font-size:11.5px; color:#34d399; font-weight:800; margin-bottom:12px;"></div>
+
+        <!-- TARJETA METÁLICA 3D -->
+        <div class="vip-metal-card-stage">
+          <div class="vip-metal-card">
+            <div class="vip-card-top-row">
+              <div class="vip-card-brand">
+                <svg width="30" height="20" viewBox="0 0 100 60">
+                  <use href="#argon-crown-only"></use>
+                </svg>
+                <span class="vip-card-brand-txt">ARGON</span>
+              </div>
+              <div class="vip-emv-chip">A</div>
+            </div>
+
+            <input
+              type="text"
+              id="regName"
+              class="vip-card-input-box"
+              placeholder="TU ALIAS / NOMBRE DE IMPERIO"
+              oninput="window.updateVipCardPreview(this.value)"
+            />
+
+            <input
+              type="text"
+              id="regHandle"
+              class="vip-card-input-box"
+              style="font-size:11px; padding:8px 10px; margin-bottom:4px;"
+              placeholder="@USUARIO OFICIAL (OPCIONAL)"
+              oninput="window.updateVipCardPreview(this.value || document.getElementById('regName').value)"
+            />
+
+            <div id="vipEngravedText" class="vip-engraved-preview">LEX_ARGON</div>
+
+            <div class="vip-card-bonus-lip">
+              <span>Bono de apertura: <strong style="color:#ffffff;">+5,000 A-Coins</strong> listas</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(255,255,255,0.14); font-size:10px; font-weight:900; color:#fff;">A</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">
+          ACTIVAR MI PASE VIP &gt;
+        </button>
+
+        <button
+          id="closeVipPreviewBtn"
+          style="display:none; margin-top:12px; background:none; border:none; color:#94a3b8; font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;"
+          onclick="document.getElementById('onboardingScreen').classList.add('hidden')"
+        >
+          Volver a mi cuenta activa
+        </button>
+      </div>
+    </div>
 
     <!-- REPRODUCTOR VERTICAL DE SHORTS A PANTALLA COMPLETA -->
     <div id="shortsFullscreenModal" class="shorts-fullscreen-modal">
@@ -1679,22 +1998,8 @@
 
       <div class="shorts-fs-stage" id="shortsStageArea">
         <video id="shortsFsVideoEl" class="shorts-fs-video" playsinline controls loop></video>
-
         <div class="shorts-fs-right-rail" id="shortsRightRail"></div>
-
         <div class="shorts-fs-bottom-info" id="shortsBottomInfo"></div>
-      </div>
-    </div>
-
-    <!-- MODAL DE INSTRUCCIÓN SOLO PARA IPHONE (SAFARI) -->
-    <div id="installGuideModal" class="confirm-modal-overlay">
-      <div class="confirm-card">
-        <div class="confirm-icon-ring" style="border-color:rgba(16,185,129,0.5); box-shadow:0 0 24px rgba(16,185,129,0.25);">📲</div>
-        <div class="confirm-title">Instalar App ARGON</div>
-        <div class="confirm-desc" id="installGuideText">
-          En iPhone toca el botón <strong>Compartir (↑)</strong> en la barra inferior y selecciona <strong>"Agregar a Inicio"</strong>.
-        </div>
-        <button class="btn-primary-platinum" onclick="document.getElementById('installGuideModal').classList.remove('open')">Listo</button>
       </div>
     </div>
 
@@ -1716,55 +2021,6 @@
     <!-- VISOR DE FOTOS A PANTALLA COMPLETA -->
     <div id="photoLightbox" class="lightbox-overlay" onclick="window.closePhotoLightbox()">
       <img id="lightboxImg" src="" alt="Vista ampliada" />
-    </div>
-
-    <!-- VECTOR DEL LOGO OFICIAL OPCIÓN C - LA CORONA (BLANCO Y PLATINO PURO) -->
-    <svg width="0" height="0" style="position:absolute">
-      <defs>
-        <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="55%" stop-color="#e2e8f0" />
-          <stop offset="100%" stop-color="#94a3b8" />
-        </linearGradient>
-        <symbol id="argon-crown-a" viewBox="0 0 100 100">
-          <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
-            <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGrad)" />
-            <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="url(#platGrad)" />
-            <circle cx="30" cy="12.5" r="2.3" fill="#ffffff" />
-            <circle cx="50" cy="7.5" r="2.6" fill="#ffffff" />
-            <circle cx="70" cy="12.5" r="2.3" fill="#ffffff" />
-          </g>
-          <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGrad)" />
-          <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
-        </symbol>
-      </defs>
-    </svg>
-
-    <!-- PANTALLA DE REGISTRO INICIAL -->
-    <div id="onboardingScreen" class="onboarding-overlay">
-      <div class="onboarding-card">
-        <label class="profile-avatar-wrap" style="margin-top:0;" title="Subir foto de perfil">
-          <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
-          <svg id="onboardingAvatarSvg" width="50" height="50"><use href="#argon-crown-a"></use></svg>
-          <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
-        </label>
-        <div style="margin-bottom:12px;">
-          <label class="btn-avatar-upload">
-            📷 Elegir Foto de Perfil
-            <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
-          </label>
-        </div>
-        <div class="brand-title" style="font-size:22px; margin-bottom:6px;">ARGON</div>
-        <div id="referralWelcomeBanner" style="font-size:12px; color:#34d399; font-weight:700; margin-bottom:8px;"></div>
-        <div style="font-size:12px; color:#94a3b8; margin-bottom:18px;">
-          Crea tu cuenta oficial y recibe <strong>5,000 A-Coins</strong> de apertura + auto-suscripción oficial.
-        </div>
-        <input type="text" id="regName" class="input-field" placeholder="Tu Nombre o Marca (ej. Alberto Soto)" />
-        <input type="text" id="regHandle" class="input-field" placeholder="Tu Usuario (ej. BELTO43)" />
-        <button class="btn-primary-platinum" onclick="window.completeRegistration()">
-          ACTIVAR MI CUENTA EN ARGON
-        </button>
-      </div>
     </div>
 
     <!-- MODAL DE PERFIL PÚBLICO -->
@@ -1822,7 +2078,7 @@
         </div>
 
         <div style="padding:10px 14px; background:#0d0f17; border-bottom:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:11px; color:#cbd5e1; font-weight:700;">Alertas en el navegador / celular</span>
+          <span style="font-size:11px; color:#cbd5e1; font-weight:700;">Alertas en el dispositivo</span>
           <button class="btn-mini-admin" onclick="window.enableBrowserPushNotifications()">Activar Alertas Push</button>
         </div>
 
@@ -1896,23 +2152,6 @@
         </div>
       </div>
     </header>
-
-    <!-- TARJETA VIP DE DESCARGA DIRECTA (SE OCULTA SOLA AL INSTALAR) -->
-    <div id="vipInstallBanner" class="vip-app-banner">
-      <div class="vip-banner-left">
-        <div class="vip-banner-icon">
-          <svg width="26" height="26"><use href="#argon-crown-a"></use></svg>
-        </div>
-        <div>
-          <div class="vip-banner-title">ARGON • App Oficial</div>
-          <div class="vip-banner-sub">Instálala directo en tu celular</div>
-        </div>
-      </div>
-      <div class="vip-banner-actions">
-        <button class="btn-vip-install" onclick="window.triggerAppInstall()">⬇ INSTALAR</button>
-        <button class="btn-vip-close" onclick="window.dismissInstallBanner()" title="Ocultar">✕</button>
-      </div>
-    </div>
 
     <!-- 1. BÓVEDA -->
     <section id="view-boveda" class="view-section">
@@ -2060,7 +2299,7 @@
       </div>
     </section>
 
-    <!-- 4. MI PERFIL -->
+    <!-- 4. MI PERFIL (SIN BOTÓN VERDE DE DESCARGAR APP) -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2098,8 +2337,12 @@
         <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
-        <button class="btn-primary-platinum" style="background:linear-gradient(180deg, #34d399 0%, #10b981 100%); color:#04130e; margin-top:8px;" onclick="window.triggerAppInstall()">
-          ⬇ DESCARGAR APP EN MI CELULAR
+
+        <button
+          style="margin-top:10px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); color:#cbd5e1; width:100%; padding:10px; border-radius:12px; font-size:11.5px; font-weight:800; cursor:pointer;"
+          onclick="window.openVipCardPreview()"
+        >
+          💳 VER MI TARJETA METÁLICA VIP
         </button>
       </div>
 
@@ -2213,60 +2456,6 @@
       });
     }
 
-    const isStandaloneApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-    const vipBannerEl = document.getElementById('vipInstallBanner');
-    if (isStandaloneApp && vipBannerEl) {
-      vipBannerEl.classList.add('hidden');
-    }
-
-    window.dismissInstallBanner = function() {
-      if (vipBannerEl) vipBannerEl.classList.add('hidden');
-    };
-
-    let deferredInstallPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredInstallPrompt = e;
-      if (vipBannerEl && !isStandaloneApp) {
-        vipBannerEl.classList.remove('hidden');
-      }
-    });
-
-    window.addEventListener('appinstalled', () => {
-      deferredInstallPrompt = null;
-      if (vipBannerEl) vipBannerEl.classList.add('hidden');
-      showToast('✓ ¡App ARGON instalada en tu celular!');
-    });
-
-    window.triggerAppInstall = async function() {
-      if (deferredInstallPrompt) {
-        deferredInstallPrompt.prompt();
-        const { outcome } = await deferredInstallPrompt.userChoice;
-        if (outcome === 'accepted') {
-          deferredInstallPrompt = null;
-          if (vipBannerEl) vipBannerEl.classList.add('hidden');
-        }
-        return;
-      }
-
-      const ua = navigator.userAgent || '';
-      const isAndroid = /android/i.test(ua);
-      const isIOS = /iPhone|iPad|iPod/i.test(ua);
-
-      if (isAndroid) {
-        const cleanUrl = window.location.href.replace(/^https?:\/\//, '');
-        window.location.href = `intent://${cleanUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-        return;
-      }
-
-      if (isIOS) {
-        document.getElementById('installGuideModal').classList.add('open');
-        return;
-      }
-
-      showToast('Abre myargonapp.com en Google Chrome para instalar directo');
-    };
-
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
 
@@ -2321,6 +2510,55 @@
     const refBanner = document.getElementById('referralWelcomeBanner');
     if (refBanner && invitedByParam) {
       refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
+    }
+
+    // GRABADO EN VIVO EN LA TARJETA METÁLICA VIP
+    window.updateVipCardPreview = function(val) {
+      const clean = (val || '').trim().toUpperCase().replace(/\s+/g, '_');
+      const el = document.getElementById('vipEngravedText');
+      if (el) el.textContent = clean || 'LEX_ARGON';
+    };
+
+    window.openVipCardPreview = function() {
+      const nameInput = document.getElementById('regName');
+      const handleInput = document.getElementById('regHandle');
+      const engraved = document.getElementById('vipEngravedText');
+      const closeBtn = document.getElementById('closeVipPreviewBtn');
+
+      if (nameInput && currentUser.userName) nameInput.value = currentUser.userName;
+      if (handleInput && currentUser.userHandle) handleInput.value = currentUser.userHandle;
+      if (engraved) engraved.textContent = currentUser.userHandle || currentUser.userName || 'BELTO43';
+      if (closeBtn) closeBtn.style.display = 'inline-block';
+
+      document.getElementById('onboardingScreen').classList.remove('hidden');
+    };
+
+    // ANIMACIÓN DE CARGANDO BÓVEDA (0% -> 100%) AL ABRIR LA APP
+    function runVaultSplashAnimation() {
+      const splash = document.getElementById('vaultSplashScreen');
+      const fill = document.getElementById('splashBarFill');
+      const pctTxt = document.getElementById('splashPctText');
+      if (!splash || !fill || !pctTxt) return;
+
+      let progress = 0;
+      const timer = setInterval(() => {
+        progress += Math.floor(Math.random() * 9) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(timer);
+          fill.style.width = '100%';
+          pctTxt.textContent = '100%';
+          setTimeout(() => {
+            splash.classList.add('hidden');
+            if (!currentUser.registered) {
+              document.getElementById('onboardingScreen').classList.remove('hidden');
+            }
+          }, 260);
+        } else {
+          fill.style.width = progress + '%';
+          pctTxt.textContent = progress + '%';
+        }
+      }, 65);
     }
 
     function isUserAdmin() {
@@ -2570,7 +2808,7 @@
 
     window.enableBrowserPushNotifications = async function() {
       if (!("Notification" in window)) {
-        showToast('Tu navegador usa las notificaciones internas de la campana 🔔');
+        showToast('Tu dispositivo usa las notificaciones internas de la campana 🔔');
         return;
       }
       const perm = await Notification.requestPermission();
@@ -2580,7 +2818,7 @@
           body: "Recibirás avisos inmediatos cuando tus creadores suban videos o fotos."
         });
       } else {
-        showToast('Permiso denegado en el navegador');
+        showToast('Permiso denegado');
       }
     };
 
@@ -2732,22 +2970,22 @@
       const profImg = document.getElementById('profileAvatarImg');
       const profSvg = document.getElementById('profileAvatarSvg');
       const onbImg = document.getElementById('onboardingAvatarImg');
-      const onbSvg = document.getElementById('onboardingAvatarSvg');
+      const onbIcon = document.getElementById('onboardingAvatarIcon');
       const compImg = document.getElementById('composerAvatarImg');
       const compSvg = document.getElementById('composerAvatarSvg');
 
       if (currentUser.avatar) {
         if (profImg) { profImg.src = currentUser.avatar; profImg.style.display = 'block'; }
         if (profSvg) profSvg.style.display = 'none';
-        if (onbImg) { onbImg.src = currentUser.avatar; onbImg.style.display = 'block'; }
-        if (onbSvg) onbSvg.style.display = 'none';
+        if (onbImg) { onbImg.src = currentUser.avatar; onbImg.style.display = 'inline-block'; }
+        if (onbIcon) onbIcon.style.display = 'none';
         if (compImg) { compImg.src = currentUser.avatar; compImg.style.display = 'block'; }
         if (compSvg) compSvg.style.display = 'none';
       } else {
         if (profImg) profImg.style.display = 'none';
         if (profSvg) profSvg.style.display = 'block';
         if (onbImg) onbImg.style.display = 'none';
-        if (onbSvg) onbSvg.style.display = 'block';
+        if (onbIcon) onbIcon.style.display = 'inline';
         if (compImg) compImg.style.display = 'none';
         if (compSvg) compSvg.style.display = 'block';
       }
@@ -3132,8 +3370,8 @@
       const file = event.target.files && event.target.files[0];
       if (!file) return;
 
-      if (file.size > 100 * 1024 * 1024) {
-        showToast('Elige un video menor a 100 MB');
+      if (file.size > 95 * 1024 * 1024) {
+        showToast('⚠️ Elige un video menor a 95 MB');
         event.target.value = '';
         return;
       }
@@ -3146,304 +3384,79 @@
       const vidPrev = document.getElementById('videoPreview');
       vidPrev.src = URL.createObjectURL(file);
       vidPrev.style.display = 'block';
-      showToast('🎬 Short listo. Toca el botón Publicar');
+      window.switchTab('feed');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('🎬 Video listo. Toca "Publicar" para subirlo');
     };
 
-    async function uploadVideoToCloudinaryOrFallback(file, onProgress) {
-      try {
-        const cloudUrl = await new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+    async function uploadVideoToCloudinary(file) {
+      return new Promise((resolve, reject) => {
+        const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
+        const xhr = new XMLHttpRequest();
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
-          xhr.upload.onprogress = (e) => {
-            if (e.lengthComputable) {
-              const pct = Math.max(5, Math.round((e.loaded / e.total) * 98));
-              onProgress(pct);
+        const wrap = document.getElementById('uploadProgressWrap');
+        const bar = document.getElementById('uploadProgressBar');
+        const txt = document.getElementById('uploadStatusText');
+        if (wrap) wrap.style.display = 'block';
+        if (txt) txt.style.display = 'block';
+
+        xhr.upload.onprogress = function(e) {
+          if (e.lengthComputable) {
+            const pct = Math.round((e.loaded / e.total) * 100);
+            if (bar) bar.style.width = pct + '%';
+            if (txt) txt.textContent = `Subiendo video... ${pct}%`;
+          }
+        };
+
+        xhr.onload = function() {
+          if (wrap) wrap.style.display = 'none';
+          if (txt) txt.style.display = 'none';
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              const res = JSON.parse(xhr.responseText);
+              resolve(res.secure_url);
+            } catch (err) {
+              reject(err);
             }
-          };
+          } else {
+            reject(new Error('Error subiendo video'));
+          }
+        };
 
-          xhr.onload = () => {
-            if (xhr.status >= 200 && xhr.status < 300) {
-              try {
-                const resp = JSON.parse(xhr.responseText);
-                if (resp.secure_url) {
-                  onProgress(100);
-                  resolve(resp.secure_url);
-                  return;
-                }
-              } catch (err) {}
-            }
-            reject(new Error('Preset no activado aún'));
-          };
+        xhr.onerror = function() {
+          if (wrap) wrap.style.display = 'none';
+          if (txt) txt.style.display = 'none';
+          reject(new Error('Error de red'));
+        };
 
-          xhr.onerror = () => reject(new Error('Error de red Cloudinary'));
-          xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, true);
-          xhr.send(formData);
-        });
-
-        return { directDataUrl: cloudUrl, videoId: '', chunkCount: 0 };
-      } catch (cloudErr) {
-        return await uploadVideoToFirestoreChunks(file, onProgress);
-      }
-    }
-
-    async function uploadVideoToFirestoreChunks(file, onProgress) {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (err) => reject(err);
-        reader.readAsDataURL(file);
+        xhr.open('POST', url, true);
+        xhr.send(fd);
       });
-
-      if (dataUrl.length <= 650000) {
-        onProgress(100);
-        return { directDataUrl: dataUrl, videoId: '', chunkCount: 0 };
-      }
-
-      const chunkSize = 650000;
-      const totalChunks = Math.ceil(dataUrl.length / chunkSize);
-      const videoId = 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-
-      for (let i = 0; i < totalChunks; i++) {
-        const slice = dataUrl.slice(i * chunkSize, (i + 1) * chunkSize);
-        await setDoc(doc(db, "video_chunks", `${videoId}_${i}`), {
-          videoId: videoId,
-          index: i,
-          data: slice,
-          createdAt: Date.now()
-        });
-        const pct = Math.round(((i + 1) / totalChunks) * 100);
-        onProgress(pct);
-      }
-
-      videoBlobCache[videoId] = URL.createObjectURL(file);
-      return { directDataUrl: '', videoId: videoId, chunkCount: totalChunks };
     }
 
     async function hydrateChunkedVideo(videoId, chunkCount, containerEl) {
-      if (!videoId || !containerEl) return;
-
+      if (!videoId || !chunkCount) return;
       if (videoBlobCache[videoId]) {
         containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata"></video>`;
         return;
       }
-
       try {
         const chunks = [];
-        if (chunkCount && chunkCount > 0) {
-          const promises = [];
-          for (let i = 0; i < chunkCount; i++) {
-            promises.push(getDoc(doc(db, "video_chunks", `${videoId}_${i}`)));
-          }
-          const snaps = await Promise.all(promises);
-          snaps.forEach(s => {
-            if (s.exists()) chunks.push(s.data());
-          });
-        } else {
-          const q = query(collection(db, "video_chunks"), where("videoId", "==", videoId));
-          const snap = await getDocs(q);
-          snap.forEach(d => chunks.push(d.data()));
+        for (let i = 0; i < chunkCount; i++) {
+          const snap = await getDoc(doc(db, "video_chunks", `${videoId}_${i}`));
+          if (snap.exists()) chunks.push(snap.data().data || '');
         }
-
-        if (chunks.length === 0) {
-          containerEl.innerHTML = `<div class="video-loading-placeholder">⚠️ Video no disponible</div>`;
-          return;
+        const fullDataUrl = chunks.join('');
+        if (fullDataUrl.startsWith('data:video')) {
+          videoBlobCache[videoId] = fullDataUrl;
+          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata"></video>`;
         }
-
-        chunks.sort((a, b) => a.index - b.index);
-        const fullDataUrl = chunks.map(c => c.data).join('');
-        const res = await fetch(fullDataUrl);
-        const blob = await res.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        videoBlobCache[videoId] = blobUrl;
-
-        containerEl.innerHTML = `<video class="post-video" src="${blobUrl}" controls playsinline preload="metadata"></video>`;
-      } catch (err) {
-        containerEl.innerHTML = `<div class="video-loading-placeholder">Error al cargar video</div>`;
+      } catch (e) {
+        containerEl.innerHTML = `<div class="video-loading-placeholder">⚠️ No se pudo cargar el video</div>`;
       }
-    }
-
-    window.completeRegistration = async function() {
-      const rawName = document.getElementById('regName').value.trim();
-      const rawHandle = document.getElementById('regHandle').value.trim();
-      if (!rawName) {
-        showToast('Escribe tu nombre para activar la cuenta');
-        return;
-      }
-      const cleanName = rawName.toUpperCase();
-      const cleanHandle = (rawHandle || rawName).replace(/\s+/g, '_').replace(/^@/, '').toUpperCase();
-
-      currentUser.userName = cleanName;
-      currentUser.userHandle = cleanHandle;
-      currentUser.registered = true;
-
-      const inviter = (invitedByParam && invitedByParam !== cleanHandle) ? invitedByParam : '';
-      const initialSubscribedTo = inviter ? [inviter] : [];
-      const initialBalance = inviter ? 5010 : 5000;
-
-      currentUser.subscribedTo = initialSubscribedTo;
-      currentUser.balance = initialBalance;
-
-      document.getElementById('onboardingScreen').classList.add('hidden');
-      saveLocalSession();
-      updateUI();
-
-      try {
-        const userRef = doc(db, "users", cleanHandle);
-        const snap = await getDoc(userRef);
-        if (!snap.exists()) {
-          await setDoc(userRef, {
-            userName: cleanName,
-            userHandle: cleanHandle,
-            avatar: currentUser.avatar || '',
-            balance: initialBalance,
-            subs: 0,
-            subscribersList: [],
-            subscribedTo: initialSubscribedTo,
-            invitedBy: inviter,
-            rewarded1k: false,
-            createdAt: Date.now()
-          });
-
-          if (inviter) {
-            await setDoc(doc(db, "users", inviter), {
-              subs: increment(1),
-              subscribersList: arrayUnion(cleanHandle)
-            }, { merge: true });
-
-            await dispatchNotification({
-              toList: [inviter],
-              type: 'sub',
-              text: `Se acaba de registrar y suscribir a tu cuenta con tu link oficial.`
-            });
-          }
-        } else {
-          const data = snap.data();
-          currentUser.balance = data.balance ?? initialBalance;
-          currentUser.subs = data.subs ?? 0;
-          currentUser.avatar = currentUser.avatar || data.avatar || '';
-          currentUser.subscribedTo = data.subscribedTo || initialSubscribedTo;
-          saveLocalSession();
-          updateUI();
-        }
-        listenToMyUserDoc(cleanHandle);
-        showToast(inviter ? `¡Bienvenido! Auto-suscrito a @${inviter} (+10 AC)` : `Cuenta @${cleanHandle} activa`);
-      } catch (err) {
-        showToast('Error al sincronizar con Firebase');
-      }
-    };
-
-    function listenToMyUserDoc(handle) {
-      if (!handle) return;
-      onSnapshot(doc(db, "users", handle), (snap) => {
-        if (snap.exists()) {
-          const data = snap.data();
-          currentUser.balance = data.balance ?? currentUser.balance;
-          currentUser.subs = data.subs ?? currentUser.subs;
-          currentUser.subscribersList = data.subscribersList || [];
-          currentUser.subscribedTo = data.subscribedTo || currentUser.subscribedTo || [];
-          if (data.avatar) currentUser.avatar = data.avatar;
-          if (currentUser.subs >= 1000 && !data.rewarded1k) {
-            updateDoc(doc(db, "users", handle), {
-              balance: increment(10000),
-              rewarded1k: true
-            });
-            showToast('¡META 1,000 SUBS! +10,000 A-Coins acreditadas');
-          }
-          saveLocalSession();
-          updateUI();
-        }
-      });
-    }
-
-    function startRealtimeListeners() {
-      onSnapshot(collection(db, "users"), (snap) => {
-        usersMap = {};
-        snap.forEach(d => {
-          usersMap[d.id] = d.data();
-        });
-        renderFeed();
-        renderMySubscribers();
-        renderAdminAndLeaderboard();
-        renderShortsTray();
-        if (viewedPublicHandle) renderPublicProfileModal();
-      });
-
-      const qPosts = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-      onSnapshot(qPosts, (snap) => {
-        livePosts = [];
-        snap.forEach(d => {
-          livePosts.push({ id: d.id, ...d.data() });
-        });
-        renderFeed();
-        renderShortsTray();
-        renderAdminAndLeaderboard();
-        updateUI();
-        if (viewedPublicHandle) renderPublicProfileModal();
-      });
-
-      const qMsgs = query(collection(db, "messages"), orderBy("createdAt", "asc"));
-      onSnapshot(qMsgs, (snap) => {
-        allDirectMessages = [];
-        snap.forEach(d => {
-          allDirectMessages.push({ id: d.id, ...d.data() });
-        });
-        const myIncoming = allDirectMessages.filter(m => m.to === currentUser.userHandle);
-        const badge = document.getElementById('inboxBadge');
-        if (badge) {
-          if (myIncoming.length > 0) {
-            badge.style.display = 'flex';
-            badge.textContent = myIncoming.length;
-          } else {
-            badge.style.display = 'none';
-          }
-        }
-        if (document.getElementById('dmModal').classList.contains('open')) {
-          renderDmModal();
-        }
-      });
-
-      const qNotifs = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
-      let initialNotifLoad = true;
-      onSnapshot(qNotifs, (snap) => {
-        allNotifications = [];
-        snap.forEach(d => {
-          allNotifications.push({ id: d.id, ...d.data() });
-        });
-
-        const myNotifs = allNotifications.filter(n =>
-          n.to === currentUser.userHandle || (n.to === 'ALL' && n.from !== currentUser.userHandle)
-        );
-        const unread = myNotifs.filter(n => (n.createdAt || 0) > lastSeenNotifTime);
-
-        const nBadge = document.getElementById('notifBadge');
-        if (nBadge) {
-          if (unread.length > 0) {
-            nBadge.style.display = 'flex';
-            nBadge.textContent = unread.length;
-          } else {
-            nBadge.style.display = 'none';
-          }
-        }
-
-        if (!initialNotifLoad && unread.length > 0) {
-          const newest = unread[0];
-          playNotificationSound();
-          showToast(`🔔 @${newest.from}: ${newest.text}`);
-          if ("Notification" in window && Notification.permission === "granted") {
-            try {
-              new Notification(`ARGON • @${newest.from}`, { body: newest.text });
-            } catch (e) {}
-          }
-        }
-        initialNotifLoad = false;
-
-        if (document.getElementById('notifModal').classList.contains('open')) {
-          renderNotificationsList();
-        }
-      });
     }
 
     window.publishPost = async function() {
@@ -3451,90 +3464,139 @@
         document.getElementById('onboardingScreen').classList.remove('hidden');
         return;
       }
+
       const input = document.getElementById('newPostInput');
-      const text = input.value.trim();
-      if (!text && !selectedPhotoDataUrl && !selectedVideoFile) {
-        showToast('Escribe un mensaje, sube una foto o selecciona un Short');
+      const caption = input.value.trim();
+      const btn = document.getElementById('publishBtn');
+
+      if (!caption && !selectedPhotoDataUrl && !selectedVideoFile) {
+        showToast('Escribe algo o adjunta una foto o video');
         return;
       }
 
-      const publishBtn = document.getElementById('publishBtn');
-      const progWrap = document.getElementById('uploadProgressWrap');
-      const progBar = document.getElementById('uploadProgressBar');
-      const statusTxt = document.getElementById('uploadStatusText');
-
-      publishBtn.disabled = true;
-      let directVideoData = '';
-      let chunkedVideoId = '';
-      let chunkCount = 0;
+      btn.disabled = true;
+      btn.textContent = 'Publicando...';
 
       try {
+        let videoUrl = '';
         if (selectedVideoFile) {
-          progWrap.style.display = 'block';
-          statusTxt.style.display = 'block';
-          progBar.style.width = '5%';
-          statusTxt.textContent = 'Subiendo Short en alta velocidad... 5%';
-
-          const res = await uploadVideoToCloudinaryOrFallback(selectedVideoFile, (pct) => {
-            progBar.style.width = pct + '%';
-            statusTxt.textContent = `Subiendo Short a ARGON... ${pct}%`;
-          });
-          directVideoData = res.directDataUrl;
-          chunkedVideoId = res.videoId;
-          chunkCount = res.chunkCount;
+          videoUrl = await uploadVideoToCloudinary(selectedVideoFile);
         }
 
-        const photoToSave = selectedPhotoDataUrl;
-        const isVideoPost = !!(directVideoData || chunkedVideoId);
+        const newPost = {
+          handle: currentUser.userHandle,
+          userName: currentUser.userName,
+          avatar: currentUser.avatar || '',
+          caption: caption,
+          image: selectedPhotoDataUrl || '',
+          video: videoUrl || '',
+          likes: 0,
+          likedBy: [],
+          comments: [],
+          createdAt: Date.now()
+        };
+
+        const docRef = await addDoc(collection(db, "posts"), newPost);
 
         input.value = '';
         selectedPhotoDataUrl = '';
         selectedVideoFile = null;
-        document.getElementById('photoInput').value = '';
-        document.getElementById('videoInput').value = '';
-        document.getElementById('photoPreview').style.display = 'none';
-        const vidPrev = document.getElementById('videoPreview');
-        vidPrev.style.display = 'none';
-        vidPrev.src = '';
 
-        const docRef = await addDoc(collection(db, "posts"), {
-          handle: currentUser.userHandle,
-          initials: currentUser.userName.slice(0, 2).toUpperCase(),
-          avatar: currentUser.avatar || '',
-          image: photoToSave || '',
-          video: directVideoData || '',
-          videoId: chunkedVideoId || '',
-          chunkCount: chunkCount || 0,
-          caption: text,
-          likes: 0,
-          shares: 0,
-          comments: [],
-          createdAt: Date.now()
-        });
+        const imgPrev = document.getElementById('photoPreview');
+        if (imgPrev) { imgPrev.style.display = 'none'; imgPrev.src = ''; }
+        const vidPrev = document.getElementById('videoPreview');
+        if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
+
+        const pInp = document.getElementById('photoInput');
+        if (pInp) pInp.value = '';
+        const vInp = document.getElementById('videoInput');
+        if (vInp) vInp.value = '';
 
         const myDoc = usersMap[currentUser.userHandle] || {};
-        const mySubs = Array.isArray(myDoc.subscribersList) && myDoc.subscribersList.length > 0
-          ? myDoc.subscribersList
-          : getAllKnownHandles();
+        const mySubs = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
+        if (mySubs.length > 0) {
+          dispatchNotification({
+            toList: mySubs,
+            type: videoUrl ? 'video' : 'post',
+            text: videoUrl ? 'subió un nuevo Short / Video 🎬' : 'publicó en su muro',
+            postId: docRef.id
+          });
+        }
 
-        await dispatchNotification({
-          toList: mySubs,
-          type: isVideoPost ? 'video' : 'post',
-          text: isVideoPost
-            ? `Subió un nuevo Short: "${(text || 'Ver video ahora').slice(0, 45)}"`
-            : `Publicó en su muro: "${(text || 'Nueva foto').slice(0, 45)}"`,
-          postId: docRef.id
+        showToast('✓ Publicación compartida en tiempo real');
+      } catch (e) {
+        showToast('Error al publicar. Intenta de nuevo.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Publicar';
+      }
+    };
+
+    window.toggleLike = async function(postId) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      const post = livePosts.find(p => p.id === postId);
+      if (!post) return;
+
+      const likedPosts = currentUser.likedPosts || [];
+      const alreadyLiked = likedPosts.includes(postId);
+
+      if (alreadyLiked) {
+        currentUser.likedPosts = likedPosts.filter(id => id !== postId);
+      } else {
+        currentUser.likedPosts.push(postId);
+      }
+      saveLocalSession();
+      renderFeed();
+
+      try {
+        await updateDoc(doc(db, "posts", postId), {
+          likes: increment(alreadyLiked ? -1 : 1)
+        });
+      } catch (e) {}
+    };
+
+    window.toggleSubscribe = async function(targetHandle) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      if (!targetHandle || targetHandle === currentUser.userHandle) return;
+
+      const list = currentUser.subscribedTo || [];
+      if (list.includes(targetHandle)) {
+        showToast(`Ya estás suscrito a @${targetHandle}`);
+        return;
+      }
+
+      currentUser.subscribedTo.push(targetHandle);
+      currentUser.balance = (currentUser.balance || 0) + 10;
+      saveLocalSession();
+      updateUI();
+      renderFeed();
+      if (viewedPublicHandle) renderPublicProfileModal();
+
+      try {
+        await setDoc(doc(db, "users", currentUser.userHandle), {
+          subscribedTo: arrayUnion(targetHandle),
+          balance: increment(10)
+        }, { merge: true });
+
+        await setDoc(doc(db, "users", targetHandle), {
+          subs: increment(1),
+          subscribersList: arrayUnion(currentUser.userHandle)
+        }, { merge: true });
+
+        dispatchNotification({
+          toList: [targetHandle],
+          type: 'sub',
+          text: 'se suscribió a tu perfil (+1 Suscriptor) ⭐'
         });
 
-        showToast(isVideoPost ? '🎬 ¡Short publicado en el carrusel y en el muro!' : '✓ Publicado en vivo');
-      } catch (e) {
-        console.error(e);
-        showToast('Error de conexión al guardar. Intenta de nuevo.');
-      } finally {
-        publishBtn.disabled = false;
-        progWrap.style.display = 'none';
-        statusTxt.style.display = 'none';
-      }
+        showToast(`✓ Suscrito a @${targetHandle} (+10 AC acreditadas)`);
+      } catch (e) {}
     };
 
     window.toggleCommentsDrawer = function(postId) {
@@ -3548,118 +3610,151 @@
         document.getElementById('onboardingScreen').classList.remove('hidden');
         return;
       }
-      const input = document.getElementById('comment-input-' + postId);
-      if (!input) return;
-      const text = input.value.trim();
+      const inp = document.getElementById(`comment-input-${postId}`);
+      if (!inp) return;
+      const text = inp.value.trim();
       if (!text) return;
-      input.value = '';
 
-      const newComment = {
-        author: currentUser.userHandle,
+      inp.value = '';
+      const commentObj = {
+        id: 'c_' + Date.now(),
+        handle: currentUser.userHandle,
         text: text,
         createdAt: Date.now()
       };
 
-      openCommentDrawers[postId] = true;
-
       try {
         await updateDoc(doc(db, "posts", postId), {
-          comments: arrayUnion(newComment)
+          comments: arrayUnion(commentObj)
         });
-        const targetPost = livePosts.find(p => p.id === postId);
-        if (targetPost && targetPost.handle && targetPost.handle !== currentUser.userHandle) {
-          await dispatchNotification({
-            toList: [targetPost.handle],
+        const post = livePosts.find(p => p.id === postId);
+        if (post && post.handle && post.handle !== currentUser.userHandle) {
+          dispatchNotification({
+            toList: [post.handle],
             type: 'comment',
-            text: `Comentó tu publicación: "${text.slice(0, 40)}"`,
+            text: `comentó: "${text.slice(0, 40)}"`,
             postId: postId
           });
         }
-        showToast('Comentario publicado');
       } catch (e) {
         showToast('No se pudo publicar el comentario');
       }
     };
 
+    window.sharePost = function(handle, postId) {
+      const shareUrl = `${window.location.origin}/?ref=${encodeURIComponent(currentUser.userHandle || FOUNDER_HANDLE)}`;
+      const text = `Mira la publicación de @${handle} en ARGON y recibe +5,000 A-Coins de apertura:`;
+      if (navigator.share) {
+        navigator.share({ title: 'ARGON', text: text, url: shareUrl }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(`${text} ${shareUrl}`);
+        showToast('✓ Enlace copiado al portapapeles');
+      }
+    };
+
+    window.shareMyProfileLink = function() {
+      const myHandle = currentUser.userHandle || FOUNDER_HANDLE;
+      const shareUrl = `${window.location.origin}/?ref=${encodeURIComponent(myHandle)}`;
+      const text = `Únete a mi imperio oficial en ARGON (@${myHandle}) y recibe +5,000 A-Coins de apertura con auto-suscripción:`;
+      if (navigator.share) {
+        navigator.share({ title: `ARGON • @${myHandle}`, text: text, url: shareUrl }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(`${text} ${shareUrl}`);
+        showToast('✓ Tu link de invitación fue copiado');
+      }
+    };
+
+    window.buyPack = function(amount, priceLabel) {
+      showToast(`Paquete ${amount.toLocaleString()} AC (${priceLabel}) disponible próximamente en Google Play Billing`);
+    };
+
     function buildPostCardElement(post) {
-      const card = document.createElement('article');
+      const card = document.createElement('div');
       card.className = 'post-card';
 
+      const uDoc = usersMap[post.handle] || {};
+      const avatarSrc = uDoc.avatar || post.avatar || '';
+      const subsCount = uDoc.subs || (Array.isArray(uDoc.subscribersList) ? uDoc.subscribersList.length : 0);
       const isOwn = post.handle === currentUser.userHandle;
       const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
       const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
-      const userDoc = usersMap[post.handle] || {};
-      const authorSubs = userDoc.subs ? userDoc.subs : 0;
-      const authorAvatar = userDoc.avatar || post.avatar || (isOwn ? currentUser.avatar : '');
+      const canDelete = isOwn || isUserAdmin();
 
-      const avatarInnerHtml = authorAvatar
-        ? `<img src="${authorAvatar}" alt="${post.handle}" />`
-        : (post.initials || post.handle.slice(0, 2) || 'AR');
+      const avatarHtml = avatarSrc
+        ? `<img src="${avatarSrc}" alt="${post.handle}" />`
+        : `<span>${(post.handle || 'AR').slice(0, 2)}</span>`;
 
-      const subBtnLabel = isOwn
-        ? 'Mi Perfil'
-        : (alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)');
-      const subBtnClass = (alreadySub || isOwn) ? 'btn-subscribe subscribed' : 'btn-subscribe';
-
-      const dmQuickBtn = (!isOwn && post.id !== 'welcome')
-        ? `<button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar Mensaje Directo">✉️</button>`
-        : '';
-
-      const canDeleteBtn = ((isOwn || isUserAdmin()) && post.id !== 'welcome')
-        ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')" title="Eliminar publicación">🗑️</button>`
-        : '';
-
-      const hasVideo = !!(post.video || post.videoId);
-      const videoHtml = post.video
-        ? `<video class="post-video" src="${post.video}" controls playsinline preload="metadata"></video>`
-        : (post.videoId ? `<div class="video-slot"><div class="video-loading-placeholder">🎬 Cargando video...</div></div>` : '');
-
-      const imgHtml = (!hasVideo && post.image)
-        ? `<img class="post-image" src="${post.image}" alt="${post.handle}" onclick="window.openPhotoLightbox('${post.image}')" />`
-        : '';
+      let mediaHtml = '';
+      if (post.video) {
+        mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata"></video>`;
+      } else if (post.videoId) {
+        mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">🎬 Cargando video...</div>`;
+      } else if (post.image) {
+        mediaHtml = `<img class="post-image" src="${post.image}" alt="Publicación" onclick="window.openPhotoLightbox('${post.image}')" />`;
+      }
 
       const commentsArr = Array.isArray(post.comments) ? post.comments : [];
-      const isDrawerOpen = !!openCommentDrawers[post.id];
+      const isOpen = !!openCommentDrawers[post.id];
 
-      const commentsListHtml = commentsArr.length > 0
-        ? commentsArr.map(c => `
-            <div class="comment-row">
-              <div><strong onclick="window.openUserProfile('${c.author}')">@${c.author}</strong> ${c.text}</div>
-            </div>
-          `).join('')
-        : `<div style="font-size:11px; color:#64748b; margin-bottom:6px;">Sin comentarios aún. Sé el primero en comentar.</div>`;
+      const commentsHtml = commentsArr.map(c => `
+        <div class="comment-row">
+          <div>
+            <strong onclick="window.openUserProfile('${c.handle}')">@${c.handle}</strong>
+            <span>${c.text}</span>
+          </div>
+        </div>
+      `).join('');
 
       card.innerHTML = `
         <div class="post-header">
-          <div class="post-user-left" onclick="window.openUserProfile('${post.handle}')" title="Toca para ver el perfil de @${post.handle}">
-            <div class="avatar-circle">${avatarInnerHtml}</div>
+          <div class="post-user-left" onclick="window.openUserProfile('${post.handle}')">
+            <div class="avatar-circle">${avatarHtml}</div>
             <div class="user-meta">
               <div class="user-handle">@${post.handle}</div>
-              <div class="user-subs-line">${authorSubs.toLocaleString()} Suscriptores • Ver Perfil</div>
+              <div class="user-subs-line">${subsCount.toLocaleString()} Suscriptores</div>
             </div>
           </div>
           <div class="sub-action-Wrap">
-            ${dmQuickBtn}
-            <button class="${subBtnClass}" onclick="${isOwn ? `window.openUserProfile('${post.handle}')` : `window.toggleSubscribe('${post.handle}')`}">${subBtnLabel}</button>
-            ${canDeleteBtn}
+            ${!isOwn ? `
+              <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">
+                ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
+              </button>
+              <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar mensaje">✉️</button>
+            ` : ''}
+            ${canDelete ? `
+              <button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')" title="Eliminar publicación">🗑️</button>
+            ` : ''}
           </div>
         </div>
-        ${videoHtml}
-        ${imgHtml}
+
+        ${mediaHtml}
+
         <div class="post-actions">
           <div class="post-actions-left">
-            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">♥ <span>${post.likes || 0}</span></button>
-            <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">💬 Comentar (<span>${commentsArr.length}</span>)</button>
-            <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">↗ (<span>${post.shares || 0}</span>)</button>
+            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">
+              <span>♥</span> <span>${post.likes || 0}</span>
+            </button>
+            <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">
+              <span>💬</span> <span>${commentsArr.length}</span>
+            </button>
+            <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">
+              <span>↗</span> <span>Compartir</span>
+            </button>
           </div>
         </div>
-        <div class="post-body">
-          <div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${post.handle}</strong> ${post.caption || ''}</div>
 
-          <div class="comments-drawer ${isDrawerOpen ? 'open' : ''}">
-            ${commentsListHtml}
+        <div class="post-body">
+          ${post.caption ? `
+            <div class="post-caption">
+              <strong onclick="window.openUserProfile('${post.handle}')">@${post.handle}</strong>
+              <span>${post.caption}</span>
+            </div>
+          ` : ''}
+
+          <div class="comments-drawer ${isOpen ? 'open' : ''}">
+            ${commentsHtml}
             <div class="comment-input-wrap">
-              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." />
+              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" />
               <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
             </div>
           </div>
@@ -3667,42 +3762,35 @@
       `;
 
       if (post.videoId && !post.video) {
-        const slot = card.querySelector('.video-slot');
-        hydrateChunkedVideo(post.videoId, post.chunkCount, slot);
+        setTimeout(() => {
+          const holder = card.querySelector(`#vid-chunk-${post.id}`);
+          if (holder) hydrateChunkedVideo(post.videoId, post.chunkCount, holder);
+        }, 30);
       }
 
       return card;
     }
 
     function renderFeed() {
-      const container = document.getElementById('feedContainer');
-      if (container) {
-        container.innerHTML = '';
-        const postsToShow = livePosts.length > 0 ? livePosts : [
-          {
-            id: 'welcome',
-            handle: 'BELTO43',
-            initials: 'AL',
-            image: '',
-            video: '',
-            caption: 'Bienvenidos a ARGON. Ya puedes subir Shorts 🎬 en el carrusel superior, verlos a pantalla completa y recibir notificaciones en vivo 🔔.',
-            likes: 1,
-            shares: 0,
-            comments: []
-          }
-        ];
-        postsToShow.forEach(post => {
-          container.appendChild(buildPostCardElement(post));
+      const feedContainer = document.getElementById('feedContainer');
+      const myWall = document.getElementById('myOwnPostsWall');
+      if (!feedContainer) return;
+
+      feedContainer.innerHTML = '';
+      if (livePosts.length === 0) {
+        feedContainer.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#94a3b8;">Cargando publicaciones en tiempo real...</div>`;
+      } else {
+        livePosts.forEach(post => {
+          feedContainer.appendChild(buildPostCardElement(post));
         });
       }
 
-      const myWall = document.getElementById('myOwnPostsWall');
       if (myWall) {
         const mine = livePosts.filter(p => p.handle === currentUser.userHandle);
+        myWall.innerHTML = '';
         if (mine.length === 0) {
           myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#94a3b8;">Aún no has subido publicaciones a tu muro.</div>`;
         } else {
-          myWall.innerHTML = '';
           mine.forEach(post => {
             myWall.appendChild(buildPostCardElement(post));
           });
@@ -3710,123 +3798,161 @@
       }
     }
 
-    window.toggleSubscribe = async function(targetHandle) {
-      if (!currentUser.registered) {
-        document.getElementById('onboardingScreen').classList.remove('hidden');
+    window.completeRegistration = async function() {
+      const nameVal = (document.getElementById('regName').value || '').trim();
+      const rawHandle = (document.getElementById('regHandle').value || '').trim();
+
+      if (!nameVal) {
+        showToast('Escribe tu Nombre o Alias de Imperio en la tarjeta');
         return;
       }
-      if (!targetHandle || targetHandle === currentUser.userHandle) return;
-      if ((currentUser.subscribedTo || []).includes(targetHandle)) {
-        showToast('Ya estás suscrito a @' + targetHandle);
-        return;
+
+      const cleanHandle = (rawHandle || nameVal)
+        .replace(/^@/, '')
+        .toUpperCase()
+        .replace(/[^A-Z0-9_]/g, '_')
+        .slice(0, 20) || 'USUARIO_ARGON';
+
+      const existingDoc = usersMap[cleanHandle];
+      const isReturning = !!existingDoc;
+
+      currentUser.registered = true;
+      currentUser.userName = nameVal.toUpperCase();
+      currentUser.userHandle = cleanHandle;
+
+      if (isReturning) {
+        currentUser.balance = Number(existingDoc.balance) || currentUser.balance || 5000;
+        currentUser.subs = Number(existingDoc.subs) || 0;
+        currentUser.avatar = currentUser.avatar || existingDoc.avatar || '';
+        currentUser.subscribedTo = Array.isArray(existingDoc.subscribedTo) ? existingDoc.subscribedTo : [];
+      } else {
+        const autoSubList = [];
+        if (invitedByParam && invitedByParam !== cleanHandle) autoSubList.push(invitedByParam);
+        if (FOUNDER_HANDLE && FOUNDER_HANDLE !== cleanHandle && !autoSubList.includes(FOUNDER_HANDLE)) {
+          autoSubList.push(FOUNDER_HANDLE);
+        }
+        currentUser.balance = 5000 + (autoSubList.length > 0 ? 10 : 0);
+        currentUser.subs = 0;
+        currentUser.subscribedTo = autoSubList;
       }
 
-      currentUser.subscribedTo.push(targetHandle);
-      currentUser.balance += 10;
       saveLocalSession();
+      document.getElementById('onboardingScreen').classList.add('hidden');
       updateUI();
       renderFeed();
-      if (viewedPublicHandle) renderPublicProfileModal();
-      showToast('+10 A-Coins acreditadas por suscribirte a @' + targetHandle);
 
       try {
-        await setDoc(doc(db, "users", targetHandle), {
-          subs: increment(1),
-          subscribersList: arrayUnion(currentUser.userHandle)
+        await setDoc(doc(db, "users", cleanHandle), {
+          userName: currentUser.userName,
+          userHandle: cleanHandle,
+          avatar: currentUser.avatar || '',
+          balance: currentUser.balance,
+          subs: currentUser.subs || 0,
+          subscribedTo: currentUser.subscribedTo || [],
+          updatedAt: Date.now()
         }, { merge: true });
 
-        await setDoc(doc(db, "users", currentUser.userHandle), {
-          balance: increment(10),
-          subscribedTo: arrayUnion(targetHandle)
-        }, { merge: true });
-
-        await dispatchNotification({
-          toList: [targetHandle],
-          type: 'sub',
-          text: `Se acaba de suscribir a tu perfil (+1 Suscriptor).`
-        });
-      } catch (e) {}
-    };
-
-    window.toggleLike = async function(postId) {
-      if (!postId || postId === 'welcome') return;
-      if ((currentUser.likedPosts || []).includes(postId)) return;
-      currentUser.likedPosts.push(postId);
-      saveLocalSession();
-      renderFeed();
-      try {
-        await updateDoc(doc(db, "posts", postId), { likes: increment(1) });
-      } catch (e) {}
-    };
-
-    function getMyInviteUrl() {
-      const base = window.location.origin + window.location.pathname;
-      const myH = currentUser.userHandle || FOUNDER_HANDLE;
-      return `${base}?ref=${encodeURIComponent(myH)}`;
-    }
-
-    window.sharePost = async function(handle, postId) {
-      if (postId && postId !== 'welcome') {
-        try { await updateDoc(doc(db, "posts", postId), { shares: increment(1) }); } catch (e) {}
-      }
-      const shareUrl = getMyInviteUrl();
-      if (navigator.share) {
-        navigator.share({ title: 'ARGON', text: 'Entra al perfil de @' + handle + ' en ARGON:', url: shareUrl }).catch(() => {});
-      } else {
-        navigator.clipboard && navigator.clipboard.writeText(shareUrl);
-        showToast('Link con auto-suscripción copiado');
+        if (!isReturning && currentUser.subscribedTo.length > 0) {
+          for (const targetH of currentUser.subscribedTo) {
+            await setDoc(doc(db, "users", targetH), {
+              subs: increment(1),
+              subscribersList: arrayUnion(cleanHandle)
+            }, { merge: true });
+          }
+        }
+        showToast(`👑 Pase VIP activado: Bienvenido @${cleanHandle}`);
+      } catch (e) {
+        showToast(`👑 Bienvenido a ARGON @${cleanHandle}`);
       }
     };
 
-    window.shareMyProfileLink = function() {
-      const shareUrl = getMyInviteUrl();
-      if (navigator.share) {
-        navigator.share({
-          title: 'ARGON • @' + currentUser.userHandle,
-          text: 'Entra a ARGON con mi link oficial y quedarás suscrito a @' + currentUser.userHandle + ' con +5,010 A-Coins:',
-          url: shareUrl
-        }).catch(() => {});
-      } else {
-        navigator.clipboard && navigator.clipboard.writeText(shareUrl);
-        showToast('Link con auto-suscripción copiado');
-      }
-    };
-
-    window.buyPack = async function(amount, price) {
-      currentUser.balance += amount;
-      saveLocalSession();
-      updateUI();
-      showToast('Recarga de +' + amount.toLocaleString() + ' AC (' + price + ')');
-      if (currentUser.userHandle) {
-        try {
-          await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(amount) }, { merge: true });
-        } catch (e) {}
-      }
-    };
-
-    window.switchTab = function(tab) {
-      window.closePublicProfile();
-      window.closeShortsPlayer();
-      ['boveda', 'feed', 'ranking', 'perfil', 'admin'].forEach(t => {
-        const v = document.getElementById('view-' + t);
-        const n = document.getElementById('nav-' + t);
-        if (v) v.classList.remove('active');
-        if (n) n.classList.remove('active');
+    window.switchTab = function(tabName) {
+      const views = ['feed', 'boveda', 'ranking', 'perfil', 'admin'];
+      views.forEach(v => {
+        const sec = document.getElementById(`view-${v}`);
+        const nav = document.getElementById(`nav-${v}`);
+        if (sec) sec.classList.toggle('active', v === tabName);
+        if (nav) nav.classList.toggle('active', v === tabName);
       });
-      const targetView = document.getElementById('view-' + tab);
-      const targetNav = document.getElementById('nav-' + tab);
-      if (targetView) targetView.classList.add('active');
-      if (targetNav) targetNav.classList.add('active');
     };
+
+    function startRealtimeListeners() {
+      onSnapshot(collection(db, "users"), (snap) => {
+        snap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const h = (data.userHandle || docSnap.id).toUpperCase();
+          usersMap[h] = data;
+
+          if (currentUser.registered && h === currentUser.userHandle) {
+            if (typeof data.balance === 'number') currentUser.balance = data.balance;
+            if (typeof data.subs === 'number') currentUser.subs = data.subs;
+            if (data.avatar) currentUser.avatar = data.avatar;
+            if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
+            if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
+            saveLocalSession();
+          }
+        });
+        updateUI();
+        renderFeed();
+        renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+      });
+
+      const postsQuery = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+      onSnapshot(postsQuery, (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        livePosts = arr;
+        updateUI();
+        renderFeed();
+        renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+      });
+
+      const msgQuery = query(collection(db, "messages"), orderBy("createdAt", "asc"));
+      onSnapshot(msgQuery, (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allDirectMessages = arr;
+        const incomingCount = arr.filter(m => m.to === currentUser.userHandle).length;
+        const badge = document.getElementById('inboxBadge');
+        if (badge) {
+          badge.textContent = incomingCount;
+          badge.style.display = incomingCount > 0 ? 'flex' : 'none';
+        }
+        if (document.getElementById('dmModal').classList.contains('open')) {
+          renderDmModal();
+        }
+      });
+
+      const notifQuery = query(collection(db, "notifications"), orderBy("createdAt", "desc"));
+      onSnapshot(notifQuery, (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allNotifications = arr;
+
+        const unread = arr.filter(n =>
+          (n.to === currentUser.userHandle || n.to === 'ALL') &&
+          (n.createdAt || 0) > lastSeenNotifTime
+        );
+        const badge = document.getElementById('notifBadge');
+        if (badge) {
+          badge.textContent = unread.length;
+          badge.style.display = unread.length > 0 ? 'flex' : 'none';
+        }
+        if (unread.length > 0) {
+          playNotificationSound();
+        }
+        if (document.getElementById('notifModal').classList.contains('open')) {
+          renderNotificationsList();
+        }
+      });
+    }
 
     loadLocalSession();
     updateUI();
-    setTimeout(() => {
-      if (currentUser.registered && currentUser.userHandle) {
-        listenToMyUserDoc(currentUser.userHandle);
-      }
-      startRealtimeListeners();
-    }, 3500);
+    runVaultSplashAnimation();
+    startRealtimeListeners();
   </script>
 </body>
 </html>
