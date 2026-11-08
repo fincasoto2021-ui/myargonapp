@@ -695,7 +695,6 @@
       font-weight: 700;
     }
 
-    /* BARRA DE PUBLICAR ESTILO "¿QUÉ TIENES EN MENTE?" CON AVATAR REDONDO */
     .composer-card {
       background: #0b0c10;
       border: 1px solid var(--card-border);
@@ -2122,7 +2121,7 @@
       <div id="myOwnPostsWall"></div>
     </section>
 
-    <!-- 5. PANEL DE ADMINISTRADOR -->
+    <!-- 5. PANEL DE ADMINISTRADOR LIMPIO -->
     <section id="view-admin" class="view-section">
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -2146,20 +2145,6 @@
             <div class="admin-stat-num" id="admTotalCoins">0</div>
             <div class="admin-stat-label">A-COINS</div>
           </div>
-        </div>
-
-        <!-- GENERADOR OFICIAL OPCIÓN C - LA CORONA (512x512 PNG PURO) -->
-        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.22); border-radius:14px; padding:12px; margin-bottom:14px;">
-          <div style="font-size:12px; font-weight:900; color:#ffffff; margin-bottom:4px;">
-            👑 LOGO OFICIAL OPCIÓN C - LA CORONA (512x512)
-          </div>
-          <div style="font-size:11px; color:#cbd5e1; margin-bottom:8px;">
-            Toca abajo para descargar el archivo <strong>icon.png</strong> exacto de la Opción C (blanco/platino sobre negro, sin hexágono ni puntos verdes):
-          </div>
-          <button class="btn-primary-platinum" style="margin-top:0;" onclick="window.generateAndUploadOfficialIcon()">
-            ⬇ DESCARGAR LOGO OPCIÓN C (icon.png)
-          </button>
-          <input type="text" id="generatedIconUrlBox" class="input-field" style="display:none; margin-top:10px; margin-bottom:0; font-size:11px; color:#34d399;" readonly onclick="this.select()" />
         </div>
 
         <button class="btn-primary-platinum" style="margin-bottom:14px; background:linear-gradient(180deg, #34d399 0%, #10b981 100%);" onclick="window.adminSyncAllToFounder()">
@@ -2284,86 +2269,6 @@
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
-
-    // FUNCIÓN QUE DIBUJA EXACTAMENTE LA OPCIÓN C (LA CORONA EN BLANCO/PLATINO PURO SIN HEXÁGONO NI VERDE)
-    window.generateAndUploadOfficialIcon = async function() {
-      showToast('Generando logo Opción C - La Corona (512x512)...');
-      const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 100 100">
-        <defs>
-          <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#181a20" />
-            <stop offset="100%" stop-color="#07080b" />
-          </linearGradient>
-          <linearGradient id="platGradIcon" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ffffff" />
-            <stop offset="65%" stop-color="#f1f5f9" />
-            <stop offset="100%" stop-color="#cbd5e1" />
-          </linearGradient>
-        </defs>
-        <rect width="100" height="100" rx="22" fill="url(#bgGrad)"/>
-        <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/>
-        <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
-          <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGradIcon)" />
-          <rect x="33" y="29.5" width="34" height="3.2" rx="1.5" fill="url(#platGradIcon)" />
-          <circle cx="30" cy="12.5" r="2.3" fill="#ffffff" />
-          <circle cx="50" cy="7.5" r="2.6" fill="#ffffff" />
-          <circle cx="70" cy="12.5" r="2.3" fill="#ffffff" />
-        </g>
-        <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGradIcon)" />
-        <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
-      </svg>`;
-
-      const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 512;
-      const ctx = canvas.getContext('2d');
-
-      const img = new Image();
-      const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
-
-      img.onload = function() {
-        ctx.drawImage(img, 0, 0, 512, 512);
-        URL.revokeObjectURL(url);
-
-        canvas.toBlob(async (pngBlob) => {
-          const dlLink = document.createElement('a');
-          dlLink.href = URL.createObjectURL(pngBlob);
-          dlLink.download = 'icon.png';
-          document.body.appendChild(dlLink);
-          dlLink.click();
-          document.body.removeChild(dlLink);
-
-          try {
-            const fd = new FormData();
-            fd.append('file', pngBlob, 'icon.png');
-            fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-              method: 'POST',
-              body: fd
-            });
-            const data = await res.json();
-            if (data && data.secure_url) {
-              const box = document.getElementById('generatedIconUrlBox');
-              if (box) {
-                box.style.display = 'block';
-                box.value = data.secure_url;
-              }
-              if (navigator.clipboard) {
-                navigator.clipboard.writeText(data.secure_url).catch(() => {});
-              }
-              showToast('✓ ¡Logo Opción C descargado y link copiado!');
-            } else {
-              showToast('✓ Archivo icon.png (Opción C) descargado');
-            }
-          } catch (e) {
-            showToast('✓ Archivo icon.png (Opción C) descargado');
-          }
-        }, 'image/png');
-      };
-      img.src = url;
-    };
 
     const firebaseConfig = {
       apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
