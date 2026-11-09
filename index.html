@@ -65,34 +65,34 @@
       pointer-events: none;
       z-index: 9999;
       opacity: 0;
-      border: 2.5px solid rgba(16, 185, 129, 0);
+      border: 3px solid rgba(16, 185, 129, 0);
       box-shadow:
-        inset 0 0 22px rgba(16, 185, 129, 0.65),
-        inset 0 0 42px rgba(24, 119, 242, 0.35);
-      transition: opacity 0.18s ease;
+        inset 0 0 26px rgba(16, 185, 129, 0.75),
+        inset 0 0 48px rgba(24, 119, 242, 0.45);
+      transition: opacity 0.15s ease;
     }
 
     .edge-refresh-glow.pulling {
-      opacity: 0.45;
-      border-color: rgba(16, 185, 129, 0.55);
+      opacity: 0.65;
+      border-color: rgba(16, 185, 129, 0.75);
     }
 
     .edge-refresh-glow.blinking {
-      animation: edgeBlinkAnim 0.65s ease-out forwards;
+      animation: edgeBlinkAnim 0.7s ease-out forwards;
     }
 
     @keyframes edgeBlinkAnim {
       0% {
-        opacity: 0.25;
-        border-color: rgba(16, 185, 129, 0.4);
-        box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.4);
+        opacity: 0.3;
+        border-color: rgba(16, 185, 129, 0.5);
+        box-shadow: inset 0 0 14px rgba(16, 185, 129, 0.5);
       }
       40% {
         opacity: 1;
         border-color: #10b981;
         box-shadow:
-          inset 0 0 28px rgba(16, 185, 129, 0.9),
-          inset 0 0 55px rgba(24, 119, 242, 0.55);
+          inset 0 0 32px rgba(16, 185, 129, 0.95),
+          inset 0 0 60px rgba(24, 119, 242, 0.65);
       }
       100% {
         opacity: 0;
@@ -2449,7 +2449,18 @@
       } catch (e) {}
     }
 
-    // DESTELLO DE BORDES (BLINK) + REFRESCO SILENCIOSO DESDE FIREBASE
+    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO
+    if (sessionStorage.getItem('argon_fast_refresh') === '1') {
+      sessionStorage.removeItem('argon_fast_refresh');
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+      setTimeout(() => {
+        const g = document.getElementById('edgeRefreshGlow');
+        if (g) g.classList.add('blinking');
+      }, 80);
+    }
+
+    // DESTELLO DE BORDES (BLINK) + ACTUALIZACIÓN REAL (FIREBASE + CACHÉ GITHUB)
     window.triggerManualBlinkRefresh = async function() {
       const glow = document.getElementById('edgeRefreshGlow');
       if (glow) {
@@ -2458,7 +2469,20 @@
         glow.classList.add('blinking');
       }
 
+      if (navigator.vibrate) {
+        try { navigator.vibrate(35); } catch (e) {}
+      }
+
       try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) { await r.update(); }
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const k of keys) { await caches.delete(k); }
+        }
+
         const [uSnap, pSnap] = await Promise.all([
           getDocs(collection(db, "users")),
           getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")))
@@ -2490,40 +2514,47 @@
         renderFeed();
         renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
+        showToast('⚡ Muro actualizado');
       } catch (e) {
-        updateUI();
-        renderFeed();
+        sessionStorage.setItem('argon_fast_refresh', '1');
+        window.location.reload();
       }
     };
 
-    // DETECTOR DE DESLIZAMIENTO HACIA ABAJO (PULL-TO-REFRESH CON BLINK EN BORDES)
+    // DETECTOR DE DESLIZAMIENTO HACIA ABAJO COMPATIBLE CON SAMSUNG / ANDROID
     (function setupPullToBlinkRefresh() {
-      let pullStartY = 0;
-      let isPullingTop = false;
-      let pullDistance = 0;
+      let startY = 0;
+      let currentPull = 0;
+      let tracking = false;
 
-      window.addEventListener('touchstart', function(e) {
+      document.addEventListener('touchstart', function(e) {
         const anyModalOpen = document.querySelector('.shorts-fullscreen-modal.open, .dm-modal-overlay.open, .user-profile-modal.open, .confirm-modal-overlay.open, .lightbox-overlay.open');
         if (anyModalOpen) {
-          isPullingTop = false;
+          tracking = false;
           return;
         }
-        if (window.scrollY <= 4 && e.touches && e.touches.length === 1) {
-          pullStartY = e.touches[0].clientY;
-          isPullingTop = true;
-          pullDistance = 0;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollTop <= 15 && e.touches && e.touches.length === 1) {
+          startY = e.touches[0].screenY;
+          currentPull = 0;
+          tracking = true;
         } else {
-          isPullingTop = false;
+          tracking = false;
         }
       }, { passive: true });
 
-      window.addEventListener('touchmove', function(e) {
-        if (!isPullingTop || !e.touches || e.touches.length !== 1) return;
-        const currentY = e.touches[0].clientY;
-        pullDistance = currentY - pullStartY;
+      document.addEventListener('touchmove', function(e) {
+        if (!tracking || !e.touches || e.touches.length !== 1) return;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+        if (scrollTop > 15) {
+          tracking = false;
+          return;
+        }
+
+        currentPull = e.touches[0].screenY - startY;
         const glow = document.getElementById('edgeRefreshGlow');
 
-        if (pullDistance > 28 && window.scrollY <= 2) {
+        if (currentPull > 18) {
           if (glow && !glow.classList.contains('blinking')) {
             glow.classList.add('pulling');
           }
@@ -2532,16 +2563,16 @@
         }
       }, { passive: true });
 
-      window.addEventListener('touchend', function() {
-        if (!isPullingTop) return;
+      document.addEventListener('touchend', function() {
+        if (!tracking) return;
         const glow = document.getElementById('edgeRefreshGlow');
         if (glow) glow.classList.remove('pulling');
 
-        if (pullDistance > 68 && window.scrollY <= 4) {
+        if (currentPull > 45) {
           window.triggerManualBlinkRefresh();
         }
-        isPullingTop = false;
-        pullDistance = 0;
+        tracking = false;
+        currentPull = 0;
       }, { passive: true });
     })();
 
@@ -2637,7 +2668,7 @@
       const splash = document.getElementById('vaultSplashScreen');
       const fill = document.getElementById('splashBarFill');
       const pctTxt = document.getElementById('splashPctText');
-      if (!splash || !fill || !pctTxt) return;
+      if (!splash || !fill || !pctTxt || splash.classList.contains('hidden')) return;
 
       let progress = 0;
       const timer = setInterval(() => {
