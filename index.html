@@ -93,6 +93,34 @@
       vertical-align: middle;
     }
 
+    /* REPRODUCTOR INTEGRADO DE YOUTUBE (16:9) */
+    .youtube-embed-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000000;
+      overflow: hidden;
+    }
+
+    .youtube-embed-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .composer-yt-preview {
+      display: none;
+      margin-top: 10px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #dadde1;
+      background: #000000;
+    }
+
     /* DESTELLO EN LOS BORDES DE LA PANTALLA (PULL-TO-REFRESH BLINK) */
     .edge-refresh-glow {
       position: fixed;
@@ -1344,7 +1372,7 @@
     }
 
     .post-body { padding: 10px 14px 13px; }
-    .post-caption { font-size: 14px; line-height: 1.45; color: #050505; }
+    .post-caption { font-size: 14px; line-height: 1.45; color: #050505; word-break: break-word; }
     .post-caption strong { color: #050505; margin-right: 5px; cursor: pointer; }
 
     .comments-drawer { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e4e6eb; }
@@ -2061,7 +2089,7 @@
           <polygon points="3 18 5 7 9.5 12 12 5 14.5 12 19 7 21 18 3 18"/>
         </symbol>
 
-        <!-- 5 ESCUDOS DE RANGOS EN VECTOR (SIN EMOJIS DE TUERCA NI CD) -->
+        <!-- 5 ESCUDOS DE RANGOS EN VECTOR -->
         <symbol id="rank-bronze" viewBox="0 0 40 40">
           <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#1c1917" stroke="url(#bronzeGrad)" stroke-width="2.5"/>
           <polygon points="20,10 23,16 30,17 25,22 26,29 20,25.5 14,29 15,22 10,17 17,16" fill="url(#bronzeGrad)"/>
@@ -2634,7 +2662,7 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS -->
+    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS + RECEPTOR DE YOUTUBE -->
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
@@ -2642,11 +2670,18 @@
             <img id="composerAvatarImg" src="" alt="" style="display:none;" />
             <svg id="composerAvatarSvg" width="22" height="22"><use href="#argon-crown-a"></use></svg>
           </div>
-          <input type="text" id="newPostInput" class="composer-input" placeholder="¿Qué tienes en mente publicar hoy?" />
+          <input
+            type="text"
+            id="newPostInput"
+            class="composer-input"
+            placeholder="¿Qué tienes en mente o pega un link de YouTube?"
+            oninput="window.handleComposerInputChange(this.value)"
+          />
         </div>
 
         <img id="photoPreview" class="preview-thumb" alt="Vista previa foto" />
         <video id="videoPreview" class="preview-video" controls playsinline></video>
+        <div id="composerYoutubePreview" class="composer-yt-preview"></div>
 
         <div id="uploadProgressWrap" class="upload-progress-wrap">
           <div id="uploadProgressBar" class="upload-progress-bar"></div>
@@ -2938,7 +2973,7 @@
       </div>
     </section>
 
-    <!-- BARRA INFERIOR CON LOS ÍCONOS LINEALES DE 2PX IGUALES A TU CAPTURA DE FACEBOOK -->
+    <!-- BARRA INFERIOR CON LOS ÍCONOS LINEALES DE 2PX -->
     <nav class="bottom-nav">
       <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')">
         <svg class="ico-stroke"><use href="#ico-home"></use></svg>
@@ -2966,7 +3001,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + STRIPE $1.99 (+6,000 AC) + ÍCONOS LINEALES 2PX + SHORTS + VIEWS + SELLO ARGON ORO + FIREBASE -->
+  <!-- MOTOR OFICIAL: PWA + YOUTUBE SHARE TARGET & EMBED + STRIPE $1.99 (+6,000 AC) + ÍCONOS LINEALES 2PX + SHORTS + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -3016,8 +3051,15 @@
     const invitedByParam = (urlParams.get('ref') || FOUNDER_HANDLE).replace(/^@/, '').toUpperCase();
     const paidPackParam = Number(urlParams.get('paid_pack') || 0);
 
+    // PARÁMETROS DEL WEB SHARE TARGET (CUANDO COMPARTEN DESDE YOUTUBE / TIKTOK / NAVEGADOR)
+    const sharedTitleParam = (urlParams.get('shared_title') || '').trim();
+    const sharedTextParam = (urlParams.get('shared_text') || '').trim();
+    const sharedUrlParam = (urlParams.get('shared_url') || '').trim();
+    const hasIncomingShare = !!(sharedTitleParam || sharedTextParam || sharedUrlParam);
+
     let selectedPhotoDataUrl = '';
     let selectedVideoFile = null;
+    let selectedYoutubeId = '';
     let selectedDmPhotoDataUrl = '';
     let openCommentDrawers = {};
     let activeDmPartner = '';
@@ -3058,6 +3100,76 @@
       try {
         window.history.pushState({ argonInApp: true }, "", window.location.href);
       } catch (e) {}
+    }
+
+    // EXTRACTOR INTELIGENTE DE ID DE YOUTUBE (SOPORTA WATCH, YOUTU.BE, SHORTS, EMBED, LIVE)
+    function extractYoutubeId(text) {
+      if (!text) return '';
+      const regex = /(?:https?:\/\/)?(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+      const match = String(text).match(regex);
+      return match ? match[1] : '';
+    }
+
+    // VISTA PREVIA EN VIVO CUANDO PEGAS O COMPARTES UN LINK DE YOUTUBE EN EL PUBLICADOR
+    window.handleComposerInputChange = function(val) {
+      const ytId = extractYoutubeId(val);
+      const previewBox = document.getElementById('composerYoutubePreview');
+      if (!previewBox) return;
+
+      if (ytId) {
+        if (selectedYoutubeId !== ytId) {
+          selectedYoutubeId = ytId;
+          previewBox.style.display = 'block';
+          previewBox.innerHTML = `
+            <div class="youtube-embed-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          `;
+        }
+      } else {
+        selectedYoutubeId = '';
+        previewBox.style.display = 'none';
+        previewBox.innerHTML = '';
+      }
+    };
+
+    // RECEPTOR AUTOMÁTICO DE LINKS COMPARTIDOS DESDE ANDROID (YOUTUBE, ETC.)
+    function checkAndHandleIncomingShare() {
+      if (!hasIncomingShare) return;
+
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+
+      const combinedPieces = [];
+      if (sharedTitleParam) combinedPieces.push(sharedTitleParam);
+      if (sharedTextParam && sharedTextParam !== sharedTitleParam) combinedPieces.push(sharedTextParam);
+      if (sharedUrlParam && !sharedTextParam.includes(sharedUrlParam)) combinedPieces.push(sharedUrlParam);
+
+      const finalSharedContent = combinedPieces.join(' • ').trim();
+
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({ argonInApp: true }, "", cleanUrl);
+
+      if (!finalSharedContent) return;
+
+      window.switchTab('feed');
+      const inputEl = document.getElementById('newPostInput');
+      if (inputEl) {
+        inputEl.value = finalSharedContent;
+        window.handleComposerInputChange(finalSharedContent);
+        inputEl.focus();
+      }
+
+      const ytId = extractYoutubeId(finalSharedContent);
+      if (ytId) {
+        showToast('✓ Video de YouTube listo. Toca "Publicar"');
+      } else {
+        showToast('✓ Enlace recibido. Toca "Publicar"');
+      }
     }
 
     // DETECTOR AUTOMÁTICO DE RETORNO DE STRIPE (?paid_pack=6000)
@@ -3149,8 +3261,8 @@
       } catch (e) {}
     };
 
-    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO O DE STRIPE
-    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0) {
+    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO, DE STRIPE O DE UN LINK COMPARTIDO DE YOUTUBE
+    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0 || hasIncomingShare) {
       sessionStorage.removeItem('argon_fast_refresh');
       const sp = document.getElementById('vaultSplashScreen');
       if (sp) sp.classList.add('hidden');
@@ -3400,7 +3512,6 @@
       }
     };
 
-    // NOMBRES LIMPIOS DE RANGO (SIN EMOJIS DE CARICATURA)
     function getUserRankTitle(subsCount) {
       const s = Number(subsCount) || 0;
       if (s >= 100000) return 'RANGO ARGON';
@@ -3506,8 +3617,8 @@
 
     function getShortVideoPosts() {
       const ordered = getOrderedPostsWithPromotions();
-      const vids = ordered.filter(p => !!(p.video || p.videoId));
-      return vids.length > 0 ? vids : ordered.filter(p => !!(p.video || p.videoId || p.image));
+      const vids = ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || extractYoutubeId(p.caption)));
+      return vids.length > 0 ? vids : ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || p.image));
     }
 
     function renderShortsTray() {
@@ -3533,15 +3644,22 @@
         const avSrc = uDoc.avatar || post.avatar || '';
         const isPromo = isPostOrAuthorFeatured(post);
         const viewsCount = Number(post.views) || 0;
+        const ytId = post.youtubeId || extractYoutubeId(post.caption);
+
         const miniAv = avSrc
           ? `<img src="${avSrc}" alt="${post.handle}" />`
           : (post.handle || 'AR').slice(0, 2);
 
-        const mediaPreview = post.video
-          ? `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`
-          : (post.image
-              ? `<img class="short-thumb-img" src="${post.image}" alt="${post.handle}" />`
-              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`);
+        let mediaPreview = '';
+        if (post.video) {
+          mediaPreview = `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        } else if (ytId) {
+          mediaPreview = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube Short" />`;
+        } else if (post.image) {
+          mediaPreview = `<img class="short-thumb-img" src="${post.image}" alt="${post.handle}" />`;
+        } else {
+          mediaPreview = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
+        }
 
         const goldCornerHtml = isPromo ? `
           <div class="short-gold-corner-badge" title="Destacado en ARGON">
@@ -3662,6 +3780,8 @@
         vidEl.pause();
         vidEl.src = '';
       }
+      const ytStage = document.getElementById('shortsYoutubeIframe');
+      if (ytStage) ytStage.remove();
       document.getElementById('shortsFullscreenModal').classList.remove('open');
     };
 
@@ -3704,11 +3824,27 @@
       const vidEl = document.getElementById('shortsFsVideoEl');
       const railEl = document.getElementById('shortsRightRail');
       const bottomEl = document.getElementById('shortsBottomInfo');
+      const stageEl = document.getElementById('shortsStageArea');
+
+      const oldYt = document.getElementById('shortsYoutubeIframe');
+      if (oldYt) oldYt.remove();
+
+      const ytId = post.youtubeId || extractYoutubeId(post.caption);
 
       if (post.video) {
         vidEl.style.display = 'block';
         vidEl.src = post.video;
         vidEl.play().catch(() => {});
+      } else if (ytId && stageEl) {
+        vidEl.pause();
+        vidEl.style.display = 'none';
+        const iframe = document.createElement('iframe');
+        iframe.id = 'shortsYoutubeIframe';
+        iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0`;
+        iframe.style.cssText = 'width:100%;height:78%;border:0;background:#000;';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.allowFullscreen = true;
+        stageEl.insertBefore(iframe, railEl);
       } else if (post.videoId) {
         vidEl.style.display = 'block';
         if (videoBlobCache[post.videoId]) {
@@ -4393,7 +4529,6 @@
       }
     };
 
-    // RENDERIZA EL CONTADOR EN EL BOTÓN CUADRADO Y LA LISTA EN EL MODAL
     function renderMySubscribers() {
       const sqCountEl = document.getElementById('profileFriendsBtnCount');
       const menuFriendsLbl = document.getElementById('menuFriendsCountLabel');
@@ -4732,9 +4867,10 @@
       const input = document.getElementById('newPostInput');
       const caption = input.value.trim();
       const btn = document.getElementById('publishBtn');
+      const detectedYtId = selectedYoutubeId || extractYoutubeId(caption);
 
-      if (!caption && !selectedPhotoDataUrl && !selectedVideoFile) {
-        showToast('Escribe algo o adjunta una foto o video');
+      if (!caption && !selectedPhotoDataUrl && !selectedVideoFile && !detectedYtId) {
+        showToast('Escribe algo, pega un link de YouTube o adjunta foto/video');
         return;
       }
 
@@ -4754,8 +4890,9 @@
           caption: caption,
           image: selectedPhotoDataUrl || '',
           video: videoUrl || '',
+          youtubeId: detectedYtId || '',
           likes: 0,
-          views: 0,
+          views: detectedYtId ? 1 : 0,
           likedBy: [],
           comments: [],
           promotedUntil: 0,
@@ -4767,11 +4904,14 @@
         input.value = '';
         selectedPhotoDataUrl = '';
         selectedVideoFile = null;
+        selectedYoutubeId = '';
 
         const imgPrev = document.getElementById('photoPreview');
         if (imgPrev) { imgPrev.style.display = 'none'; imgPrev.src = ''; }
         const vidPrev = document.getElementById('videoPreview');
         if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
+        const ytPrev = document.getElementById('composerYoutubePreview');
+        if (ytPrev) { ytPrev.style.display = 'none'; ytPrev.innerHTML = ''; }
 
         const pInp = document.getElementById('photoInput');
         if (pInp) pInp.value = '';
@@ -4783,8 +4923,8 @@
         if (mySubs.length > 0) {
           dispatchNotification({
             toList: mySubs,
-            type: videoUrl ? 'video' : 'post',
-            text: videoUrl ? 'subió un nuevo Short / Video' : 'publicó en su muro',
+            type: (videoUrl || detectedYtId) ? 'video' : 'post',
+            text: (videoUrl || detectedYtId) ? 'compartió un nuevo Video en su muro' : 'publicó en su muro',
             postId: docRef.id
           });
         }
@@ -4966,7 +5106,9 @@
       const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
       const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
       const canDelete = isOwn || isUserAdmin();
-      const isVideoPost = !!(post.video || post.videoId);
+
+      const ytId = post.youtubeId || extractYoutubeId(post.caption);
+      const isVideoPost = !!(post.video || post.videoId || ytId);
       const viewsCount = Number(post.views) || 0;
 
       const avatarHtml = avatarSrc
@@ -4976,6 +5118,16 @@
       let mediaHtml = '';
       if (post.video) {
         mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
+      } else if (ytId) {
+        mediaHtml = `
+          <div class="youtube-embed-wrap" onclick="window.registerVideoView('${post.id}')">
+            <iframe
+              src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        `;
       } else if (post.videoId) {
         mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">Cargando video...</div>`;
       } else if (post.image) {
@@ -5303,6 +5455,7 @@
     runVaultSplashAnimation();
     startRealtimeListeners();
     checkAndCreditStripeReturn();
+    checkAndHandleIncomingShare();
 
     // PROTECTOR REFORZADO DEL BOTÓN "ATRÁS" (<) DE ANDROID
     for (let i = 0; i < 4; i++) {
