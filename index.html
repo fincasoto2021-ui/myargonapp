@@ -58,6 +58,41 @@
       border-right: 1px solid #dadde1;
     }
 
+    /* ÍCONOS VECTORIALES DE TRAZO NEGRO 2PX ESTILO FACEBOOK PRO */
+    .ico-stroke {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .ico-stroke-sm {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .rank-shield-svg {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
     /* DESTELLO EN LOS BORDES DE LA PANTALLA (PULL-TO-REFRESH BLINK) */
     .edge-refresh-glow {
       position: fixed;
@@ -510,10 +545,9 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: #e4e6eb;
-      border: none;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
       color: #050505;
-      font-size: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -702,7 +736,7 @@
       color: #e2e8f0;
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
       margin-top: 2px;
       text-shadow: 0 1px 3px rgba(0,0,0,0.95);
     }
@@ -936,21 +970,21 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
     .video-upload-label {
       font-size: 11.5px;
       font-weight: 800;
-      color: #059669;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
+      color: #050505;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
       padding: 7px 12px;
       border-radius: 9px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
     }
 
     .composer-btn {
@@ -1124,7 +1158,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
       white-space: nowrap;
@@ -1146,7 +1180,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
+      gap: 6px;
       cursor: pointer;
       white-space: nowrap;
       padding: 0 10px;
@@ -1157,18 +1191,18 @@
 
     .btn-pro-friends-sq {
       height: 40px;
-      min-width: 52px;
+      min-width: 56px;
       padding: 0 10px;
       border-radius: 10px;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #059669;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
+      color: #050505;
       font-size: 12px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 5px;
       cursor: pointer;
       flex-shrink: 0;
       transition: transform 0.12s ease;
@@ -1241,6 +1275,9 @@
       font-size: 11px;
       font-weight: 800;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .post-image {
@@ -1282,7 +1319,7 @@
     .action-item {
       background: none;
       border: none;
-      color: #65676b;
+      color: #050505;
       font-size: 13px;
       font-weight: 700;
       display: flex;
@@ -1296,12 +1333,12 @@
     .views-counter-pill {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       font-size: 12px;
       font-weight: 800;
-      color: #059669;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
+      color: #050505;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
       padding: 3px 9px;
       border-radius: 999px;
     }
@@ -1543,10 +1580,10 @@
       border-radius: 10px;
       background: #f0f2f5;
       border: 1px solid #dadde1;
+      color: #050505;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
       cursor: pointer;
       flex-shrink: 0;
     }
@@ -1582,10 +1619,10 @@
       margin: 0 auto 14px;
       background: #fef2f2;
       border: 1.5px solid #fecaca;
+      color: #e41e3f;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
     }
 
     .confirm-title { font-size: 17px; font-weight: 900; color: #050505; margin-bottom: 6px; }
@@ -1679,43 +1716,40 @@
       -webkit-user-drag: none;
     }
 
-    /* ESTILOS DEL MENÚ HAMBURGUESA (3 RAYITAS ESTILO FACEBOOK) */
+    /* ESTILOS DEL MENÚ HAMBURGUESA (TRAZO NEGRO LIMPIO SIN CUADRITOS) */
     .fb-menu-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 13px 14px;
+      padding: 13px 12px;
       border-radius: 12px;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 8px;
+      background: #ffffff;
+      border-bottom: 1px solid #f0f2f5;
+      margin-bottom: 4px;
       cursor: pointer;
       transition: background 0.15s ease;
     }
 
-    .fb-menu-row:active { background: #e2e8f0; }
+    .fb-menu-row:active { background: #f0f2f5; }
 
     .fb-menu-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       min-width: 0;
     }
 
     .fb-menu-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
+      width: 28px;
+      height: 28px;
+      color: #050505;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 17px;
       flex-shrink: 0;
     }
 
-    .fb-menu-title { font-size: 13px; font-weight: 800; color: #050505; }
+    .fb-menu-title { font-size: 14px; font-weight: 800; color: #050505; }
     .fb-menu-sub { font-size: 11px; color: #65676b; margin-top: 1px; }
 
     .btn-logout-gray {
@@ -1742,7 +1776,7 @@
     }
 
     .admin-stat-num { font-size: 18px; font-weight: 900; color: #059669; }
-    .admin-stat-label { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; }
+    .admin-stat-label { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; display:flex; align-items:center; justify-content:center; gap:4px; }
 
     .admin-user-row {
       display: flex;
@@ -1757,15 +1791,18 @@
     }
 
     .btn-mini-admin {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #059669;
-      font-size: 10px;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
+      color: #050505;
+      font-size: 11px;
       font-weight: 800;
-      padding: 6px 8px;
+      padding: 6px 10px;
       border-radius: 8px;
       cursor: pointer;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .btn-mini-danger {
@@ -1774,9 +1811,12 @@
       color: #e41e3f;
       font-size: 10px;
       font-weight: 800;
-      padding: 4px 7px;
+      padding: 5px 8px;
       border-radius: 7px;
       cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .tier-item {
@@ -1791,8 +1831,8 @@
       color: #050505;
     }
 
-    .rank-title-text { font-size: 13px; font-weight: 900; color: #050505; }
-    .rank-sub-text { font-size: 11px; font-weight: 600; color: #475569; margin-top: 2px; }
+    .rank-title-text { font-size: 13px; font-weight: 900; color: #050505; display:flex; align-items:center; gap:8px; }
+    .rank-sub-text { font-size: 11px; font-weight: 600; color: #475569; margin-top: 3px; }
     .rank-reward-text { font-size: 12.5px; font-weight: 900; color: #059669; white-space: nowrap; }
 
     .btn-primary-platinum {
@@ -1825,7 +1865,7 @@
     .nav-btn {
       background: none;
       border: none;
-      color: #65676b;
+      color: #050505;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1835,9 +1875,10 @@
       letter-spacing: 0.6px;
       cursor: pointer;
       flex: 1;
+      opacity: 0.72;
     }
 
-    .nav-btn.active { color: #1877f2; }
+    .nav-btn.active { color: #1877f2; opacity: 1; }
 
     .toast {
       position: fixed;
@@ -1862,6 +1903,7 @@
     <div id="edgeRefreshGlow" class="edge-refresh-glow"></div>
     <div id="toast" class="toast"></div>
 
+    <!-- LIBRERÍA CENTRAL DE LOGOS: TU "A" DE ARGON INTACTA + ÍCONOS DE LÍNEA NEGRA 2PX ESTILO FACEBOOK PRO -->
     <svg width="0" height="0" style="position:absolute">
       <defs>
         <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1869,13 +1911,29 @@
           <stop offset="55%" stop-color="#e2e8f0" />
           <stop offset="100%" stop-color="#94a3b8" />
         </linearGradient>
-        <!-- GRADIENTE ORO METÁLICO 24K PARA EL LOGO ARGON EN PUBLICACIONES DESTACADAS -->
         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#fef08a" />
           <stop offset="35%" stop-color="#fbbf24" />
           <stop offset="75%" stop-color="#d97706" />
           <stop offset="100%" stop-color="#fef08a" />
         </linearGradient>
+        <linearGradient id="bronzeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#fdba74" />
+          <stop offset="50%" stop-color="#d97706" />
+          <stop offset="100%" stop-color="#78350f" />
+        </linearGradient>
+        <linearGradient id="titanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#cbd5e1" />
+          <stop offset="50%" stop-color="#475569" />
+          <stop offset="100%" stop-color="#0f172a" />
+        </linearGradient>
+        <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e0f2fe" />
+          <stop offset="50%" stop-color="#38bdf8" />
+          <stop offset="100%" stop-color="#0284c7" />
+        </linearGradient>
+
+        <!-- LOGO OFICIAL ARGON INTACTO -->
         <symbol id="argon-crown-a" viewBox="0 0 100 100">
           <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
             <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#platGrad)" />
@@ -1887,7 +1945,8 @@
           <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#platGrad)" />
           <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#ffffff" />
         </symbol>
-        <!-- MISMO LOGO OFICIAL ARGON CON CORONA EN COLOR ORO -->
+
+        <!-- LOGO OFICIAL ARGON EN ORO 24K INTACTO -->
         <symbol id="argon-crown-a-gold" viewBox="0 0 100 100">
           <g transform="translate(50, 22) rotate(-7) translate(-50, -22)">
             <path d="M33 28 L30 15 L43 22 L50 10 L57 22 L70 15 L67 28 Z" fill="url(#goldGrad)" />
@@ -1899,12 +1958,130 @@
           <path d="M50 35 L27 84 L19 84 L19 88 L39 88 L39 84 L33 84 L39 70 L58 70 L64 84 L57 84 L57 88 L81 88 L81 84 L74 84 L53 35 Z M41 64 L48.5 46 L55.5 64 Z" fill="url(#goldGrad)" />
           <path d="M29 73 C39 67, 56 61, 72 47 C61 62, 45 71, 29 77 Z" fill="#fef08a" />
         </symbol>
+
         <symbol id="argon-crown-only" viewBox="0 0 100 60">
           <path d="M18 46 L12 18 L34 32 L50 8 L66 32 L88 18 L82 46 Z" fill="url(#platGrad)" />
           <rect x="18" y="49" width="64" height="5.5" rx="2.5" fill="url(#platGrad)" />
           <circle cx="12" cy="13" r="3.5" fill="#ffffff" />
           <circle cx="50" cy="4.5" r="4.2" fill="#ffffff" />
           <circle cx="88" cy="13" r="3.5" fill="#ffffff" />
+        </symbol>
+
+        <!-- ÍCONOS LINEALES 2PX ESTILO FACEBOOK PRO -->
+        <symbol id="ico-home" viewBox="0 0 24 24">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.5z"/>
+        </symbol>
+        <symbol id="ico-reels" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="4"/>
+          <line x1="3" y1="8" x2="21" y2="8"/>
+          <line x1="8" y1="3" x2="11" y2="8"/>
+          <line x1="14" y1="3" x2="17" y2="8"/>
+          <polygon points="10,11.5 15.5,14.5 10,17.5"/>
+        </symbol>
+        <symbol id="ico-vault" viewBox="0 0 24 24">
+          <rect x="2" y="5" width="20" height="14" rx="3"/>
+          <line x1="2" y1="10" x2="22" y2="10"/>
+          <line x1="6" y1="15" x2="10" y2="15"/>
+        </symbol>
+        <symbol id="ico-friends" viewBox="0 0 24 24">
+          <circle cx="9" cy="8.5" r="3.5"/>
+          <path d="M2.5 19.5c0-3.2 2.9-5.5 6.5-5.5s6.5 2.3 6.5 5.5"/>
+          <circle cx="17" cy="9.5" r="2.5"/>
+          <path d="M15.5 14.5c2.8.4 5 2.2 5 4.8"/>
+        </symbol>
+        <symbol id="ico-user" viewBox="0 0 24 24">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-6.8 8-6.8s8 2.8 8 6.8"/>
+        </symbol>
+        <symbol id="ico-menu" viewBox="0 0 24 24">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </symbol>
+        <symbol id="ico-bell" viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </symbol>
+        <symbol id="ico-mail" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+          <polyline points="3,7 12,13 21,7"/>
+        </symbol>
+        <symbol id="ico-gear" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.05 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </symbol>
+        <symbol id="ico-dashboard" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="18" height="18" rx="3.5"/>
+          <line x1="8" y1="16" x2="8" y2="11"/>
+          <line x1="12" y1="16" x2="12" y2="8"/>
+          <line x1="16" y1="16" x2="16" y2="13"/>
+        </symbol>
+        <symbol id="ico-upgrades" viewBox="0 0 24 24">
+          <rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.2"/>
+          <circle cx="17.2" cy="6.8" r="3.3"/>
+          <polygon points="6.8,13.5 10.5,20 3.2,20"/>
+          <path d="M17.2 14.2c1.2-1.2 3.1-.3 3.1 1.3 0 1.8-3.1 4-3.1 4s-3.1-2.2-3.1-4c0-1.6 1.9-2.5 3.1-1.3z"/>
+        </symbol>
+        <symbol id="ico-edit" viewBox="0 0 24 24">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </symbol>
+        <symbol id="ico-shield" viewBox="0 0 24 24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9,12 11,14 15,10"/>
+        </symbol>
+        <symbol id="ico-sync" viewBox="0 0 24 24">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+        </symbol>
+        <symbol id="ico-camera" viewBox="0 0 24 24">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </symbol>
+        <symbol id="ico-eye" viewBox="0 0 24 24">
+          <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </symbol>
+        <symbol id="ico-heart" viewBox="0 0 24 24">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </symbol>
+        <symbol id="ico-comment" viewBox="0 0 24 24">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </symbol>
+        <symbol id="ico-share" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </symbol>
+        <symbol id="ico-trash" viewBox="0 0 24 24">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        </symbol>
+        <symbol id="ico-crown-line" viewBox="0 0 24 24">
+          <polygon points="3 18 5 7 9.5 12 12 5 14.5 12 19 7 21 18 3 18"/>
+        </symbol>
+
+        <!-- 5 ESCUDOS DE RANGOS EN VECTOR (SIN EMOJIS DE TUERCA NI CD) -->
+        <symbol id="rank-bronze" viewBox="0 0 40 40">
+          <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#1c1917" stroke="url(#bronzeGrad)" stroke-width="2.5"/>
+          <polygon points="20,10 23,16 30,17 25,22 26,29 20,25.5 14,29 15,22 10,17 17,16" fill="url(#bronzeGrad)"/>
+        </symbol>
+        <symbol id="rank-titan" viewBox="0 0 40 40">
+          <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#0f172a" stroke="url(#titanGrad)" stroke-width="2.5"/>
+          <polyline points="12,19 20,12 28,19" fill="none" stroke="#e2e8f0" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="12,26 20,19 28,26" fill="none" stroke="#94a3b8" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </symbol>
+        <symbol id="rank-platinum" viewBox="0 0 40 40">
+          <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#0f172a" stroke="url(#platGrad)" stroke-width="2.5"/>
+          <polygon points="20,9 23.5,16.5 31,20 23.5,23.5 20,31 16.5,23.5 9,20 16.5,16.5" fill="url(#platGrad)"/>
+        </symbol>
+        <symbol id="rank-diamond" viewBox="0 0 40 40">
+          <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#082f49" stroke="url(#diamondGrad)" stroke-width="2.5"/>
+          <polygon points="20,9 30,19 20,31 10,19" fill="url(#diamondGrad)"/>
+        </symbol>
+        <symbol id="rank-argon" viewBox="0 0 40 40">
+          <polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#0b0d13" stroke="url(#goldGrad)" stroke-width="2.5"/>
+          <use href="#argon-crown-a-gold" x="6" y="5" width="28" height="28"/>
         </symbol>
       </defs>
     </svg>
@@ -1942,7 +2119,7 @@
 
         <label class="vip-avatar-mini-picker" title="Subir foto de perfil opcional">
           <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
-          <span id="onboardingAvatarIcon">📷</span>
+          <span id="onboardingAvatarIcon" style="display:inline-flex;"><svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg></span>
           <span>Elegir Foto de Perfil</span>
           <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
         </label>
@@ -2013,7 +2190,7 @@
     <div id="editProfileModal" class="confirm-modal-overlay">
       <div class="confirm-card" style="max-width:355px; text-align:left;">
         <div style="text-align:center; margin-bottom:12px;">
-          <span style="font-size:26px;">✏️</span>
+          <svg class="ico-stroke" style="width:28px;height:28px;"><use href="#ico-edit"></use></svg>
           <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Editar Mi Perfil</div>
           <div style="font-size:11.5px; color:#65676b;">Actualiza tu nombre visible y foto en ARGON</div>
         </div>
@@ -2040,7 +2217,7 @@
     <div id="ageEmailVerifyModal" class="confirm-modal-overlay">
       <div class="confirm-card" style="max-width:365px; text-align:left;">
         <div style="text-align:center; margin-bottom:10px;">
-          <span style="font-size:28px;">🛡️</span>
+          <svg class="ico-stroke" style="width:30px;height:30px;"><use href="#ico-shield"></use></svg>
           <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Verificación Reglamentaria (+18)</div>
           <div style="font-size:11.5px; color:#65676b; margin-top:3px;">
             Por normativa oficial de seguridad y Google Play, vincula tu correo electrónico y confirma tu mayoría de edad.
@@ -2072,12 +2249,15 @@
       </div>
     </div>
 
-    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD (BLINDADO BAJO ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC) -->
+    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD -->
     <div id="legalTermsModal" class="dm-modal-overlay">
       <div class="dm-sheet" style="height:84vh;">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;">⚖️ Contrato Oficial, Relevo Legal y Privacidad</div>
+            <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;">
+              <svg class="ico-stroke-sm"><use href="#ico-shield"></use></svg>
+              <span>Contrato Oficial, Relevo Legal y Privacidad</span>
+            </div>
             <div style="font-size:11px; color:#059669;">Operado por ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC (v2.0-PR)</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeLegalModal()">✕</button>
@@ -2124,7 +2304,7 @@
       <div class="dm-sheet" style="height:80vh;">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;" id="friendsModalTitle">👥 Mi Comunidad y Amigos</div>
+            <div style="font-size:14px; font-weight:900; color:#050505;" id="friendsModalTitle">Mi Comunidad y Amigos</div>
             <div style="font-size:11px; color:#059669;">Toca cualquier miembro para ver su perfil o enviarle mensaje</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeFriendsModal()">✕</button>
@@ -2136,8 +2316,9 @@
     <!-- REPRODUCTOR VERTICAL DE SHORTS -->
     <div id="shortsFullscreenModal" class="shorts-fullscreen-modal">
       <div class="shorts-fs-topbar">
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span style="font-size:15px; font-weight:900; letter-spacing:1.5px; color:#fff;">🎬 ARGON SHORTS</span>
+        <div style="display:flex; align-items:center; gap:8px; color:#fff;">
+          <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg>
+          <span style="font-size:15px; font-weight:900; letter-spacing:1.5px;">ARGON SHORTS</span>
         </div>
         <div style="display:flex; align-items:center; gap:8px;">
           <button class="upm-back-btn" onclick="window.prevShortVideo()">↑ Ant</button>
@@ -2156,7 +2337,9 @@
     <!-- MODAL DE CONFIRMACIÓN PARA BORRAR -->
     <div id="confirmDeleteModal" class="confirm-modal-overlay">
       <div class="confirm-card">
-        <div class="confirm-icon-ring">🗑️</div>
+        <div class="confirm-icon-ring">
+          <svg class="ico-stroke"><use href="#ico-trash"></use></svg>
+        </div>
         <div class="confirm-title" id="confirmModalTitle">¿Estás seguro?</div>
         <div class="confirm-desc" id="confirmModalDesc">
           Esta publicación se eliminará permanentemente de ARGON y no se podrá recuperar.
@@ -2171,7 +2354,7 @@
     <!-- VISOR DE FOTOS CON PELLIZCO DE 2 DEDOS Y DOBLE TOQUE PARA ZOOM -->
     <div id="photoLightbox" class="lightbox-overlay">
       <div class="lightbox-top-controls">
-        <span class="lightbox-hint-pill">🔍 Pellizca o toca 2 veces para Zoom</span>
+        <span class="lightbox-hint-pill">Pellizca o toca 2 veces para Zoom</span>
         <button class="lightbox-close-x" onclick="window.closePhotoLightbox()">✕</button>
       </div>
       <img id="lightboxImg" src="" alt="Vista ampliada" />
@@ -2225,7 +2408,10 @@
       <div class="dm-sheet">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;">🔔 Centro de Notificaciones</div>
+            <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;">
+              <svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg>
+              <span>Centro de Notificaciones</span>
+            </div>
             <div style="font-size:11px; color:#059669;">Avisos de videos nuevos, suscriptores y comentarios</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeNotificationsModal()">✕</button>
@@ -2245,7 +2431,7 @@
       <div class="dm-sheet">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;" id="dmTargetTitle">✉️ Mensajes Directos</div>
+            <div style="font-size:14px; font-weight:900; color:#050505;" id="dmTargetTitle">Mensajes Directos</div>
             <div style="font-size:11px; color:#059669;" id="dmTargetSubtitle">Selecciona un suscriptor o miembro abajo</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeDirectMessages()">✕</button>
@@ -2257,14 +2443,14 @@
         <div id="dmPhotoPreviewBar" class="dm-preview-bar">
           <div style="display:flex; align-items:center; gap:10px;">
             <img id="dmPhotoPreviewThumb" class="dm-preview-img" src="" alt="Foto lista" />
-            <span style="font-size:11px; color:#059669; font-weight:700;">📷 Foto lista para enviar</span>
+            <span style="font-size:11px; color:#059669; font-weight:700;">Foto lista para enviar</span>
           </div>
           <button class="btn-mini-danger" onclick="window.clearDmSelectedPhoto()">✕ Quitar</button>
         </div>
 
         <div class="dm-footer">
           <label class="dm-photo-btn" title="Adjuntar foto al mensaje privado">
-            📷
+            <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg>
             <input type="file" id="dmPhotoInput" accept="image/*" style="display:none" onchange="window.previewDmPhoto(event)" />
           </label>
           <input type="text" id="dmTextInput" class="composer-input" placeholder="Mensaje o foto privada..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
@@ -2273,7 +2459,7 @@
       </div>
     </div>
 
-    <!-- CABECERA BLANCA LIMPIA -->
+    <!-- CABECERA BLANCA LIMPIA CON TU "A" DE ARGON INTACTA + ÍCONOS DE TRAZO NEGRO 2PX -->
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box">
@@ -2285,13 +2471,13 @@
       </div>
 
       <div class="top-right-actions">
-        <button class="inbox-btn" onclick="window.openNotificationsModal()" title="Notificaciones de Suscriptores">
-          🔔
+        <button class="inbox-btn" onclick="window.openNotificationsModal()" title="Notificaciones">
+          <svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg>
           <span id="notifBadge" class="inbox-badge notif-badge">0</span>
         </button>
 
         <button class="inbox-btn" onclick="window.openDirectMessages()" title="Mensajes Directos">
-          ✉️
+          <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
           <span id="inboxBadge" class="inbox-badge">0</span>
         </button>
 
@@ -2308,7 +2494,7 @@
 
     <!-- BARRA DE AVISO SI FALTA VERIFICAR CORREO Y EDAD (+18) -->
     <div id="complianceAlertBar" class="compliance-alert-bar" onclick="window.openAgeEmailVerifyModal()">
-      <span>🛡️ Reglamentario: Verifica tu correo y edad (+18)</span>
+      <span>Reglamentario: Verifica tu correo y edad (+18)</span>
       <span style="background:#f59e0b; color:#fff; padding:4px 9px; border-radius:999px; font-size:10px;">Verificar →</span>
     </div>
 
@@ -2368,7 +2554,7 @@
       <!-- BOTÓN ÚNICO OFICIAL DE STRIPE ($1.99 -> +6,000 A-COINS) -->
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:11px; font-weight:900; color:#050505; letter-spacing:0.8px;">⚡ RECARGA OFICIAL DE A-COINS</span>
+          <span style="font-size:11px; font-weight:900; color:#050505; letter-spacing:0.8px;">RECARGA OFICIAL DE A-COINS</span>
           <span style="font-size:10.5px; color:#059669; font-weight:800;">✓ Pago seguro Stripe</span>
         </div>
 
@@ -2386,46 +2572,61 @@
         </button>
       </div>
 
-      <!-- RANKING EN VIVO Y LOS 5 RANGOS INTEGRADOS EN LA BÓVEDA -->
+      <!-- RANKING EN VIVO Y LOS 5 RANGOS CON ESCUDOS VECTORIALES -->
       <div class="glass-card">
-        <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">🏆 TOP CREADORES EN TIEMPO REAL</div>
+        <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">TOP CREADORES EN TIEMPO REAL</div>
         <div style="font-size:11.5px; color:#475569; font-weight:600; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
         <div id="liveLeaderboardList"></div>
       </div>
 
       <div class="glass-card">
-        <div style="font-size:14px; font-weight:900; margin-bottom:10px; color:#050505;">👑 RANGOS OFICIALES DE IMPERIO ARGON</div>
+        <div style="font-size:14px; font-weight:900; margin-bottom:10px; color:#050505;">RANGOS OFICIALES DE IMPERIO ARGON</div>
         <div class="tier-item">
           <div>
-            <div class="rank-title-text">🥉 1,000 Suscriptores • Bronce</div>
+            <div class="rank-title-text">
+              <svg class="rank-shield-svg"><use href="#rank-bronze"></use></svg>
+              <span>1,000 Suscriptores • Bronce</span>
+            </div>
             <div class="rank-sub-text">Insignia Bronce + Impulso de página en ARGON</div>
           </div>
           <div class="rank-reward-text">+10,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div class="rank-title-text">⚙️ 5,000 Suscriptores • Titanio</div>
+            <div class="rank-title-text">
+              <svg class="rank-shield-svg"><use href="#rank-titan"></use></svg>
+              <span>5,000 Suscriptores • Titanio</span>
+            </div>
             <div class="rank-sub-text">Acceso al Directorio de Patrocinios Comerciales</div>
           </div>
           <div class="rank-reward-text">+25,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div class="rank-title-text">💿 10,000 Suscriptores • Platino</div>
+            <div class="rank-title-text">
+              <svg class="rank-shield-svg"><use href="#rank-platinum"></use></svg>
+              <span>10,000 Suscriptores • Platino</span>
+            </div>
             <div class="rank-sub-text">Elegible para Campañas de Marcas Regionales</div>
           </div>
           <div class="rank-reward-text">+50,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div class="rank-title-text">💎 20,000 Suscriptores • Diamante</div>
+            <div class="rank-title-text">
+              <svg class="rank-shield-svg"><use href="#rank-diamond"></use></svg>
+              <span>20,000 Suscriptores • Diamante</span>
+            </div>
             <div class="rank-sub-text">Prioridad en Patrocinios Comerciales Premium</div>
           </div>
           <div class="rank-reward-text">+100,000 AC</div>
         </div>
         <div class="tier-item">
           <div>
-            <div class="rank-title-text">👑 100,000 Suscriptores • Argon</div>
+            <div class="rank-title-text">
+              <svg class="rank-shield-svg"><use href="#rank-argon"></use></svg>
+              <span>100,000 Suscriptores • Argon</span>
+            </div>
             <div class="rank-sub-text">Socio Oficial • Contratos Directos de Imperio</div>
           </div>
           <div class="rank-reward-text">+500,000 AC</div>
@@ -2433,7 +2634,7 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS (SIN TEXTO DE PÁGINAS DESTACADAS) -->
+    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS -->
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
@@ -2455,11 +2656,13 @@
         <div class="composer-actions">
           <div class="media-buttons-wrap">
             <label class="photo-upload-label">
-              📷 Foto
+              <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg>
+              <span>Foto</span>
               <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="window.previewSelectedPhoto(event)" />
             </label>
             <label class="video-upload-label">
-              🎬 Subir Short / Video
+              <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg>
+              <span>Subir Short / Video</span>
               <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event)" />
             </label>
           </div>
@@ -2470,7 +2673,8 @@
       <div class="shorts-tray-wrap">
         <div class="shorts-tray-header">
           <div class="shorts-tray-title">
-            <span style="color:#1877f2;">▶</span> ARGON SHORTS & DESTACADOS
+            <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg>
+            <span>ARGON SHORTS & DESTACADOS</span>
           </div>
           <span style="font-size:11px; color:#1877f2; font-weight:800; cursor:pointer;" onclick="window.openShortsPlayer(0)">Ver todos →</span>
         </div>
@@ -2480,7 +2684,7 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. MI PERFIL LIMPIO CON OPCIÓN 1 (UNA SOLA FILA DE 3 BOTONES PRO) -->
+    <!-- 3. MI PERFIL LIMPIO CON OPCIÓN 1 -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2492,7 +2696,8 @@
 
         <div>
           <label class="btn-avatar-upload">
-            📷 Cambiar Foto de Perfil
+            <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg>
+            <span>Cambiar Foto de Perfil</span>
             <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
           </label>
         </div>
@@ -2508,7 +2713,7 @@
           </div>
           <div class="ig-stat-box-clickable" onclick="window.openFriendsModal()" title="Ver lista de suscriptores y amigos">
             <div class="ig-stat-num" id="myStatSubs">0</div>
-            <div class="ig-stat-lbl" style="color:#059669;">👥 SUSCRIPTORES</div>
+            <div class="ig-stat-lbl" style="color:#059669;">SUSCRIPTORES</div>
           </div>
           <div class="ig-stat-box-clickable" onclick="window.openFriendsModal()" title="Ver comunidad">
             <div class="ig-stat-num" id="myStatFollowing">0</div>
@@ -2516,20 +2721,20 @@
           </div>
         </div>
 
-        <!-- OPCIÓN 1: LOS 3 BOTONES ALINEADOS EN UNA SOLA LÍNEA FINA -->
+        <!-- OPCIÓN 1: LOS 3 BOTONES CON ÍCONOS DE TRAZO LIMPIO -->
         <div class="profile-pro-action-bar">
           <button class="btn-pro-vip" onclick="window.promoteMyProfilePage()">
-            <span>🚀</span>
+            <svg class="ico-stroke-sm"><use href="#ico-upgrades"></use></svg>
             <span>Impulsar VIP</span>
           </button>
 
           <button class="btn-pro-share" onclick="window.shareMyProfileLink()">
-            <span>↗</span>
+            <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg>
             <span>Compartir Link</span>
           </button>
 
           <button class="btn-pro-friends-sq" onclick="window.openFriendsModal()" title="Ver lista de amigos y suscriptores">
-            <span>👥</span>
+            <svg class="ico-stroke-sm"><use href="#ico-friends"></use></svg>
             <span id="profileFriendsBtnCount">0</span>
           </button>
         </div>
@@ -2541,14 +2746,16 @@
       <div id="myOwnPostsWall"></div>
     </section>
 
-    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ & SETTINGS ESTILO FACEBOOK) -->
+    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ CON EL ESTILO EXACTO DE TU CAPTURA DE FACEBOOK) -->
     <section id="view-menu" class="view-section">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 4px 12px;">
-        <span style="font-size:22px; font-weight:900; color:#050505;">Menú</span>
-        <span style="font-size:18px; cursor:pointer;" onclick="window.openEditProfileModal()" title="Ajustes de perfil">⚙️</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 6px 12px;">
+        <span style="font-size:24px; font-weight:900; color:#050505;">Menu</span>
+        <button style="background:none; border:none; color:#050505; cursor:pointer;" onclick="window.openEditProfileModal()" title="Ajustes de perfil">
+          <svg class="ico-stroke"><use href="#ico-gear"></use></svg>
+        </button>
       </div>
 
-      <!-- TARJETA RÁPIDA DE USUARIO ESTILO FACEBOOK MENU -->
+      <!-- TARJETA RÁPIDA DE USUARIO -->
       <div class="glass-card" style="padding:14px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer;" onclick="window.switchTab('perfil')">
           <div style="display:flex; align-items:center; gap:12px; min-width:0;">
@@ -2561,42 +2768,42 @@
               <div style="font-size:11.5px; color:#059669; font-weight:800;" id="menuUserHandle">@BELTO43 • Ver mi perfil</div>
             </div>
           </div>
-          <button class="btn-mini-admin" onclick="event.stopPropagation(); window.openEditProfileModal();">✏️ Editar</button>
+          <button class="btn-mini-admin" onclick="event.stopPropagation(); window.openEditProfileModal();">
+            <svg class="ico-stroke-sm"><use href="#ico-edit"></use></svg>
+            <span>Editar</span>
+          </button>
         </div>
       </div>
 
-      <!-- CREATOR DASHBOARD (ESTADÍSTICAS DE VISTAS Y ENGAGEMENT) -->
+      <!-- CREATOR DASHBOARD -->
       <div class="glass-card" style="padding:14px;">
-        <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-          <span>📊</span> CREATOR DASHBOARD (MIS MÉTRICAS EN VIVO)
+        <div style="font-size:13px; font-weight:900; color:#050505; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+          <svg class="ico-stroke"><use href="#ico-dashboard"></use></svg>
+          <span>Creator Dashboard (Métricas en Vivo)</span>
         </div>
         <div class="admin-stats-grid" style="margin-bottom:4px;">
           <div class="admin-stat-box">
             <div class="admin-stat-num" id="menuTotalViews">0</div>
-            <div class="admin-stat-label">👁️ VIEWS</div>
+            <div class="admin-stat-label"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-eye"></use></svg> VIEWS</div>
           </div>
           <div class="admin-stat-box">
             <div class="admin-stat-num" id="menuTotalLikes">0</div>
-            <div class="admin-stat-label">♥ LIKES</div>
+            <div class="admin-stat-label"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-heart"></use></svg> LIKES</div>
           </div>
           <div class="admin-stat-box">
             <div class="admin-stat-num" id="menuTotalSubs">0</div>
-            <div class="admin-stat-label">👥 SUBS</div>
+            <div class="admin-stat-label"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-friends"></use></svg> SUBS</div>
           </div>
         </div>
       </div>
 
-      <!-- ACCESOS RÁPIDOS ESTILO FACEBOOK -->
-      <div class="glass-card" style="padding:12px;">
-        <div style="font-size:11px; font-weight:900; color:#65676b; letter-spacing:0.8px; margin-bottom:8px;">
-          ACCESOS RÁPIDOS DE IMPERIO
-        </div>
-
+      <!-- ACCESOS RÁPIDOS ESTILO FACEBOOK (SIN CUADRITOS, TRAZO NEGRO DIRECTO) -->
+      <div class="glass-card" style="padding:10px 12px;">
         <div class="fb-menu-row" onclick="window.openFriendsModal()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">👥</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-friends"></use></svg></div>
             <div>
-              <div class="fb-menu-title" id="menuFriendsCountLabel">Friends y Suscriptores</div>
+              <div class="fb-menu-title" id="menuFriendsCountLabel">Friends (6 online)</div>
               <div class="fb-menu-sub">Ver lista de miembros conectados</div>
             </div>
           </div>
@@ -2605,7 +2812,7 @@
 
         <div class="fb-menu-row" onclick="window.switchTab('boveda')">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">🏆</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-dashboard"></use></svg></div>
             <div>
               <div class="fb-menu-title">Bóveda & Ranking Oficial</div>
               <div class="fb-menu-sub">Tarjeta metálica, A-Coins y Top Creadores</div>
@@ -2614,9 +2821,9 @@
           <span style="font-weight:900; color:#65676b;">›</span>
         </div>
 
-        <div class="fb-menu-row" onclick="window.promoteMyProfilePage()">
+        <div class="fb-menu-row" style="border-bottom:none;" onclick="window.promoteMyProfilePage()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">🚀</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-upgrades"></use></svg></div>
             <div>
               <div class="fb-menu-title">Upgrades • Impulsar mi Contenido</div>
               <div class="fb-menu-sub">Destacar en 1er lugar con Sello Argon Oro (500 AC)</div>
@@ -2627,14 +2834,15 @@
       </div>
 
       <!-- SETTINGS AND PRIVACY -->
-      <div class="glass-card" style="padding:12px;">
-        <div style="font-size:11px; font-weight:900; color:#65676b; letter-spacing:0.8px; margin-bottom:8px;">
-          ⚙️ SETTINGS & PRIVACY
+      <div class="glass-card" style="padding:10px 12px;">
+        <div style="font-size:12px; font-weight:900; color:#050505; margin:4px 4px 8px; display:flex; align-items:center; gap:8px;">
+          <svg class="ico-stroke-sm"><use href="#ico-gear"></use></svg>
+          <span>Settings and privacy</span>
         </div>
 
         <div class="fb-menu-row" onclick="window.openEditProfileModal()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">✏️</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-edit"></use></svg></div>
             <div>
               <div class="fb-menu-title">Editar Nombre de Imperio</div>
               <div class="fb-menu-sub">Cambiar cómo apareces en ARGON</div>
@@ -2645,7 +2853,7 @@
 
         <div class="fb-menu-row" onclick="window.toggleSoundSetting()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">🔔</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-bell"></use></svg></div>
             <div>
               <div class="fb-menu-title">Sonido de Notificaciones</div>
               <div class="fb-menu-sub">Efecto de audio al recibir alertas</div>
@@ -2656,7 +2864,7 @@
 
         <div class="fb-menu-row" onclick="window.openAgeEmailVerifyModal()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">🛡️</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-shield"></use></svg></div>
             <div>
               <div class="fb-menu-title">Verificación de Correo y Edad (+18)</div>
               <div class="fb-menu-sub" id="menuVerifiedEmailSub">Certificación reglamentaria</div>
@@ -2667,7 +2875,7 @@
 
         <div class="fb-menu-row" onclick="window.triggerManualBlinkRefresh()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">⚡</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-sync"></use></svg></div>
             <div>
               <div class="fb-menu-title">Sincronizar y Limpiar Caché</div>
               <div class="fb-menu-sub">Descarga los últimos cambios en vivo</div>
@@ -2676,9 +2884,9 @@
           <span style="font-weight:900; color:#059669;">Actualizar</span>
         </div>
 
-        <div class="fb-menu-row" onclick="window.openLegalModal()">
+        <div class="fb-menu-row" style="border-bottom:none;" onclick="window.openLegalModal()">
           <div class="fb-menu-left">
-            <div class="fb-menu-icon">⚖️</div>
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-shield"></use></svg></div>
             <div>
               <div class="fb-menu-title">Contrato Oficial y Privacidad</div>
               <div class="fb-menu-sub">ASD Building Solutions LLC / Finca Soto LLC</div>
@@ -2698,7 +2906,7 @@
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;">👑 PANEL DE CONTROL ARGON</div>
+            <div style="font-size:14px; font-weight:900; color:#050505;">PANEL DE CONTROL ARGON</div>
             <div style="font-size:11px; color:#65676b;">Toca cualquier usuario para abrir su perfil completo</div>
           </div>
           <span class="badge-active">ADMIN</span>
@@ -2720,7 +2928,7 @@
         </div>
 
         <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">
-          ⚡ VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)
+          VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)
         </button>
 
         <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">
@@ -2730,34 +2938,35 @@
       </div>
     </section>
 
+    <!-- BARRA INFERIOR CON LOS ÍCONOS LINEALES DE 2PX IGUALES A TU CAPTURA DE FACEBOOK -->
     <nav class="bottom-nav">
       <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')">
-        <span>🏠</span>
+        <svg class="ico-stroke"><use href="#ico-home"></use></svg>
         <span>FEED</span>
       </button>
       <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)">
-        <span>🎬</span>
+        <svg class="ico-stroke"><use href="#ico-reels"></use></svg>
         <span>SHORTS</span>
       </button>
       <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')">
-        <span>💳</span>
+        <svg class="ico-stroke"><use href="#ico-vault"></use></svg>
         <span>BÓVEDA</span>
       </button>
       <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')">
-        <span>👤</span>
+        <svg class="ico-stroke"><use href="#ico-friends"></use></svg>
         <span>PERFIL</span>
       </button>
       <button class="nav-btn" id="nav-menu" onclick="window.switchTab('menu')">
-        <span style="font-size:14px; line-height:1;">☰</span>
+        <svg class="ico-stroke"><use href="#ico-menu"></use></svg>
         <span>MENÚ</span>
       </button>
       <button class="nav-btn" id="nav-admin" style="display:none; color:#059669;" onclick="window.switchTab('admin')">
-        <span>👑</span>
+        <svg class="ico-stroke"><use href="#ico-crown-line"></use></svg>
         <span>ADMIN</span>
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + STRIPE $1.99 (+6,000 AC) + SHORTS + VIEWS + SELLO ARGON ORO + FIREBASE -->
+  <!-- MOTOR OFICIAL: PWA + STRIPE $1.99 (+6,000 AC) + ÍCONOS LINEALES 2PX + SHORTS + VIEWS + SELLO ARGON ORO + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -2861,7 +3070,6 @@
       const pendingCheckoutTs = Number(localStorage.getItem('argon_stripe_pending_ts') || 0);
       localStorage.removeItem('argon_stripe_pending_ts');
 
-      // Evita recargas falsas si no salió hacia Stripe recientemente (ventana de 45 min) y no es Admin probando
       const now = Date.now();
       if (!pendingCheckoutTs && (now - pendingCheckoutTs > 45 * 60 * 1000) && !isUserAdmin()) {
         return;
@@ -2893,12 +3101,12 @@
             createdAt: now
           });
 
-          showToast(`👑 ¡Pago confirmado! +${coinsToCredit.toLocaleString()} A-Coins acreditadas`);
+          showToast(`✓ Pago confirmado: +${coinsToCredit.toLocaleString()} A-Coins acreditadas`);
         } catch (e) {
-          showToast(`👑 ¡+${coinsToCredit.toLocaleString()} A-Coins acreditadas en tu Bóveda!`);
+          showToast(`✓ +${coinsToCredit.toLocaleString()} A-Coins acreditadas en tu Bóveda`);
         }
       } else {
-        showToast(`👑 ¡+${coinsToCredit.toLocaleString()} A-Coins listas! Completa tu registro`);
+        showToast(`✓ +${coinsToCredit.toLocaleString()} A-Coins listas. Completa tu registro`);
       }
     }
 
@@ -3006,7 +3214,7 @@
         renderFeed();
         renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
-        showToast('⚡ Muro y caché sincronizados');
+        showToast('✓ Muro y caché sincronizados');
       } catch (e) {
         sessionStorage.setItem('argon_fast_refresh', '1');
         window.location.reload();
@@ -3088,7 +3296,7 @@
     window.saveEditedProfile = async function() {
       const val = (document.getElementById('editProfileNameInput').value || '').trim().toUpperCase();
       if (!val) {
-        showToast('⚠️ Escribe un nombre válido');
+        showToast('Escribe un nombre válido');
         return;
       }
       currentUser.userName = val;
@@ -3113,7 +3321,7 @@
       soundAlertsEnabled = !soundAlertsEnabled;
       localStorage.setItem('argon_sound_enabled', soundAlertsEnabled ? '1' : '0');
       updateUI();
-      showToast(soundAlertsEnabled ? '🔔 Sonido de notificaciones activado' : '🔕 Sonido silenciado');
+      showToast(soundAlertsEnabled ? '✓ Sonido de notificaciones activado' : 'Sonido silenciado');
     };
 
     window.logoutMyAccount = function() {
@@ -3157,11 +3365,11 @@
       const ageChecked = document.getElementById('verifyModalAgeCheck').checked;
 
       if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
-        showToast('⚠️ Ingresa un correo electrónico válido');
+        showToast('Ingresa un correo electrónico válido');
         return;
       }
       if (!ageChecked) {
-        showToast('⚠️ Debes confirmar que eres mayor de 18 años y aceptar el contrato');
+        showToast('Debes confirmar que eres mayor de 18 años y aceptar el contrato');
         return;
       }
 
@@ -3192,13 +3400,14 @@
       }
     };
 
+    // NOMBRES LIMPIOS DE RANGO (SIN EMOJIS DE CARICATURA)
     function getUserRankTitle(subsCount) {
       const s = Number(subsCount) || 0;
-      if (s >= 100000) return '👑 RANGO ARGON';
-      if (s >= 20000) return '💎 RANGO DIAMANTE';
-      if (s >= 10000) return '💿 RANGO PLATINO';
-      if (s >= 5000) return '⚙️ RANGO TITANIO';
-      if (s >= 1000) return '🥉 RANGO BRONCE';
+      if (s >= 100000) return 'RANGO ARGON';
+      if (s >= 20000) return 'RANGO DIAMANTE';
+      if (s >= 10000) return 'RANGO PLATINO';
+      if (s >= 5000) return 'RANGO TITANIO';
+      if (s >= 1000) return 'RANGO BRONCE';
       return 'RANGO INICIAL';
     }
 
@@ -3332,7 +3541,7 @@
           ? `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`
           : (post.image
               ? `<img class="short-thumb-img" src="${post.image}" alt="${post.handle}" />`
-              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;">🎬</div>`);
+              : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`);
 
         const goldCornerHtml = isPromo ? `
           <div class="short-gold-corner-badge" title="Destacado en ARGON">
@@ -3348,7 +3557,10 @@
               <div class="short-mini-avatar">${miniAv}</div>
               <div>
                 <div class="short-card-handle">@${post.handle}</div>
-                <div class="short-views-pill">👁️ ${viewsCount.toLocaleString()}</div>
+                <div class="short-views-pill">
+                  <svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-eye"></use></svg>
+                  <span>${viewsCount.toLocaleString()}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -3364,7 +3576,7 @@
         return;
       }
       if ((currentUser.balance || 0) < 500) {
-        showToast('⚠️ Necesitas al menos 500 A-Coins en tu Bóveda para impulsar');
+        showToast('Necesitas al menos 500 A-Coins en tu Bóveda para impulsar');
         window.switchTab('boveda');
         return;
       }
@@ -3383,7 +3595,7 @@
           promotedUntil: promoUntil
         });
 
-        showToast('👑 ¡Destacado en 1er lugar con el Sello Argon Oro! (-500 AC)');
+        showToast('✓ Destacado en 1er lugar con el Sello Argon Oro (-500 AC)');
       } catch (e) {
         showToast('Error al activar impulso');
       }
@@ -3395,7 +3607,7 @@
         return;
       }
       if ((currentUser.balance || 0) < 500) {
-        showToast('⚠️ Necesitas 500 A-Coins en tu Bóveda para impulsar');
+        showToast('Necesitas 500 A-Coins en tu Bóveda para impulsar');
         window.switchTab('boveda');
         return;
       }
@@ -3425,7 +3637,7 @@
           });
         }
 
-        showToast('👑 ¡Tus publicaciones lucen el Sello Argon Oro arriba en el Feed! (-500 AC)');
+        showToast('✓ Tus publicaciones lucen el Sello Argon Oro arriba en el Feed (-500 AC)');
         window.switchTab('feed');
       } catch (e) {
         showToast('Error al activar impulso VIP');
@@ -3435,7 +3647,7 @@
     window.openShortsPlayer = function(index = 0) {
       const shortsList = getShortVideoPosts();
       if (shortsList.length === 0) {
-        showToast('🎬 Sube el primer Short tocando "+ Subir Short"');
+        showToast('Sube el primer Short tocando "+ Subir Short"');
         return;
       }
       pushAppHistoryState();
@@ -3521,19 +3733,27 @@
 
       railEl.innerHTML = `
         <div style="text-align:center;">
-          <div class="short-rail-btn" style="cursor:default;">👁️</div>
+          <div class="short-rail-btn" style="cursor:default;">
+            <svg class="ico-stroke"><use href="#ico-eye"></use></svg>
+          </div>
           <div class="short-rail-lbl" id="short-views-lbl-${post.id}">${viewsCount.toLocaleString()}</div>
         </div>
         <div style="text-align:center;">
-          <button class="short-rail-btn" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLike('${post.id}'); setTimeout(()=>window.openShortsPlayer(${currentShortIndex}), 150);">♥</button>
+          <button class="short-rail-btn" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLike('${post.id}'); setTimeout(()=>window.openShortsPlayer(${currentShortIndex}), 150);">
+            <svg class="ico-stroke"><use href="#ico-heart"></use></svg>
+          </button>
           <div class="short-rail-lbl">${post.likes || 0}</div>
         </div>
         <div style="text-align:center;">
-          <button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');">💬</button>
+          <button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');">
+            <svg class="ico-stroke"><use href="#ico-comment"></use></svg>
+          </button>
           <div class="short-rail-lbl">${commentsCount}</div>
         </div>
         <div style="text-align:center;">
-          <button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')">↗</button>
+          <button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')">
+            <svg class="ico-stroke"><use href="#ico-share"></use></svg>
+          </button>
           <div class="short-rail-lbl">Enviar</div>
         </div>
       `;
@@ -3553,7 +3773,7 @@
           ` : (
             !isPromo ? `
               <button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">
-                🚀 Impulsar (500 AC)
+                Impulsar (500 AC)
               </button>
             ` : ''
           )}
@@ -3596,7 +3816,7 @@
           }
         }
         await deleteDoc(doc(db, "posts", postId));
-        showToast('🗑️ Publicación eliminada correctamente');
+        showToast('✓ Publicación eliminada correctamente');
       } catch (e) {
         showToast('No se pudo eliminar la publicación');
       }
@@ -3624,7 +3844,7 @@
 
     window.enableBrowserPushNotifications = async function() {
       if (!("Notification" in window)) {
-        showToast('Tu dispositivo usa las notificaciones internas de la campana 🔔');
+        showToast('Tu dispositivo usa las notificaciones internas de la campana');
         return;
       }
       const perm = await Notification.requestPermission();
@@ -3689,11 +3909,11 @@
 
       box.innerHTML = myNotifs.map(n => {
         const isUnread = (n.createdAt || 0) > lastSeenNotifTime;
-        const icon = n.type === 'video' ? '🎬' : (n.type === 'sub' ? '⭐' : '💬');
+        const iconHref = n.type === 'video' ? '#ico-reels' : (n.type === 'sub' ? '#ico-friends' : '#ico-comment');
         return `
           <div class="notif-item-row ${isUnread ? 'unread' : ''}" onclick="window.closeNotificationsModal(); window.openUserProfile('${n.from}')">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <div style="font-size:18px;">${icon}</div>
+            <div style="display:flex; align-items:center; gap:12px;">
+              <svg class="ico-stroke"><use href="${iconHref}"></use></svg>
               <div>
                 <div style="font-size:12px; color:#050505; font-weight:800;">@${n.from}</div>
                 <div style="font-size:12px; color:#374151; margin-top:2px;">${n.text}</div>
@@ -3866,8 +4086,9 @@
           <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" style="padding:10px 18px; font-size:12px;" onclick="window.toggleSubscribe('${viewedPublicHandle}')">
             ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
           </button>
-          <button class="btn-dm-icon" style="padding:10px 16px; font-size:12px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');">
-            ✉️ Enviar Mensaje
+          <button class="btn-dm-icon" style="padding:10px 16px; font-size:12px; gap:6px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');">
+            <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
+            <span>Enviar Mensaje</span>
           </button>
         `;
       }
@@ -3906,7 +4127,7 @@
         if (profImg) profImg.style.display = 'none';
         if (profSvg) profSvg.style.display = 'block';
         if (onbImg) onbImg.style.display = 'none';
-        if (onbIcon) onbIcon.style.display = 'inline';
+        if (onbIcon) onbIcon.style.display = 'inline-flex';
         if (compImg) compImg.style.display = 'none';
         if (compSvg) compSvg.style.display = 'block';
         if (menuImg) menuImg.style.display = 'none';
@@ -3959,7 +4180,6 @@
       document.getElementById('profileName').textContent = currentUser.userName || 'MI CUENTA';
       document.getElementById('profileHandle').textContent = `@${currentUser.userHandle || 'USUARIO'} • ${rankTitle}`;
 
-      // ACTUALIZAR DATOS EN EL MENÚ DE 3 RAYITAS (SETTINGS)
       const menuNameEl = document.getElementById('menuUserName');
       const menuHandleEl = document.getElementById('menuUserHandle');
       if (menuNameEl) menuNameEl.textContent = currentUser.userName || 'MI CUENTA';
@@ -3991,7 +4211,7 @@
           if (menuEmailSub) menuEmailSub.textContent = `${currentUser.email} • Certificado +18`;
         } else {
           emailEl.style.color = '#d97706';
-          emailEl.textContent = `⚠️ Toca aquí para verificar tu Correo y Edad (+18)`;
+          emailEl.textContent = `Toca aquí para verificar tu Correo y Edad (+18)`;
           if (menuEmailSub) menuEmailSub.textContent = `Pendiente de verificar`;
         }
       }
@@ -4108,7 +4328,7 @@
       }
 
       if (!activeDmPartner) {
-        titleEl.textContent = '✉️ Mensajes Directos';
+        titleEl.textContent = 'Mensajes Directos';
         subEl.textContent = 'Selecciona un miembro';
         messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Elige un usuario arriba para conversar en privado.</div>`;
         return;
@@ -4153,7 +4373,7 @@
       const photoToSend = selectedDmPhotoDataUrl;
 
       if (!text && !photoToSend) {
-        showToast('Escribe un mensaje o adjunta una foto (📷)');
+        showToast('Escribe un mensaje o adjunta una foto');
         return;
       }
 
@@ -4173,7 +4393,7 @@
       }
     };
 
-    // RENDERIZA EL CONTADOR EN EL BOTÓN CUADRADO (OPCIÓN 1) Y LA LISTA EN EL MODAL
+    // RENDERIZA EL CONTADOR EN EL BOTÓN CUADRADO Y LA LISTA EN EL MODAL
     function renderMySubscribers() {
       const sqCountEl = document.getElementById('profileFriendsBtnCount');
       const menuFriendsLbl = document.getElementById('menuFriendsCountLabel');
@@ -4189,10 +4409,10 @@
         sqCountEl.textContent = combined.length.toLocaleString();
       }
       if (menuFriendsLbl) {
-        menuFriendsLbl.textContent = `Friends y Suscriptores (${combined.length} activos)`;
+        menuFriendsLbl.textContent = `Friends (${combined.length} online)`;
       }
       if (modalTitle) {
-        modalTitle.textContent = `👥 Mi Comunidad y Amigos (${combined.length})`;
+        modalTitle.textContent = `Mi Comunidad y Amigos (${combined.length})`;
       }
 
       if (!modalListBox) return;
@@ -4224,7 +4444,9 @@
             </div>
             <div style="display:flex; gap:6px;">
               <button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">Ver Perfil</button>
-              <button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');">✉️</button>
+              <button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');">
+                <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
+              </button>
             </div>
           </div>
         `;
@@ -4295,14 +4517,14 @@
 
       dirBox.innerHTML = allUsers.map(u => {
         const subsList = Array.isArray(u.subscribersList) ? u.subscribersList : [];
-        const emailInfo = u.email ? `✉️ ${u.email} (+18 • ${u.legalContractVersion || 'Verificado'})` : '⚠️ Sin correo verificado';
+        const emailInfo = u.email ? `${u.email} (+18 • ${u.legalContractVersion || 'Verificado'})` : 'Sin correo verificado';
         const refInfo = u.invitedBy ? ` • Ref: @${u.invitedBy}` : '';
         const subsNames = subsList.length > 0 ? `${emailInfo}${refInfo} • Subs: @${subsList.join(', @')}` : `${emailInfo}${refInfo}`;
         return `
           <div class="admin-user-row">
             <div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
               <div style="font-size:13px; font-weight:800; color:#050505; text-decoration:underline;">
-                👤 @${u.userHandle} <span style="font-size:11px; color:#65676b; font-weight:600;">(${u.userName || ''})</span>
+                @${u.userHandle} <span style="font-size:11px; color:#65676b; font-weight:600;">(${u.userName || ''})</span>
               </div>
               <div style="font-size:11px; color:#059669; font-weight:700; margin-top:2px;">
                 ${(u.subs || 0).toLocaleString()} Subs • ${(u.balance || 0).toLocaleString()} AC • ${getUserRankTitle(u.subs)}
@@ -4313,7 +4535,9 @@
             </div>
             <div style="display:flex; gap:5px;">
               <button class="btn-mini-admin" onclick="window.openUserProfile('${u.userHandle}')">Perfil</button>
-              <button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')">✉️</button>
+              <button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')">
+                <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
+              </button>
               <button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K</button>
             </div>
           </div>
@@ -4406,7 +4630,7 @@
       if (!file) return;
 
       if (file.size > 95 * 1024 * 1024) {
-        showToast('⚠️ Elige un video menor a 95 MB');
+        showToast('Elige un video menor a 95 MB');
         event.target.value = '';
         return;
       }
@@ -4421,7 +4645,7 @@
       vidPrev.style.display = 'block';
       window.switchTab('feed');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      showToast('🎬 Video listo. Toca "Publicar" para subirlo');
+      showToast('Video listo. Toca "Publicar" para subirlo');
     };
 
     async function uploadVideoToCloudinary(file) {
@@ -4490,7 +4714,7 @@
           containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
         }
       } catch (e) {
-        containerEl.innerHTML = `<div class="video-loading-placeholder">⚠️ No se pudo cargar el video</div>`;
+        containerEl.innerHTML = `<div class="video-loading-placeholder">No se pudo cargar el video</div>`;
       }
     }
 
@@ -4560,7 +4784,7 @@
           dispatchNotification({
             toList: mySubs,
             type: videoUrl ? 'video' : 'post',
-            text: videoUrl ? 'subió un nuevo Short / Video 🎬' : 'publicó en su muro',
+            text: videoUrl ? 'subió un nuevo Short / Video' : 'publicó en su muro',
             postId: docRef.id
           });
         }
@@ -4634,7 +4858,7 @@
         dispatchNotification({
           toList: [targetHandle],
           type: 'sub',
-          text: 'se suscribió a tu perfil (+1 Suscriptor) ⭐'
+          text: 'se suscribió a tu perfil (+1 Suscriptor)'
         });
 
         showToast(`✓ Suscrito a @${targetHandle} (+10 AC acreditadas)`);
@@ -4713,7 +4937,7 @@
         return;
       }
       localStorage.setItem('argon_stripe_pending_ts', String(Date.now()));
-      showToast('⚡ Abriendo pasarela segura de Stripe ($1.99)...');
+      showToast('Abriendo pasarela segura de Stripe ($1.99)...');
 
       let checkoutUrl = STRIPE_PAYMENT_LINK_6000;
       const params = [];
@@ -4753,7 +4977,7 @@
       if (post.video) {
         mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
       } else if (post.videoId) {
-        mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">🎬 Cargando video...</div>`;
+        mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">Cargando video...</div>`;
       } else if (post.image) {
         mediaHtml = `<img class="post-image" src="${post.image}" alt="Publicación" onclick="window.openPhotoLightbox('${post.image}')" />`;
       }
@@ -4770,7 +4994,6 @@
         </div>
       `).join('');
 
-      // SELLO CUADRADO DE ARGON EN ORO EN LA ESQUINA SUPERIOR DERECHA DEL POST
       const goldCornerBadgeHtml = isPromo ? `
         <div class="argon-gold-corner-badge" title="Destacado en ARGON">
           <svg width="19" height="19"><use href="#argon-crown-a-gold"></use></svg>
@@ -4791,13 +5014,17 @@
               <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">
                 ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
               </button>
-              <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar mensaje">✉️</button>
+              <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar mensaje">
+                <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
+              </button>
             ` : `
-              ${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">🚀 Impulsar (500 AC)</button>` : ''}
+              ${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : ''}
             `}
             ${goldCornerBadgeHtml}
             ${canDelete ? `
-              <button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')" title="Eliminar publicación">🗑️</button>
+              <button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')" title="Eliminar publicación">
+                <svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-trash"></use></svg>
+              </button>
             ` : ''}
           </div>
         </div>
@@ -4807,18 +5034,22 @@
         <div class="post-actions">
           <div class="post-actions-left">
             <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')">
-              <span>♥</span> <span>${post.likes || 0}</span>
+              <svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg>
+              <span>${post.likes || 0}</span>
             </button>
             <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">
-              <span>💬</span> <span>${commentsArr.length}</span>
+              <svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg>
+              <span>${commentsArr.length}</span>
             </button>
             ${isVideoPost ? `
               <span class="views-counter-pill">
-                👁️ <span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span>
+                <svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-eye"></use></svg>
+                <span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span>
               </span>
             ` : ''}
             <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">
-              <span>↗</span> <span>Compartir</span>
+              <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg>
+              <span>Compartir</span>
             </button>
           </div>
         </div>
@@ -4892,12 +5123,12 @@
       }
 
       if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) {
-        showToast('⚠️ Ingresa un correo electrónico válido para verificar tu cuenta');
+        showToast('Ingresa un correo electrónico válido para verificar tu cuenta');
         return;
       }
 
       if (!ageChecked) {
-        showToast('⚠️ Debes confirmar que eres mayor de 18 años y aceptar el contrato');
+        showToast('Debes confirmar que eres mayor de 18 años y aceptar el contrato');
         return;
       }
 
@@ -4970,9 +5201,9 @@
             }, { merge: true });
           }
         }
-        showToast(`👑 Bienvenido a ARGON @${cleanHandle}`);
+        showToast(`✓ Bienvenido a ARGON @${cleanHandle}`);
       } catch (e) {
-        showToast(`👑 Bienvenido a ARGON @${cleanHandle}`);
+        showToast(`✓ Bienvenido a ARGON @${cleanHandle}`);
       }
     };
 
