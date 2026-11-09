@@ -657,7 +657,7 @@
     .short-card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.82) 100%);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -689,6 +689,17 @@
       overflow: hidden;
       text-overflow: ellipsis;
       text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    }
+
+    .short-views-pill {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-top: 2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.95);
     }
 
     /* REPRODUCTOR SHORTS FULLSCREEN */
@@ -739,7 +750,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
     }
 
     .short-rail-btn {
@@ -1064,8 +1075,66 @@
       border-bottom: 1px solid #e4e6eb;
     }
 
+    .ig-stat-box-clickable {
+      cursor: pointer;
+      padding: 4px 2px;
+      border-radius: 8px;
+      transition: background 0.15s ease;
+    }
+
+    .ig-stat-box-clickable:active { background: #f0f2f5; }
+
     .ig-stat-num { font-size: 17px; font-weight: 900; color: #050505; }
     .ig-stat-lbl { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; }
+
+    /* BOTÓN COMPACTO DE COMUNIDAD Y AMIGOS (AHORRA ESPACIO EN PERFIL) */
+    .compact-friends-btn {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .compact-friends-btn:active { transform: scale(0.99); background: #f1f5f9; }
+
+    .compact-friends-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .friends-mini-stack {
+      display: flex;
+      align-items: center;
+    }
+
+    .friends-stack-bubble {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #ecfdf5;
+      border: 2px solid #ffffff;
+      color: #059669;
+      font-size: 9.5px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-left: -7px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .friends-stack-bubble:first-child { margin-left: 0; }
+    .friends-stack-bubble img { width: 100%; height: 100%; object-fit: cover; }
 
     .btn-avatar-upload {
       display: inline-flex;
@@ -1168,7 +1237,7 @@
       border-bottom: 1px solid #f0f2f5;
     }
 
-    .post-actions-left { display: flex; align-items: center; gap: 18px; }
+    .post-actions-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 
     .action-item {
       background: none;
@@ -1183,6 +1252,20 @@
     }
 
     .action-item.liked { color: #e41e3f; }
+
+    .views-counter-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+
     .post-body { padding: 10px 14px 13px; }
     .post-caption { font-size: 14px; line-height: 1.45; color: #050505; }
     .post-caption strong { color: #050505; margin-right: 5px; cursor: pointer; }
@@ -1553,21 +1636,6 @@
       cursor: pointer;
     }
 
-    .subscriber-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      color: #059669;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 6px 11px;
-      border-radius: 999px;
-      margin: 4px;
-      cursor: pointer;
-    }
-
     .tier-item {
       display: flex;
       justify-content: space-between;
@@ -1872,6 +1940,20 @@
             Este contrato se rige por las leyes del <strong>Estado Libre Asociado de Puerto Rico</strong> y las leyes federales aplicables de EE. UU. El usuario renuncia expresamente a participar en demandas colectivas (<em>Class Action Waiver</em>) y acepta que cualquier controversia se resolverá de manera individual.
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- MODAL DESPLEGABLE DE LISTA DE AMIGOS, SUSCRIPTORES Y COMUNIDAD -->
+    <div id="friendsListModal" class="dm-modal-overlay">
+      <div class="dm-sheet" style="height:80vh;">
+        <div class="dm-header">
+          <div>
+            <div style="font-size:14px; font-weight:900; color:#050505;" id="friendsModalTitle">👥 Mi Comunidad y Amigos</div>
+            <div style="font-size:11px; color:#059669;">Toca cualquier miembro para ver su perfil o enviarle mensaje</div>
+          </div>
+          <button class="dm-close-btn" onclick="window.closeFriendsModal()">✕</button>
+        </div>
+        <div class="dm-messages-box" id="friendsModalListBox" style="padding:10px;"></div>
       </div>
     </div>
 
@@ -2227,7 +2309,7 @@
       </div>
     </section>
 
-    <!-- 4. MI PERFIL LIMPIO -->
+    <!-- 4. MI PERFIL LIMPIO CON BOTÓN COMPACTO DE AMIGOS -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2253,11 +2335,11 @@
             <div class="ig-stat-num" id="myStatPosts">0</div>
             <div class="ig-stat-lbl">POSTS</div>
           </div>
-          <div>
+          <div class="ig-stat-box-clickable" onclick="window.openFriendsModal()" title="Ver lista de suscriptores y amigos">
             <div class="ig-stat-num" id="myStatSubs">0</div>
-            <div class="ig-stat-lbl">SUSCRIPTORES</div>
+            <div class="ig-stat-lbl" style="color:#059669;">👥 SUSCRIPTORES</div>
           </div>
-          <div>
+          <div class="ig-stat-box-clickable" onclick="window.openFriendsModal()" title="Ver comunidad">
             <div class="ig-stat-num" id="myStatFollowing">0</div>
             <div class="ig-stat-lbl">SIGUIENDO</div>
           </div>
@@ -2271,22 +2353,22 @@
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
 
+        <!-- BOTÓN COMPACTO CON LOGO DE AMIGOS QUE ABRE LA LISTA -->
+        <div class="compact-friends-btn" onclick="window.openFriendsModal()">
+          <div class="compact-friends-left">
+            <div class="friends-mini-stack" id="profileFriendsMiniStack"></div>
+            <div style="text-align:left;">
+              <div style="font-size:12px; font-weight:900; color:#050505;" id="profileFriendsBtnLabel">👥 Mis Amigos y Suscriptores</div>
+              <div style="font-size:10.5px; color:#65676b;">Toca para abrir la lista completa</div>
+            </div>
+          </div>
+          <span style="font-size:12px; font-weight:900; color:#059669;">Ver lista →</span>
+        </div>
+
         <div style="margin-top:12px;">
           <span style="font-size:11px; color:#475569; text-decoration:underline; font-weight:700; cursor:pointer;" onclick="window.openLegalModal()">
             ⚖️ Ver Contrato Oficial, Relevo Legal (+18) y Privacidad
           </span>
-        </div>
-      </div>
-
-      <div class="glass-card">
-        <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:4px;">
-          COMUNIDAD Y SUSCRIPTORES (TOCA PARA VER PERFIL)
-        </div>
-        <div style="font-size:11px; color:#65676b; margin-bottom:8px;">
-          Toca cualquier miembro para entrar a su perfil o enviarle mensaje:
-        </div>
-        <div id="mySubscribersList" style="font-size:12px; color:#65676b;">
-          Cargando comunidad...
         </div>
       </div>
 
@@ -2360,7 +2442,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + SHORTS + CLOUDINARY CDN + FIREBASE FIRESTORE -->
+  <!-- MOTOR OFICIAL: PWA + SHORTS + VIEWS EN VIVO + CLOUDINARY CDN + FIREBASE FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -2420,6 +2502,7 @@
 
     let pendingDeletePostId = '';
     const videoBlobCache = {};
+    const viewCooldownMap = {};
     let currentShortIndex = 0;
     let previousLiveBalance = null;
 
@@ -2448,6 +2531,35 @@
         window.history.pushState({ argonInApp: true }, "", window.location.href);
       } catch (e) {}
     }
+
+    // MOTOR DE VIEWS ESTILO TIKTOK (SUMA POR REPRODUCCIÓN CON COOLDOWN DE 60s ANTI-SPAM)
+    window.registerVideoView = async function(postId) {
+      if (!postId) return;
+      const now = Date.now();
+      const lastViewTs = viewCooldownMap[postId] || 0;
+      if (now - lastViewTs < 60000) return;
+      viewCooldownMap[postId] = now;
+
+      const postObj = livePosts.find(p => p.id === postId);
+      if (postObj) {
+        postObj.views = (Number(postObj.views) || 0) + 1;
+      }
+
+      const inlineLbl = document.getElementById(`views-lbl-${postId}`);
+      if (inlineLbl && postObj) {
+        inlineLbl.textContent = `${(postObj.views || 1).toLocaleString()} Views`;
+      }
+      const shortRailLbl = document.getElementById(`short-views-lbl-${postId}`);
+      if (shortRailLbl && postObj) {
+        shortRailLbl.textContent = (postObj.views || 1).toLocaleString();
+      }
+
+      try {
+        await updateDoc(doc(db, "posts", postId), {
+          views: increment(1)
+        });
+      } catch (e) {}
+    };
 
     // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO
     if (sessionStorage.getItem('argon_fast_refresh') === '1') {
@@ -2588,6 +2700,16 @@
 
     window.closeLegalModal = function() {
       document.getElementById('legalTermsModal').classList.remove('open');
+    };
+
+    window.openFriendsModal = function() {
+      pushAppHistoryState();
+      renderMySubscribers();
+      document.getElementById('friendsListModal').classList.add('open');
+    };
+
+    window.closeFriendsModal = function() {
+      document.getElementById('friendsListModal').classList.remove('open');
     };
 
     window.openAgeEmailVerifyModal = function() {
@@ -2794,6 +2916,7 @@
         const uDoc = usersMap[post.handle] || {};
         const avSrc = uDoc.avatar || post.avatar || '';
         const isPromo = (post.promotedUntil || 0) > now;
+        const viewsCount = Number(post.views) || 0;
         const miniAv = avSrc
           ? `<img src="${avSrc}" alt="${post.handle}" />`
           : (post.handle || 'AR').slice(0, 2);
@@ -2809,7 +2932,10 @@
             ${mediaPreview}
             <div class="short-card-overlay">
               <div class="short-mini-avatar">${miniAv}</div>
-              <div class="short-card-handle">${isPromo ? '🔥 ' : ''}@${post.handle}</div>
+              <div>
+                <div class="short-card-handle">${isPromo ? '🔥 ' : ''}@${post.handle}</div>
+                <div class="short-views-pill">👁️ ${viewsCount.toLocaleString()}</div>
+              </div>
             </div>
           </div>
         `;
@@ -2934,6 +3060,8 @@
       const post = shortsList[currentShortIndex];
       if (!post) return;
 
+      window.registerVideoView(post.id);
+
       const vidEl = document.getElementById('shortsFsVideoEl');
       const railEl = document.getElementById('shortsRightRail');
       const bottomEl = document.getElementById('shortsBottomInfo');
@@ -2949,7 +3077,7 @@
           vidEl.play().catch(() => {});
         } else {
           const dummyDiv = document.createElement('div');
-          await hydrateChunkedVideo(post.videoId, post.chunkCount, dummyDiv);
+          await hydrateChunkedVideo(post.videoId, post.chunkCount, dummyDiv, post.id);
           if (videoBlobCache[post.videoId]) {
             vidEl.src = videoBlobCache[post.videoId];
             vidEl.play().catch(() => {});
@@ -2961,8 +3089,13 @@
       const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
       const isOwn = post.handle === currentUser.userHandle;
       const commentsCount = Array.isArray(post.comments) ? post.comments.length : 0;
+      const viewsCount = Number(post.views) || 1;
 
       railEl.innerHTML = `
+        <div style="text-align:center;">
+          <div class="short-rail-btn" style="cursor:default;">👁️</div>
+          <div class="short-rail-lbl" id="short-views-lbl-${post.id}">${viewsCount.toLocaleString()}</div>
+        </div>
         <div style="text-align:center;">
           <button class="short-rail-btn" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLike('${post.id}'); setTimeout(()=>window.openShortsPlayer(${currentShortIndex}), 150);">♥</button>
           <div class="short-rail-lbl">${post.likes || 0}</div>
@@ -3476,26 +3609,70 @@
       }
     };
 
+    // RENDERIZA EL BOTÓN COMPACTO CON CARITAS Y LA LISTA COMPLETA EN EL MODAL
     function renderMySubscribers() {
-      const box = document.getElementById('mySubscribersList');
-      if (!box) return;
+      const stackBox = document.getElementById('profileFriendsMiniStack');
+      const btnLbl = document.getElementById('profileFriendsBtnLabel');
+      const modalListBox = document.getElementById('friendsModalListBox');
+      const modalTitle = document.getElementById('friendsModalTitle');
 
       const myDoc = usersMap[currentUser.userHandle] || {};
       const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
       const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
       const combined = Array.from(new Set([...fromDoc, ...allKnown]));
 
+      if (btnLbl) {
+        btnLbl.textContent = `👥 Mis Amigos y Suscriptores (${combined.length})`;
+      }
+      if (modalTitle) {
+        modalTitle.textContent = `👥 Mi Comunidad y Amigos (${combined.length})`;
+      }
+
+      if (stackBox) {
+        if (combined.length === 0) {
+          stackBox.innerHTML = `<div class="friends-stack-bubble">👥</div>`;
+        } else {
+          stackBox.innerHTML = combined.slice(0, 4).map(h => {
+            const u = usersMap[h] || {};
+            return u.avatar
+              ? `<div class="friends-stack-bubble"><img src="${u.avatar}" alt="${h}" /></div>`
+              : `<div class="friends-stack-bubble">${h.slice(0, 2)}</div>`;
+          }).join('');
+        }
+      }
+
+      if (!modalListBox) return;
+
       if (combined.length === 0) {
-        box.innerHTML = `<span style="color:#65676b;">Aún no hay otros miembros visibles.</span>`;
+        modalListBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; padding:40px 16px;">Aún no tienes otros miembros en tu lista. Comparte tu link de invitación para sumar amigos.</div>`;
         return;
       }
 
-      box.innerHTML = combined.map(h => {
+      modalListBox.innerHTML = combined.map(h => {
+        const u = usersMap[h] || {};
         const isSubToMe = fromDoc.includes(h);
+        const avHtml = u.avatar
+          ? `<img src="${u.avatar}" alt="${h}" />`
+          : `<span>${h.slice(0, 2)}</span>`;
+
         return `
-          <span class="subscriber-chip" onclick="window.openUserProfile('${h}')">
-            👤 @${h} ${isSubToMe ? '✓' : ''}
-          </span>
+          <div class="admin-user-row" style="background:#ffffff; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1; cursor:pointer;" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">
+              <div class="avatar-circle" style="width:38px; height:38px;">${avHtml}</div>
+              <div style="min-width:0; flex:1;">
+                <div style="font-size:13px; font-weight:800; color:#050505;">
+                  @${h} ${isSubToMe ? '<span style="color:#059669;">✓</span>' : ''}
+                </div>
+                <div style="font-size:11px; color:#65676b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${u.userName || h} • ${getUserRankTitle(u.subs)}
+                </div>
+              </div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">Ver Perfil</button>
+              <button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');">✉️</button>
+            </div>
+          </div>
         `;
       }).join('');
     }
@@ -3740,10 +3917,10 @@
       });
     }
 
-    async function hydrateChunkedVideo(videoId, chunkCount, containerEl) {
+    async function hydrateChunkedVideo(videoId, chunkCount, containerEl, postId = '') {
       if (!videoId || !chunkCount) return;
       if (videoBlobCache[videoId]) {
-        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata"></video>`;
+        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
         return;
       }
       try {
@@ -3755,7 +3932,7 @@
         const fullDataUrl = chunks.join('');
         if (fullDataUrl.startsWith('data:video')) {
           videoBlobCache[videoId] = fullDataUrl;
-          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata"></video>`;
+          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
         }
       } catch (e) {
         containerEl.innerHTML = `<div class="video-loading-placeholder">⚠️ No se pudo cargar el video</div>`;
@@ -3799,6 +3976,7 @@
           image: selectedPhotoDataUrl || '',
           video: videoUrl || '',
           likes: 0,
+          views: 0,
           likedBy: [],
           comments: [],
           promotedUntil: 0,
@@ -3990,6 +4168,8 @@
       const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
       const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
       const canDelete = isOwn || isUserAdmin();
+      const isVideoPost = !!(post.video || post.videoId);
+      const viewsCount = Number(post.views) || 0;
 
       const avatarHtml = avatarSrc
         ? `<img src="${avatarSrc}" alt="${post.handle}" />`
@@ -3997,7 +4177,7 @@
 
       let mediaHtml = '';
       if (post.video) {
-        mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata"></video>`;
+        mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
       } else if (post.videoId) {
         mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">🎬 Cargando video...</div>`;
       } else if (post.image) {
@@ -4058,6 +4238,11 @@
             <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">
               <span>💬</span> <span>${commentsArr.length}</span>
             </button>
+            ${isVideoPost ? `
+              <span class="views-counter-pill">
+                👁️ <span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span>
+              </span>
+            ` : ''}
             <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">
               <span>↗</span> <span>Compartir</span>
             </button>
@@ -4085,7 +4270,7 @@
       if (post.videoId && !post.video) {
         setTimeout(() => {
           const holder = card.querySelector(`#vid-chunk-${post.id}`);
-          if (holder) hydrateChunkedVideo(post.videoId, post.chunkCount, holder);
+          if (holder) hydrateChunkedVideo(post.videoId, post.chunkCount, holder, post.id);
         }, 30);
       }
 
@@ -4336,6 +4521,7 @@
 
       const openModals = [
         { id: 'publicProfileModal', closeFn: window.closePublicProfile },
+        { id: 'friendsListModal', closeFn: window.closeFriendsModal },
         { id: 'dmModal', closeFn: window.closeDirectMessages },
         { id: 'notifModal', closeFn: window.closeNotificationsModal },
         { id: 'legalTermsModal', closeFn: window.closeLegalModal },
