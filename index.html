@@ -1069,7 +1069,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
-      margin: 14px 0;
+      margin: 14px 0 12px;
       padding: 10px 0;
       border-top: 1px solid #e4e6eb;
       border-bottom: 1px solid #e4e6eb;
@@ -1087,51 +1087,78 @@
     .ig-stat-num { font-size: 17px; font-weight: 900; color: #050505; }
     .ig-stat-lbl { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; }
 
-    /* BOTÓN COMPACTO DE COMUNIDAD Y AMIGOS */
-    .compact-friends-btn {
+    /* OPCIÓN 1: FILA HORIZONTAL DE 3 BOTONES ESTILO INSTAGRAM / TIKTOK PRO */
+    .profile-pro-action-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       width: 100%;
-      margin-top: 10px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: #f8fafc;
-      border: 1px solid #cbd5e1;
+      margin-top: 4px;
+    }
+
+    .btn-pro-vip {
+      flex: 1;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%);
+      border: 1px solid #334155;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 5px;
       cursor: pointer;
-      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      white-space: nowrap;
+      padding: 0 10px;
+      transition: transform 0.12s ease;
     }
 
-    .compact-friends-btn:active { transform: scale(0.99); background: #f1f5f9; }
+    .btn-pro-vip:active { transform: scale(0.97); }
 
-    .compact-friends-left {
+    .btn-pro-share {
+      flex: 1;
+      height: 40px;
+      border-radius: 10px;
+      background: #f0f2f5;
+      border: 1px solid #dadde1;
+      color: #050505;
+      font-size: 12px;
+      font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 10px;
-      min-width: 0;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      padding: 0 10px;
+      transition: transform 0.12s ease, background 0.12s ease;
     }
 
-    .friends-mini-stack { display: flex; align-items: center; }
+    .btn-pro-share:active { transform: scale(0.97); background: #e4e6eb; }
 
-    .friends-stack-bubble {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
+    .btn-pro-friends-sq {
+      height: 40px;
+      min-width: 52px;
+      padding: 0 10px;
+      border-radius: 10px;
       background: #ecfdf5;
-      border: 2px solid #ffffff;
+      border: 1px solid #a7f3d0;
       color: #059669;
-      font-size: 9.5px;
+      font-size: 12px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-left: -7px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      gap: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.12s ease;
     }
 
-    .friends-stack-bubble:first-child { margin-left: 0; }
-    .friends-stack-bubble img { width: 100%; height: 100%; object-fit: cover; }
+    .btn-pro-friends-sq:active { transform: scale(0.96); }
 
     .btn-avatar-upload {
       display: inline-flex;
@@ -1763,19 +1790,6 @@
       font-size: 13px;
       cursor: pointer;
       margin-top: 10px;
-    }
-
-    .btn-promote-page {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1.5px solid #f59e0b;
-      background: #fffbeb;
-      color: #b45309;
-      font-weight: 900;
-      font-size: 12.5px;
-      cursor: pointer;
-      margin-top: 8px;
     }
 
     .bottom-nav {
@@ -2438,7 +2452,7 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. MI PERFIL LIMPIO CON BOTÓN COMPACTO DE AMIGOS -->
+    <!-- 3. MI PERFIL LIMPIO CON OPCIÓN 1 (UNA SOLA FILA DE 3 BOTONES PRO) -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2474,29 +2488,22 @@
           </div>
         </div>
 
-        <button class="btn-promote-page" onclick="window.promoteMyProfilePage()">
-          🚀 PROMOCIONAR MI PÁGINA EN EL FEED (500 AC)
-        </button>
+        <!-- OPCIÓN 1: LOS 3 BOTONES ALINEADOS EN UNA SOLA LÍNEA FINA -->
+        <div class="profile-pro-action-bar">
+          <button class="btn-pro-vip" onclick="window.promoteMyProfilePage()">
+            <span>🚀</span>
+            <span>Impulsar VIP</span>
+          </button>
 
-        <button class="btn-primary-platinum" onclick="window.shareMyProfileLink()">
-          ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
-        </button>
+          <button class="btn-pro-share" onclick="window.shareMyProfileLink()">
+            <span>↗</span>
+            <span>Compartir Link</span>
+          </button>
 
-        <div class="compact-friends-btn" onclick="window.openFriendsModal()">
-          <div class="compact-friends-left">
-            <div class="friends-mini-stack" id="profileFriendsMiniStack"></div>
-            <div style="text-align:left;">
-              <div style="font-size:12px; font-weight:900; color:#050505;" id="profileFriendsBtnLabel">👥 Mis Amigos y Suscriptores</div>
-              <div style="font-size:10.5px; color:#65676b;">Toca para abrir la lista completa</div>
-            </div>
-          </div>
-          <span style="font-size:12px; font-weight:900; color:#059669;">Ver lista →</span>
-        </div>
-
-        <div style="margin-top:12px;">
-          <span style="font-size:11px; color:#475569; text-decoration:underline; font-weight:700; cursor:pointer;" onclick="window.openLegalModal()">
-            ⚖️ Ver Contrato Oficial, Relevo Legal (+18) y Privacidad
-          </span>
+          <button class="btn-pro-friends-sq" onclick="window.openFriendsModal()" title="Ver lista de amigos y suscriptores">
+            <span>👥</span>
+            <span id="profileFriendsBtnCount">0</span>
+          </button>
         </div>
       </div>
 
@@ -4071,10 +4078,9 @@
       }
     };
 
-    // RENDERIZA EL BOTÓN COMPACTO CON CARITAS Y LA LISTA COMPLETA EN EL MODAL
+    // RENDERIZA EL CONTADOR EN EL BOTÓN CUADRADO (OPCIÓN 1) Y LA LISTA EN EL MODAL
     function renderMySubscribers() {
-      const stackBox = document.getElementById('profileFriendsMiniStack');
-      const btnLbl = document.getElementById('profileFriendsBtnLabel');
+      const sqCountEl = document.getElementById('profileFriendsBtnCount');
       const menuFriendsLbl = document.getElementById('menuFriendsCountLabel');
       const modalListBox = document.getElementById('friendsModalListBox');
       const modalTitle = document.getElementById('friendsModalTitle');
@@ -4084,27 +4090,14 @@
       const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
       const combined = Array.from(new Set([...fromDoc, ...allKnown]));
 
-      if (btnLbl) {
-        btnLbl.textContent = `👥 Mis Amigos y Suscriptores (${combined.length})`;
+      if (sqCountEl) {
+        sqCountEl.textContent = combined.length.toLocaleString();
       }
       if (menuFriendsLbl) {
         menuFriendsLbl.textContent = `Friends y Suscriptores (${combined.length} activos)`;
       }
       if (modalTitle) {
         modalTitle.textContent = `👥 Mi Comunidad y Amigos (${combined.length})`;
-      }
-
-      if (stackBox) {
-        if (combined.length === 0) {
-          stackBox.innerHTML = `<div class="friends-stack-bubble">👥</div>`;
-        } else {
-          stackBox.innerHTML = combined.slice(0, 4).map(h => {
-            const u = usersMap[h] || {};
-            return u.avatar
-              ? `<div class="friends-stack-bubble"><img src="${u.avatar}" alt="${h}" /></div>`
-              : `<div class="friends-stack-bubble">${h.slice(0, 2)}</div>`;
-          }).join('');
-        }
       }
 
       if (!modalListBox) return;
