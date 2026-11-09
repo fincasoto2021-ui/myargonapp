@@ -121,6 +121,158 @@
       background: #000000;
     }
 
+    /* SISTEMA DE GALERÍA 3X3 (PERFIL, PÚBLICO Y EXPLORAR GLOBAL) */
+    .profile-view-switcher {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #ffffff;
+      border: 1px solid #dadde1;
+      border-radius: 12px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .profile-switch-tab {
+      background: none;
+      border: none;
+      padding: 11px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #65676b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      border-bottom: 2.5px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .profile-switch-tab.active {
+      color: #050505;
+      border-bottom-color: #050505;
+      background: #f8fafc;
+    }
+
+    .media-grid-3x3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .media-grid-cell {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: #e4e6eb;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .media-grid-cell img,
+    .media-grid-cell video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .media-grid-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(5, 5, 5, 0.72);
+      color: #ffffff;
+      border-radius: 6px;
+      padding: 3px 5px;
+      font-size: 9.5px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      backdrop-filter: blur(4px);
+    }
+
+    .media-grid-bottom-meta {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 4px 6px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.78) 100%);
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* CARRUSEL DESLIZABLE DE MÚLTIPLES FOTOS POR POST */
+    .post-carousel-wrap {
+      position: relative;
+      width: 100%;
+      background: #0b0d13;
+    }
+
+    .post-carousel-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .post-carousel-track::-webkit-scrollbar { display: none; }
+
+    .post-carousel-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      scroll-snap-align: center;
+      position: relative;
+    }
+
+    .post-carousel-counter {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(5, 5, 5, 0.75);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      pointer-events: none;
+      backdrop-filter: blur(6px);
+    }
+
+    .composer-multi-strip {
+      display: none;
+      gap: 8px;
+      overflow-x: auto;
+      margin-top: 10px;
+      padding-bottom: 4px;
+    }
+
+    .composer-multi-strip.active { display: flex; }
+
+    .composer-multi-item {
+      position: relative;
+      width: 78px;
+      height: 78px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #dadde1;
+      flex-shrink: 0;
+    }
+
+    .composer-multi-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     /* DESTELLO EN LOS BORDES DE LA PANTALLA (PULL-TO-REFRESH BLINK) */
     .edge-refresh-glow {
       position: fixed;
@@ -2006,6 +2158,12 @@
           <line x1="14" y1="3" x2="17" y2="8"/>
           <polygon points="10,11.5 15.5,14.5 10,17.5"/>
         </symbol>
+        <symbol id="ico-grid" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+        </symbol>
         <symbol id="ico-vault" viewBox="0 0 24 24">
           <rect x="2" y="5" width="20" height="14" rx="3"/>
           <line x1="2" y1="10" x2="22" y2="10"/>
@@ -2388,7 +2546,7 @@
       <img id="lightboxImg" src="" alt="Vista ampliada" />
     </div>
 
-    <!-- MODAL DE PERFIL PÚBLICO -->
+    <!-- MODAL DE PERFIL PÚBLICO CON SELECTOR MURO / GALERÍA 3X3 -->
     <div id="publicProfileModal" class="user-profile-modal">
       <div class="upm-inner">
         <div class="upm-topbar">
@@ -2423,10 +2581,19 @@
             <div style="display:flex; gap:8px; justify-content:center;" id="upmActionButtons"></div>
           </div>
 
-          <div style="font-size:12px; font-weight:800; color:#65676b; letter-spacing:1px; margin:12px 4px 10px;">
-            PUBLICACIONES EN EL MURO DE ESTE PERFIL
+          <div class="profile-view-switcher">
+            <button id="upmTabWallBtn" class="profile-switch-tab active" onclick="window.setPublicProfileLayout('wall')">
+              <svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg>
+              <span>Muro</span>
+            </button>
+            <button id="upmTabGridBtn" class="profile-switch-tab" onclick="window.setPublicProfileLayout('grid')">
+              <svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg>
+              <span>Galería 3x3</span>
+            </button>
           </div>
+
           <div id="upmWallPosts"></div>
+          <div id="upmGalleryGrid" class="media-grid-3x3" style="display:none;"></div>
         </div>
       </div>
     </div>
@@ -2662,7 +2829,7 @@
       </div>
     </section>
 
-    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS + RECEPTOR DE YOUTUBE -->
+    <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS + ÁLBUM MULTI-FOTO + YOUTUBE -->
     <section id="view-feed" class="view-section active">
       <div class="composer-card">
         <div class="composer-row">
@@ -2680,6 +2847,7 @@
         </div>
 
         <img id="photoPreview" class="preview-thumb" alt="Vista previa foto" />
+        <div id="composerMultiPhotoStrip" class="composer-multi-strip"></div>
         <video id="videoPreview" class="preview-video" controls playsinline></video>
         <div id="composerYoutubePreview" class="composer-yt-preview"></div>
 
@@ -2692,8 +2860,8 @@
           <div class="media-buttons-wrap">
             <label class="photo-upload-label">
               <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg>
-              <span>Foto</span>
-              <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="window.previewSelectedPhoto(event)" />
+              <span>Fotos / Álbum</span>
+              <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="window.previewSelectedPhoto(event)" />
             </label>
             <label class="video-upload-label">
               <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg>
@@ -2719,7 +2887,7 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. MI PERFIL LIMPIO CON OPCIÓN 1 -->
+    <!-- 3. MI PERFIL LIMPIO CON MURO Y GALERÍA 3X3 -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2756,7 +2924,6 @@
           </div>
         </div>
 
-        <!-- OPCIÓN 1: LOS 3 BOTONES CON ÍCONOS DE TRAZO LIMPIO -->
         <div class="profile-pro-action-bar">
           <button class="btn-pro-vip" onclick="window.promoteMyProfilePage()">
             <svg class="ico-stroke-sm"><use href="#ico-upgrades"></use></svg>
@@ -2775,13 +2942,39 @@
         </div>
       </div>
 
-      <div style="font-size:12px; font-weight:800; color:#65676b; letter-spacing:1px; margin:10px 4px;">
-        MIS PUBLICACIONES EN MI MURO
+      <!-- SELECTOR MURO / GALERÍA 3X3 EN MI PERFIL -->
+      <div class="profile-view-switcher">
+        <button id="myProfileTabWallBtn" class="profile-switch-tab active" onclick="window.setMyProfileLayout('wall')">
+          <svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg>
+          <span>Muro</span>
+        </button>
+        <button id="myProfileTabGridBtn" class="profile-switch-tab" onclick="window.setMyProfileLayout('grid')">
+          <svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg>
+          <span>Galería 3x3</span>
+        </button>
       </div>
+
       <div id="myOwnPostsWall"></div>
+      <div id="myOwnGalleryGrid" class="media-grid-3x3" style="display:none;"></div>
     </section>
 
-    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ CON EL ESTILO EXACTO DE TU CAPTURA DE FACEBOOK) -->
+    <!-- NUEVA VISTA GLOBAL: EXPLORAR GALERÍA ARGON (MOSAICO DE TODA LA COMUNIDAD) -->
+    <section id="view-galeria" class="view-section">
+      <div class="glass-card" style="padding:13px 15px; display:flex; align-items:center; justify-content:space-between;">
+        <div>
+          <div style="font-size:15px; font-weight:900; color:#050505; display:flex; align-items:center; gap:7px;">
+            <svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg>
+            <span>GALERÍA GLOBAL ARGON</span>
+          </div>
+          <div style="font-size:11px; color:#65676b; margin-top:2px;">Fotos, álbumes y Shorts de toda la comunidad en tiempo real</div>
+        </div>
+        <button class="btn-mini-admin" onclick="window.switchTab('feed')">← Feed</button>
+      </div>
+
+      <div id="globalGalleryGrid" class="media-grid-3x3"></div>
+    </section>
+
+    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ CON ACCESO A GALERÍA GLOBAL) -->
     <section id="view-menu" class="view-section">
       <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 6px 12px;">
         <span style="font-size:24px; font-weight:900; color:#050505;">Menu</span>
@@ -2790,7 +2983,6 @@
         </button>
       </div>
 
-      <!-- TARJETA RÁPIDA DE USUARIO -->
       <div class="glass-card" style="padding:14px;">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer;" onclick="window.switchTab('perfil')">
           <div style="display:flex; align-items:center; gap:12px; min-width:0;">
@@ -2810,7 +3002,6 @@
         </div>
       </div>
 
-      <!-- CREATOR DASHBOARD -->
       <div class="glass-card" style="padding:14px;">
         <div style="font-size:13px; font-weight:900; color:#050505; margin-bottom:10px; display:flex; align-items:center; gap:8px;">
           <svg class="ico-stroke"><use href="#ico-dashboard"></use></svg>
@@ -2832,8 +3023,18 @@
         </div>
       </div>
 
-      <!-- ACCESOS RÁPIDOS ESTILO FACEBOOK (SIN CUADRITOS, TRAZO NEGRO DIRECTO) -->
       <div class="glass-card" style="padding:10px 12px;">
+        <div class="fb-menu-row" onclick="window.switchTab('galeria')">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-grid"></use></svg></div>
+            <div>
+              <div class="fb-menu-title">Explorar Galería ARGON (3x3)</div>
+              <div class="fb-menu-sub">Mosaico global de fotos, álbumes y videos</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
         <div class="fb-menu-row" onclick="window.openFriendsModal()">
           <div class="fb-menu-left">
             <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-friends"></use></svg></div>
@@ -2868,7 +3069,6 @@
         </div>
       </div>
 
-      <!-- SETTINGS AND PRIVACY -->
       <div class="glass-card" style="padding:10px 12px;">
         <div style="font-size:12px; font-weight:900; color:#050505; margin:4px 4px 8px; display:flex; align-items:center; gap:8px;">
           <svg class="ico-stroke-sm"><use href="#ico-gear"></use></svg>
@@ -3001,7 +3201,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + YOUTUBE SHARE TARGET & EMBED + STRIPE $1.99 (+6,000 AC) + ÍCONOS LINEALES 2PX + SHORTS + FIREBASE -->
+  <!-- MOTOR OFICIAL: GALERÍA 3X3 + ÁLBUM CARRUSEL MULTI-FOTO + YOUTUBE SHARE TARGET & EMBED + STRIPE $1.99 + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -3058,12 +3258,15 @@
     const hasIncomingShare = !!(sharedTitleParam || sharedTextParam || sharedUrlParam);
 
     let selectedPhotoDataUrl = '';
+    let selectedPhotosArray = [];
     let selectedVideoFile = null;
     let selectedYoutubeId = '';
     let selectedDmPhotoDataUrl = '';
     let openCommentDrawers = {};
     let activeDmPartner = '';
     let viewedPublicHandle = '';
+    let myProfileLayoutMode = 'wall';
+    let publicProfileLayoutMode = 'wall';
     let allDirectMessages = [];
     let allNotifications = [];
     let lastSeenNotifTime = Number(localStorage.getItem('argon_last_notif_ts') || 0);
@@ -3109,6 +3312,121 @@
       const match = String(text).match(regex);
       return match ? match[1] : '';
     }
+
+    // OBTIENE TODAS LAS FOTOS DE UN POST (COMPATIBLE CON FOTOS SIMPLES Y ÁLBUMES MÚLTIPLES)
+    function getPostImagesList(post) {
+      if (!post) return [];
+      if (Array.isArray(post.images) && post.images.length > 0) {
+        return post.images.filter(Boolean);
+      }
+      if (post.image) return [post.image];
+      return [];
+    }
+
+    // CAMBIAR ENTRE MURO Y GALERÍA 3X3 EN MI PERFIL
+    window.setMyProfileLayout = function(mode) {
+      myProfileLayoutMode = mode === 'grid' ? 'grid' : 'wall';
+      const wallBtn = document.getElementById('myProfileTabWallBtn');
+      const gridBtn = document.getElementById('myProfileTabGridBtn');
+      const wallBox = document.getElementById('myOwnPostsWall');
+      const gridBox = document.getElementById('myOwnGalleryGrid');
+
+      if (wallBtn) wallBtn.classList.toggle('active', myProfileLayoutMode === 'wall');
+      if (gridBtn) gridBtn.classList.toggle('active', myProfileLayoutMode === 'grid');
+      if (wallBox) wallBox.style.display = myProfileLayoutMode === 'wall' ? 'block' : 'none';
+      if (gridBox) gridBox.style.display = myProfileLayoutMode === 'grid' ? 'grid' : 'none';
+    };
+
+    // CAMBIAR ENTRE MURO Y GALERÍA 3X3 EN PERFIL PÚBLICO
+    window.setPublicProfileLayout = function(mode) {
+      publicProfileLayoutMode = mode === 'grid' ? 'grid' : 'wall';
+      const wallBtn = document.getElementById('upmTabWallBtn');
+      const gridBtn = document.getElementById('upmTabGridBtn');
+      const wallBox = document.getElementById('upmWallPosts');
+      const gridBox = document.getElementById('upmGalleryGrid');
+
+      if (wallBtn) wallBtn.classList.toggle('active', publicProfileLayoutMode === 'wall');
+      if (gridBtn) gridBtn.classList.toggle('active', publicProfileLayoutMode === 'grid');
+      if (wallBox) wallBox.style.display = publicProfileLayoutMode === 'wall' ? 'block' : 'none';
+      if (gridBox) gridBox.style.display = publicProfileLayoutMode === 'grid' ? 'grid' : 'none';
+    };
+
+    // CONSTRUYE EL MOSAICO 3X3 PARA CUALQUIER LISTA DE PUBLICACIONES
+    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos en esta galería.') {
+      if (!containerEl) return;
+      const mediaPosts = (postsList || []).filter(p => {
+        const imgs = getPostImagesList(p);
+        const yt = p.youtubeId || extractYoutubeId(p.caption);
+        return imgs.length > 0 || p.video || p.videoId || yt;
+      });
+
+      if (mediaPosts.length === 0) {
+        containerEl.innerHTML = `<div class="glass-card" style="grid-column:1 / -1; text-align:center; font-size:12px; color:#65676b;">${emptyMessage}</div>`;
+        return;
+      }
+
+      containerEl.innerHTML = mediaPosts.map(post => {
+        const imgs = getPostImagesList(post);
+        const ytId = post.youtubeId || extractYoutubeId(post.caption);
+        const isVideo = !!(post.video || post.videoId || ytId);
+        const viewsCount = Number(post.views) || 0;
+        const likesCount = Number(post.likes) || 0;
+
+        let thumbHtml = '';
+        if (imgs.length > 0) {
+          thumbHtml = `<img src="${imgs[0]}" alt="@${post.handle}" loading="lazy" />`;
+        } else if (ytId) {
+          thumbHtml = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube" loading="lazy" />`;
+        } else if (post.video) {
+          thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        } else {
+          thumbHtml = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
+        }
+
+        let badgeHtml = '';
+        if (imgs.length > 1) {
+          badgeHtml = `<div class="media-grid-badge">1/${imgs.length}</div>`;
+        } else if (isVideo) {
+          badgeHtml = `<div class="media-grid-badge">▶</div>`;
+        }
+
+        return `
+          <div class="media-grid-cell" onclick="window.openGalleryItem('${post.id}')">
+            ${thumbHtml}
+            ${badgeHtml}
+            <div class="media-grid-bottom-meta">
+              <span>@${post.handle}</span>
+              <span>${isVideo ? `👁 ${viewsCount}` : `♥ ${likesCount}`}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // AL TOCAR UN CUADRITO DE LA GALERÍA 3X3: ABRE LA FOTO EN ZOOM O EL VIDEO EN SHORTS
+    window.openGalleryItem = function(postId) {
+      const post = livePosts.find(p => p.id === postId);
+      if (!post) return;
+      const imgs = getPostImagesList(post);
+      if (imgs.length > 0) {
+        window.openPhotoLightbox(imgs[0]);
+        return;
+      }
+      const shortsList = getShortVideoPosts();
+      const idx = shortsList.findIndex(p => p.id === postId);
+      if (idx >= 0) {
+        window.openShortsPlayer(idx);
+      }
+    };
+
+    // ACTUALIZA EL CONTADOR (1/4, 2/4) CUANDO EL USUARIO DESLIZA EL CARRUSEL DE FOTOS
+    window.updateCarouselCounter = function(trackEl, postId, totalSlides) {
+      if (!trackEl || !totalSlides) return;
+      const w = trackEl.clientWidth || 1;
+      const idx = Math.min(totalSlides, Math.max(1, Math.round(trackEl.scrollLeft / w) + 1));
+      const badge = document.getElementById(`carousel-cnt-${postId}`);
+      if (badge) badge.textContent = `${idx}/${totalSlides}`;
+    };
 
     // VISTA PREVIA EN VIVO CUANDO PEGAS O COMPARTES UN LINK DE YOUTUBE EN EL PUBLICADOR
     window.handleComposerInputChange = function(val) {
@@ -3222,7 +3540,6 @@
       }
     }
 
-    // VERIFICA SI UN POST O SU AUTOR TIENEN IMPULSO VIP ACTIVO
     function isPostOrAuthorFeatured(post) {
       if (!post) return false;
       const now = Date.now();
@@ -3232,7 +3549,6 @@
       return false;
     }
 
-    // MOTOR DE VIEWS ESTILO TIKTOK (SUMA POR REPRODUCCIÓN CON COOLDOWN DE 60s ANTI-SPAM)
     window.registerVideoView = async function(postId) {
       if (!postId) return;
       const now = Date.now();
@@ -3261,7 +3577,6 @@
       } catch (e) {}
     };
 
-    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO, DE STRIPE O DE UN LINK COMPARTIDO DE YOUTUBE
     if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0 || hasIncomingShare) {
       sessionStorage.removeItem('argon_fast_refresh');
       const sp = document.getElementById('vaultSplashScreen');
@@ -3272,7 +3587,6 @@
       }, 80);
     }
 
-    // DESTELLO DE BORDES (BLINK) + ACTUALIZACIÓN REAL (FIREBASE + CACHÉ GITHUB)
     window.triggerManualBlinkRefresh = async function() {
       const glow = document.getElementById('edgeRefreshGlow');
       if (glow) {
@@ -3326,14 +3640,13 @@
         renderFeed();
         renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
-        showToast('✓ Muro y caché sincronizados');
+        showToast('✓ Muro y galería sincronizados');
       } catch (e) {
         sessionStorage.setItem('argon_fast_refresh', '1');
         window.location.reload();
       }
     };
 
-    // DETECTOR DE DESLIZAMIENTO HACIA ABAJO COMPATIBLE CON SAMSUNG / ANDROID
     (function setupPullToBlinkRefresh() {
       let startY = 0;
       let currentPull = 0;
@@ -3393,7 +3706,6 @@
       refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
     }
 
-    // FUNCIONES DEL MENÚ SETTINGS (EDITAR PERFIL, SONIDO, LOG OUT)
     window.openEditProfileModal = function() {
       pushAppHistoryState();
       const inp = document.getElementById('editProfileNameInput');
@@ -3618,7 +3930,7 @@
     function getShortVideoPosts() {
       const ordered = getOrderedPostsWithPromotions();
       const vids = ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || extractYoutubeId(p.caption)));
-      return vids.length > 0 ? vids : ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || p.image));
+      return vids.length > 0 ? vids : ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || getPostImagesList(p).length > 0));
     }
 
     function renderShortsTray() {
@@ -3645,6 +3957,7 @@
         const isPromo = isPostOrAuthorFeatured(post);
         const viewsCount = Number(post.views) || 0;
         const ytId = post.youtubeId || extractYoutubeId(post.caption);
+        const postImgs = getPostImagesList(post);
 
         const miniAv = avSrc
           ? `<img src="${avSrc}" alt="${post.handle}" />`
@@ -3655,8 +3968,8 @@
           mediaPreview = `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
         } else if (ytId) {
           mediaPreview = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube Short" />`;
-        } else if (post.image) {
-          mediaPreview = `<img class="short-thumb-img" src="${post.image}" alt="${post.handle}" />`;
+        } else if (postImgs.length > 0) {
+          mediaPreview = `<img class="short-thumb-img" src="${postImgs[0]}" alt="${post.handle}" />`;
         } else {
           mediaPreview = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
         }
@@ -4230,6 +4543,8 @@
       }
 
       const wallBox = document.getElementById('upmWallPosts');
+      const gridBox = document.getElementById('upmGalleryGrid');
+
       if (userPosts.length === 0) {
         wallBox.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">@${viewedPublicHandle} aún no tiene publicaciones en su muro.</div>`;
       } else {
@@ -4238,6 +4553,9 @@
           wallBox.appendChild(buildPostCardElement(post));
         });
       }
+
+      renderMediaGrid3x3(userPosts, gridBox, `@${viewedPublicHandle} aún no tiene fotos ni videos en su galería.`);
+      window.setPublicProfileLayout(publicProfileLayoutMode);
     }
 
     function renderAvatarElements() {
@@ -4731,33 +5049,65 @@
       reader.readAsDataURL(file);
     };
 
-    window.previewSelectedPhoto = function(event) {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
+    // COMPRESIÓN Y VISTA PREVIA DE 1 O MÚLTIPLES FOTOS (HASTA 6 POR POST PARA ÁLBUM CARRUSEL)
+    function compressImageFileToDataUrl(file, maxW = 720, quality = 0.7) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const scale = img.width > maxW ? maxW / img.width : 1;
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.previewSelectedPhoto = async function(event) {
+      const files = Array.from((event.target && event.target.files) || []).slice(0, 6);
+      if (files.length === 0) return;
 
       selectedVideoFile = null;
       const vidPrev = document.getElementById('videoPreview');
       if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxW = 720;
-          const scale = img.width > maxW ? maxW / img.width : 1;
-          canvas.width = img.width * scale;
-          canvas.height = img.height * scale;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          selectedPhotoDataUrl = canvas.toDataURL('image/jpeg', 0.72);
-          const preview = document.getElementById('photoPreview');
-          preview.src = selectedPhotoDataUrl;
-          preview.style.display = 'block';
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+      const singlePreview = document.getElementById('photoPreview');
+      const stripEl = document.getElementById('composerMultiPhotoStrip');
+
+      const compressedList = [];
+      for (const f of files) {
+        const dUrl = await compressImageFileToDataUrl(f, files.length > 1 ? 640 : 720, files.length > 1 ? 0.66 : 0.72);
+        if (dUrl) compressedList.push(dUrl);
+      }
+
+      selectedPhotosArray = compressedList;
+      selectedPhotoDataUrl = compressedList[0] || '';
+
+      if (compressedList.length === 1) {
+        if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
+        if (singlePreview) {
+          singlePreview.src = compressedList[0];
+          singlePreview.style.display = 'block';
+        }
+      } else if (compressedList.length > 1) {
+        if (singlePreview) { singlePreview.style.display = 'none'; singlePreview.src = ''; }
+        if (stripEl) {
+          stripEl.classList.add('active');
+          stripEl.innerHTML = compressedList.map((src, i) => `
+            <div class="composer-multi-item">
+              <img src="${src}" alt="Foto ${i + 1}" />
+            </div>
+          `).join('');
+        }
+        showToast(`✓ ${compressedList.length} fotos listas para tu álbum carrusel`);
+      }
     };
 
     window.previewSelectedVideo = function(event) {
@@ -4771,8 +5121,11 @@
       }
 
       selectedPhotoDataUrl = '';
+      selectedPhotosArray = [];
       const imgPrev = document.getElementById('photoPreview');
       if (imgPrev) { imgPrev.style.display = 'none'; imgPrev.src = ''; }
+      const stripEl = document.getElementById('composerMultiPhotoStrip');
+      if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
 
       selectedVideoFile = file;
       const vidPrev = document.getElementById('videoPreview');
@@ -4869,8 +5222,8 @@
       const btn = document.getElementById('publishBtn');
       const detectedYtId = selectedYoutubeId || extractYoutubeId(caption);
 
-      if (!caption && !selectedPhotoDataUrl && !selectedVideoFile && !detectedYtId) {
-        showToast('Escribe algo, pega un link de YouTube o adjunta foto/video');
+      if (!caption && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile && !detectedYtId) {
+        showToast('Escribe algo, pega un link de YouTube o adjunta fotos/video');
         return;
       }
 
@@ -4883,12 +5236,17 @@
           videoUrl = await uploadVideoToCloudinary(selectedVideoFile);
         }
 
+        const finalPhotos = selectedPhotosArray.length > 0
+          ? selectedPhotosArray
+          : (selectedPhotoDataUrl ? [selectedPhotoDataUrl] : []);
+
         const newPost = {
           handle: currentUser.userHandle,
           userName: currentUser.userName,
           avatar: currentUser.avatar || '',
           caption: caption,
-          image: selectedPhotoDataUrl || '',
+          image: finalPhotos[0] || '',
+          images: finalPhotos,
           video: videoUrl || '',
           youtubeId: detectedYtId || '',
           likes: 0,
@@ -4903,11 +5261,14 @@
 
         input.value = '';
         selectedPhotoDataUrl = '';
+        selectedPhotosArray = [];
         selectedVideoFile = null;
         selectedYoutubeId = '';
 
         const imgPrev = document.getElementById('photoPreview');
         if (imgPrev) { imgPrev.style.display = 'none'; imgPrev.src = ''; }
+        const stripEl = document.getElementById('composerMultiPhotoStrip');
+        if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
         const vidPrev = document.getElementById('videoPreview');
         if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
         const ytPrev = document.getElementById('composerYoutubePreview');
@@ -5070,7 +5431,6 @@
       }
     };
 
-    // CONEXIÓN OFICIAL EN VIVO A STRIPE ($1.99 -> +6,000 A-COINS)
     window.buyPack = function(amount, priceLabel) {
       if (!currentUser.registered) {
         document.getElementById('onboardingScreen').classList.remove('hidden');
@@ -5108,6 +5468,7 @@
       const canDelete = isOwn || isUserAdmin();
 
       const ytId = post.youtubeId || extractYoutubeId(post.caption);
+      const postImgs = getPostImagesList(post);
       const isVideoPost = !!(post.video || post.videoId || ytId);
       const viewsCount = Number(post.views) || 0;
 
@@ -5130,8 +5491,22 @@
         `;
       } else if (post.videoId) {
         mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">Cargando video...</div>`;
-      } else if (post.image) {
-        mediaHtml = `<img class="post-image" src="${post.image}" alt="Publicación" onclick="window.openPhotoLightbox('${post.image}')" />`;
+      } else if (postImgs.length > 1) {
+        const slidesHtml = postImgs.map((imgUrl, idx) => `
+          <div class="post-carousel-slide">
+            <img class="post-image" src="${imgUrl}" alt="Foto ${idx + 1}" onclick="window.openPhotoLightbox('${imgUrl}')" />
+          </div>
+        `).join('');
+        mediaHtml = `
+          <div class="post-carousel-wrap">
+            <div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${postImgs.length})">
+              ${slidesHtml}
+            </div>
+            <div id="carousel-cnt-${post.id}" class="post-carousel-counter">1/${postImgs.length}</div>
+          </div>
+        `;
+      } else if (postImgs.length === 1) {
+        mediaHtml = `<img class="post-image" src="${postImgs[0]}" alt="Publicación" onclick="window.openPhotoLightbox('${postImgs[0]}')" />`;
       }
 
       const commentsArr = Array.isArray(post.comments) ? post.comments : [];
@@ -5237,6 +5612,8 @@
     function renderFeed() {
       const feedContainer = document.getElementById('feedContainer');
       const myWall = document.getElementById('myOwnPostsWall');
+      const myGrid = document.getElementById('myOwnGalleryGrid');
+      const globalGrid = document.getElementById('globalGalleryGrid');
       if (!feedContainer) return;
 
       const orderedPosts = getOrderedPostsWithPromotions();
@@ -5250,8 +5627,8 @@
         });
       }
 
+      const mine = orderedPosts.filter(p => p.handle === currentUser.userHandle);
       if (myWall) {
-        const mine = orderedPosts.filter(p => p.handle === currentUser.userHandle);
         myWall.innerHTML = '';
         if (mine.length === 0) {
           myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones a tu muro.</div>`;
@@ -5261,6 +5638,10 @@
           });
         }
       }
+
+      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos a tu galería.');
+      renderMediaGrid3x3(orderedPosts, globalGrid, 'Cargando galería global de ARGON...');
+      window.setMyProfileLayout(myProfileLayoutMode);
     }
 
     window.completeRegistration = async function() {
@@ -5362,7 +5743,7 @@
     window.switchTab = function(tabName) {
       pushAppHistoryState();
       if (tabName === 'ranking') tabName = 'boveda';
-      const views = ['feed', 'boveda', 'perfil', 'menu', 'admin'];
+      const views = ['feed', 'boveda', 'perfil', 'galeria', 'menu', 'admin'];
       views.forEach(v => {
         const sec = document.getElementById(`view-${v}`);
         const nav = document.getElementById(`nav-${v}`);
@@ -5457,7 +5838,6 @@
     checkAndCreditStripeReturn();
     checkAndHandleIncomingShare();
 
-    // PROTECTOR REFORZADO DEL BOTÓN "ATRÁS" (<) DE ANDROID
     for (let i = 0; i < 4; i++) {
       pushAppHistoryState();
     }
