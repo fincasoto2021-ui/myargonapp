@@ -1087,7 +1087,7 @@
     .ig-stat-num { font-size: 17px; font-weight: 900; color: #050505; }
     .ig-stat-lbl { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; }
 
-    /* BOTÓN COMPACTO DE COMUNIDAD Y AMIGOS (AHORRA ESPACIO EN PERFIL) */
+    /* BOTÓN COMPACTO DE COMUNIDAD Y AMIGOS */
     .compact-friends-btn {
       width: 100%;
       margin-top: 10px;
@@ -1111,10 +1111,7 @@
       min-width: 0;
     }
 
-    .friends-mini-stack {
-      display: flex;
-      align-items: center;
-    }
+    .friends-mini-stack { display: flex; align-items: center; }
 
     .friends-stack-bubble {
       width: 26px;
@@ -1574,19 +1571,122 @@
       cursor: pointer;
     }
 
+    /* VISOR DE FOTOS CON SOPORTE DE ZOOM TÁCTIL (PINCH + DOUBLE TAP) */
     .lightbox-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.92);
+      background: rgba(0, 0, 0, 0.95);
       z-index: 350;
       display: none;
       align-items: center;
       justify-content: center;
-      padding: 16px;
+      overflow: hidden;
+      touch-action: none;
     }
 
     .lightbox-overlay.open { display: flex; }
-    .lightbox-overlay img { max-width: 100%; max-height: 88vh; border-radius: 14px; object-fit: contain; }
+
+    .lightbox-top-controls {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      right: 16px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .lightbox-hint-pill {
+      background: rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 999px;
+      pointer-events: auto;
+    }
+
+    .lightbox-close-x {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-overlay img {
+      max-width: 100%;
+      max-height: 88vh;
+      border-radius: 10px;
+      object-fit: contain;
+      transform-origin: center center;
+      transition: transform 0.08s ease-out;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* ESTILOS DEL MENÚ HAMBURGUESA (3 RAYITAS ESTILO FACEBOOK) */
+    .fb-menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .fb-menu-row:active { background: #e2e8f0; }
+
+    .fb-menu-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .fb-menu-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .fb-menu-title { font-size: 13px; font-weight: 800; color: #050505; }
+    .fb-menu-sub { font-size: 11px; color: #65676b; margin-top: 1px; }
+
+    .btn-logout-gray {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      background: #e4e6eb;
+      border: 1px solid #ced0d4;
+      color: #050505;
+      font-size: 13.5px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 8px;
+    }
 
     .admin-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
 
@@ -1860,6 +1960,33 @@
       </div>
     </div>
 
+    <!-- MODAL PARA EDITAR NOMBRE Y ALIAS DESDE SETTINGS -->
+    <div id="editProfileModal" class="confirm-modal-overlay">
+      <div class="confirm-card" style="max-width:355px; text-align:left;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <span style="font-size:26px;">✏️</span>
+          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Editar Mi Perfil</div>
+          <div style="font-size:11.5px; color:#65676b;">Actualiza tu nombre visible y foto en ARGON</div>
+        </div>
+
+        <div style="margin-bottom:12px;">
+          <label style="font-size:11px; font-weight:800; color:#050505; display:block; margin-bottom:4px;">NOMBRE VISIBLE EN TU MURO Y TARJETA:</label>
+          <input
+            type="text"
+            id="editProfileNameInput"
+            class="composer-input"
+            style="width:100%; border-radius:10px; font-size:13px; text-transform:uppercase;"
+            placeholder="TU NOMBRE O ALIAS"
+          />
+        </div>
+
+        <div class="confirm-actions">
+          <button class="btn-confirm-cancel" onclick="window.closeEditProfileModal()">Cancelar</button>
+          <button class="composer-btn" style="border-radius:12px;" onclick="window.saveEditedProfile()">Guardar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- MODAL DE VERIFICACIÓN REGLAMENTARIA DE CORREO Y EDAD (+18) -->
     <div id="ageEmailVerifyModal" class="confirm-modal-overlay">
       <div class="confirm-card" style="max-width:365px; text-align:left;">
@@ -1992,8 +2119,12 @@
       </div>
     </div>
 
-    <!-- VISOR DE FOTOS -->
-    <div id="photoLightbox" class="lightbox-overlay" onclick="window.closePhotoLightbox()">
+    <!-- VISOR DE FOTOS CON PELLIZCO DE 2 DEDOS Y DOBLE TOQUE PARA ZOOM -->
+    <div id="photoLightbox" class="lightbox-overlay">
+      <div class="lightbox-top-controls">
+        <span class="lightbox-hint-pill">🔍 Pellizca o toca 2 veces para Zoom</span>
+        <button class="lightbox-close-x" onclick="window.closePhotoLightbox()">✕</button>
+      </div>
       <img id="lightboxImg" src="" alt="Vista ampliada" />
     </div>
 
@@ -2132,7 +2263,7 @@
       <span style="background:#f59e0b; color:#fff; padding:4px 9px; border-radius:999px; font-size:10px;">Verificar →</span>
     </div>
 
-    <!-- 1. BÓVEDA CON TARJETA METÁLICA 3D Y NÚMERO EN VIVO -->
+    <!-- 1. BÓVEDA + RANKING UNIFICADOS EN UN SOLO LUGAR -->
     <section id="view-boveda" class="view-section">
       <div class="glass-card">
         <div class="progress-header">
@@ -2205,6 +2336,52 @@
           </button>
         </div>
       </div>
+
+      <!-- RANKING EN VIVO Y LOS 5 RANGOS INTEGRADOS EN LA BÓVEDA -->
+      <div class="glass-card">
+        <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">🏆 TOP CREADORES EN TIEMPO REAL</div>
+        <div style="font-size:11.5px; color:#475569; font-weight:600; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
+        <div id="liveLeaderboardList"></div>
+      </div>
+
+      <div class="glass-card">
+        <div style="font-size:14px; font-weight:900; margin-bottom:10px; color:#050505;">👑 RANGOS OFICIALES DE IMPERIO ARGON</div>
+        <div class="tier-item">
+          <div>
+            <div class="rank-title-text">🥉 1,000 Suscriptores • Bronce</div>
+            <div class="rank-sub-text">Insignia Bronce + Impulso de página en ARGON</div>
+          </div>
+          <div class="rank-reward-text">+10,000 AC</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div class="rank-title-text">⚙️ 5,000 Suscriptores • Titanio</div>
+            <div class="rank-sub-text">Acceso al Directorio de Patrocinios Comerciales</div>
+          </div>
+          <div class="rank-reward-text">+25,000 AC</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div class="rank-title-text">💿 10,000 Suscriptores • Platino</div>
+            <div class="rank-sub-text">Elegible para Campañas de Marcas Regionales</div>
+          </div>
+          <div class="rank-reward-text">+50,000 AC</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div class="rank-title-text">💎 20,000 Suscriptores • Diamante</div>
+            <div class="rank-sub-text">Prioridad en Patrocinios Comerciales Premium</div>
+          </div>
+          <div class="rank-reward-text">+100,000 AC</div>
+        </div>
+        <div class="tier-item">
+          <div>
+            <div class="rank-title-text">👑 100,000 Suscriptores • Argon</div>
+            <div class="rank-sub-text">Socio Oficial • Contratos Directos de Imperio</div>
+          </div>
+          <div class="rank-reward-text">+500,000 AC</div>
+        </div>
+      </div>
     </section>
 
     <!-- 2. FEED EN TIEMPO REAL + ARGON SHORTS -->
@@ -2261,55 +2438,7 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. RANKING EN VIVO + LOS 5 RANGOS OFICIALES -->
-    <section id="view-ranking" class="view-section">
-      <div class="glass-card">
-        <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">TOP CREADORES EN TIEMPO REAL</div>
-        <div style="font-size:11.5px; color:#475569; font-weight:600; margin-bottom:10px;">Toca cualquier usuario para entrar a su perfil:</div>
-        <div id="liveLeaderboardList"></div>
-      </div>
-
-      <div class="glass-card">
-        <div style="font-size:14px; font-weight:900; margin-bottom:10px; color:#050505;">RANGOS OFICIALES DE IMPERIO ARGON</div>
-        <div class="tier-item">
-          <div>
-            <div class="rank-title-text">🥉 1,000 Suscriptores • Bronce</div>
-            <div class="rank-sub-text">Insignia Bronce + Impulso de página en ARGON</div>
-          </div>
-          <div class="rank-reward-text">+10,000 AC</div>
-        </div>
-        <div class="tier-item">
-          <div>
-            <div class="rank-title-text">⚙️ 5,000 Suscriptores • Titanio</div>
-            <div class="rank-sub-text">Acceso al Directorio de Patrocinios Comerciales</div>
-          </div>
-          <div class="rank-reward-text">+25,000 AC</div>
-        </div>
-        <div class="tier-item">
-          <div>
-            <div class="rank-title-text">💿 10,000 Suscriptores • Platino</div>
-            <div class="rank-sub-text">Elegible para Campañas de Marcas Regionales</div>
-          </div>
-          <div class="rank-reward-text">+50,000 AC</div>
-        </div>
-        <div class="tier-item">
-          <div>
-            <div class="rank-title-text">💎 20,000 Suscriptores • Diamante</div>
-            <div class="rank-sub-text">Prioridad en Patrocinios Comerciales Premium</div>
-          </div>
-          <div class="rank-reward-text">+100,000 AC</div>
-        </div>
-        <div class="tier-item">
-          <div>
-            <div class="rank-title-text">👑 100,000 Suscriptores • Argon</div>
-            <div class="rank-sub-text">Socio Oficial • Contratos Directos de Imperio</div>
-          </div>
-          <div class="rank-reward-text">+500,000 AC</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. MI PERFIL LIMPIO CON BOTÓN COMPACTO DE AMIGOS -->
+    <!-- 3. MI PERFIL LIMPIO CON BOTÓN COMPACTO DE AMIGOS -->
     <section id="view-perfil" class="view-section">
       <div class="glass-card" style="text-align:center;">
         <div class="fb-cover-banner"></div>
@@ -2353,7 +2482,6 @@
           ↗ ENVIAR MI LINK CON AUTO-SUSCRIPCIÓN
         </button>
 
-        <!-- BOTÓN COMPACTO CON LOGO DE AMIGOS QUE ABRE LA LISTA -->
         <div class="compact-friends-btn" onclick="window.openFriendsModal()">
           <div class="compact-friends-left">
             <div class="friends-mini-stack" id="profileFriendsMiniStack"></div>
@@ -2376,6 +2504,158 @@
         MIS PUBLICACIONES EN MI MURO
       </div>
       <div id="myOwnPostsWall"></div>
+    </section>
+
+    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ & SETTINGS ESTILO FACEBOOK) -->
+    <section id="view-menu" class="view-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 4px 12px;">
+        <span style="font-size:22px; font-weight:900; color:#050505;">Menú</span>
+        <span style="font-size:18px; cursor:pointer;" onclick="window.openEditProfileModal()" title="Ajustes de perfil">⚙️</span>
+      </div>
+
+      <!-- TARJETA RÁPIDA DE USUARIO ESTILO FACEBOOK MENU -->
+      <div class="glass-card" style="padding:14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer;" onclick="window.switchTab('perfil')">
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div class="avatar-circle" style="width:48px; height:48px;">
+              <img id="menuUserAvatarImg" src="" alt="" style="display:none;" />
+              <svg id="menuUserAvatarSvg" width="26" height="26"><use href="#argon-crown-a"></use></svg>
+            </div>
+            <div style="min-width:0;">
+              <div style="font-size:16px; font-weight:900; color:#050505;" id="menuUserName">ALBERTO SOTO</div>
+              <div style="font-size:11.5px; color:#059669; font-weight:800;" id="menuUserHandle">@BELTO43 • Ver mi perfil</div>
+            </div>
+          </div>
+          <button class="btn-mini-admin" onclick="event.stopPropagation(); window.openEditProfileModal();">✏️ Editar</button>
+        </div>
+      </div>
+
+      <!-- CREATOR DASHBOARD (ESTADÍSTICAS DE VISTAS Y ENGAGEMENT) -->
+      <div class="glass-card" style="padding:14px;">
+        <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
+          <span>📊</span> CREATOR DASHBOARD (MIS MÉTRICAS EN VIVO)
+        </div>
+        <div class="admin-stats-grid" style="margin-bottom:4px;">
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="menuTotalViews">0</div>
+            <div class="admin-stat-label">👁️ VIEWS</div>
+          </div>
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="menuTotalLikes">0</div>
+            <div class="admin-stat-label">♥ LIKES</div>
+          </div>
+          <div class="admin-stat-box">
+            <div class="admin-stat-num" id="menuTotalSubs">0</div>
+            <div class="admin-stat-label">👥 SUBS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCESOS RÁPIDOS ESTILO FACEBOOK -->
+      <div class="glass-card" style="padding:12px;">
+        <div style="font-size:11px; font-weight:900; color:#65676b; letter-spacing:0.8px; margin-bottom:8px;">
+          ACCESOS RÁPIDOS DE IMPERIO
+        </div>
+
+        <div class="fb-menu-row" onclick="window.openFriendsModal()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">👥</div>
+            <div>
+              <div class="fb-menu-title" id="menuFriendsCountLabel">Friends y Suscriptores</div>
+              <div class="fb-menu-sub">Ver lista de miembros conectados</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.switchTab('boveda')">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">🏆</div>
+            <div>
+              <div class="fb-menu-title">Bóveda & Ranking Oficial</div>
+              <div class="fb-menu-sub">Tarjeta metálica, A-Coins y Top Creadores</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.promoteMyProfilePage()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">🚀</div>
+            <div>
+              <div class="fb-menu-title">Upgrades • Impulsar mi Página</div>
+              <div class="fb-menu-sub">Destacar mi perfil en el Feed por 24h (500 AC)</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#b45309;">VIP ›</span>
+        </div>
+      </div>
+
+      <!-- SETTINGS AND PRIVACY -->
+      <div class="glass-card" style="padding:12px;">
+        <div style="font-size:11px; font-weight:900; color:#65676b; letter-spacing:0.8px; margin-bottom:8px;">
+          ⚙️ SETTINGS & PRIVACY
+        </div>
+
+        <div class="fb-menu-row" onclick="window.openEditProfileModal()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">✏️</div>
+            <div>
+              <div class="fb-menu-title">Editar Nombre de Imperio</div>
+              <div class="fb-menu-sub">Cambiar cómo apareces en ARGON</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.toggleSoundSetting()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">🔔</div>
+            <div>
+              <div class="fb-menu-title">Sonido de Notificaciones</div>
+              <div class="fb-menu-sub">Efecto de audio al recibir alertas</div>
+            </div>
+          </div>
+          <span id="menuSoundStatusBadge" class="badge-active">ACTIVO</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.openAgeEmailVerifyModal()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">🛡️</div>
+            <div>
+              <div class="fb-menu-title">Verificación de Correo y Edad (+18)</div>
+              <div class="fb-menu-sub" id="menuVerifiedEmailSub">Certificación reglamentaria</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#059669;">✓</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.triggerManualBlinkRefresh()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">⚡</div>
+            <div>
+              <div class="fb-menu-title">Sincronizar y Limpiar Caché</div>
+              <div class="fb-menu-sub">Descarga los últimos cambios en vivo</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#059669;">Actualizar</span>
+        </div>
+
+        <div class="fb-menu-row" onclick="window.openLegalModal()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon">⚖️</div>
+            <div>
+              <div class="fb-menu-title">Contrato Oficial y Privacidad</div>
+              <div class="fb-menu-sub">8 cláusulas de relevo legal (v2.0-PR)</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
+        <button class="btn-logout-gray" onclick="window.logoutMyAccount()">
+          Log out / Cambiar de Cuenta
+        </button>
+      </div>
     </section>
 
     <!-- 5. PANEL DE ADMINISTRADOR -->
@@ -2428,13 +2708,13 @@
         <span>💳</span>
         <span>BÓVEDA</span>
       </button>
-      <button class="nav-btn" id="nav-ranking" onclick="window.switchTab('ranking')">
-        <span>🏆</span>
-        <span>RANKING</span>
-      </button>
       <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')">
         <span>👤</span>
         <span>PERFIL</span>
+      </button>
+      <button class="nav-btn" id="nav-menu" onclick="window.switchTab('menu')">
+        <span style="font-size:14px; line-height:1;">☰</span>
+        <span>MENÚ</span>
       </button>
       <button class="nav-btn" id="nav-admin" style="display:none; color:#059669;" onclick="window.switchTab('admin')">
         <span>👑</span>
@@ -2442,7 +2722,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + SHORTS + VIEWS EN VIVO + CLOUDINARY CDN + FIREBASE FIRESTORE -->
+  <!-- MOTOR OFICIAL: PWA + SHORTS + VIEWS + ZOOM FOTOS + SETTINGS MENU + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -2499,6 +2779,7 @@
     let allDirectMessages = [];
     let allNotifications = [];
     let lastSeenNotifTime = Number(localStorage.getItem('argon_last_notif_ts') || 0);
+    let soundAlertsEnabled = localStorage.getItem('argon_sound_enabled') !== '0';
 
     let pendingDeletePostId = '';
     const videoBlobCache = {};
@@ -2626,7 +2907,7 @@
         renderFeed();
         renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
-        showToast('⚡ Muro actualizado');
+        showToast('⚡ Muro y caché sincronizados');
       } catch (e) {
         sessionStorage.setItem('argon_fast_refresh', '1');
         window.location.reload();
@@ -2692,6 +2973,57 @@
     if (refBanner && invitedByParam) {
       refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
     }
+
+    // FUNCIONES DEL MENÚ SETTINGS (EDITAR PERFIL, SONIDO, LOG OUT)
+    window.openEditProfileModal = function() {
+      pushAppHistoryState();
+      const inp = document.getElementById('editProfileNameInput');
+      if (inp) inp.value = currentUser.userName || '';
+      document.getElementById('editProfileModal').classList.add('open');
+    };
+
+    window.closeEditProfileModal = function() {
+      document.getElementById('editProfileModal').classList.remove('open');
+    };
+
+    window.saveEditedProfile = async function() {
+      const val = (document.getElementById('editProfileNameInput').value || '').trim().toUpperCase();
+      if (!val) {
+        showToast('⚠️ Escribe un nombre válido');
+        return;
+      }
+      currentUser.userName = val;
+      saveLocalSession();
+      window.closeEditProfileModal();
+      updateUI();
+
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            userName: val,
+            updatedAt: Date.now()
+          }, { merge: true });
+          showToast('✓ Nombre actualizado en tu perfil y tarjeta');
+        } catch (e) {
+          showToast('✓ Nombre guardado');
+        }
+      }
+    };
+
+    window.toggleSoundSetting = function() {
+      soundAlertsEnabled = !soundAlertsEnabled;
+      localStorage.setItem('argon_sound_enabled', soundAlertsEnabled ? '1' : '0');
+      updateUI();
+      showToast(soundAlertsEnabled ? '🔔 Sonido de notificaciones activado' : '🔕 Sonido silenciado');
+    };
+
+    window.logoutMyAccount = function() {
+      localStorage.removeItem(LOCAL_USER_KEY);
+      currentUser.registered = false;
+      document.getElementById('onboardingScreen').classList.remove('hidden');
+      window.switchTab('feed');
+      showToast('Sesión cerrada. Puedes ingresar con otra cuenta.');
+    };
 
     window.openLegalModal = function() {
       pushAppHistoryState();
@@ -3168,6 +3500,7 @@
     };
 
     function playNotificationSound() {
+      if (!soundAlertsEnabled) return;
       try {
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         if (!AudioCtx) return;
@@ -3269,17 +3602,115 @@
       }).join('');
     }
 
+    // MOTOR DE ZOOM EN FOTOS (PINCH-TO-ZOOM CON 2 DEDOS + DOBLE TOQUE + ARRASTRE)
+    let lbScale = 1;
+    let lbPointX = 0;
+    let lbPointY = 0;
+    let lbStartX = 0;
+    let lbStartY = 0;
+    let lbPinchStartDist = 0;
+    let lbPinchStartScale = 1;
+    let lbIsPanning = false;
+    let lbLastTapTime = 0;
+
+    function applyLightboxTransform() {
+      const img = document.getElementById('lightboxImg');
+      if (img) {
+        img.style.transform = `translate3d(${lbPointX}px, ${lbPointY}px, 0) scale(${lbScale})`;
+      }
+    }
+
     window.openPhotoLightbox = function(imgSrc) {
       if (!imgSrc) return;
       pushAppHistoryState();
-      document.getElementById('lightboxImg').src = imgSrc;
+      lbScale = 1;
+      lbPointX = 0;
+      lbPointY = 0;
+      const img = document.getElementById('lightboxImg');
+      img.src = imgSrc;
+      applyLightboxTransform();
       document.getElementById('photoLightbox').classList.add('open');
     };
 
     window.closePhotoLightbox = function() {
       document.getElementById('photoLightbox').classList.remove('open');
-      document.getElementById('lightboxImg').src = '';
+      const img = document.getElementById('lightboxImg');
+      if (img) {
+        img.src = '';
+        img.style.transform = '';
+      }
     };
+
+    (function setupLightboxZoomGestures() {
+      const overlay = document.getElementById('photoLightbox');
+      if (!overlay) return;
+
+      overlay.addEventListener('touchstart', function(e) {
+        if (e.target.closest('.lightbox-close-x')) return;
+
+        if (e.touches.length === 2) {
+          lbIsPanning = false;
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          lbPinchStartDist = Math.hypot(dx, dy);
+          lbPinchStartScale = lbScale;
+        } else if (e.touches.length === 1) {
+          const now = Date.now();
+          if (now - lbLastTapTime < 280) {
+            if (lbScale > 1.1) {
+              lbScale = 1;
+              lbPointX = 0;
+              lbPointY = 0;
+            } else {
+              lbScale = 2.6;
+            }
+            applyLightboxTransform();
+            lbLastTapTime = 0;
+            return;
+          }
+          lbLastTapTime = now;
+
+          if (lbScale > 1.05) {
+            lbIsPanning = true;
+            lbStartX = e.touches[0].clientX - lbPointX;
+            lbStartY = e.touches[0].clientY - lbPointY;
+          }
+        }
+      }, { passive: true });
+
+      overlay.addEventListener('touchmove', function(e) {
+        if (e.touches.length === 2 && lbPinchStartDist > 0) {
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const dist = Math.hypot(dx, dy);
+          lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), 4.5);
+          if (lbScale <= 1.05) {
+            lbPointX = 0;
+            lbPointY = 0;
+          }
+          applyLightboxTransform();
+        } else if (e.touches.length === 1 && lbIsPanning && lbScale > 1.05) {
+          lbPointX = e.touches[0].clientX - lbStartX;
+          lbPointY = e.touches[0].clientY - lbStartY;
+          applyLightboxTransform();
+        }
+      }, { passive: true });
+
+      overlay.addEventListener('touchend', function(e) {
+        if (e.touches.length < 2) {
+          lbPinchStartDist = 0;
+        }
+        if (e.touches.length === 0) {
+          lbIsPanning = false;
+          if (lbScale <= 1.05) {
+            lbScale = 1;
+            lbPointX = 0;
+            lbPointY = 0;
+            applyLightboxTransform();
+          }
+        }
+      }, { passive: true });
+    })();
 
     window.openUserProfile = function(handle) {
       if (!handle) return;
@@ -3356,6 +3787,8 @@
       const onbIcon = document.getElementById('onboardingAvatarIcon');
       const compImg = document.getElementById('composerAvatarImg');
       const compSvg = document.getElementById('composerAvatarSvg');
+      const menuImg = document.getElementById('menuUserAvatarImg');
+      const menuSvg = document.getElementById('menuUserAvatarSvg');
 
       if (currentUser.avatar) {
         if (profImg) { profImg.src = currentUser.avatar; profImg.style.display = 'block'; }
@@ -3364,6 +3797,8 @@
         if (onbIcon) onbIcon.style.display = 'none';
         if (compImg) { compImg.src = currentUser.avatar; compImg.style.display = 'block'; }
         if (compSvg) compSvg.style.display = 'none';
+        if (menuImg) { menuImg.src = currentUser.avatar; menuImg.style.display = 'block'; }
+        if (menuSvg) menuSvg.style.display = 'none';
       } else {
         if (profImg) profImg.style.display = 'none';
         if (profSvg) profSvg.style.display = 'block';
@@ -3371,6 +3806,8 @@
         if (onbIcon) onbIcon.style.display = 'inline';
         if (compImg) compImg.style.display = 'none';
         if (compSvg) compSvg.style.display = 'block';
+        if (menuImg) menuImg.style.display = 'none';
+        if (menuSvg) menuSvg.style.display = 'block';
       }
     }
 
@@ -3419,14 +3856,40 @@
       document.getElementById('profileName').textContent = currentUser.userName || 'MI CUENTA';
       document.getElementById('profileHandle').textContent = `@${currentUser.userHandle || 'USUARIO'} • ${rankTitle}`;
 
+      // ACTUALIZAR DATOS EN EL MENÚ DE 3 RAYITAS (SETTINGS)
+      const menuNameEl = document.getElementById('menuUserName');
+      const menuHandleEl = document.getElementById('menuUserHandle');
+      if (menuNameEl) menuNameEl.textContent = currentUser.userName || 'MI CUENTA';
+      if (menuHandleEl) menuHandleEl.textContent = `@${currentUser.userHandle || 'USUARIO'} • ${rankTitle}`;
+
+      const myPostsArr = livePosts.filter(p => p.handle === currentUser.userHandle);
+      const myTotalViews = myPostsArr.reduce((acc, p) => acc + (Number(p.views) || 0), 0);
+      const myTotalLikes = myPostsArr.reduce((acc, p) => acc + (Number(p.likes) || 0), 0);
+
+      const mViewsEl = document.getElementById('menuTotalViews');
+      const mLikesEl = document.getElementById('menuTotalLikes');
+      const mSubsEl = document.getElementById('menuTotalSubs');
+      if (mViewsEl) mViewsEl.textContent = myTotalViews.toLocaleString();
+      if (mLikesEl) mLikesEl.textContent = myTotalLikes.toLocaleString();
+      if (mSubsEl) mSubsEl.textContent = subsNow.toLocaleString();
+
+      const soundBadge = document.getElementById('menuSoundStatusBadge');
+      if (soundBadge) {
+        soundBadge.textContent = soundAlertsEnabled ? 'ACTIVO' : 'SILENCIO';
+        soundBadge.style.color = soundAlertsEnabled ? '#059669' : '#65676b';
+      }
+
       const emailEl = document.getElementById('profileVerifiedEmail');
+      const menuEmailSub = document.getElementById('menuVerifiedEmailSub');
       if (emailEl) {
         if (currentUser.email && currentUser.ageVerified) {
           emailEl.style.color = '#059669';
           emailEl.textContent = `✓ Email verificado (${currentUser.email}) • +18`;
+          if (menuEmailSub) menuEmailSub.textContent = `${currentUser.email} • Certificado +18`;
         } else {
           emailEl.style.color = '#d97706';
           emailEl.textContent = `⚠️ Toca aquí para verificar tu Correo y Edad (+18)`;
+          if (menuEmailSub) menuEmailSub.textContent = `Pendiente de verificar`;
         }
       }
 
@@ -3439,12 +3902,11 @@
       document.getElementById('vaultSubsCounter').textContent = subsNow.toLocaleString() + ' / ' + target.toLocaleString();
       document.getElementById('vaultProgressBar').style.width = pct + '%';
 
-      const myPostsCount = livePosts.filter(p => p.handle === currentUser.userHandle).length;
       const myFollowingCount = (currentUser.subscribedTo || []).length;
       const elMyPosts = document.getElementById('myStatPosts');
       const elMySubs = document.getElementById('myStatSubs');
       const elMyFol = document.getElementById('myStatFollowing');
-      if (elMyPosts) elMyPosts.textContent = myPostsCount.toLocaleString();
+      if (elMyPosts) elMyPosts.textContent = myPostsArr.length.toLocaleString();
       if (elMySubs) elMySubs.textContent = subsNow.toLocaleString();
       if (elMyFol) elMyFol.textContent = myFollowingCount.toLocaleString();
 
@@ -3613,6 +4075,7 @@
     function renderMySubscribers() {
       const stackBox = document.getElementById('profileFriendsMiniStack');
       const btnLbl = document.getElementById('profileFriendsBtnLabel');
+      const menuFriendsLbl = document.getElementById('menuFriendsCountLabel');
       const modalListBox = document.getElementById('friendsModalListBox');
       const modalTitle = document.getElementById('friendsModalTitle');
 
@@ -3623,6 +4086,9 @@
 
       if (btnLbl) {
         btnLbl.textContent = `👥 Mis Amigos y Suscriptores (${combined.length})`;
+      }
+      if (menuFriendsLbl) {
+        menuFriendsLbl.textContent = `Friends y Suscriptores (${combined.length} activos)`;
       }
       if (modalTitle) {
         modalTitle.textContent = `👥 Mi Comunidad y Amigos (${combined.length})`;
@@ -4402,13 +4868,15 @@
 
     window.switchTab = function(tabName) {
       pushAppHistoryState();
-      const views = ['feed', 'boveda', 'ranking', 'perfil', 'admin'];
+      if (tabName === 'ranking') tabName = 'boveda';
+      const views = ['feed', 'boveda', 'perfil', 'menu', 'admin'];
       views.forEach(v => {
         const sec = document.getElementById(`view-${v}`);
         const nav = document.getElementById(`nav-${v}`);
         if (sec) sec.classList.toggle('active', v === tabName);
         if (nav) nav.classList.toggle('active', v === tabName);
       });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     function startRealtimeListeners() {
@@ -4522,6 +4990,7 @@
       const openModals = [
         { id: 'publicProfileModal', closeFn: window.closePublicProfile },
         { id: 'friendsListModal', closeFn: window.closeFriendsModal },
+        { id: 'editProfileModal', closeFn: window.closeEditProfileModal },
         { id: 'dmModal', closeFn: window.closeDirectMessages },
         { id: 'notifModal', closeFn: window.closeNotificationsModal },
         { id: 'legalTermsModal', closeFn: window.closeLegalModal },
