@@ -1010,20 +1010,20 @@
     .shorts-fs-right-rail {
       position: absolute;
       right: 12px;
-      bottom: 95px;
+      bottom: 85px;
       z-index: 20;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
+      gap: 13px;
     }
 
     .short-rail-btn {
       background: rgba(15, 18, 26, 0.72);
       backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.22);
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       color: #ffffff;
       font-size: 18px;
@@ -1884,6 +1884,25 @@
       cursor: pointer;
     }
 
+    .report-reason-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 13px;
+      border-radius: 11px;
+      background: #f8fafc;
+      border: 1px solid #dadde1;
+      color: #050505;
+      font-size: 12.5px;
+      font-weight: 800;
+      margin-bottom: 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .report-reason-btn:active { background: #fee2e2; border-color: #f87171; }
+
     /* VISOR DE FOTOS CON SOPORTE DE ZOOM TÁCTIL (PINCH + DOUBLE TAP) */
     .lightbox-overlay {
       position: fixed;
@@ -2299,6 +2318,15 @@
         <symbol id="ico-crown-line" viewBox="0 0 24 24">
           <polygon points="3 18 5 7 9.5 12 12 5 14.5 12 19 7 21 18 3 18"/>
         </symbol>
+        <!-- ÍCONOS NUEVOS PARA REPORTE UGC Y BLOQUEO (GOOGLE PLAY POLICY) -->
+        <symbol id="ico-flag" viewBox="0 0 24 24">
+          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+          <line x1="4" y1="22" x2="4" y2="15"/>
+        </symbol>
+        <symbol id="ico-ban" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <line x1="5.7" y1="5.7" x2="18.3" y2="18.3"/>
+        </symbol>
 
         <!-- 5 ESCUDOS DE RANGOS EN VECTOR -->
         <symbol id="rank-bronze" viewBox="0 0 40 40">
@@ -2488,7 +2516,7 @@
       </div>
     </div>
 
-    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD -->
+    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD (CON CLÁUSULA 9 DMCA + UGC GOOGLE PLAY) -->
     <div id="legalTermsModal" class="dm-modal-overlay">
       <div class="dm-sheet" style="height:84vh;">
         <div class="dm-header">
@@ -2497,7 +2525,7 @@
               <svg class="ico-stroke-sm"><use href="#ico-shield"></use></svg>
               <span>Contrato Oficial, Relevo Legal y Privacidad</span>
             </div>
-            <div style="font-size:11px; color:#059669;">Operado por ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC (v2.0-PR)</div>
+            <div style="font-size:11px; color:#059669;">Operado por ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC (v2.1-PR)</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeLegalModal()">✕</button>
         </div>
@@ -2519,8 +2547,8 @@
             Cada usuario es el <strong>único y exclusivo responsable legal</strong> de las fotos, videos, Shorts, música, voces, marcas y textos que publique o envíe por mensaje. El usuario garantiza que posee los derechos o permisos necesarios y exime a ARGON de cualquier reclamo por derechos de autor, imagen o propiedad intelectual (protección bajo la Sección 230 de la CDA y DMCA).
           </div>
           <div class="glass-card">
-            <div style="font-weight:900; color:#050505; margin-bottom:6px;">5. Moderación Absoluta y Terminación de Cuenta</div>
-            Queda prohibido publicar contenido ilegal, difamatorio, violento, fraudulento, sexualmente explícito o spam. La administración de ARGON se reserva el derecho absoluto de eliminar cualquier publicación o suspender/cancelar cuentas en cualquier momento, sin previo aviso y sin derecho a compensación o reclamo sobre A-Coins acumuladas.
+            <div style="font-weight:900; color:#050505; margin-bottom:6px;">5. Moderación Absoluta, Reportes UGC y Bloqueo de Usuarios</div>
+            Queda prohibido publicar contenido ilegal, difamatorio, violento, fraudulento, sexualmente explícito o spam. Los usuarios disponen de botones directos para <strong>Reportar Contenido</strong> y <strong>Bloquear Usuarios</strong> de forma inmediata. La administración de ARGON revisa los reportes en un plazo máximo de 24 horas y se reserva el derecho absoluto de eliminar cualquier publicación o cancelar cuentas sin previo aviso y sin derecho a compensación sobre A-Coins acumuladas.
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">6. Relevo Total de Responsabilidad e Indemnización (Hold Harmless)</div>
@@ -2534,6 +2562,59 @@
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">8. Ley Aplicable, Arbitraje Individual y Renuncia a Demandas Colectivas</div>
             Este contrato se rige por las leyes del <strong>Estado Libre Asociado de Puerto Rico</strong> y las leyes federales aplicables de EE. UU. El usuario renuncia expresamente a participar en demandas colectivas (<em>Class Action Waiver</em>) y acepta que cualquier controversia se resolverá de manera individual en la jurisdicción de Puerto Rico.
           </div>
+          <div class="glass-card">
+            <div style="font-weight:900; color:#050505; margin-bottom:6px;">9. Agente Designado DMCA, Contacto Legal y Supresión de Cuenta</div>
+            Para notificaciones oficiales de derechos de autor (DMCA), reportes legales o soporte al consumidor, comuníquese con el departamento legal de <strong>ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC</strong> en Adjuntas, Puerto Rico, al correo oficial: <strong>fincasoto2021@gmail.com</strong>. Todo usuario puede ejercer su derecho a eliminar permanentemente su cuenta y sus datos desde el menú <em>Settings &amp; Privacy → Eliminar Mi Cuenta y Datos</em>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OFICIAL DE REPORTE DE CONTENIDO UGC (CUMPLIMIENTO GOOGLE PLAY & SECCIÓN 230) -->
+    <div id="reportContentModal" class="confirm-modal-overlay">
+      <div class="confirm-card" style="max-width:360px; text-align:left;">
+        <div style="text-align:center; margin-bottom:12px;">
+          <div class="confirm-icon-ring">
+            <svg class="ico-stroke"><use href="#ico-flag"></use></svg>
+          </div>
+          <div class="confirm-title">Reportar Contenido (UGC)</div>
+          <div class="confirm-desc" style="margin-bottom:10px;">
+            Selecciona el motivo. Esta publicación se ocultará de tu vista inmediatamente y será auditada por Moderación de ARGON.
+          </div>
+        </div>
+
+        <button class="report-reason-btn" onclick="window.submitContentReport('Contenido inapropiado / +18 explícito')">
+          <span>Contenido inapropiado o explícito</span><span>›</span>
+        </button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('Derechos de autor / DMCA')">
+          <span>Derechos de autor (DMCA)</span><span>›</span>
+        </button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('Acoso, odio o violencia')">
+          <span>Acoso, abuso o violencia</span><span>›</span>
+        </button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('Spam o fraude comercial')">
+          <span>Spam o enlace engañoso</span><span>›</span>
+        </button>
+
+        <div style="margin-top:8px;">
+          <button class="btn-confirm-cancel" style="width:100%;" onclick="window.closeReportModal()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL OFICIAL DE ELIMINACIÓN PERMANENTE DE CUENTA Y DATOS (GOOGLE PLAY DATA SAFETY) -->
+    <div id="deleteAccountModal" class="confirm-modal-overlay">
+      <div class="confirm-card" style="max-width:355px;">
+        <div class="confirm-icon-ring">
+          <svg class="ico-stroke"><use href="#ico-trash"></use></svg>
+        </div>
+        <div class="confirm-title">¿Eliminar tu cuenta y datos?</div>
+        <div class="confirm-desc">
+          Esta acción cumplirá con la normativa de supresión de datos: borrará permanentemente tu perfil, tus publicaciones y tus A-Coins acumuladas sin derecho a reembolso.
+        </div>
+        <div class="confirm-actions">
+          <button class="btn-confirm-cancel" onclick="window.closeDeleteAccountModal()">Cancelar</button>
+          <button class="btn-confirm-delete" onclick="window.executePermanentAccountDeletion()">Sí, borrar todo</button>
         </div>
       </div>
     </div>
@@ -2592,7 +2673,7 @@
       <img id="lightboxImg" src="" alt="Vista ampliada" />
     </div>
 
-    <!-- MODAL DE PERFIL PÚBLICO CON SELECTOR MURO / GALERÍA 3X3 -->
+    <!-- MODAL DE PERFIL PÚBLICO CON SELECTOR MURO / GALERÍA 3X3 Y BOTÓN BLOQUEAR -->
     <div id="publicProfileModal" class="user-profile-modal">
       <div class="upm-inner">
         <div class="upm-topbar">
@@ -2624,7 +2705,7 @@
               </div>
             </div>
 
-            <div style="display:flex; gap:8px; justify-content:center;" id="upmActionButtons"></div>
+            <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;" id="upmActionButtons"></div>
           </div>
 
           <div class="profile-view-switcher">
@@ -2667,7 +2748,7 @@
       </div>
     </div>
 
-    <!-- MODAL DE MENSAJES DIRECTOS PRIVADOS (DM) -->
+    <!-- MODAL DE MENSAJES DIRECTOS PRIVADOS (DM) CON BOTÓN DE BLOQUEAR USUARIO -->
     <div id="dmModal" class="dm-modal-overlay">
       <div class="dm-sheet">
         <div class="dm-header">
@@ -2675,7 +2756,12 @@
             <div style="font-size:14px; font-weight:900; color:#050505;" id="dmTargetTitle">Mensajes Directos</div>
             <div style="font-size:11px; color:#059669;" id="dmTargetSubtitle">Selecciona un suscriptor o miembro abajo</div>
           </div>
-          <button class="dm-close-btn" onclick="window.closeDirectMessages()">✕</button>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button id="dmBlockPartnerBtn" class="btn-mini-danger" style="display:none;" onclick="window.toggleBlockUser(window.getActiveDmPartner())" title="Bloquear este usuario">
+              <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-ban"></use></svg>
+            </button>
+            <button class="dm-close-btn" onclick="window.closeDirectMessages()">✕</button>
+          </div>
         </div>
 
         <div class="dm-contacts-bar" id="dmContactsBar"></div>
@@ -3020,7 +3106,7 @@
       <div id="globalGalleryGrid" class="media-grid-3x3"></div>
     </section>
 
-    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ CON ACCESO A GALERÍA GLOBAL) -->
+    <!-- 4. SECCIÓN DE LAS 3 RAYITAS (☰ MENÚ CON ACCESO A GALERÍA GLOBAL Y SUPRESIÓN DE CUENTA) -->
     <section id="view-menu" class="view-section">
       <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 6px 12px;">
         <span style="font-size:24px; font-weight:900; color:#050505;">Menu</span>
@@ -3154,6 +3240,17 @@
           <span style="font-weight:900; color:#059669;">✓</span>
         </div>
 
+        <div class="fb-menu-row" onclick="window.unblockAllUsers()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-ban"></use></svg></div>
+            <div>
+              <div class="fb-menu-title">Usuarios Bloqueados</div>
+              <div class="fb-menu-sub" id="menuBlockedUsersSub">0 bloqueados (toca para restaurar)</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#65676b;">›</span>
+        </div>
+
         <div class="fb-menu-row" onclick="window.triggerManualBlinkRefresh()">
           <div class="fb-menu-left">
             <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-sync"></use></svg></div>
@@ -3165,7 +3262,7 @@
           <span style="font-weight:900; color:#059669;">Actualizar</span>
         </div>
 
-        <div class="fb-menu-row" style="border-bottom:none;" onclick="window.openLegalModal()">
+        <div class="fb-menu-row" onclick="window.openLegalModal()">
           <div class="fb-menu-left">
             <div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-shield"></use></svg></div>
             <div>
@@ -3176,19 +3273,30 @@
           <span style="font-weight:900; color:#65676b;">›</span>
         </div>
 
+        <div class="fb-menu-row" style="border-bottom:none;" onclick="window.openDeleteAccountModal()">
+          <div class="fb-menu-left">
+            <div class="fb-menu-icon" style="color:#e41e3f;"><svg class="ico-stroke"><use href="#ico-trash"></use></svg></div>
+            <div>
+              <div class="fb-menu-title" style="color:#e41e3f;">Eliminar Mi Cuenta y Datos</div>
+              <div class="fb-menu-sub">Borrado permanente de perfil y publicaciones</div>
+            </div>
+          </div>
+          <span style="font-weight:900; color:#e41e3f;">›</span>
+        </div>
+
         <button class="btn-logout-gray" onclick="window.logoutMyAccount()">
           Log out / Cambiar de Cuenta
         </button>
       </div>
     </section>
 
-    <!-- 5. PANEL DE ADMINISTRADOR -->
+    <!-- 5. PANEL DE ADMINISTRADOR CON BANDEJA DE REPORTES UGC -->
     <section id="view-admin" class="view-section">
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <div>
             <div style="font-size:14px; font-weight:900; color:#050505;">PANEL DE CONTROL ARGON</div>
-            <div style="font-size:11px; color:#65676b;">Toca cualquier usuario para abrir su perfil completo</div>
+            <div style="font-size:11px; color:#65676b;">Auditoría de Usuarios y Moderación UGC en Vivo</div>
           </div>
           <span class="badge-active">ADMIN</span>
         </div>
@@ -3211,6 +3319,12 @@
         <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">
           VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)
         </button>
+
+        <div style="font-size:12px; font-weight:800; color:#e41e3f; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+          <svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg>
+          <span>REPORTES UGC & DMCA RECIBIDOS</span>
+        </div>
+        <div id="adminReportsList" style="margin-bottom:14px;"></div>
 
         <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">
           DIRECTORIO COMPLETO DE USUARIOS (TOCA PARA VER PERFIL)
@@ -3247,7 +3361,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: SHORTS SCROLL SNAP INFINITO + GALERÍA 3X3 + ÁLBUM CARRUSEL + YOUTUBE SHARE TARGET + STRIPE $1.99 + FIREBASE -->
+  <!-- MOTOR OFICIAL: SHORTS SCROLL SNAP + BLINDAJE GOOGLE PLAY (REPORTAR UGC, BLOQUEAR USUARIO, BORRAR CUENTA) + GALERÍA 3X3 + STRIPE $1.99 + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -3315,10 +3429,13 @@
     let publicProfileLayoutMode = 'wall';
     let allDirectMessages = [];
     let allNotifications = [];
+    let allUgcReports = [];
     let lastSeenNotifTime = Number(localStorage.getItem('argon_last_notif_ts') || 0);
     let soundAlertsEnabled = localStorage.getItem('argon_sound_enabled') !== '0';
 
     let pendingDeletePostId = '';
+    let pendingReportPostId = '';
+    let pendingReportAuthorHandle = '';
     const videoBlobCache = {};
     const viewCooldownMap = {};
     let currentShortIndex = 0;
@@ -3340,6 +3457,8 @@
       subscribedTo: [],
       subscribersList: [],
       likedPosts: [],
+      blockedUsers: [],
+      reportedPosts: [],
       promotedUntil: 0
     };
 
@@ -3351,6 +3470,10 @@
         window.history.pushState({ argonInApp: true }, "", window.location.href);
       } catch (e) {}
     }
+
+    window.getActiveDmPartner = function() {
+      return activeDmPartner;
+    };
 
     // EXTRACTOR INTELIGENTE DE ID DE YOUTUBE (SOPORTA WATCH, YOUTU.BE, SHORTS, EMBED, LIVE)
     function extractYoutubeId(text) {
@@ -3369,6 +3492,187 @@
       if (post.image) return [post.image];
       return [];
     }
+
+    // ============================================================================
+    // BLINDAJE GOOGLE PLAY UGC: 1. REPORTAR PUBLICACIÓN / VIDEO + 2. BLOQUEAR USUARIO + 3. SUPRESIÓN DE CUENTA
+    // ============================================================================
+    window.openReportModal = function(postId, authorHandle) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      pushAppHistoryState();
+      pendingReportPostId = postId || '';
+      pendingReportAuthorHandle = (authorHandle || '').replace(/^@/, '').toUpperCase();
+      document.getElementById('reportContentModal').classList.add('open');
+    };
+
+    window.closeReportModal = function() {
+      pendingReportPostId = '';
+      pendingReportAuthorHandle = '';
+      document.getElementById('reportContentModal').classList.remove('open');
+    };
+
+    window.submitContentReport = async function(reasonText) {
+      const postId = pendingReportPostId;
+      const authorH = pendingReportAuthorHandle;
+      window.closeReportModal();
+      if (!postId) return;
+
+      if (!Array.isArray(currentUser.reportedPosts)) currentUser.reportedPosts = [];
+      if (!currentUser.reportedPosts.includes(postId)) {
+        currentUser.reportedPosts.push(postId);
+      }
+      saveLocalSession();
+      renderFeed();
+
+      try {
+        await addDoc(collection(db, "reports"), {
+          postId: postId,
+          reportedAuthor: authorH || 'DESCONOCIDO',
+          reportedBy: currentUser.userHandle || 'ANONIMO',
+          reason: reasonText || 'Reporte UGC',
+          status: 'pendiente',
+          createdAt: Date.now()
+        });
+
+        if (currentUser.userHandle) {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            reportedPosts: arrayUnion(postId)
+          }, { merge: true });
+        }
+        showToast('✓ Reporte enviado a Moderación y publicación ocultada');
+      } catch (e) {
+        showToast('✓ Publicación ocultada de tu feed');
+      }
+    };
+
+    window.toggleBlockUser = async function(targetHandle) {
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      const cleanTarget = (targetHandle || '').replace(/^@/, '').toUpperCase();
+      if (!cleanTarget || cleanTarget === currentUser.userHandle) return;
+
+      if (!Array.isArray(currentUser.blockedUsers)) currentUser.blockedUsers = [];
+      const alreadyBlocked = currentUser.blockedUsers.includes(cleanTarget);
+
+      if (alreadyBlocked) {
+        currentUser.blockedUsers = currentUser.blockedUsers.filter(h => h !== cleanTarget);
+        showToast(`✓ @${cleanTarget} ha sido desbloqueado`);
+      } else {
+        currentUser.blockedUsers.push(cleanTarget);
+        showToast(`🚫 @${cleanTarget} bloqueado. No verás su contenido ni mensajes`);
+      }
+
+      saveLocalSession();
+      updateUI();
+      renderFeed();
+      if (viewedPublicHandle) window.closePublicProfile();
+      if (document.getElementById('dmModal').classList.contains('open')) {
+        activeDmPartner = '';
+        renderDmModal();
+      }
+
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            blockedUsers: currentUser.blockedUsers
+          }, { merge: true });
+        } catch (e) {}
+      }
+    };
+
+    window.unblockAllUsers = async function() {
+      const count = Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers.length : 0;
+      if (count === 0) {
+        showToast('No tienes ningún usuario bloqueado actualmente');
+        return;
+      }
+      currentUser.blockedUsers = [];
+      saveLocalSession();
+      updateUI();
+      renderFeed();
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            blockedUsers: []
+          }, { merge: true });
+        } catch (e) {}
+      }
+      showToast('✓ Lista de usuarios bloqueados restaurada');
+    };
+
+    window.openDeleteAccountModal = function() {
+      if (!currentUser.registered) return;
+      pushAppHistoryState();
+      document.getElementById('deleteAccountModal').classList.add('open');
+    };
+
+    window.closeDeleteAccountModal = function() {
+      document.getElementById('deleteAccountModal').classList.remove('open');
+    };
+
+    window.executePermanentAccountDeletion = async function() {
+      window.closeDeleteAccountModal();
+      const myHandle = currentUser.userHandle;
+      if (!myHandle) return;
+
+      showToast('Eliminando tu cuenta y publicaciones...');
+      try {
+        const myPosts = livePosts.filter(p => p.handle === myHandle);
+        for (const p of myPosts) {
+          if (p.id) {
+            await deleteDoc(doc(db, "posts", p.id)).catch(() => {});
+          }
+        }
+        await deleteDoc(doc(db, "users", myHandle)).catch(() => {});
+      } catch (e) {}
+
+      localStorage.removeItem(LOCAL_USER_KEY);
+      currentUser = {
+        registered: false,
+        userName: '',
+        userHandle: '',
+        email: '',
+        ageVerified: false,
+        legalContractVersion: '',
+        legalAcceptedAt: 0,
+        invitedBy: FOUNDER_HANDLE,
+        avatar: '',
+        balance: 5000,
+        subs: 0,
+        subscribedTo: [],
+        subscribersList: [],
+        likedPosts: [],
+        blockedUsers: [],
+        reportedPosts: [],
+        promotedUntil: 0
+      };
+      document.getElementById('onboardingScreen').classList.remove('hidden');
+      window.switchTab('feed');
+      showToast('✓ Tu cuenta y tus datos fueron eliminados permanentemente');
+    };
+
+    window.adminDismissReport = async function(reportId) {
+      if (!isUserAdmin() || !reportId) return;
+      try {
+        await deleteDoc(doc(db, "reports", reportId));
+        showToast('✓ Reporte marcado como revisado');
+      } catch (e) {}
+    };
+
+    window.adminDeleteReportedPost = async function(postId, reportId) {
+      if (!isUserAdmin()) return;
+      try {
+        if (postId) await deleteDoc(doc(db, "posts", postId)).catch(() => {});
+        if (reportId) await deleteDoc(doc(db, "reports", reportId)).catch(() => {});
+        showToast('✓ Publicación reportada eliminada de ARGON');
+      } catch (e) {
+        showToast('Error al eliminar publicación reportada');
+      }
+    };
 
     // CAMBIAR ENTRE MURO Y GALERÍA 3X3 EN MI PERFIL
     window.setMyProfileLayout = function(mode) {
@@ -3675,6 +3979,8 @@
             if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
             if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
             if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
+            if (Array.isArray(data.blockedUsers)) currentUser.blockedUsers = data.blockedUsers;
+            if (Array.isArray(data.reportedPosts)) currentUser.reportedPosts = data.reportedPosts;
             saveLocalSession();
           }
         });
@@ -3847,7 +4153,7 @@
       const signedTimestamp = Date.now();
       currentUser.email = emailVal;
       currentUser.ageVerified = true;
-      currentUser.legalContractVersion = 'v2.0-PR';
+      currentUser.legalContractVersion = 'v2.1-PR';
       currentUser.legalAcceptedAt = signedTimestamp;
       saveLocalSession();
       document.getElementById('ageEmailVerifyModal').classList.remove('open');
@@ -3858,7 +4164,7 @@
           await setDoc(doc(db, "users", currentUser.userHandle), {
             email: emailVal,
             ageVerified: true,
-            legalContractVersion: 'v2.0-PR',
+            legalContractVersion: 'v2.1-PR',
             legalAcceptedAt: signedTimestamp,
             legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
             legalUserAgent: navigator.userAgent || 'mobile-app',
@@ -3965,13 +4271,19 @@
       requestAnimationFrame(tick);
     }
 
+    // FILTRA AUTOMÁTICAMENTE USUARIOS BLOQUEADOS Y PUBLICACIONES REPORTADAS
     function getOrderedPostsWithPromotions() {
-      return [...livePosts].sort((a, b) => {
-        const aPromo = isPostOrAuthorFeatured(a) ? 1 : 0;
-        const bPromo = isPostOrAuthorFeatured(b) ? 1 : 0;
-        if (aPromo !== bPromo) return bPromo - aPromo;
-        return (b.createdAt || 0) - (a.createdAt || 0);
-      });
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const reportedSet = new Set(Array.isArray(currentUser.reportedPosts) ? currentUser.reportedPosts : []);
+
+      return [...livePosts]
+        .filter(p => !blockedSet.has(p.handle) && !reportedSet.has(p.id))
+        .sort((a, b) => {
+          const aPromo = isPostOrAuthorFeatured(a) ? 1 : 0;
+          const bPromo = isPostOrAuthorFeatured(b) ? 1 : 0;
+          if (aPromo !== bPromo) return bPromo - aPromo;
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
     }
 
     function getShortVideoPosts() {
@@ -4122,7 +4434,7 @@
       }
     };
 
-    // NUEVO MOTOR DE SCROLL VERTICAL INFINITO ESTILO TIKTOK / REELS (SIN BOTONES ANT / SIG)
+    // NUEVO MOTOR DE SCROLL VERTICAL INFINITO ESTILO TIKTOK / REELS (CON BOTÓN DE REPORTAR UGC)
     window.openShortsPlayer = function(startIndex = 0) {
       const shortsList = getShortVideoPosts();
       if (shortsList.length === 0) {
@@ -4165,7 +4477,6 @@
       const feedEl = document.getElementById('shortsSnapFeed');
       if (!feedEl) return;
 
-      // Pausar todos los demás videos e iframes de YouTube para que solo suene el activo
       feedEl.querySelectorAll('.short-snap-slide').forEach(otherSlide => {
         const isCurrent = otherSlide === slideEl;
         const vid = otherSlide.querySelector('video');
@@ -4226,7 +4537,6 @@
           const clampedIdx = Math.max(0, Math.min(nextIdx, totalSlides - 1));
           feedEl.scrollTo({ top: clampedIdx * slideH, behavior: 'smooth' });
         } else if (elapsed < 260) {
-          // Si fue un toque corto para pausar/reproducir YouTube, deja pasar el toque por 2.5 segundos
           shieldEl.style.pointerEvents = 'none';
           setTimeout(() => {
             shieldEl.style.pointerEvents = 'auto';
@@ -4295,6 +4605,14 @@
                 </button>
                 <div class="short-rail-lbl">Enviar</div>
               </div>
+              ${!isOwn ? `
+                <div style="text-align:center;">
+                  <button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.openReportModal('${post.id}', '${post.handle}');" title="Reportar Short">
+                    <svg class="ico-stroke"><use href="#ico-flag"></use></svg>
+                  </button>
+                  <div class="short-rail-lbl">Reportar</div>
+                </div>
+              ` : ''}
             </div>
 
             <div class="shorts-fs-bottom-info">
@@ -4325,12 +4643,10 @@
         `;
       }).join('');
 
-      // Activar escudo de deslizamiento en los slides de YouTube
       feedEl.querySelectorAll('.short-swipe-shield').forEach(shield => {
         setupSwipeShieldForYoutubeSlide(shield, feedEl);
       });
 
-      // Posicionar en el video tocado inicialmente
       setTimeout(() => {
         const slideH = feedEl.clientHeight || window.innerHeight;
         feedEl.scrollTop = initialIndex * slideH;
@@ -4340,7 +4656,6 @@
         }
       }, 40);
 
-      // Observador que detecta qué Short encajó en pantalla al deslizar
       shortsSnapObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
@@ -4486,8 +4801,9 @@
       const box = document.getElementById('notifListBox');
       if (!box) return;
 
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
       const myNotifs = allNotifications.filter(n =>
-        n.to === currentUser.userHandle || n.to === 'ALL'
+        (n.to === currentUser.userHandle || n.to === 'ALL') && !blockedSet.has(n.from)
       );
 
       if (myNotifs.length === 0) {
@@ -4640,7 +4956,8 @@
     function renderPublicProfileModal() {
       if (!viewedPublicHandle) return;
       const uDoc = usersMap[viewedPublicHandle] || {};
-      const userPosts = livePosts.filter(p => p.handle === viewedPublicHandle);
+      const reportedSet = new Set(Array.isArray(currentUser.reportedPosts) ? currentUser.reportedPosts : []);
+      const userPosts = livePosts.filter(p => p.handle === viewedPublicHandle && !reportedSet.has(p.id));
 
       const displayName = uDoc.userName || viewedPublicHandle;
       const avatarSrc = uDoc.avatar || (userPosts[0] && userPosts[0].avatar) || '';
@@ -4664,6 +4981,7 @@
       const actionsBox = document.getElementById('upmActionButtons');
       const isMe = viewedPublicHandle === currentUser.userHandle;
       const alreadySub = (currentUser.subscribedTo || []).includes(viewedPublicHandle);
+      const isBlocked = (currentUser.blockedUsers || []).includes(viewedPublicHandle);
 
       if (isMe) {
         actionsBox.innerHTML = `
@@ -4671,12 +4989,16 @@
         `;
       } else {
         actionsBox.innerHTML = `
-          <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" style="padding:10px 18px; font-size:12px;" onclick="window.toggleSubscribe('${viewedPublicHandle}')">
+          <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" style="padding:10px 16px; font-size:12px;" onclick="window.toggleSubscribe('${viewedPublicHandle}')">
             ${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}
           </button>
-          <button class="btn-dm-icon" style="padding:10px 16px; font-size:12px; gap:6px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');">
+          <button class="btn-dm-icon" style="padding:10px 14px; font-size:12px; gap:6px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');">
             <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
-            <span>Enviar Mensaje</span>
+            <span>Mensaje</span>
+          </button>
+          <button class="btn-mini-danger" style="padding:9px 12px; border-radius:999px; font-size:11px; gap:5px;" onclick="window.toggleBlockUser('${viewedPublicHandle}')">
+            <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-ban"></use></svg>
+            <span>${isBlocked ? 'Desbloquear' : 'Bloquear'}</span>
           </button>
         `;
       }
@@ -4795,6 +5117,12 @@
         soundBadge.style.color = soundAlertsEnabled ? '#059669' : '#65676b';
       }
 
+      const blockedSubEl = document.getElementById('menuBlockedUsersSub');
+      if (blockedSubEl) {
+        const bCount = Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers.length : 0;
+        blockedSubEl.textContent = bCount > 0 ? `${bCount} bloqueado(s) • Toca para desbloquear` : '0 usuarios bloqueados';
+      }
+
       const emailEl = document.getElementById('profileVerifiedEmail');
       const menuEmailSub = document.getElementById('menuVerifiedEmailSub');
       if (emailEl) {
@@ -4903,15 +5231,17 @@
       const messagesBox = document.getElementById('dmMessagesBox');
       const titleEl = document.getElementById('dmTargetTitle');
       const subEl = document.getElementById('dmTargetSubtitle');
+      const blockBtn = document.getElementById('dmBlockPartnerBtn');
 
-      const otherUsers = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const otherUsers = getAllKnownHandles().filter(h => h !== currentUser.userHandle && !blockedSet.has(h));
 
-      if (!activeDmPartner && otherUsers.length > 0) {
+      if ((!activeDmPartner || blockedSet.has(activeDmPartner)) && otherUsers.length > 0) {
         activeDmPartner = otherUsers[0];
       }
 
       if (otherUsers.length === 0) {
-        contactsBar.innerHTML = `<span style="font-size:11px; color:#65676b;">Aún no hay otros usuarios para chatear.</span>`;
+        contactsBar.innerHTML = `<span style="font-size:11px; color:#65676b;">Aún no hay otros usuarios disponibles para chatear.</span>`;
       } else {
         contactsBar.innerHTML = otherUsers.map(h => `
           <button class="dm-user-pill ${activeDmPartner === h ? 'active' : ''}" onclick="window.selectDmPartner('${h}')">
@@ -4923,10 +5253,12 @@
       if (!activeDmPartner) {
         titleEl.textContent = 'Mensajes Directos';
         subEl.textContent = 'Selecciona un miembro';
+        if (blockBtn) blockBtn.style.display = 'none';
         messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Elige un usuario arriba para conversar en privado.</div>`;
         return;
       }
 
+      if (blockBtn) blockBtn.style.display = 'inline-flex';
       titleEl.innerHTML = `Chat con <span style="text-decoration:underline; cursor:pointer;" onclick="window.closeDirectMessages(); window.openUserProfile('${activeDmPartner}');">@${activeDmPartner}</span>`;
       subEl.textContent = 'Toca su @usuario arriba para ver su perfil';
 
@@ -4992,10 +5324,11 @@
       const modalListBox = document.getElementById('friendsModalListBox');
       const modalTitle = document.getElementById('friendsModalTitle');
 
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
       const myDoc = usersMap[currentUser.userHandle] || {};
       const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList : [];
-      const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle);
-      const combined = Array.from(new Set([...fromDoc, ...allKnown]));
+      const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle && !blockedSet.has(h));
+      const combined = Array.from(new Set([...fromDoc.filter(h => !blockedSet.has(h)), ...allKnown]));
 
       if (sqCountEl) {
         sqCountEl.textContent = combined.length.toLocaleString();
@@ -5103,6 +5436,30 @@
       document.getElementById('admTotalUsers').textContent = allUsers.length.toLocaleString();
       document.getElementById('admTotalPosts').textContent = livePosts.length.toLocaleString();
       document.getElementById('admTotalCoins').textContent = totalCoins.toLocaleString();
+
+      const repBox = document.getElementById('adminReportsList');
+      if (repBox) {
+        if (allUgcReports.length === 0) {
+          repBox.innerHTML = `<div style="font-size:11.5px; color:#059669; font-weight:700; padding:8px 10px; background:#ecfdf5; border-radius:10px;">✓ 0 reportes pendientes. Comunidad limpia.</div>`;
+        } else {
+          repBox.innerHTML = allUgcReports.map(r => `
+            <div class="admin-user-row" style="border-color:#fecaca; background:#fef2f2;">
+              <div style="min-width:0; flex:1;">
+                <div style="font-size:12px; font-weight:900; color:#e41e3f;">
+                  Motivo: ${r.reason || 'Reporte UGC'}
+                </div>
+                <div style="font-size:11px; color:#050505; margin-top:2px;">
+                  Autor: <strong>@${r.reportedAuthor || 'N/A'}</strong> • Reportado por: @${r.reportedBy || 'N/A'}
+                </div>
+              </div>
+              <div style="display:flex; gap:5px;">
+                <button class="btn-mini-danger" onclick="window.adminDeleteReportedPost('${r.postId}', '${r.id}')">Borrar Post</button>
+                <button class="btn-mini-admin" onclick="window.adminDismissReport('${r.id}')">Ignorar</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
 
       const dirBox = document.getElementById('adminUsersDirectory');
       if (!dirBox) return;
@@ -5682,6 +6039,9 @@
               <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')" title="Enviar mensaje">
                 <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
               </button>
+              <button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')" title="Reportar contenido">
+                <svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg>
+              </button>
             ` : `
               ${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : ''}
             `}
@@ -5818,7 +6178,7 @@
       currentUser.userHandle = cleanHandle;
       currentUser.email = emailVal;
       currentUser.ageVerified = true;
-      currentUser.legalContractVersion = 'v2.0-PR';
+      currentUser.legalContractVersion = 'v2.1-PR';
       currentUser.legalAcceptedAt = signedTimestamp;
       currentUser.invitedBy = (existingDoc && existingDoc.invitedBy) || invitedByParam || FOUNDER_HANDLE;
 
@@ -5827,6 +6187,8 @@
         currentUser.subs = Number(existingDoc.subs) || 0;
         currentUser.avatar = currentUser.avatar || existingDoc.avatar || '';
         currentUser.subscribedTo = Array.isArray(existingDoc.subscribedTo) ? existingDoc.subscribedTo : [];
+        currentUser.blockedUsers = Array.isArray(existingDoc.blockedUsers) ? existingDoc.blockedUsers : [];
+        currentUser.reportedPosts = Array.isArray(existingDoc.reportedPosts) ? existingDoc.reportedPosts : [];
         currentUser.promotedUntil = existingDoc.promotedUntil || 0;
       } else {
         const autoSubList = [];
@@ -5837,6 +6199,8 @@
         currentUser.balance = 5000 + (autoSubList.length > 0 ? 10 : 0);
         currentUser.subs = 0;
         currentUser.subscribedTo = autoSubList;
+        currentUser.blockedUsers = [];
+        currentUser.reportedPosts = [];
         currentUser.promotedUntil = 0;
       }
 
@@ -5851,7 +6215,7 @@
           userHandle: cleanHandle,
           email: currentUser.email,
           ageVerified: true,
-          legalContractVersion: 'v2.0-PR',
+          legalContractVersion: 'v2.1-PR',
           legalAcceptedAt: signedTimestamp,
           legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
           legalUserAgent: navigator.userAgent || 'mobile-app',
@@ -5860,6 +6224,8 @@
           balance: currentUser.balance,
           subs: currentUser.subs || 0,
           subscribedTo: currentUser.subscribedTo || [],
+          blockedUsers: currentUser.blockedUsers || [],
+          reportedPosts: currentUser.reportedPosts || [],
           promotedUntil: currentUser.promotedUntil || 0,
           updatedAt: signedTimestamp
         }, { merge: true });
@@ -5909,6 +6275,8 @@
             if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
             if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
             if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
+            if (Array.isArray(data.blockedUsers)) currentUser.blockedUsers = data.blockedUsers;
+            if (Array.isArray(data.reportedPosts)) currentUser.reportedPosts = data.reportedPosts;
             saveLocalSession();
           }
         });
@@ -5934,7 +6302,8 @@
         const arr = [];
         snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
         allDirectMessages = arr;
-        const incomingCount = arr.filter(m => m.to === currentUser.userHandle).length;
+        const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+        const incomingCount = arr.filter(m => m.to === currentUser.userHandle && !blockedSet.has(m.from)).length;
         const badge = document.getElementById('inboxBadge');
         if (badge) {
           badge.textContent = incomingCount;
@@ -5951,8 +6320,10 @@
         snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
         allNotifications = arr;
 
+        const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
         const unread = arr.filter(n =>
           (n.to === currentUser.userHandle || n.to === 'ALL') &&
+          !blockedSet.has(n.from) &&
           (n.createdAt || 0) > lastSeenNotifTime
         );
         const badge = document.getElementById('notifBadge');
@@ -5966,6 +6337,14 @@
         if (document.getElementById('notifModal').classList.contains('open')) {
           renderNotificationsList();
         }
+      });
+
+      const reportsQuery = query(collection(db, "reports"), orderBy("createdAt", "desc"));
+      onSnapshot(reportsQuery, (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allUgcReports = arr;
+        renderAdminAndLeaderboard();
       });
     }
 
@@ -6009,6 +6388,8 @@
         { id: 'notifModal', closeFn: window.closeNotificationsModal },
         { id: 'legalTermsModal', closeFn: window.closeLegalModal },
         { id: 'confirmDeleteModal', closeFn: window.closeConfirmModal },
+        { id: 'reportContentModal', closeFn: window.closeReportModal },
+        { id: 'deleteAccountModal', closeFn: window.closeDeleteAccountModal },
         { id: 'ageEmailVerifyModal', closeFn: () => document.getElementById('ageEmailVerifyModal').classList.remove('open') }
       ];
 
