@@ -58,6 +58,49 @@
       border-right: 1px solid #dadde1;
     }
 
+    /* DESTELLO EN LOS BORDES DE LA PANTALLA (PULL-TO-REFRESH BLINK) */
+    .edge-refresh-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0;
+      border: 2.5px solid rgba(16, 185, 129, 0);
+      box-shadow:
+        inset 0 0 22px rgba(16, 185, 129, 0.65),
+        inset 0 0 42px rgba(24, 119, 242, 0.35);
+      transition: opacity 0.18s ease;
+    }
+
+    .edge-refresh-glow.pulling {
+      opacity: 0.45;
+      border-color: rgba(16, 185, 129, 0.55);
+    }
+
+    .edge-refresh-glow.blinking {
+      animation: edgeBlinkAnim 0.65s ease-out forwards;
+    }
+
+    @keyframes edgeBlinkAnim {
+      0% {
+        opacity: 0.25;
+        border-color: rgba(16, 185, 129, 0.4);
+        box-shadow: inset 0 0 12px rgba(16, 185, 129, 0.4);
+      }
+      40% {
+        opacity: 1;
+        border-color: #10b981;
+        box-shadow:
+          inset 0 0 28px rgba(16, 185, 129, 0.9),
+          inset 0 0 55px rgba(24, 119, 242, 0.55);
+      }
+      100% {
+        opacity: 0;
+        border-color: rgba(16, 185, 129, 0);
+        box-shadow: inset 0 0 0px rgba(16, 185, 129, 0);
+      }
+    }
+
     .live-ticker-badge {
       display: inline-flex;
       align-items: center;
@@ -82,7 +125,6 @@
       color: #fb7185;
     }
 
-    /* BANNER DE VERIFICACIÓN DE EDAD Y EMAIL PENDIENTE */
     .compliance-alert-bar {
       background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 100%);
       border-bottom: 1px solid #f59e0b;
@@ -97,9 +139,7 @@
       cursor: pointer;
     }
 
-    .compliance-alert-bar.show {
-      display: flex;
-    }
+    .compliance-alert-bar.show { display: flex; }
 
     /* 1. PANTALLA DE CARGA */
     .vault-splash-screen {
@@ -233,7 +273,7 @@
       text-transform: uppercase;
     }
 
-    /* TARJETA METÁLICA 3D (METAL NEGRO EN BÓVEDA Y REGISTRO) */
+    /* TARJETA METÁLICA 3D */
     .vip-metal-card-stage { width: 100%; perspective: 1100px; margin-bottom: 14px; }
 
     .vip-metal-card {
@@ -392,7 +432,7 @@
       text-transform: uppercase;
     }
 
-    /* CABECERA BLANCA ESTILO FACEBOOK */
+    /* CABECERA BLANCA */
     .topbar {
       position: sticky;
       top: 0;
@@ -489,7 +529,7 @@
 
     .wallet-label { font-size: 8px; font-weight: 800; color: #65676b; letter-spacing: 0.5px; line-height: 1; }
 
-    /* STORIES Y SHORTS ESTILO FACEBOOK BLANCO */
+    /* STORIES Y SHORTS */
     .promoted-profiles-bar {
       display: flex;
       gap: 8px;
@@ -795,7 +835,7 @@
     .pack-price { font-size: 11px; color: #65676b; margin-top: 4px; display: block; font-weight: 700; }
     .pack-btn.vip .pack-price { color: #059669; font-weight: 800; }
 
-    /* PUBLICADOR BLANCO ESTILO FACEBOOK */
+    /* PUBLICADOR BLANCO */
     .composer-card {
       background: #ffffff;
       border: 1px solid #dadde1;
@@ -934,7 +974,7 @@
       text-align: center;
     }
 
-    /* TARJETAS DE PUBLICACIONES BLANCAS */
+    /* TARJETAS DE PUBLICACIONES */
     .post-card {
       background: #ffffff;
       border: 1px solid #dadde1;
@@ -1528,7 +1568,6 @@
       cursor: pointer;
     }
 
-    /* RANGOS Y LEADERBOARD NÍTIDOS SOBRE BLANCO */
     .tier-item {
       display: flex;
       justify-content: space-between;
@@ -1541,25 +1580,9 @@
       color: #050505;
     }
 
-    .rank-title-text {
-      font-size: 13px;
-      font-weight: 900;
-      color: #050505;
-    }
-
-    .rank-sub-text {
-      font-size: 11px;
-      font-weight: 600;
-      color: #475569;
-      margin-top: 2px;
-    }
-
-    .rank-reward-text {
-      font-size: 12.5px;
-      font-weight: 900;
-      color: #059669;
-      white-space: nowrap;
-    }
+    .rank-title-text { font-size: 13px; font-weight: 900; color: #050505; }
+    .rank-sub-text { font-size: 11px; font-weight: 600; color: #475569; margin-top: 2px; }
+    .rank-reward-text { font-size: 12.5px; font-weight: 900; color: #059669; white-space: nowrap; }
 
     .btn-primary-platinum {
       width: 100%;
@@ -1587,7 +1610,6 @@
       margin-top: 8px;
     }
 
-    /* BARRA INFERIOR BLANCA ESTILO FACEBOOK */
     .bottom-nav {
       position: fixed;
       bottom: 0;
@@ -1639,9 +1661,9 @@
 </head>
 <body>
   <div class="app-shell">
+    <div id="edgeRefreshGlow" class="edge-refresh-glow"></div>
     <div id="toast" class="toast"></div>
 
-    <!-- VECTOR DEL LOGO OFICIAL - CORONA PLATINO -->
     <svg width="0" height="0" style="position:absolute">
       <defs>
         <linearGradient id="platGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1670,7 +1692,7 @@
       </defs>
     </svg>
 
-    <!-- 1. PANTALLA DE CARGA ANIMADA: CARGANDO BÓVEDA -->
+    <!-- 1. PANTALLA DE CARGA -->
     <div id="vaultSplashScreen" class="vault-splash-screen">
       <div style="height:10px;"></div>
       <div class="splash-center-logo">
@@ -1692,7 +1714,7 @@
       </div>
     </div>
 
-    <!-- 2. PANTALLA DE BIENVENIDA CON EMAIL Y VERIFICACIÓN DE EDAD (+18) -->
+    <!-- 2. PANTALLA DE BIENVENIDA -->
     <div id="onboardingScreen" class="onboarding-overlay hidden">
       <div class="vip-onboarding-wrap">
         <svg class="vip-top-crown" viewBox="0 0 100 60">
@@ -1710,7 +1732,6 @@
 
         <div id="referralWelcomeBanner" style="font-size:11px; color:#059669; font-weight:800; margin-bottom:10px;"></div>
 
-        <!-- TARJETA METÁLICA 3D DE REGISTRO -->
         <div class="vip-metal-card-stage">
           <div class="vip-metal-card">
             <div class="vip-card-top-row">
@@ -1771,7 +1792,7 @@
       </div>
     </div>
 
-    <!-- MODAL DE VERIFICACIÓN REGLAMENTARIA DE CORREO Y EDAD (+18) PARA CUENTAS EXISTENTES -->
+    <!-- MODAL DE VERIFICACIÓN REGLAMENTARIA DE CORREO Y EDAD (+18) -->
     <div id="ageEmailVerifyModal" class="confirm-modal-overlay">
       <div class="confirm-card" style="max-width:365px; text-align:left;">
         <div style="text-align:center; margin-bottom:10px;">
@@ -1854,7 +1875,7 @@
       </div>
     </div>
 
-    <!-- REPRODUCTOR VERTICAL DE SHORTS A PANTALLA COMPLETA -->
+    <!-- REPRODUCTOR VERTICAL DE SHORTS -->
     <div id="shortsFullscreenModal" class="shorts-fullscreen-modal">
       <div class="shorts-fs-topbar">
         <div style="display:flex; align-items:center; gap:8px;">
@@ -1874,7 +1895,7 @@
       </div>
     </div>
 
-    <!-- MODAL ELEGANTE DE CONFIRMACIÓN PARA BORRAR -->
+    <!-- MODAL DE CONFIRMACIÓN PARA BORRAR -->
     <div id="confirmDeleteModal" class="confirm-modal-overlay">
       <div class="confirm-card">
         <div class="confirm-icon-ring">🗑️</div>
@@ -1889,7 +1910,7 @@
       </div>
     </div>
 
-    <!-- VISOR DE FOTOS A PANTALLA COMPLETA -->
+    <!-- VISOR DE FOTOS -->
     <div id="photoLightbox" class="lightbox-overlay" onclick="window.closePhotoLightbox()">
       <img id="lightboxImg" src="" alt="Vista ampliada" />
     </div>
@@ -1992,7 +2013,7 @@
 
     <!-- CABECERA BLANCA LIMPIA -->
     <header class="topbar">
-      <div class="brand-wrap" onclick="window.switchTab('feed')">
+      <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box">
           <svg width="26" height="26"><use href="#argon-crown-a"></use></svg>
         </div>
@@ -2158,7 +2179,7 @@
       <div id="feedContainer"></div>
     </section>
 
-    <!-- 3. RANKING EN VIVO + LOS 5 RANGOS OFICIALES (TEXTO NÍTIDO SOBRE BLANCO) -->
+    <!-- 3. RANKING EN VIVO + LOS 5 RANGOS OFICIALES -->
     <section id="view-ranking" class="view-section">
       <div class="glass-card">
         <div style="font-size:14px; font-weight:900; margin-bottom:4px; color:#050505;">TOP CREADORES EN TIEMPO REAL</div>
@@ -2339,7 +2360,6 @@
       </button>
     </nav>
   </div>
-
   <!-- MOTOR OFICIAL: PWA + SHORTS + CLOUDINARY CDN + FIREBASE FIRESTORE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -2349,6 +2369,7 @@
       doc,
       setDoc,
       getDoc,
+      getDocs,
       addDoc,
       updateDoc,
       deleteDoc,
@@ -2427,6 +2448,102 @@
         window.history.pushState({ argonInApp: true }, "", window.location.href);
       } catch (e) {}
     }
+
+    // DESTELLO DE BORDES (BLINK) + REFRESCO SILENCIOSO DESDE FIREBASE
+    window.triggerManualBlinkRefresh = async function() {
+      const glow = document.getElementById('edgeRefreshGlow');
+      if (glow) {
+        glow.classList.remove('pulling', 'blinking');
+        void glow.offsetWidth;
+        glow.classList.add('blinking');
+      }
+
+      try {
+        const [uSnap, pSnap] = await Promise.all([
+          getDocs(collection(db, "users")),
+          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")))
+        ]);
+
+        uSnap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const h = (data.userHandle || docSnap.id).toUpperCase();
+          usersMap[h] = data;
+          if (currentUser.registered && h === currentUser.userHandle) {
+            if (typeof data.balance === 'number') currentUser.balance = data.balance;
+            if (typeof data.subs === 'number') currentUser.subs = data.subs;
+            if (data.avatar) currentUser.avatar = data.avatar;
+            if (data.email) currentUser.email = data.email;
+            if (typeof data.ageVerified === 'boolean') currentUser.ageVerified = data.ageVerified;
+            if (data.legalContractVersion) currentUser.legalContractVersion = data.legalContractVersion;
+            if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
+            if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
+            if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
+            saveLocalSession();
+          }
+        });
+
+        const arr = [];
+        pSnap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        livePosts = arr;
+
+        updateUI();
+        renderFeed();
+        renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+      } catch (e) {
+        updateUI();
+        renderFeed();
+      }
+    };
+
+    // DETECTOR DE DESLIZAMIENTO HACIA ABAJO (PULL-TO-REFRESH CON BLINK EN BORDES)
+    (function setupPullToBlinkRefresh() {
+      let pullStartY = 0;
+      let isPullingTop = false;
+      let pullDistance = 0;
+
+      window.addEventListener('touchstart', function(e) {
+        const anyModalOpen = document.querySelector('.shorts-fullscreen-modal.open, .dm-modal-overlay.open, .user-profile-modal.open, .confirm-modal-overlay.open, .lightbox-overlay.open');
+        if (anyModalOpen) {
+          isPullingTop = false;
+          return;
+        }
+        if (window.scrollY <= 4 && e.touches && e.touches.length === 1) {
+          pullStartY = e.touches[0].clientY;
+          isPullingTop = true;
+          pullDistance = 0;
+        } else {
+          isPullingTop = false;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', function(e) {
+        if (!isPullingTop || !e.touches || e.touches.length !== 1) return;
+        const currentY = e.touches[0].clientY;
+        pullDistance = currentY - pullStartY;
+        const glow = document.getElementById('edgeRefreshGlow');
+
+        if (pullDistance > 28 && window.scrollY <= 2) {
+          if (glow && !glow.classList.contains('blinking')) {
+            glow.classList.add('pulling');
+          }
+        } else if (glow) {
+          glow.classList.remove('pulling');
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', function() {
+        if (!isPullingTop) return;
+        const glow = document.getElementById('edgeRefreshGlow');
+        if (glow) glow.classList.remove('pulling');
+
+        if (pullDistance > 68 && window.scrollY <= 4) {
+          window.triggerManualBlinkRefresh();
+        }
+        isPullingTop = false;
+        pullDistance = 0;
+      }, { passive: true });
+    })();
 
     const refBanner = document.getElementById('referralWelcomeBanner');
     if (refBanner && invitedByParam) {
