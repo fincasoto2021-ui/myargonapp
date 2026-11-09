@@ -834,22 +834,42 @@
       border-radius: 999px;
     }
 
-    .pack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 12px; }
-
-    .pack-btn {
-      background: #f7f8fa;
-      border: 1px solid #dadde1;
-      border-radius: 12px;
-      padding: 12px 6px;
-      text-align: center;
-      color: #050505;
+    /* BOTÓN ÚNICO VIP DE RECARGA STRIPE ($1.99 -> +6,000 A-COINS) */
+    .single-stripe-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%);
+      border: 1.5px solid #fbbf24;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      transition: transform 0.12s ease;
     }
 
-    .pack-btn.vip { border: 1.5px solid #10b981; background: #ecfdf5; }
-    .pack-ac { font-size: 13px; font-weight: 900; display: block; color: #050505; }
-    .pack-price { font-size: 11px; color: #65676b; margin-top: 4px; display: block; font-weight: 700; }
-    .pack-btn.vip .pack-price { color: #059669; font-weight: 800; }
+    .single-stripe-btn:active { transform: scale(0.98); }
+
+    .stripe-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .stripe-price-pill {
+      background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%);
+      color: #050505;
+      font-size: 14px;
+      font-weight: 900;
+      padding: 7px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    }
 
     /* PUBLICADOR BLANCO */
     .composer-card {
@@ -2052,13 +2072,13 @@
       </div>
     </div>
 
-    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD (8 CLÁUSULAS DE BLINDAJE) -->
+    <!-- MODAL DE CONTRATO LEGAL, RELEVO Y PRIVACIDAD (BLINDADO BAJO ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC) -->
     <div id="legalTermsModal" class="dm-modal-overlay">
       <div class="dm-sheet" style="height:84vh;">
         <div class="dm-header">
           <div>
             <div style="font-size:14px; font-weight:900; color:#050505;">⚖️ Contrato Oficial, Relevo Legal y Privacidad</div>
-            <div style="font-size:11px; color:#059669;">Acuerdo vinculante de uso de la plataforma ARGON (v2.0-PR)</div>
+            <div style="font-size:11px; color:#059669;">Operado por ASD BUILDING SOLUTIONS LLC / FINCA SOTO LLC (v2.0-PR)</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeLegalModal()">✕</button>
         </div>
@@ -2073,7 +2093,7 @@
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">3. Rangos de Prestigio y Ausencia de Relación Laboral</div>
-            Los rangos (Bronce, Titanio, Platino, Diamante y Argon) son niveles gamificados de reconocimiento comunitario. Alcanzar un rango <strong>no garantiza pagos fijos en efectivo ni crea relación laboral, sociedad o nómina</strong> entre el usuario y ARGON. Las campañas con marcas o patrocinadores son acuerdos comerciales independientes sujetos a disponibilidad de anunciantes y actividad real.
+            Los rangos (Bronce, Titanio, Platino, Diamante y Argon) son niveles gamificados de reconocimiento comunitario. Alcanzar un rango <strong>no garantiza pagos fijos en efectivo ni crea relación laboral, sociedad o nómina</strong> entre el usuario y ARGON, ASD BUILDING SOLUTIONS LLC o FINCA SOTO LLC. Las campañas con marcas o patrocinadores son acuerdos comerciales independientes sujetos a disponibilidad de anunciantes y actividad real.
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">4. Responsabilidad Exclusiva por Contenido y Derechos de Autor (DMCA)</div>
@@ -2085,7 +2105,7 @@
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">6. Relevo Total de Responsabilidad e Indemnización (Hold Harmless)</div>
-            ARGON se proporciona "TAL CUAL" (<em>As-Is</em>) sin garantías de disponibilidad ininterrumpida. El usuario libera de toda responsabilidad civil, comercial o extracontractual a ARGON, sus propietarios, fundadores, afiliados y administradores, y se compromete a indemnizarlos y mantenerlos indemnes frente a cualquier demanda, multa, daño o gasto legal derivado de su contenido o incumplimiento de este contrato.
+            ARGON se proporciona "TAL CUAL" (<em>As-Is</em>) sin garantías de disponibilidad ininterrumpida. El usuario libera de toda responsabilidad civil, comercial o extracontractual a <strong>ARGON, ASD BUILDING SOLUTIONS LLC y FINCA SOTO LLC (Registro de Comerciante SURI 1433044-0010)</strong>, así como a sus propietarios, miembros, fundadores, afiliados y administradores, y se compromete a indemnizarlos y mantenerlos indemnes frente a cualquier demanda, multa, daño o gasto legal derivado de su contenido o incumplimiento de este contrato.
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">7. Privacidad de Datos y Registro de Firma Electrónica</div>
@@ -2093,7 +2113,7 @@
           </div>
           <div class="glass-card">
             <div style="font-weight:900; color:#050505; margin-bottom:6px;">8. Ley Aplicable, Arbitraje Individual y Renuncia a Demandas Colectivas</div>
-            Este contrato se rige por las leyes del <strong>Estado Libre Asociado de Puerto Rico</strong> y las leyes federales aplicables de EE. UU. El usuario renuncia expresamente a participar en demandas colectivas (<em>Class Action Waiver</em>) y acepta que cualquier controversia se resolverá de manera individual.
+            Este contrato se rige por las leyes del <strong>Estado Libre Asociado de Puerto Rico</strong> y las leyes federales aplicables de EE. UU. El usuario renuncia expresamente a participar en demandas colectivas (<em>Class Action Waiver</em>) y acepta que cualquier controversia se resolverá de manera individual en la jurisdicción de Puerto Rico.
           </div>
         </div>
       </div>
@@ -2345,25 +2365,25 @@
         </div>
       </div>
 
+      <!-- BOTÓN ÚNICO OFICIAL DE STRIPE ($1.99 -> +6,000 A-COINS) -->
       <div class="glass-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <span style="font-size:11px; font-weight:800; color:#65676b; letter-spacing:1px;">RECARGAR A-COINS PROMOCIONALES</span>
-          <span style="font-size:10px; color:#65676b;">Acreditación inmediata</span>
+          <span style="font-size:11px; font-weight:900; color:#050505; letter-spacing:0.8px;">⚡ RECARGA OFICIAL DE A-COINS</span>
+          <span style="font-size:10.5px; color:#059669; font-weight:800;">✓ Pago seguro Stripe</span>
         </div>
-        <div class="pack-grid">
-          <button class="pack-btn" onclick="window.buyPack(1000, '$1.99')">
-            <span class="pack-ac">+1,000 AC</span>
-            <span class="pack-price">$1.99</span>
-          </button>
-          <button class="pack-btn vip" onclick="window.buyPack(3500, '$4.99')">
-            <span class="pack-ac">+3,500 AC</span>
-            <span class="pack-price">$4.99</span>
-          </button>
-          <button class="pack-btn" onclick="window.buyPack(12000, '$14.99')">
-            <span class="pack-ac">+12,000 AC</span>
-            <span class="pack-price">$14.99</span>
-          </button>
-        </div>
+
+        <button class="single-stripe-btn" onclick="window.buyPack(6000, '$1.99')">
+          <div class="stripe-btn-left">
+            <div class="argon-gold-corner-badge" style="width:36px; height:36px; border-radius:9px;">
+              <svg width="24" height="24"><use href="#argon-crown-a-gold"></use></svg>
+            </div>
+            <div>
+              <div style="font-size:15px; font-weight:900; color:#ffffff; letter-spacing:0.5px;">+6,000 A-COINS</div>
+              <div style="font-size:11px; color:#cbd5e1; margin-top:1px;">Acreditación inmediata en tu Bóveda</div>
+            </div>
+          </div>
+          <span class="stripe-price-pill">$1.99 USD →</span>
+        </button>
       </div>
 
       <!-- RANKING EN VIVO Y LOS 5 RANGOS INTEGRADOS EN LA BÓVEDA -->
@@ -2661,7 +2681,7 @@
             <div class="fb-menu-icon">⚖️</div>
             <div>
               <div class="fb-menu-title">Contrato Oficial y Privacidad</div>
-              <div class="fb-menu-sub">8 cláusulas de relevo legal (v2.0-PR)</div>
+              <div class="fb-menu-sub">ASD Building Solutions LLC / Finca Soto LLC</div>
             </div>
           </div>
           <span style="font-weight:900; color:#65676b;">›</span>
@@ -2737,7 +2757,7 @@
       </button>
     </nav>
   </div>
-  <!-- MOTOR OFICIAL: PWA + SHORTS + VIEWS + SELLO ARGON ORO + ZOOM FOTOS + SETTINGS MENU + FIREBASE -->
+  <!-- MOTOR OFICIAL: PWA + STRIPE $1.99 (+6,000 AC) + SHORTS + VIEWS + SELLO ARGON ORO + FIREBASE -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -2765,6 +2785,7 @@
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
+    const STRIPE_PAYMENT_LINK_6000 = "https://buy.stripe.com/cNi14p1NdfCBeCG4ka7ok03";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
@@ -2784,6 +2805,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const invitedByParam = (urlParams.get('ref') || FOUNDER_HANDLE).replace(/^@/, '').toUpperCase();
+    const paidPackParam = Number(urlParams.get('paid_pack') || 0);
 
     let selectedPhotoDataUrl = '';
     let selectedVideoFile = null;
@@ -2810,6 +2832,7 @@
       ageVerified: false,
       legalContractVersion: '',
       legalAcceptedAt: 0,
+      invitedBy: FOUNDER_HANDLE,
       avatar: '',
       balance: 5000,
       subs: 0,
@@ -2826,6 +2849,57 @@
       try {
         window.history.pushState({ argonInApp: true }, "", window.location.href);
       } catch (e) {}
+    }
+
+    // DETECTOR AUTOMÁTICO DE RETORNO DE STRIPE (?paid_pack=6000)
+    async function checkAndCreditStripeReturn() {
+      if (!paidPackParam || paidPackParam <= 0) return;
+
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({ argonInApp: true }, "", cleanUrl);
+
+      const pendingCheckoutTs = Number(localStorage.getItem('argon_stripe_pending_ts') || 0);
+      localStorage.removeItem('argon_stripe_pending_ts');
+
+      // Evita recargas falsas si no salió hacia Stripe recientemente (ventana de 45 min) y no es Admin probando
+      const now = Date.now();
+      if (!pendingCheckoutTs && (now - pendingCheckoutTs > 45 * 60 * 1000) && !isUserAdmin()) {
+        return;
+      }
+
+      const coinsToCredit = paidPackParam === 6000 ? 6000 : paidPackParam;
+      currentUser.balance = (Number(currentUser.balance) || 0) + coinsToCredit;
+      saveLocalSession();
+      updateUI();
+      window.switchTab('boveda');
+
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+
+      if (currentUser.registered && currentUser.userHandle) {
+        try {
+          const promoterHandle = (currentUser.invitedBy || FOUNDER_HANDLE).toUpperCase();
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            balance: increment(coinsToCredit),
+            lastPurchaseAt: now
+          }, { merge: true });
+
+          await addDoc(collection(db, "purchases"), {
+            buyer: currentUser.userHandle,
+            promoter: promoterHandle,
+            coins: coinsToCredit,
+            amountUSD: 1.99,
+            promoterCommissionUSD: 0.10,
+            createdAt: now
+          });
+
+          showToast(`👑 ¡Pago confirmado! +${coinsToCredit.toLocaleString()} A-Coins acreditadas`);
+        } catch (e) {
+          showToast(`👑 ¡+${coinsToCredit.toLocaleString()} A-Coins acreditadas en tu Bóveda!`);
+        }
+      } else {
+        showToast(`👑 ¡+${coinsToCredit.toLocaleString()} A-Coins listas! Completa tu registro`);
+      }
     }
 
     // VERIFICA SI UN POST O SU AUTOR TIENEN IMPULSO VIP ACTIVO
@@ -2867,8 +2941,8 @@
       } catch (e) {}
     };
 
-    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO
-    if (sessionStorage.getItem('argon_fast_refresh') === '1') {
+    // SALTAR LA PANTALLA NEGRA SI VIENE DE UN REFRESH RÁPIDO O DE STRIPE
+    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0) {
       sessionStorage.removeItem('argon_fast_refresh');
       const sp = document.getElementById('vaultSplashScreen');
       if (sp) sp.classList.add('hidden');
@@ -4222,7 +4296,8 @@
       dirBox.innerHTML = allUsers.map(u => {
         const subsList = Array.isArray(u.subscribersList) ? u.subscribersList : [];
         const emailInfo = u.email ? `✉️ ${u.email} (+18 • ${u.legalContractVersion || 'Verificado'})` : '⚠️ Sin correo verificado';
-        const subsNames = subsList.length > 0 ? `${emailInfo} • Subs: @${subsList.join(', @')}` : emailInfo;
+        const refInfo = u.invitedBy ? ` • Ref: @${u.invitedBy}` : '';
+        const subsNames = subsList.length > 0 ? `${emailInfo}${refInfo} • Subs: @${subsList.join(', @')}` : `${emailInfo}${refInfo}`;
         return `
           <div class="admin-user-row">
             <div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')">
@@ -4631,8 +4706,28 @@
       }
     };
 
+    // CONEXIÓN OFICIAL EN VIVO A STRIPE ($1.99 -> +6,000 A-COINS)
     window.buyPack = function(amount, priceLabel) {
-      showToast(`Paquete ${amount.toLocaleString()} AC (${priceLabel}) disponible próximamente en Google Play Billing`);
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
+      localStorage.setItem('argon_stripe_pending_ts', String(Date.now()));
+      showToast('⚡ Abriendo pasarela segura de Stripe ($1.99)...');
+
+      let checkoutUrl = STRIPE_PAYMENT_LINK_6000;
+      const params = [];
+      if (currentUser.userHandle) {
+        params.push(`client_reference_id=${encodeURIComponent(currentUser.userHandle)}`);
+      }
+      if (currentUser.email) {
+        params.push(`prefilled_email=${encodeURIComponent(currentUser.email)}`);
+      }
+      if (params.length > 0) {
+        checkoutUrl += (checkoutUrl.includes('?') ? '&' : '?') + params.join('&');
+      }
+
+      window.location.href = checkoutUrl;
     };
 
     function buildPostCardElement(post) {
@@ -4823,6 +4918,7 @@
       currentUser.ageVerified = true;
       currentUser.legalContractVersion = 'v2.0-PR';
       currentUser.legalAcceptedAt = signedTimestamp;
+      currentUser.invitedBy = (existingDoc && existingDoc.invitedBy) || invitedByParam || FOUNDER_HANDLE;
 
       if (isReturning) {
         currentUser.balance = Number(existingDoc.balance) || currentUser.balance || 5000;
@@ -4857,6 +4953,7 @@
           legalAcceptedAt: signedTimestamp,
           legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
           legalUserAgent: navigator.userAgent || 'mobile-app',
+          invitedBy: currentUser.invitedBy,
           avatar: currentUser.avatar || '',
           balance: currentUser.balance,
           subs: currentUser.subs || 0,
@@ -4906,6 +5003,7 @@
             if (data.email) currentUser.email = data.email;
             if (typeof data.ageVerified === 'boolean') currentUser.ageVerified = data.ageVerified;
             if (data.legalContractVersion) currentUser.legalContractVersion = data.legalContractVersion;
+            if (data.invitedBy) currentUser.invitedBy = data.invitedBy;
             if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
             if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
             if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
@@ -4973,6 +5071,7 @@
     updateUI();
     runVaultSplashAnimation();
     startRealtimeListeners();
+    checkAndCreditStripeReturn();
 
     // PROTECTOR REFORZADO DEL BOTÓN "ATRÁS" (<) DE ANDROID
     for (let i = 0; i < 4; i++) {
