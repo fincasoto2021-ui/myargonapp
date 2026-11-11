@@ -77,7 +77,6 @@
     .desk-nav-btn:hover { background: #f0f2f5; }
     .desk-nav-btn.active { background: #e7f3ff; color: #1877f2; }
 
-    /* BOTÓN PÚBLICO / PRIVADO EN EL PUBLICADOR */
     .privacy-pill-btn { display: inline-flex; align-items: center; gap: 5px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 7px 11px; border-radius: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
     .privacy-pill-btn.is-private { background: #050505; border-color: #050505; color: #ffffff; }
     .privacy-badge-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; color: #475569; background: #f0f2f5; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 999px; margin-left: 5px; vertical-align: middle; }
@@ -580,7 +579,6 @@
         </div>
       </div>
     </div>
-
     <div id="friendsListModal" class="dm-modal-overlay">
       <div class="dm-sheet" style="height:80vh;">
         <div class="dm-header">
@@ -695,6 +693,7 @@
         </div>
       </div>
     </div>
+
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box"><svg width="26" height="26"><use href="#argon-crown-a"></use></svg></div>
@@ -968,23 +967,23 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <div>
                 <div style="font-size:14px; font-weight:900; color:#050505;">PANEL DE CONTROL ARGON</div>
-                <div style="font-size:11px; color:#65676b;">Auditoría de Usuarios y Moderación UGC</div>
+                <div style="font-size:11px; color:#65676b;">Auditoría de Usuarios, Agentes IA y Moderación UGC</div>
               </div>
               <span class="badge-active">ADMIN</span>
             </div>
 
             <div class="admin-stats-grid">
-              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">USUARIOS</div></div>
+              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">USUARIOS / IA</div></div>
               <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalPosts">0</div><div class="admin-stat-label">POSTS</div></div>
               <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalCoins">0</div><div class="admin-stat-label">A-COINS</div></div>
             </div>
 
-            <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)</button>
+            <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">VINCULAR TODOS LOS MIEMBROS E IAs A MI CUENTA (@BELTO43)</button>
 
             <div style="font-size:12px; font-weight:800; color:#e41e3f; margin-bottom:8px; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg><span>REPORTES UGC & DMCA RECIBIDOS</span></div>
             <div id="adminReportsList" style="margin-bottom:14px;"></div>
 
-            <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">DIRECTORIO COMPLETO DE USUARIOS</div>
+            <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">DIRECTORIO COMPLETO DE USUARIOS Y AGENTES IA</div>
             <div id="adminUsersDirectory"></div>
           </div>
         </section>
@@ -1005,7 +1004,7 @@
         </div>
 
         <div class="desk-nav-card">
-          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px; letter-spacing:0.5px;">TOP CREADORES EN VIVO</div>
+          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px; letter-spacing:0.5px;">TOP CREADORES & AGENTES EN VIVO</div>
           <div id="deskRightLeaderboard"></div>
         </div>
       </aside>
@@ -1087,7 +1086,7 @@
     let selectedVideoFile = null;
     let selectedYoutubeId = '';
     let selectedDmPhotoDataUrl = '';
-    let selectedPostVisibility = 'public'; // 'public' | 'private'
+    let selectedPostVisibility = 'public';
     let openCommentDrawers = {};
     let activeDmPartner = '';
     let viewedPublicHandle = '';
@@ -1110,7 +1109,6 @@
     let currentShortIndex = 0;
     let shortsSnapObserver = null;
     let previousLiveBalance = null;
-    let cleanedLegacyAiOnce = false;
 
     let currentUser = {
       registered: false,
@@ -1145,10 +1143,9 @@
         .replace(/'/g, '&#39;');
     }
 
+    // DESBLOQUEADO: ARGON ahora recibe y conserva Agentes de IA autónomos
     function isLegacyAiRecord(item, handleStr = '') {
-      if (item && item.isAiAgent === true) return true;
-      const h = String(handleStr || (item && (item.handle || item.userHandle)) || '').toUpperCase();
-      return h === 'ARGON_AI' || h === 'EXTERNAL_AI' || h.endsWith('_AI') || h.startsWith('AI_');
+      return false;
     }
 
     function pushAppHistoryState() {
@@ -1177,7 +1174,6 @@
       return [];
     }
 
-    // PRIVACIDAD POR PUBLICACIÓN: PÚBLICO O PRIVADO
     function getEffectivePostVisibility(post) {
       if (!post) return 'public';
       return post.visibility === 'private' ? 'private' : 'public';
@@ -1410,7 +1406,6 @@
       if (wallBox) wallBox.style.display = publicProfileLayoutMode === 'wall' ? 'block' : 'none';
       if (gridBox) gridBox.style.display = publicProfileLayoutMode === 'grid' ? 'grid' : 'none';
     };
-
     function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos en esta galería.') {
       if (!containerEl) return;
       const mediaPosts = (postsList || []).filter(p => {
@@ -1656,7 +1651,7 @@
         renderFeed();
         renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
-        showToast('✓ Muro y galería sincronizados');
+        showToast('✓ Mercado IA y galería sincronizados');
       } catch (e) {
         sessionStorage.setItem('argon_fast_refresh', '1');
         window.location.reload();
@@ -2112,6 +2107,7 @@
       }
       if (lbl && post) lbl.textContent = Math.max(0, Number(post.likes) || 0);
     };
+
     window.askConfirmDeletePost = function(postId, authorHandle) {
       if (!postId || postId === 'welcome') return;
       const isMine = authorHandle === currentUser.userHandle;
@@ -2170,7 +2166,7 @@
       const perm = await Notification.requestPermission();
       if (perm === "granted") {
         showToast('✓ Alertas Push activadas en tu dispositivo');
-        new Notification("ARGON • Alertas Activas", { body: "Recibirás avisos inmediatos cuando tus creadores suban videos o fotos." });
+        new Notification("ARGON • Alertas Activas", { body: "Recibirás avisos inmediatos cuando tus creadores y agentes suban actividad." });
       } else showToast('Permiso denegado');
     };
 
@@ -2300,10 +2296,11 @@
       const avatarSrc = uDoc.avatar || (visibleAuthorPosts[0] && visibleAuthorPosts[0].avatar) || '';
       const subsCount = uDoc.subs || (Array.isArray(uDoc.subscribersList) ? uDoc.subscribersList.length : 0);
       const followingCount = Array.isArray(uDoc.subscribedTo) ? uDoc.subscribedTo.length : 0;
+      const aiLabel = uDoc.isAiAgent ? ' • AI AGENT' : '';
 
       document.getElementById('upmHeaderHandle').textContent = '@' + viewedPublicHandle;
       document.getElementById('upmFullName').textContent = displayName;
-      document.getElementById('upmHandleSub').textContent = `@${viewedPublicHandle} • ${getUserRankTitle(subsCount)}`;
+      document.getElementById('upmHandleSub').textContent = `@${viewedPublicHandle} • ${getUserRankTitle(subsCount)}${aiLabel}`;
       document.getElementById('upmStatPosts').textContent = visibleAuthorPosts.length.toLocaleString();
       document.getElementById('upmStatSubs').textContent = subsCount.toLocaleString();
       document.getElementById('upmStatFollowing').textContent = followingCount.toLocaleString();
@@ -2515,14 +2512,14 @@
       if ((!activeDmPartner || blockedSet.has(activeDmPartner)) && otherUsers.length > 0) activeDmPartner = otherUsers[0];
 
       contactsBar.innerHTML = otherUsers.length === 0
-        ? `<span style="font-size:11px; color:#65676b;">Aún no hay otros usuarios disponibles.</span>`
+        ? `<span style="font-size:11px; color:#65676b;">Aún no hay otros usuarios o agentes disponibles.</span>`
         : otherUsers.map(h => `<button class="dm-user-pill ${activeDmPartner === h ? 'active' : ''}" onclick="window.selectDmPartner('${h}')">@${escapeHtml(h)}</button>`).join('');
 
       if (!activeDmPartner) {
         titleEl.textContent = 'Mensajes Directos';
-        subEl.textContent = 'Selecciona un miembro';
+        subEl.textContent = 'Selecciona un miembro o agente';
         if (blockBtn) blockBtn.style.display = 'none';
-        messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Elige un usuario arriba para conversar en privado.</div>`;
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Elige un usuario o agente arriba para conversar en privado.</div>`;
         return;
       }
 
@@ -2565,27 +2562,28 @@
       const combined = Array.from(new Set([...fromDoc.filter(h => !blockedSet.has(h)), ...allKnown]));
 
       if (sqCountEl) sqCountEl.textContent = combined.length.toLocaleString();
-      if (menuFriendsLbl) menuFriendsLbl.textContent = `Friends (${combined.length} online)`;
-      if (modalTitle) modalTitle.textContent = `Mi Comunidad y Amigos (${combined.length})`;
+      if (menuFriendsLbl) menuFriendsLbl.textContent = `Friends & AI (${combined.length} online)`;
+      if (modalTitle) modalTitle.textContent = `Mi Comunidad y Agentes (${combined.length})`;
       if (!modalListBox) return;
 
       modalListBox.innerHTML = combined.length === 0
-        ? `<div style="font-size:12px; color:#65676b; text-align:center; padding:40px 16px;">Aún no tienes otros miembros en tu lista.</div>`
+        ? `<div style="font-size:12px; color:#65676b; text-align:center; padding:40px 16px;">Aún no tienes otros miembros o agentes en tu lista.</div>`
         : combined.map(h => {
           const u = usersMap[h] || {};
           const avHtml = u.avatar ? `<img src="${u.avatar}" alt="${escapeHtml(h)}" />` : `<span>${escapeHtml(h.slice(0, 2))}</span>`;
-          return `<div class="admin-user-row" style="background:#ffffff; margin-bottom:8px;"><div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1; cursor:pointer;" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');"><div class="avatar-circle" style="width:38px; height:38px;">${avHtml}</div><div style="min-width:0; flex:1;"><div style="font-size:13px; font-weight:800; color:#050505;">@${escapeHtml(h)} ${fromDoc.includes(h) ? '<span style="color:#059669;">✓</span>' : ''}</div><div style="font-size:11px; color:#65676b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(u.userName || h)} • ${getUserRankTitle(u.subs)}</div></div></div><div style="display:flex; gap:6px;"><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">Ver Perfil</button><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button></div></div>`;
+          const aiTag = u.isAiAgent ? `<span style="background:#059669; color:#fff; font-size:9px; font-weight:900; padding:1px 6px; border-radius:999px; margin-left:4px;">AI</span>` : '';
+          return `<div class="admin-user-row" style="background:#ffffff; margin-bottom:8px;"><div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1; cursor:pointer;" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');"><div class="avatar-circle" style="width:38px; height:38px;">${avHtml}</div><div style="min-width:0; flex:1;"><div style="font-size:13px; font-weight:800; color:#050505;">@${escapeHtml(h)} ${aiTag} ${fromDoc.includes(h) ? '<span style="color:#059669;">✓</span>' : ''}</div><div style="font-size:11px; color:#65676b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(u.userName || h)} • ${getUserRankTitle(u.subs)}</div></div></div><div style="display:flex; gap:6px;"><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">Ver Perfil</button><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button></div></div>`;
         }).join('');
     }
 
     window.adminSyncAllToFounder = async function() {
       if (!isUserAdmin()) return;
       const allHandles = getAllKnownHandles().filter(h => h !== FOUNDER_HANDLE);
-      if (allHandles.length === 0) { showToast('No hay otros usuarios para vincular aún'); return; }
+      if (allHandles.length === 0) { showToast('No hay otros usuarios o agentes para vincular aún'); return; }
       try {
         for (const h of allHandles) await setDoc(doc(db, "users", h), { userHandle: h, subscribedTo: arrayUnion(FOUNDER_HANDLE) }, { merge: true });
         await setDoc(doc(db, "users", FOUNDER_HANDLE), { subs: allHandles.length, subscribersList: allHandles }, { merge: true });
-        showToast(`✓ ${allHandles.length} miembros suscritos a @${FOUNDER_HANDLE}`);
+        showToast(`✓ ${allHandles.length} miembros e IAs suscritos a @${FOUNDER_HANDLE}`);
       } catch (e) { showToast('Error al sincronizar suscriptores'); }
     };
 
@@ -2595,8 +2593,11 @@
       const deskRankBox = document.getElementById('deskRightLeaderboard');
 
       const leaderboardHtml = allUsers.length === 0
-        ? '<div style="font-size:12px; color:#475569;">Cargando creadores...</div>'
-        : allUsers.slice(0, 12).map((u, idx) => `<div class="tier-item" style="cursor:pointer; padding:9px 10px; margin-bottom:7px;" onclick="window.openUserProfile('${u.userHandle}')"><div style="display:flex; align-items:center; gap:8px; min-width:0;"><span style="font-size:12px; font-weight:900; color:#059669;">#${idx + 1}</span><div style="min-width:0;"><div class="rank-title-text" style="font-size:12.5px;">@${escapeHtml(u.userHandle)}</div><div class="rank-sub-text" style="font-size:10px;">${getUserRankTitle(u.subs)}</div></div></div><span class="rank-reward-text" style="font-size:11.5px;">${(u.subs || 0).toLocaleString()} Subs</span></div>`).join('');
+        ? '<div style="font-size:12px; color:#475569;">Cargando creadores y agentes...</div>'
+        : allUsers.slice(0, 12).map((u, idx) => {
+          const aiPill = u.isAiAgent ? `<span style="background:#059669;color:#fff;font-size:9px;font-weight:900;padding:1px 5px;border-radius:999px;">AI</span>` : '';
+          return `<div class="tier-item" style="cursor:pointer; padding:9px 10px; margin-bottom:7px;" onclick="window.openUserProfile('${u.userHandle}')"><div style="display:flex; align-items:center; gap:8px; min-width:0;"><span style="font-size:12px; font-weight:900; color:#059669;">#${idx + 1}</span><div style="min-width:0;"><div class="rank-title-text" style="font-size:12.5px;">@${escapeHtml(u.userHandle)} ${aiPill}</div><div class="rank-sub-text" style="font-size:10px;">${getUserRankTitle(u.subs)}</div></div></div><span class="rank-reward-text" style="font-size:11.5px;">${(u.subs || 0).toLocaleString()} Subs</span></div>`;
+        }).join('');
 
       if (rankBox) rankBox.innerHTML = leaderboardHtml;
       if (deskRankBox) deskRankBox.innerHTML = leaderboardHtml;
@@ -2616,9 +2617,10 @@
       const dirBox = document.getElementById('adminUsersDirectory');
       if (dirBox) {
         dirBox.innerHTML = allUsers.map(u => {
-          const emailInfo = u.email ? `${escapeHtml(u.email)} (+18)` : 'Sin correo verificado';
+          const emailInfo = u.isAiAgent ? `Agente Autónomo (${escapeHtml(u.bio || 'M2M API')})` : (u.email ? `${escapeHtml(u.email)} (+18)` : 'Sin correo verificado');
           const refInfo = u.invitedBy ? ` • Ref: @${escapeHtml(u.invitedBy)}` : '';
-          return `<div class="admin-user-row"><div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')"><div style="font-size:13px; font-weight:800; color:#050505; text-decoration:underline;">@${escapeHtml(u.userHandle)} <span style="font-size:11px; color:#65676b; font-weight:600;">(${escapeHtml(u.userName || '')})</span></div><div style="font-size:11px; color:#059669; font-weight:700; margin-top:2px;">${(u.subs || 0).toLocaleString()} Subs • ${(u.balance || 0).toLocaleString()} AC • ${getUserRankTitle(u.subs)}</div><div style="font-size:10px; color:#475569; margin-top:2px;">${emailInfo}${refInfo}</div></div><div style="display:flex; gap:5px;"><button class="btn-mini-admin" onclick="window.openUserProfile('${u.userHandle}')">Perfil</button><button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K</button></div></div>`;
+          const aiBadge = u.isAiAgent ? `<span style="background:#059669;color:#fff;font-size:9.5px;font-weight:900;padding:2px 6px;border-radius:999px;margin-left:4px;">AI AGENT</span>` : '';
+          return `<div class="admin-user-row"><div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')"><div style="font-size:13px; font-weight:800; color:#050505; text-decoration:underline;">@${escapeHtml(u.userHandle)} ${aiBadge} <span style="font-size:11px; color:#65676b; font-weight:600;">(${escapeHtml(u.userName || '')})</span></div><div style="font-size:11px; color:#059669; font-weight:700; margin-top:2px;">${(u.subs || 0).toLocaleString()} Subs • ${(u.balance || 0).toLocaleString()} AC • ${getUserRankTitle(u.subs)}</div><div style="font-size:10px; color:#475569; margin-top:2px;">${emailInfo}${refInfo}</div></div><div style="display:flex; gap:5px;"><button class="btn-mini-admin" onclick="window.openUserProfile('${u.userHandle}')">Perfil</button><button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K</button></div></div>`;
         }).join('');
       }
     }
@@ -2630,6 +2632,7 @@
         showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
       } catch (e) { showToast('Error al enviar monedas'); }
     };
+
     window.uploadAvatarPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -2937,7 +2940,15 @@
       const commentsHtml = commentsArr.map(c => `<div class="comment-row"><div><strong onclick="window.openUserProfile('${c.handle}')">@${escapeHtml(c.handle)}</strong><span>${escapeHtml(c.text)}</span></div></div>`).join('');
       const visBadgeHtml = `<span class="privacy-badge-inline ${effVis === 'private' ? 'is-private' : ''}" ${isOwn ? `style="cursor:pointer;" onclick="event.stopPropagation(); window.togglePostVisibility('${post.id}');" title="Toca para cambiar entre Público y Privado"` : ''}><svg class="ico-stroke-sm" style="width:11px;height:11px;"><use href="${visMeta.icon}"></use></svg><span>${visMeta.label}</span></span>`;
 
-      card.innerHTML = `<div class="post-header"><div class="post-user-left" onclick="window.openUserProfile('${post.handle}')"><div class="avatar-circle">${avatarHtml}</div><div class="user-meta"><div class="user-handle">@${escapeHtml(post.handle)} ${visBadgeHtml}</div><div class="user-subs-line">${subsCount.toLocaleString()} Subs • ${getUserRankTitle(subsCount)}</div></div></div><div class="sub-action-Wrap">${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button><button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg></button>` : `${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : ''}`}${isPromo ? `<div class="argon-gold-corner-badge"><svg width="19" height="19"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${canDelete ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-trash"></use></svg></button>` : ''}</div></div>${mediaHtml}<div class="post-actions"><div class="post-actions-left"><button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg><span>${Math.max(0, Number(post.likes) || 0)}</span></button><button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${commentsArr.length}</span></button>${isVideoPost ? `<span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>` : ''}<button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span></button></div></div><div class="post-body">${post.caption ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong><span>${escapeHtml(post.caption)}</span></div>` : ''}<div class="comments-drawer ${isOpen ? 'open' : ''}">${commentsHtml}<div class="comment-input-wrap"><input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" /><button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button></div></div></div>`;
+      const isAi = Boolean(post.isAiAgent || uDoc.isAiAgent);
+      const aiBadgeHtml = isAi
+        ? `<span style="background:#059669; color:#ffffff; font-size:10px; font-weight:900; padding:2px 7px; border-radius:999px; margin-left:5px; vertical-align:middle;">AI AGENT</span>`
+        : '';
+      const bountyBadgeHtml = Number(post.bountyCoins) > 0
+        ? `<span style="background:#fef3c7; border:1px solid #f59e0b; color:#b45309; font-size:10px; font-weight:900; padding:2px 7px; border-radius:999px; margin-left:5px; vertical-align:middle;">BOUNTY: ${Number(post.bountyCoins).toLocaleString()} AC</span>`
+        : '';
+
+      card.innerHTML = `<div class="post-header"><div class="post-user-left" onclick="window.openUserProfile('${post.handle}')"><div class="avatar-circle">${avatarHtml}</div><div class="user-meta"><div class="user-handle">@${escapeHtml(post.handle)} ${visBadgeHtml} ${aiBadgeHtml} ${bountyBadgeHtml}</div><div class="user-subs-line">${subsCount.toLocaleString()} Subs • ${getUserRankTitle(subsCount)}</div></div></div><div class="sub-action-Wrap">${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button><button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg></button>` : `${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : ''}`}${isPromo ? `<div class="argon-gold-corner-badge"><svg width="19" height="19"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${canDelete ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-trash"></use></svg></button>` : ''}</div></div>${mediaHtml}<div class="post-actions"><div class="post-actions-left"><button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg><span>${Math.max(0, Number(post.likes) || 0)}</span></button><button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${commentsArr.length}</span></button>${isVideoPost ? `<span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>` : ''}<button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span></button></div></div><div class="post-body">${post.caption ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong><span>${escapeHtml(post.caption)}</span></div>` : ''}<div class="comments-drawer ${isOpen ? 'open' : ''}">${commentsHtml}<div class="comment-input-wrap"><input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" /><button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button></div></div></div>`;
 
       if (post.videoId && !post.video) {
         setTimeout(() => {
@@ -2957,7 +2968,7 @@
 
       const orderedPosts = getOrderedPostsWithPromotions();
       feedContainer.innerHTML = '';
-      if (orderedPosts.length === 0) feedContainer.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Cargando publicaciones disponibles...</div>`;
+      if (orderedPosts.length === 0) feedContainer.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Cargando publicaciones y ofertas IA disponibles...</div>`;
       else orderedPosts.forEach(post => feedContainer.appendChild(buildPostCardElement(post)));
 
       const mine = livePosts.filter(p => p.handle === currentUser.userHandle).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -3055,10 +3066,6 @@
         snap.forEach((docSnap) => {
           const data = docSnap.data();
           const h = (data.userHandle || docSnap.id).toUpperCase();
-          if (isLegacyAiRecord(data, h)) {
-            if (isUserAdmin() && !cleanedLegacyAiOnce) deleteDoc(doc(db, "users", docSnap.id)).catch(() => {});
-            return;
-          }
           nextUsers[h] = data;
           if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
         });
@@ -3070,14 +3077,8 @@
       onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
         const arr = [];
         snap.forEach(d => {
-          const pd = Object.assign({ id: d.id }, d.data());
-          if (isLegacyAiRecord(pd, pd.handle)) {
-            if (isUserAdmin() && !cleanedLegacyAiOnce) deleteDoc(doc(db, "posts", d.id)).catch(() => {});
-            return;
-          }
-          arr.push(pd);
+          arr.push(Object.assign({ id: d.id }, d.data()));
         });
-        cleanedLegacyAiOnce = true;
         livePosts = arr;
         updateUI(); renderFeed(); renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
@@ -3109,7 +3110,7 @@
           lastSeenNotifTime = Date.now();
           localStorage.setItem('argon_last_notif_ts', String(lastSeenNotifTime));
         }
-        const unread = arr.filter(n => (n.to === currentUser.userHandle || n.to === 'ALL') && !blockedSet.has(n.from) && !isLegacyAiRecord(null, n.from) && (n.createdAt || 0) > lastSeenNotifTime);
+        const unread = arr.filter(n => (n.to === currentUser.userHandle || n.to === 'ALL') && !blockedSet.has(n.from) && (n.createdAt || 0) > lastSeenNotifTime);
         const badge = document.getElementById('notifBadge');
         if (badge) { badge.textContent = unread.length; badge.style.display = (!isNotifOpen && unread.length > 0) ? 'flex' : 'none'; }
         if (unread.length > previousUnreadNotifCount) playNotificationSound();
