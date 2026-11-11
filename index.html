@@ -77,6 +77,7 @@
     .desk-nav-btn:hover { background: #f0f2f5; }
     .desk-nav-btn.active { background: #e7f3ff; color: #1877f2; }
 
+    /* BOTÓN PÚBLICO / PRIVADO ESTILO FB */
     .privacy-pill-btn { display: inline-flex; align-items: center; gap: 5px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 7px 11px; border-radius: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
     .privacy-pill-btn.is-private { background: #050505; border-color: #050505; color: #ffffff; }
     .privacy-badge-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; color: #475569; background: #f0f2f5; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 999px; margin-left: 5px; vertical-align: middle; }
@@ -488,15 +489,12 @@
             <input type="text" id="regHandle" class="vip-card-input-box uppercase-input" style="font-size:11px; padding:8px 10px;" placeholder="@USUARIO OFICIAL (OPCIONAL)" oninput="window.updateVipCardPreview(this.value || document.getElementById('regName').value)" />
             <input type="email" id="regEmail" class="vip-card-input-box" style="font-size:11px; padding:8px 10px; margin-bottom:4px; text-transform:lowercase;" placeholder="CORREO ELECTRÓNICO (OBLIGATORIO)" />
             <div id="vipEngravedText" class="vip-engraved-preview">LEX_ARGON</div>
-            <div class="vip-card-bonus-lip">
-              <span>Bono de apertura: <strong style="color:#ffffff;">+5,000 A-Coins</strong> listas</span>
-              <span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(255,255,255,0.14); font-size:10px; font-weight:900; color:#fff;">A</span>
-            </div>
+            <div class="vip-card-bonus-lip"><span>Bono de apertura: <strong style="color:#ffffff;">+5,000 A-Coins</strong> listas</span></div>
           </div>
         </div>
         <label class="age-compliance-box">
           <input type="checkbox" id="regAgeCheck" />
-          <span>Confirmo bajo juramento que soy <strong>mayor de 18 años</strong>, ingreso mi correo real y acepto el <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial, Relevo Legal y Privacidad</span> de ARGON.</span>
+          <span>Confirmo bajo juramento que soy <strong>mayor de 18 años</strong>, ingreso mi correo real y acepto el <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial y Privacidad</span> de ARGON.</span>
         </label>
         <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">ENTRAR A ARGON &gt;</button>
       </div>
@@ -621,6 +619,14 @@
       </div>
     </div>
 
+    <div id="photoLightbox" class="lightbox-overlay">
+      <div class="lightbox-top-controls">
+        <span class="lightbox-hint-pill">Pellizca o toca 2 veces para Zoom</span>
+        <button class="lightbox-close-x" onclick="window.closePhotoLightbox()">✕</button>
+      </div>
+      <img id="lightboxImg" src="" alt="Vista ampliada" />
+    </div>
+
     <div id="publicProfileModal" class="user-profile-modal">
       <div class="upm-inner">
         <div class="upm-topbar">
@@ -658,7 +664,7 @@
             <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg><span>Centro de Notificaciones</span></div>
             <div style="font-size:11px; color:#059669;">Avisos de videos nuevos, suscriptores y comentarios</div>
           </div>
-          <button class="dm-close-btn" onclick="window.closeNotificationsModal()">✕</button>
+          <button class="dm-close-btn" onclick="window.openNotificationsModal()">✕</button>
         </div>
         <div style="padding:10px 14px; background:#f7f8fa; border-bottom:1px solid #dadde1; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:11px; color:#374151; font-weight:700;">Alertas en el dispositivo</span>
@@ -699,6 +705,7 @@
         </div>
       </div>
     </div>
+
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box"><svg width="26" height="26"><use href="#argon-crown-a"></use></svg></div>
@@ -789,7 +796,7 @@
               <span style="font-size:11px; font-weight:900; color:#050505; letter-spacing:0.8px;">RECARGA OFICIAL DE A-COINS</span>
               <span style="font-size:10.5px; color:#059669; font-weight:800;">✓ Pago seguro Stripe</span>
             </div>
-            <button class="single-stripe-btn" onclick="window.buyPack()">
+            <button class="single-stripe-btn" onclick="window.buyPack(6000, '$1.99')">
               <div class="stripe-btn-left">
                 <div class="argon-gold-corner-badge" style="width:36px; height:36px; border-radius:9px;"><svg width="24" height="24"><use href="#argon-crown-a-gold"></use></svg></div>
                 <div>
@@ -1002,7 +1009,7 @@
           </div>
           <div style="font-size:28px; font-weight:900; color:#ffffff; font-variant-numeric:tabular-nums;" id="deskRightBalance">5,000</div>
           <div style="font-size:11px; color:#34d399; font-weight:800; margin-top:2px;" id="deskRightRank">@BELTO43 • RANGO INICIAL</div>
-          <button class="single-stripe-btn" style="margin-top:10px; padding:10px 12px;" onclick="window.buyPack()">
+          <button class="single-stripe-btn" style="margin-top:10px; padding:10px 12px;" onclick="window.buyPack(6000, '$1.99')">
             <span style="font-size:12px; font-weight:900;">+6,000 A-COINS</span>
             <span class="stripe-price-pill" style="font-size:12px; padding:5px 10px;">$1.99 →</span>
           </button>
@@ -1020,7 +1027,7 @@
       <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>SHORTS</span></button>
       <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')"><svg class="ico-stroke"><use href="#ico-vault"></use></svg><span>BÓVEDA</span></button>
       <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')"><svg class="ico-stroke"><use href="#ico-friends"></use></svg><span>PERFIL</span></button>
-      <button class="nav-btn" id="nav-menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-menu"></use></svg><span>MENÚ</span></button>
+      <button class="nav-btn" id="menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-menu"></use></svg><span>MENÚ</span></button>
       <button class="nav-btn" id="nav-admin" style="display:none; color:#059669;" onclick="window.switchTab('admin')"><svg class="ico-stroke"><use href="#ico-crown-line"></use></svg><span>ADMIN</span></button>
     </nav>
   </div>
@@ -1299,322 +1306,343 @@
       if (gridBox) gridBox.style.display = publicProfileLayoutMode === 'grid' ? 'grid' : 'none';
     };
 
-    function syncCurrentUserFromDoc(data) {
-      if (typeof data.balance === 'number') currentUser.balance = data.balance;
-      if (typeof data.subs === 'number') currentUser.subs = data.subs;
-      if (data.avatar) currentUser.avatar = data.avatar;
-      if (data.email) currentUser.email = data.email;
-      if (typeof data.ageVerified === 'boolean') currentUser.ageVerified = data.ageVerified;
-      if (data.legalContractVersion) currentUser.legalContractVersion = data.legalContractVersion;
-      if (data.invitedBy) currentUser.invitedBy = data.invitedBy;
-      if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
-      if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
-      if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
-      if (Array.isArray(data.blockedUsers)) currentUser.blockedUsers = data.blockedUsers;
-      if (Array.isArray(data.reportedPosts)) currentUser.reportedPosts = data.reportedPosts;
-      saveLocalSession();
+    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos.') {
+      if (!containerEl) return;
+      const mediaPosts = (postsList || []).filter(p => {
+        const imgs = getPostImagesList(p);
+        const yt = p.youtubeId || extractYoutubeId(p.caption);
+        return imgs.length > 0 || p.video || p.videoId || yt;
+      });
+      if (mediaPosts.length === 0) {
+        containerEl.innerHTML = `<div class="glass-card" style="grid-column:1 / -1; text-align:center; font-size:12px; color:#65676b;">${escapeHtml(emptyMessage)}</div>`;
+        return;
+      }
+      containerEl.innerHTML = mediaPosts.map(post => {
+        const imgs = getPostImagesList(post);
+        const ytId = post.youtubeId || extractYoutubeId(post.caption);
+        const isVideo = !!(post.video || post.videoId || ytId);
+        let thumbHtml = '';
+        if (imgs.length > 0) thumbHtml = `<img src="${imgs[0]}" alt="" loading="lazy" />`;
+        else if (ytId) thumbHtml = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" />`;
+        else if (post.video) thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        else thumbHtml = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
+        const badgeHtml = imgs.length > 1 ? `<div class="media-grid-badge">1/${imgs.length}</div>` : (isVideo ? `<div class="media-grid-badge">▶</div>` : '');
+        return `<div class="media-grid-cell" onclick="window.openGalleryItem('${post.id}')">${thumbHtml}${badgeHtml}<div class="media-grid-bottom-meta"><span>@${escapeHtml(post.handle)}</span><span>${isVideo ? Number(post.views || 0) : Number(post.likes || 0)}</span></div></div>`;
+      }).join('');
     }
 
-    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0 || hasIncomingShare) {
-      sessionStorage.removeItem('argon_fast_refresh');
-      const sp = document.getElementById('vaultSplashScreen');
-      if (sp) sp.classList.add('hidden');
-      setTimeout(() => {
-        const g = document.getElementById('edgeRefreshGlow');
-        if (g) g.classList.add('blinking');
-      }, 80);
+    window.openGalleryItem = function(postId) {
+      const post = livePosts.find(p => p.id === postId);
+      if (!post) return;
+      const imgs = getPostImagesList(post);
+      if (imgs.length > 0) { window.openPhotoLightbox(imgs[0]); return; }
+      const shortsList = getShortVideoPosts();
+      const idx = shortsList.findIndex(p => p.id === postId);
+      if (idx >= 0) window.openShortsPlayer(idx);
+    };
+
+    window.updateCarouselCounter = function(trackEl, postId, totalSlides) {
+      if (!trackEl || !totalSlides) return;
+      const w = trackEl.clientWidth || 1;
+      const idx = Math.min(totalSlides, Math.max(1, Math.round(trackEl.scrollLeft / w) + 1));
+      const badge = document.getElementById(`carousel-cnt-${postId}`);
+      if (badge) badge.textContent = `${idx}/${totalSlides}`;
+    };
+
+    function buildPostCardElement(post) {
+      const isPromo = isPostOrAuthorFeatured(post);
+      const card = document.createElement('div');
+      card.className = `post-card ${isPromo ? 'promoted-post' : ''}`;
+
+      const uDoc = usersMap[post.handle] || {};
+      const avatarSrc = uDoc.avatar || post.avatar || '';
+      const subsCount = uDoc.subs || (Array.isArray(uDoc.subscribersList) ? uDoc.subscribersList.length : 0);
+      const isOwn = post.handle === currentUser.userHandle;
+      const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
+      const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
+      const canDelete = isOwn || isUserAdmin();
+
+      const effVis = getEffectivePostVisibility(post);
+      const visMeta = getVisibilityMeta(effVis);
+      const ytId = post.youtubeId || extractYoutubeId(post.caption);
+      const postImgs = getPostImagesList(post);
+      const isVideoPost = !!(post.video || post.videoId || ytId);
+      const viewsCount = Number(post.views) || 0;
+      const avatarHtml = avatarSrc ? `<img src="${avatarSrc}" alt="${escapeHtml(post.handle)}" />` : `<span>${escapeHtml((post.handle || 'AR').slice(0, 2))}</span>`;
+
+      let mediaHtml = '';
+      if (post.video) mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
+      else if (ytId) mediaHtml = `<div class="youtube-embed-wrap" onclick="window.registerVideoView('${post.id}')"><iframe src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+      else if (post.videoId) mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">Cargando video...</div>`;
+      else if (postImgs.length > 1) mediaHtml = `<div class="post-carousel-wrap"><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${postImgs.length})">${postImgs.map((imgUrl, idx) => `<div class="post-carousel-slide"><img class="post-image" src="${imgUrl}" alt="Foto ${idx + 1}" onclick="window.openPhotoLightbox('${imgUrl}')" /></div>`).join('')}</div><div id="carousel-cnt-${post.id}" class="post-carousel-counter">1/${postImgs.length}</div></div>`;
+      else if (postImgs.length === 1) mediaHtml = `<img class="post-image" src="${postImgs[0]}" alt="Publicación" onclick="window.openPhotoLightbox('${postImgs[0]}')" />`;
+
+      const commentsArr = Array.isArray(post.comments) ? post.comments : [];
+      const isOpen = !!openCommentDrawers[post.id];
+      const commentsHtml = commentsArr.map(c => `<div class="comment-row"><div><strong onclick="window.openUserProfile('${c.handle}')">@${escapeHtml(c.handle)}</strong><span>${escapeHtml(c.text)}</span></div></div>`).join('');
+      
+      // CABECERA ESTILO FB (LÍNEA HORIZONTAL COMPACTA)
+      const visBadgeHtml = `<span class="privacy-badge-inline ${effVis === 'private' ? 'is-private' : ''}" ${isOwn ? `style="cursor:pointer;" onclick="event.stopPropagation(); window.togglePostVisibility('${post.id}');" title="Toca para cambiar entre Público y Privado"` : ''}><svg class="ico-stroke-sm" style="width:10px;height:10px;"><use href="${visMeta.icon}"></use></svg><span>${visMeta.label}</span></span>`;
+
+      card.innerHTML = `
+        <div class="post-header">
+          <div class="post-user-left" onclick="window.openUserProfile('${post.handle}')">
+            <div class="avatar-circle">${avatarHtml}</div>
+            <div class="user-meta">
+              <div class="user-handle-row">
+                <div class="user-handle">@${escapeHtml(post.handle)}</div>
+                ${visBadgeHtml}
+              </div>
+              <div class="user-subtitle-inline">${subsCount.toLocaleString()} Subs • ${getUserRankTitle(subsCount)}</div>
+            </div>
+          </div>
+          <div class="sub-action-Wrap">
+            ${!isOwn ? `
+              <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse'}</button>
+              <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button>
+              <button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-flag"></use></svg></button>
+            ` : `${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar</button>` : ''}`}
+            ${isPromo ? `<div class="argon-gold-corner-badge"><svg width="17" height="17"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}
+            ${canDelete ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg></button>` : ''}
+          </div>
+        </div>
+        ${mediaHtml}
+        <div class="post-actions">
+          <div class="post-actions-left">
+            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg><span>${Math.max(0, Number(post.likes) || 0)}</span></button>
+            <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${commentsArr.length}</span></button>
+            ${isVideoPost ? `<span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>` : ''}
+            <button class="action-item" onclick="window.sharePost('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span></button>
+          </div>
+        </div>
+        <div class="post-body">
+          ${post.caption ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong><span>${escapeHtml(post.caption)}</span></div>` : ''}
+          <div class="comments-drawer ${isOpen ? 'open' : ''}">
+            ${commentsHtml}
+            <div class="comment-input-wrap">
+              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" />
+              <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      if (post.videoId && !post.video) {
+        setTimeout(() => {
+          const holder = card.querySelector(`#vid-chunk-${post.id}`);
+          if (holder) hydrateChunkedVideo(post.videoId, post.chunkCount, holder, post.id);
+        }, 30);
+      }
+      return card;
     }
 
-    window.triggerManualBlinkRefresh = async function() {
-      const glow = document.getElementById('edgeRefreshGlow');
-      if (glow) {
-        glow.classList.remove('pulling', 'blinking');
-        void glow.offsetWidth;
-        glow.classList.add('blinking');
+    function renderFeed() {
+      const feedContainer = document.getElementById('feedContainer');
+      const myWall = document.getElementById('myOwnPostsWall');
+      const myGrid = document.getElementById('myOwnGalleryGrid');
+      const globalGrid = document.getElementById('globalGalleryGrid');
+      if (!feedContainer) return;
+
+      const orderedPosts = getOrderedPostsWithPromotions();
+      feedContainer.innerHTML = '';
+      if (orderedPosts.length === 0) feedContainer.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Cargando publicaciones disponibles...</div>`;
+      else orderedPosts.forEach(post => feedContainer.appendChild(buildPostCardElement(post)));
+
+      const mine = livePosts.filter(p => p.handle === currentUser.userHandle).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      if (myWall) {
+        myWall.innerHTML = '';
+        if (mine.length === 0) myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones a tu muro.</div>`;
+        else mine.forEach(post => myWall.appendChild(buildPostCardElement(post)));
       }
-      if (navigator.vibrate) { try { navigator.vibrate(35); } catch (e) {} }
-
-      try {
-        if ('serviceWorker' in navigator) {
-          const regs = await navigator.serviceWorker.getRegistrations();
-          for (const r of regs) await r.update();
-        }
-        if ('caches' in window) {
-          const keys = await caches.keys();
-          for (const k of keys) await caches.delete(k);
-        }
-
-        const [uSnap, pSnap] = await Promise.all([
-          getDocs(collection(db, "users")),
-          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")))
-        ]);
-
-        const nextUsers = {};
-        uSnap.forEach((docSnap) => {
-          const data = docSnap.data();
-          const h = (data.userHandle || docSnap.id).toUpperCase();
-          if (isLegacyAiRecord(data, h)) return;
-          nextUsers[h] = data;
-          if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
-        });
-        usersMap = nextUsers;
-
-        const arr = [];
-        pSnap.forEach(d => {
-          const pd = Object.assign({ id: d.id }, d.data());
-          if (!isLegacyAiRecord(pd, pd.handle)) arr.push(pd);
-        });
-        livePosts = arr;
-
-        updateUI();
-        renderFeed();
-        renderAdminAndLeaderboard();
-        if (viewedPublicHandle) renderPublicProfileModal();
-        showToast('✓ Muro y galería sincronizados');
-      } catch (e) {
-        sessionStorage.setItem('argon_fast_refresh', '1');
-        window.location.reload();
-      }
-    };
-
-    (function setupPullToBlinkRefresh() {
-      let startY = 0, currentPull = 0, tracking = false;
-      document.addEventListener('touchstart', (e) => {
-        if (document.querySelector('.shorts-fullscreen-modal.open, .dm-modal-overlay.open, .user-profile-modal.open, .confirm-modal-overlay.open, .lightbox-overlay.open')) {
-          tracking = false;
-          return;
-        }
-        const st = window.pageYOffset || document.documentElement.scrollTop || 0;
-        if (st <= 5 && e.touches && e.touches.length === 1) {
-          startY = e.touches[0].screenY;
-          currentPull = 0;
-          tracking = true;
-        } else {
-          tracking = false;
-        }
-      }, { passive: true });
-
-      document.addEventListener('touchmove', (e) => {
-        if (!tracking || !e.touches || e.touches.length !== 1) return;
-        if ((window.pageYOffset || document.documentElement.scrollTop || 0) > 5) {
-          tracking = false;
-          return;
-        }
-        currentPull = e.touches[0].screenY - startY;
-        const glow = document.getElementById('edgeRefreshGlow');
-        if (currentPull > 45) {
-          if (glow && !glow.classList.contains('blinking')) glow.classList.add('pulling');
-        } else if (glow) {
-          glow.classList.remove('pulling');
-        }
-      }, { passive: true });
-
-      document.addEventListener('touchend', () => {
-        if (!tracking) return;
-        const glow = document.getElementById('edgeRefreshGlow');
-        if (glow) glow.classList.remove('pulling');
-        if (currentPull > 120) window.triggerManualBlinkRefresh();
-        tracking = false;
-        currentPull = 0;
-      }, { passive: true });
-    })();
-
-    const refBanner = document.getElementById('referralWelcomeBanner');
-    if (refBanner && invitedByParam) {
-      refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
+      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos a tu galería.');
+      renderMediaGrid3x3(orderedPosts, globalGrid, 'Cargando galería global de ARGON...');
+      window.setMyProfileLayout(myProfileLayoutMode);
     }
 
-    window.openEditProfileModal = function() {
-      pushAppHistoryState();
-      const inp = document.getElementById('editProfileNameInput');
-      if (inp) inp.value = currentUser.userName || '';
-      document.getElementById('editProfileModal').classList.add('open');
-    };
+    window.completeRegistration = async function() {
+      const nameVal = (document.getElementById('regName').value || '').trim();
+      const rawHandle = (document.getElementById('regHandle').value || '').trim();
+      const emailVal = (document.getElementById('regEmail').value || '').trim().toLowerCase();
+      const ageChecked = document.getElementById('regAgeCheck').checked;
 
-    window.closeEditProfileModal = function() {
-      document.getElementById('editProfileModal').classList.remove('open');
-    };
-
-    window.saveEditedProfile = async function() {
-      const val = (document.getElementById('editProfileNameInput').value || '').trim().toUpperCase();
-      if (!val) { showToast('Escribe un nombre válido'); return; }
-      currentUser.userName = val;
-      saveLocalSession();
-      window.closeEditProfileModal();
-      updateUI();
-      if (currentUser.userHandle) {
-        try {
-          await setDoc(doc(db, "users", currentUser.userHandle), { userName: val, updatedAt: Date.now() }, { merge: true });
-          showToast('✓ Nombre actualizado en tu perfil y tarjeta');
-        } catch (e) {
-          showToast('✓ Nombre guardado');
-        }
-      }
-    };
-
-    window.toggleSoundSetting = function() {
-      soundAlertsEnabled = !soundAlertsEnabled;
-      localStorage.setItem('argon_sound_enabled', soundAlertsEnabled ? '1' : '0');
-      updateUI();
-      showToast(soundAlertsEnabled ? '✓ Sonido de notificaciones activado' : 'Sonido silenciado');
-    };
-
-    window.logoutMyAccount = function() {
-      localStorage.removeItem(LOCAL_USER_KEY);
-      currentUser.registered = false;
-      document.getElementById('onboardingScreen').classList.remove('hidden');
-      window.switchTab('feed');
-      showToast('Sesión cerrada. Puedes ingresar con otra cuenta.');
-    };
-
-    window.openLegalModal = function() {
-      pushAppHistoryState();
-      document.getElementById('legalTermsModal').classList.add('open');
-    };
-
-    window.closeLegalModal = function() {
-      document.getElementById('legalTermsModal').classList.remove('open');
-    };
-
-    window.openFriendsModal = function() {
-      pushAppHistoryState();
-      renderMySubscribers();
-      document.getElementById('friendsListModal').classList.add('open');
-    };
-
-    window.closeFriendsModal = function() {
-      document.getElementById('friendsListModal').classList.remove('open');
-    };
-
-    window.openAgeEmailVerifyModal = function() {
-      pushAppHistoryState();
-      const inp = document.getElementById('verifyModalEmailInput');
-      const chk = document.getElementById('verifyModalAgeCheck');
-      if (inp) inp.value = currentUser.email || '';
-      if (chk) chk.checked = !!currentUser.ageVerified;
-      document.getElementById('ageEmailVerifyModal').classList.add('open');
-    };
-
-    window.saveExistingUserVerification = async function() {
-      const emailVal = (document.getElementById('verifyModalEmailInput').value || '').trim().toLowerCase();
-      const ageChecked = document.getElementById('verifyModalAgeCheck').checked;
+      if (!nameVal) { showToast('Escribe tu Nombre o Alias de Imperio'); return; }
       if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) { showToast('Ingresa un correo electrónico válido'); return; }
-      if (!ageChecked) { showToast('Debes confirmar que eres mayor de 18 años y aceptar el contrato'); return; }
+      if (!ageChecked) { showToast('Debes confirmar que eres mayor de 18 años'); return; }
 
+      const cleanHandle = (rawHandle || nameVal).replace(/^@/, '').toUpperCase().replace(/[^A-Z0-9_]/g, '_').slice(0, 20) || 'USUARIO_ARGON';
+      const existingDoc = usersMap[cleanHandle];
+      const isReturning = !!existingDoc;
       const signedTimestamp = Date.now();
+
+      currentUser.registered = true;
+      currentUser.userName = nameVal.toUpperCase();
+      currentUser.userHandle = cleanHandle;
       currentUser.email = emailVal;
       currentUser.ageVerified = true;
       currentUser.legalContractVersion = 'v2.1-PR';
       currentUser.legalAcceptedAt = signedTimestamp;
+      currentUser.invitedBy = (existingDoc && existingDoc.invitedBy) || invitedByParam || FOUNDER_HANDLE;
+
+      if (isReturning) {
+        currentUser.balance = Number(existingDoc.balance) || currentUser.balance || 5000;
+        currentUser.subs = Number(existingDoc.subs) || 0;
+        currentUser.avatar = currentUser.avatar || existingDoc.avatar || '';
+        currentUser.subscribedTo = Array.isArray(existingDoc.subscribedTo) ? existingDoc.subscribedTo : [];
+        currentUser.blockedUsers = Array.isArray(existingDoc.blockedUsers) ? existingDoc.blockedUsers : [];
+        currentUser.reportedPosts = Array.isArray(existingDoc.reportedPosts) ? existingDoc.reportedPosts : [];
+        currentUser.promotedUntil = existingDoc.promotedUntil || 0;
+      } else {
+        const autoSubList = [];
+        if (invitedByParam && invitedByParam !== cleanHandle) autoSubList.push(invitedByParam);
+        if (FOUNDER_HANDLE && FOUNDER_HANDLE !== cleanHandle && !autoSubList.includes(FOUNDER_HANDLE)) autoSubList.push(FOUNDER_HANDLE);
+        currentUser.balance = 5000 + (autoSubList.length > 0 ? 10 : 0);
+        currentUser.subs = 0;
+        currentUser.subscribedTo = autoSubList;
+        currentUser.blockedUsers = [];
+        currentUser.reportedPosts = [];
+        currentUser.promotedUntil = 0;
+      }
+
       saveLocalSession();
-      document.getElementById('ageEmailVerifyModal').classList.remove('open');
-      updateUI();
+      document.getElementById('onboardingScreen').classList.add('hidden');
+      updateUI(); renderFeed();
 
-      if (currentUser.userHandle) {
-        try {
-          await setDoc(doc(db, "users", currentUser.userHandle), {
-            email: emailVal, ageVerified: true, legalContractVersion: 'v2.1-PR',
-            legalAcceptedAt: signedTimestamp, legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
-            legalUserAgent: navigator.userAgent || 'mobile-app', updatedAt: signedTimestamp
-          }, { merge: true });
-          showToast('✓ Contrato legal y mayoría de edad (+18) certificados');
-        } catch (e) {
-          showToast('✓ Certificación guardada');
-        }
-      }
-    };
-
-    function getUserRankTitle(subsCount) {
-      const s = Number(subsCount) || 0;
-      if (s >= 100000) return 'RANGO ARGON';
-      if (s >= 20000) return 'RANGO DIAMANTE';
-      if (s >= 10000) return 'RANGO PLATINO';
-      if (s >= 5000) return 'RANGO TITANIO';
-      if (s >= 1000) return 'RANGO BRONCE';
-      return 'RANGO INICIAL';
-    }
-
-    function getNextRankTarget(subsCount) {
-      const s = Number(subsCount) || 0;
-      if (s < 1000) return 1000;
-      if (s < 5000) return 5000;
-      if (s < 10000) return 10000;
-      if (s < 20000) return 20000;
-      return 100000;
-    }
-
-    window.updateVipCardPreview = function(val) {
-      const clean = (val || '').trim().toUpperCase().replace(/\s+/g, '_');
-      const el = document.getElementById('vipEngravedText');
-      if (el) el.textContent = clean || 'LEX_ARGON';
-    };
-
-    function runVaultSplashAnimation() {
-      const splash = document.getElementById('vaultSplashScreen');
-      const fill = document.getElementById('splashBarFill');
-      const pctTxt = document.getElementById('splashPctText');
-      if (!splash || !fill || !pctTxt || splash.classList.contains('hidden')) return;
-
-      let progress = 0;
-      const timer = setInterval(() => {
-        progress += Math.floor(Math.random() * 9) + 5;
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(timer);
-          fill.style.width = '100%';
-          pctTxt.textContent = '100%';
-          setTimeout(() => {
-            splash.classList.add('hidden');
-            splash.style.display = 'none';
-            if (!currentUser.registered) {
-              document.getElementById('onboardingScreen').classList.remove('hidden');
-            } else if (!currentUser.email || !currentUser.ageVerified) {
-              window.openAgeEmailVerifyModal();
-            }
-          }, 260);
-        } else {
-          fill.style.width = progress + '%';
-          pctTxt.textContent = progress + '%';
-        }
-      }, 65);
-    }
-
-    function isUserAdmin() {
-      const h = (currentUser.userHandle || '').toUpperCase();
-      const n = (currentUser.userName || '').toUpperCase();
-      return ADMIN_HANDLES.includes(h) || n.includes('ALBERTO SOTO');
-    }
-
-    function loadLocalSession() {
       try {
-        const saved = localStorage.getItem(LOCAL_USER_KEY);
-        if (saved) currentUser = Object.assign({}, currentUser, JSON.parse(saved));
-      } catch (e) {}
+        await setDoc(doc(db, "users", cleanHandle), {
+          userName: currentUser.userName, userHandle: cleanHandle, email: currentUser.email, ageVerified: true,
+          legalContractVersion: 'v2.1-PR', legalAcceptedAt: signedTimestamp, legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
+          legalUserAgent: navigator.userAgent || 'mobile-app', invitedBy: currentUser.invitedBy, avatar: currentUser.avatar || '',
+          balance: currentUser.balance, subs: currentUser.subs || 0, subscribedTo: currentUser.subscribedTo || [],
+          blockedUsers: currentUser.blockedUsers || [], reportedPosts: currentUser.reportedPosts || [],
+          promotedUntil: currentUser.promotedUntil || 0, updatedAt: signedTimestamp
+        }, { merge: true });
+        if (!isReturning && currentUser.subscribedTo.length > 0) {
+          for (const targetH of currentUser.subscribedTo) await setDoc(doc(db, "users", targetH), { subs: increment(1), subscribersList: arrayUnion(cleanHandle) }, { merge: true });
+        }
+        showToast(`✓ Bienvenido a ARGON @${cleanHandle}`);
+      } catch (e) { showToast(`✓ Bienvenido a ARGON @${cleanHandle}`); }
+    };
+
+    window.switchTab = function(tabName) {
+      pushAppHistoryState();
+      if (tabName === 'ranking') tabName = 'boveda';
+      ['feed', 'boveda', 'perfil', 'galeria', 'menu', 'admin'].forEach(v => {
+        const sec = document.getElementById(`view-${v}`);
+        const nav = document.getElementById(`nav-${v}`);
+        const dnav = document.getElementById(`dnav-${v}`);
+        if (sec) sec.classList.toggle('active', v === tabName);
+        if (nav) nav.classList.toggle('active', v === tabName);
+        if (dnav) dnav.classList.toggle('active', v === tabName);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    function startRealtimeListeners() {
+      onSnapshot(collection(db, "users"), (snap) => {
+        const nextUsers = {};
+        snap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const h = (data.userHandle || docSnap.id).toUpperCase();
+          if (isLegacyAiRecord(data, h)) {
+            if (isUserAdmin() && !cleanedLegacyAiOnce) deleteDoc(doc(db, "users", docSnap.id)).catch(() => {});
+            return;
+          }
+          nextUsers[h] = data;
+          if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
+        });
+        usersMap = nextUsers;
+        updateUI(); renderFeed(); renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+      });
+
+      onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
+        const arr = [];
+        snap.forEach(d => {
+          const pd = Object.assign({ id: d.id }, d.data());
+          if (isLegacyAiRecord(pd, pd.handle)) {
+            if (isUserAdmin() && !cleanedLegacyAiOnce) deleteDoc(doc(db, "posts", d.id)).catch(() => {});
+            return;
+          }
+          arr.push(pd);
+        });
+        cleanedLegacyAiOnce = true;
+        livePosts = arr;
+        updateUI(); renderFeed(); renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+      });
+
+      onSnapshot(query(collection(db, "messages"), orderBy("createdAt", "asc")), (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allDirectMessages = arr;
+        const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+        const isDmOpen = document.getElementById('dmModal').classList.contains('open');
+        if (isDmOpen) {
+          lastSeenDmTime = Date.now();
+          localStorage.setItem('argon_last_dm_ts', String(lastSeenDmTime));
+        }
+        const incomingCount = arr.filter(m => m.to === currentUser.userHandle && !blockedSet.has(m.from) && (m.createdAt || 0) > lastSeenDmTime).length;
+        const badge = document.getElementById('inboxBadge');
+        if (badge) { badge.textContent = incomingCount; badge.style.display = (!isDmOpen && incomingCount > 0) ? 'flex' : 'none'; }
+        if (isDmOpen) renderDmModal();
+      });
+
+      onSnapshot(query(collection(db, "notifications"), orderBy("createdAt", "desc")), (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allNotifications = arr;
+        const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+        const isNotifOpen = document.getElementById('notifModal').classList.contains('open');
+        if (isNotifOpen) {
+          lastSeenNotifTime = Date.now();
+          localStorage.setItem('argon_last_notif_ts', String(lastSeenNotifTime));
+        }
+        const unread = arr.filter(n => (n.to === currentUser.userHandle || n.to === 'ALL') && !blockedSet.has(n.from) && !isLegacyAiRecord(null, n.from) && (n.createdAt || 0) > lastSeenNotifTime);
+        const badge = document.getElementById('notifBadge');
+        if (badge) { badge.textContent = unread.length; badge.style.display = (!isNotifOpen && unread.length > 0) ? 'flex' : 'none'; }
+        if (unread.length > previousUnreadNotifCount) playNotificationSound();
+        previousUnreadNotifCount = unread.length;
+        if (isNotifOpen) renderNotificationsList();
+      });
+
+      onSnapshot(query(collection(db, "reports"), orderBy("createdAt", "desc")), (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        allUgcReports = arr;
+        renderAdminAndLeaderboard();
+      });
     }
 
-    function saveLocalSession() {
-      try { localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(currentUser)); } catch (e) {}
-    }
+    loadLocalSession();
+    updateUI();
+    runVaultSplashAnimation();
+    startRealtimeListeners();
+    checkAndCreditStripeReturn();
+    checkAndHandleIncomingShare();
 
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.style.display = 'block';
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
-    }
+    for (let i = 0; i < 4; i++) pushAppHistoryState();
+    document.addEventListener('touchstart', () => { if (!window.history.state || !window.history.state.argonInApp) pushAppHistoryState(); }, { passive: true });
 
-    function animateLiveBalance(el, startVal, endVal, duration = 650) {
-      if (!el) return;
-      const startTime = performance.now();
-      function tick(now) {
-        const p = Math.min((now - startTime) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(startVal + (endVal - startVal) * eased).toLocaleString();
-        if (p < 1) requestAnimationFrame(tick);
+    window.addEventListener('popstate', () => {
+      if (document.getElementById('shortsFullscreenModal').classList.contains('open')) { window.closeShortsPlayer(); pushAppHistoryState(); return; }
+      if (document.getElementById('photoLightbox').classList.contains('open')) { window.closePhotoLightbox(); pushAppHistoryState(); return; }
+      const openModals = [
+        ['publicProfileModal', window.closePublicProfile], ['friendsListModal', window.closeFriendsModal],
+        ['editProfileModal', window.closeEditProfileModal], ['dmModal', window.closeDirectMessages],
+        ['notifModal', window.closeNotificationsModal], ['legalTermsModal', window.closeLegalModal],
+        ['confirmDeleteModal', window.closeConfirmModal], ['reportContentModal', window.closeReportModal],
+        ['deleteAccountModal', window.closeDeleteAccountModal],
+        ['ageEmailVerifyModal', () => document.getElementById('ageEmailVerifyModal').classList.remove('open')]
+      ];
+      for (const [id, fn] of openModals) {
+        const el = document.getElementById(id);
+        if (el && el.classList.contains('open')) { fn(); pushAppHistoryState(); return; }
       }
-      requestAnimationFrame(tick);
-    }
+      const feedSec = document.getElementById('view-feed');
+      if (feedSec && !feedSec.classList.contains('active')) { window.switchTab('feed'); pushAppHistoryState(); return; }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      pushAppHistoryState();
+    });
   </script>
 </body>
 </html>
