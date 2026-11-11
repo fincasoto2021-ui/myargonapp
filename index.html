@@ -77,10 +77,10 @@
     .desk-nav-btn:hover { background: #f0f2f5; }
     .desk-nav-btn.active { background: #e7f3ff; color: #1877f2; }
 
-    /* BOTÓN PÚBLICO / PRIVADO ESTILO FB */
+    /* BOTÓN PÚBLICO / PRIVADO EN EL PUBLICADOR */
     .privacy-pill-btn { display: inline-flex; align-items: center; gap: 5px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 7px 11px; border-radius: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
     .privacy-pill-btn.is-private { background: #050505; border-color: #050505; color: #ffffff; }
-    .privacy-badge-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; color: #475569; background: #f0f2f5; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 999px; margin-left: 5px; vertical-align: middle; }
+    .privacy-badge-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 800; color: #475569; background: #f0f2f5; border: 1px solid #e2e8f0; padding: 2px 7px; border-radius: 999px; margin-left: 5px; vertical-align: middle; }
     .privacy-badge-inline.is-private { background: #050505; border-color: #050505; color: #ffffff; }
 
     .ico-stroke { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
@@ -249,55 +249,50 @@
     .upload-progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.2s ease; }
     .upload-status-text { display: none; font-size: 11px; color: #059669; font-weight: 800; margin-top: 5px; text-align: center; }
 
-    /* TARJETAS ESTILO FB LIMPIO Y FINO */
     .post-card { background: #ffffff; border: 1px solid #dadde1; border-radius: 14px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); position: relative; }
     .post-card.promoted-post { border: 1.5px solid #fbbf24; box-shadow: 0 2px 12px rgba(245, 158, 11, 0.14); }
-    .post-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .post-header { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .post-user-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; cursor: pointer; }
-    .avatar-circle { width: 38px; height: 38px; border-radius: 50%; background: #e4e6eb; border: 1px solid #dadde1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #050505; flex-shrink: 0; overflow: hidden; }
+    .avatar-circle { width: 40px; height: 40px; border-radius: 50%; background: #e4e6eb; border: 1px solid #dadde1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #050505; flex-shrink: 0; overflow: hidden; }
     .avatar-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .fb-cover-banner { height: 95px; border-radius: 14px 14px 0 0; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #059669 100%); margin: -15px -15px 0 -15px; position: relative; }
     .profile-avatar-wrap { width: 92px; height: 92px; border-radius: 50%; margin: -46px auto 10px; background: #e4e6eb; border: 4px solid #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; cursor: pointer; z-index: 2; }
     .profile-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .ig-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 10px 0 10px; padding: 8px 0; border-top: 1px solid #e4e6eb; border-bottom: 1px solid #e4e6eb; }
-    .ig-stat-box-clickable { cursor: pointer; padding: 2px; }
-    .ig-stat-num { font-size: 16px; font-weight: 900; color: #050505; }
-    .ig-stat-lbl { font-size: 9.5px; color: #65676b; font-weight: 800; margin-top: 1px; }
+    .ig-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 14px 0 12px; padding: 10px 0; border-top: 1px solid #e4e6eb; border-bottom: 1px solid #e4e6eb; }
+    .ig-stat-box-clickable { cursor: pointer; padding: 4px 2px; border-radius: 8px; }
+    .ig-stat-num { font-size: 17px; font-weight: 900; color: #050505; }
+    .ig-stat-lbl { font-size: 10px; color: #65676b; font-weight: 800; margin-top: 2px; }
     .profile-pro-action-bar { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 4px; }
-    .btn-pro-vip { flex: 1; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1px solid #334155; color: #ffffff; font-size: 11.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; white-space: nowrap; padding: 0 10px; }
-    .btn-pro-share { flex: 1; height: 38px; border-radius: 10px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; font-size: 11.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; white-space: nowrap; padding: 0 10px; }
-    .btn-pro-friends-sq { height: 38px; min-width: 52px; padding: 0 8px; border-radius: 10px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; font-size: 11.5px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; flex-shrink: 0; }
-    .btn-avatar-upload { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; margin-bottom: 2px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 5px 12px; border-radius: 999px; font-size: 10.5px; font-weight: 800; cursor: pointer; }
-    
-    /* CABECERA HORIZONTAL FLUIDA ESTILO FB PARA EL HANDLE Y SUBS */
-    .user-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
-    .user-handle-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
-    .user-handle { font-size: 13.5px; font-weight: 800; color: #050505; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
-    .user-subtitle-inline { font-size: 11px; font-weight: 600; color: #65676b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
+    .btn-pro-vip { flex: 1; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1px solid #334155; color: #ffffff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12); white-space: nowrap; padding: 0 10px; }
+    .btn-pro-share { flex: 1; height: 40px; border-radius: 10px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; white-space: nowrap; padding: 0 10px; }
+    .btn-pro-friends-sq { height: 40px; min-width: 56px; padding: 0 10px; border-radius: 10px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; flex-shrink: 0; }
+    .btn-avatar-upload { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; margin-bottom: 4px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .user-meta { flex: 1; min-width: 0; }
+    .user-handle { font-size: 14px; font-weight: 800; color: #050505; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-subs-line { font-size: 11.5px; color: #65676b; margin-top: 1px; }
     .sub-action-Wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
-    .btn-subscribe { background: #1877f2; color: #ffffff; border: none; border-radius: 999px; padding: 6px 11px; font-size: 10.5px; font-weight: 800; cursor: pointer; white-space: nowrap; }
+    .btn-subscribe { background: #1877f2; color: #ffffff; border: none; border-radius: 999px; padding: 7px 12px; font-size: 11px; font-weight: 800; cursor: pointer; white-space: nowrap; }
     .btn-subscribe.subscribed { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-    .btn-promote-post { background: #fffbeb; border: 1px solid #f59e0b; color: #b45309; border-radius: 999px; padding: 5px 9px; font-size: 10px; font-weight: 800; cursor: pointer; white-space: nowrap; }
-    .btn-dm-icon { background: #f0f2f5; border: 1px solid #dadde1; color: #050505; border-radius: 999px; width: 32px; height: 32px; font-size: 11px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+    .btn-promote-post { background: #fffbeb; border: 1px solid #f59e0b; color: #b45309; border-radius: 999px; padding: 5px 10px; font-size: 10.5px; font-weight: 800; cursor: pointer; white-space: nowrap; }
+    .btn-dm-icon { background: #f0f2f5; border: 1px solid #dadde1; color: #050505; border-radius: 999px; padding: 6px 9px; font-size: 11px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     .post-image { width: 100%; max-height: 420px; object-fit: cover; display: block; background: #e4e6eb; cursor: pointer; }
     .post-video { width: 100%; max-height: 440px; display: block; background: #000000; outline: none; }
     .video-loading-placeholder { width: 100%; height: 220px; background: #f0f2f5; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #059669; font-size: 12px; font-weight: 800; gap: 8px; }
-    .post-actions { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
+    .post-actions { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
     .post-actions-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .action-item { background: none; border: none; color: #050505; font-size: 12.5px; font-weight: 700; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+    .action-item { background: none; border: none; color: #050505; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 5px; cursor: pointer; }
     .action-item.liked { color: #e41e3f; }
-    .views-counter-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 2px 8px; border-radius: 999px; }
-    .post-body { padding: 8px 14px 12px; }
-    .post-caption { font-size: 13.5px; line-height: 1.4; color: #050505; word-break: break-word; }
+    .views-counter-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 3px 9px; border-radius: 999px; }
+    .post-body { padding: 10px 14px 13px; }
+    .post-caption { font-size: 14px; line-height: 1.45; color: #050505; word-break: break-word; }
     .post-caption strong { color: #050505; margin-right: 5px; cursor: pointer; }
-    .comments-drawer { display: none; margin-top: 8px; padding-top: 8px; border-top: 1px solid #e4e6eb; }
+    .comments-drawer { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e4e6eb; }
     .comments-drawer.open { display: block; }
-    .comment-row { font-size: 12px; color: #050505; margin-bottom: 6px; line-height: 1.35; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; background: #f0f2f5; padding: 6px 10px; border-radius: 10px; }
+    .comment-row { font-size: 12.5px; color: #050505; margin-bottom: 7px; line-height: 1.35; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; background: #f0f2f5; padding: 7px 11px; border-radius: 12px; }
     .comment-row strong { color: #059669; margin-right: 4px; cursor: pointer; }
-    .comment-input-wrap { display: flex; gap: 6px; margin-top: 6px; }
-    .comment-input { flex: 1; background: #f0f2f5; border: 1px solid #dadde1; border-radius: 999px; padding: 7px 12px; color: #050505; font-size: 12px; outline: none; }
-    .comment-send-btn { background: #1877f2; color: #ffffff; border: none; border-radius: 999px; padding: 0 12px; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .comment-input-wrap { display: flex; gap: 6px; margin-top: 8px; }
+    .comment-input { flex: 1; background: #f0f2f5; border: 1px solid #dadde1; border-radius: 999px; padding: 8px 12px; color: #050505; font-size: 12.5px; outline: none; }
+    .comment-send-btn { background: #1877f2; color: #ffffff; border: none; border-radius: 999px; padding: 0 14px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
 
     .user-profile-modal { position: fixed; inset: 0; background: #f0f2f5; z-index: 240; display: none; flex-direction: column; overflow-y: auto; }
     .user-profile-modal.open { display: flex; }
@@ -489,12 +484,15 @@
             <input type="text" id="regHandle" class="vip-card-input-box uppercase-input" style="font-size:11px; padding:8px 10px;" placeholder="@USUARIO OFICIAL (OPCIONAL)" oninput="window.updateVipCardPreview(this.value || document.getElementById('regName').value)" />
             <input type="email" id="regEmail" class="vip-card-input-box" style="font-size:11px; padding:8px 10px; margin-bottom:4px; text-transform:lowercase;" placeholder="CORREO ELECTRÓNICO (OBLIGATORIO)" />
             <div id="vipEngravedText" class="vip-engraved-preview">LEX_ARGON</div>
-            <div class="vip-card-bonus-lip"><span>Bono de apertura: <strong style="color:#ffffff;">+5,000 A-Coins</strong> listas</span></div>
+            <div class="vip-card-bonus-lip">
+              <span>Bono de apertura: <strong style="color:#ffffff;">+5,000 A-Coins</strong> listas</span>
+              <span style="display:inline-flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; background:rgba(255,255,255,0.14); font-size:10px; font-weight:900; color:#fff;">A</span>
+            </div>
           </div>
         </div>
         <label class="age-compliance-box">
           <input type="checkbox" id="regAgeCheck" />
-          <span>Confirmo bajo juramento que soy <strong>mayor de 18 años</strong>, ingreso mi correo real y acepto el <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial y Privacidad</span> de ARGON.</span>
+          <span>Confirmo bajo juramento que soy <strong>mayor de 18 años</strong>, ingreso mi correo real y acepto el <span style="color:#059669; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial, Relevo Legal y Privacidad</span> de ARGON.</span>
         </label>
         <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">ENTRAR A ARGON &gt;</button>
       </div>
@@ -619,14 +617,6 @@
       </div>
     </div>
 
-    <div id="photoLightbox" class="lightbox-overlay">
-      <div class="lightbox-top-controls">
-        <span class="lightbox-hint-pill">Pellizca o toca 2 veces para Zoom</span>
-        <button class="lightbox-close-x" onclick="window.closePhotoLightbox()">✕</button>
-      </div>
-      <img id="lightboxImg" src="" alt="Vista ampliada" />
-    </div>
-
     <div id="publicProfileModal" class="user-profile-modal">
       <div class="upm-inner">
         <div class="upm-topbar">
@@ -664,7 +654,7 @@
             <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg><span>Centro de Notificaciones</span></div>
             <div style="font-size:11px; color:#059669;">Avisos de videos nuevos, suscriptores y comentarios</div>
           </div>
-          <button class="dm-close-btn" onclick="window.openNotificationsModal()">✕</button>
+          <button class="dm-close-btn" onclick="window.closeNotificationsModal()">✕</button>
         </div>
         <div style="padding:10px 14px; background:#f7f8fa; border-bottom:1px solid #dadde1; display:flex; justify-content:space-between; align-items:center;">
           <span style="font-size:11px; color:#374151; font-weight:700;">Alertas en el dispositivo</span>
@@ -705,7 +695,6 @@
         </div>
       </div>
     </div>
-
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box"><svg width="26" height="26"><use href="#argon-crown-a"></use></svg></div>
@@ -1027,7 +1016,7 @@
       <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>SHORTS</span></button>
       <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')"><svg class="ico-stroke"><use href="#ico-vault"></use></svg><span>BÓVEDA</span></button>
       <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')"><svg class="ico-stroke"><use href="#ico-friends"></use></svg><span>PERFIL</span></button>
-      <button class="nav-btn" id="menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-menu"></use></svg><span>MENÚ</span></button>
+      <button class="nav-btn" id="nav-menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-menu"></use></svg><span>MENÚ</span></button>
       <button class="nav-btn" id="nav-admin" style="display:none; color:#059669;" onclick="window.switchTab('admin')"><svg class="ico-stroke"><use href="#ico-crown-line"></use></svg><span>ADMIN</span></button>
     </nav>
   </div>
@@ -1039,15 +1028,29 @@
     </div>
     <img id="lightboxImg" src="" alt="Vista ampliada" />
   </div>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
-      getFirestore, collection, doc, setDoc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, increment, arrayUnion
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      getDoc,
+      getDocs,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      onSnapshot,
+      query,
+      orderBy,
+      increment,
+      arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
     }
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
@@ -1073,6 +1076,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const invitedByParam = (urlParams.get('ref') || FOUNDER_HANDLE).replace(/^@/, '').toUpperCase();
     const paidPackParam = Number(urlParams.get('paid_pack') || 0);
+
     const sharedTitleParam = (urlParams.get('shared_title') || '').trim();
     const sharedTextParam = (urlParams.get('shared_text') || '').trim();
     const sharedUrlParam = (urlParams.get('shared_url') || '').trim();
@@ -1083,7 +1087,7 @@
     let selectedVideoFile = null;
     let selectedYoutubeId = '';
     let selectedDmPhotoDataUrl = '';
-    let selectedPostVisibility = 'public';
+    let selectedPostVisibility = 'public'; // 'public' | 'private'
     let openCommentDrawers = {};
     let activeDmPartner = '';
     let viewedPublicHandle = '';
@@ -1109,10 +1113,23 @@
     let cleanedLegacyAiOnce = false;
 
     let currentUser = {
-      registered: false, userName: '', userHandle: '', email: '', ageVerified: false,
-      legalContractVersion: '', legalAcceptedAt: 0, invitedBy: FOUNDER_HANDLE, avatar: '',
-      balance: 5000, subs: 0, subscribedTo: [], subscribersList: [], likedPosts: [],
-      blockedUsers: [], reportedPosts: [], promotedUntil: 0
+      registered: false,
+      userName: '',
+      userHandle: '',
+      email: '',
+      ageVerified: false,
+      legalContractVersion: '',
+      legalAcceptedAt: 0,
+      invitedBy: FOUNDER_HANDLE,
+      avatar: '',
+      balance: 5000,
+      subs: 0,
+      subscribedTo: [],
+      subscribersList: [],
+      likedPosts: [],
+      blockedUsers: [],
+      reportedPosts: [],
+      promotedUntil: 0
     };
 
     let livePosts = [];
@@ -1120,7 +1137,12 @@
 
     function escapeHtml(str) {
       if (str === null || str === undefined) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
     function isLegacyAiRecord(item, handleStr = '') {
@@ -1130,10 +1152,14 @@
     }
 
     function pushAppHistoryState() {
-      try { window.history.pushState({ argonInApp: true }, "", window.location.href); } catch (e) {}
+      try {
+        window.history.pushState({ argonInApp: true }, "", window.location.href);
+      } catch (e) {}
     }
 
-    window.getActiveDmPartner = function() { return activeDmPartner; };
+    window.getActiveDmPartner = function() {
+      return activeDmPartner;
+    };
 
     function extractYoutubeId(text) {
       if (!text) return '';
@@ -1144,11 +1170,14 @@
 
     function getPostImagesList(post) {
       if (!post) return [];
-      if (Array.isArray(post.images) && post.images.length > 0) return post.images.filter(Boolean);
+      if (Array.isArray(post.images) && post.images.length > 0) {
+        return post.images.filter(Boolean);
+      }
       if (post.image) return [post.image];
       return [];
     }
 
+    // PRIVACIDAD POR PUBLICACIÓN: PÚBLICO O PRIVADO
     function getEffectivePostVisibility(post) {
       if (!post) return 'public';
       return post.visibility === 'private' ? 'private' : 'public';
@@ -1165,7 +1194,9 @@
     }
 
     function getVisibilityMeta(mode) {
-      if (mode === 'private') return { label: 'Privado', icon: '#ico-lock' };
+      if (mode === 'private') {
+        return { label: 'Privado', icon: '#ico-lock' };
+      }
       return { label: 'Público', icon: '#ico-globe' };
     }
 
@@ -1188,16 +1219,25 @@
     window.togglePostVisibility = async function(postId) {
       const post = livePosts.find(p => p.id === postId);
       if (!post || post.handle !== currentUser.userHandle) return;
+
       const nextVis = getEffectivePostVisibility(post) === 'public' ? 'private' : 'public';
       post.visibility = nextVis;
       renderFeed();
       if (viewedPublicHandle) renderPublicProfileModal();
-      showToast(`✓ Publicación cambiada a: ${getVisibilityMeta(nextVis).label}`);
-      try { await updateDoc(doc(db, "posts", postId), { visibility: nextVis }); } catch (e) {}
+
+      const meta = getVisibilityMeta(nextVis);
+      showToast(`✓ Publicación cambiada a: ${meta.label}`);
+
+      try {
+        await updateDoc(doc(db, "posts", postId), { visibility: nextVis });
+      } catch (e) {}
     };
 
     window.openReportModal = function(postId, authorHandle) {
-      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
       pushAppHistoryState();
       pendingReportPostId = postId || '';
       pendingReportAuthorHandle = (authorHandle || '').replace(/^@/, '').toUpperCase();
@@ -1205,7 +1245,8 @@
     };
 
     window.closeReportModal = function() {
-      pendingReportPostId = ''; pendingReportAuthorHandle = '';
+      pendingReportPostId = '';
+      pendingReportAuthorHandle = '';
       document.getElementById('reportContentModal').classList.remove('open');
     };
 
@@ -1214,63 +1255,125 @@
       const authorH = pendingReportAuthorHandle;
       window.closeReportModal();
       if (!postId) return;
+
       if (!Array.isArray(currentUser.reportedPosts)) currentUser.reportedPosts = [];
       if (!currentUser.reportedPosts.includes(postId)) currentUser.reportedPosts.push(postId);
-      saveLocalSession(); renderFeed();
+      saveLocalSession();
+      renderFeed();
+
       try {
-        await addDoc(collection(db, "reports"), { postId, reportedAuthor: authorH || 'DESCONOCIDO', reportedBy: currentUser.userHandle || 'ANONIMO', reason: reasonText || 'Reporte UGC', status: 'pendiente', createdAt: Date.now() });
-        if (currentUser.userHandle) await setDoc(doc(db, "users", currentUser.userHandle), { reportedPosts: arrayUnion(postId) }, { merge: true });
-        showToast('✓ Reporte enviado a Moderación');
-      } catch (e) { showToast('✓ Publicación ocultada'); }
+        await addDoc(collection(db, "reports"), {
+          postId: postId,
+          reportedAuthor: authorH || 'DESCONOCIDO',
+          reportedBy: currentUser.userHandle || 'ANONIMO',
+          reason: reasonText || 'Reporte UGC',
+          status: 'pendiente',
+          createdAt: Date.now()
+        });
+        if (currentUser.userHandle) {
+          await setDoc(doc(db, "users", currentUser.userHandle), { reportedPosts: arrayUnion(postId) }, { merge: true });
+        }
+        showToast('✓ Reporte enviado a Moderación y publicación ocultada');
+      } catch (e) {
+        showToast('✓ Publicación ocultada de tu feed');
+      }
     };
 
     window.toggleBlockUser = async function(targetHandle) {
-      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if (!currentUser.registered) {
+        document.getElementById('onboardingScreen').classList.remove('hidden');
+        return;
+      }
       const cleanTarget = (targetHandle || '').replace(/^@/, '').toUpperCase();
       if (!cleanTarget || cleanTarget === currentUser.userHandle) return;
+
       if (!Array.isArray(currentUser.blockedUsers)) currentUser.blockedUsers = [];
       const alreadyBlocked = currentUser.blockedUsers.includes(cleanTarget);
-      currentUser.blockedUsers = alreadyBlocked ? currentUser.blockedUsers.filter(h => h !== cleanTarget) : [...currentUser.blockedUsers, cleanTarget];
-      saveLocalSession(); updateUI(); renderFeed();
-      if (viewedPublicHandle) window.closePublicProfile();
-      if (document.getElementById('dmModal').classList.contains('open')) { activeDmPartner = ''; renderDmModal(); }
-      if (currentUser.userHandle) {
-        try { await setDoc(doc(db, "users", currentUser.userHandle), { blockedUsers: currentUser.blockedUsers }, { merge: true }); } catch (e) {}
+
+      if (alreadyBlocked) {
+        currentUser.blockedUsers = currentUser.blockedUsers.filter(h => h !== cleanTarget);
+        showToast(`✓ @${cleanTarget} ha sido desbloqueado`);
+      } else {
+        currentUser.blockedUsers.push(cleanTarget);
+        showToast(`@${cleanTarget} bloqueado. No verás su contenido ni mensajes`);
       }
-      showToast(alreadyBlocked ? `✓ @${cleanTarget} desbloqueado` : `@${cleanTarget} bloqueado`);
+
+      saveLocalSession();
+      updateUI();
+      renderFeed();
+      if (viewedPublicHandle) window.closePublicProfile();
+      if (document.getElementById('dmModal').classList.contains('open')) {
+        activeDmPartner = '';
+        renderDmModal();
+      }
+
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), { blockedUsers: currentUser.blockedUsers }, { merge: true });
+        } catch (e) {}
+      }
     };
 
     window.unblockAllUsers = async function() {
-      if (!Array.isArray(currentUser.blockedUsers) || currentUser.blockedUsers.length === 0) { showToast('No hay usuarios bloqueados'); return; }
+      const count = Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers.length : 0;
+      if (count === 0) {
+        showToast('No tienes ningún usuario bloqueado actualmente');
+        return;
+      }
       currentUser.blockedUsers = [];
-      saveLocalSession(); updateUI(); renderFeed();
-      if (currentUser.userHandle) { try { await setDoc(doc(db, "users", currentUser.userHandle), { blockedUsers: [] }, { merge: true }); } catch (e) {} }
-      showToast('✓ Lista de bloqueados restaurada');
+      saveLocalSession();
+      updateUI();
+      renderFeed();
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), { blockedUsers: [] }, { merge: true });
+        } catch (e) {}
+      }
+      showToast('✓ Lista de usuarios bloqueados restaurada');
     };
 
-    window.openDeleteAccountModal = function() { if (!currentUser.registered) return; pushAppHistoryState(); document.getElementById('deleteAccountModal').classList.add('open'); };
-    window.closeDeleteAccountModal = function() { document.getElementById('deleteAccountModal').classList.remove('open'); };
+    window.openDeleteAccountModal = function() {
+      if (!currentUser.registered) return;
+      pushAppHistoryState();
+      document.getElementById('deleteAccountModal').classList.add('open');
+    };
+
+    window.closeDeleteAccountModal = function() {
+      document.getElementById('deleteAccountModal').classList.remove('open');
+    };
 
     window.executePermanentAccountDeletion = async function() {
       window.closeDeleteAccountModal();
       const myHandle = currentUser.userHandle;
       if (!myHandle) return;
-      showToast('Eliminando tu cuenta y datos...');
+
+      showToast('Eliminando tu cuenta y publicaciones...');
       try {
         const myPosts = livePosts.filter(p => p.handle === myHandle);
-        for (const p of myPosts) { if (p.id) await deleteDoc(doc(db, "posts", p.id)).catch(() => {}); }
+        for (const p of myPosts) {
+          if (p.id) await deleteDoc(doc(db, "posts", p.id)).catch(() => {});
+        }
         await deleteDoc(doc(db, "users", myHandle)).catch(() => {});
       } catch (e) {}
+
       localStorage.removeItem(LOCAL_USER_KEY);
-      currentUser = { registered: false, userName: '', userHandle: '', email: '', ageVerified: false, legalContractVersion: '', legalAcceptedAt: 0, invitedBy: FOUNDER_HANDLE, avatar: '', balance: 5000, subs: 0, subscribedTo: [], subscribersList: [], likedPosts: [], blockedUsers: [], reportedPosts: [], promotedUntil: 0 };
+      currentUser = {
+        registered: false, userName: '', userHandle: '', email: '', ageVerified: false,
+        legalContractVersion: '', legalAcceptedAt: 0, invitedBy: FOUNDER_HANDLE, avatar: '',
+        balance: 5000, subs: 0, subscribedTo: [], subscribersList: [], likedPosts: [],
+        blockedUsers: [], reportedPosts: [], promotedUntil: 0
+      };
       document.getElementById('onboardingScreen').classList.remove('hidden');
       window.switchTab('feed');
-      showToast('✓ Cuenta eliminada permanentemente');
+      showToast('✓ Tu cuenta y tus datos fueron eliminados permanentemente');
     };
 
     window.adminDismissReport = async function(reportId) {
       if (!isUserAdmin() || !reportId) return;
-      try { await deleteDoc(doc(db, "reports", reportId)); showToast('✓ Reporte revisado'); } catch (e) {}
+      try {
+        await deleteDoc(doc(db, "reports", reportId));
+        showToast('✓ Reporte marcado como revisado');
+      } catch (e) {}
     };
 
     window.adminDeleteReportedPost = async function(postId, reportId) {
@@ -1278,8 +1381,10 @@
       try {
         if (postId) await deleteDoc(doc(db, "posts", postId)).catch(() => {});
         if (reportId) await deleteDoc(doc(db, "reports", reportId)).catch(() => {});
-        showToast('✓ Publicación eliminada');
-      } catch (e) {}
+        showToast('✓ Publicación reportada eliminada de ARGON');
+      } catch (e) {
+        showToast('Error al eliminar publicación reportada');
+      }
     };
 
     window.setMyProfileLayout = function(mode) {
@@ -1306,28 +1411,51 @@
       if (gridBox) gridBox.style.display = publicProfileLayoutMode === 'grid' ? 'grid' : 'none';
     };
 
-    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos.') {
+    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos en esta galería.') {
       if (!containerEl) return;
       const mediaPosts = (postsList || []).filter(p => {
         const imgs = getPostImagesList(p);
         const yt = p.youtubeId || extractYoutubeId(p.caption);
         return imgs.length > 0 || p.video || p.videoId || yt;
       });
+
       if (mediaPosts.length === 0) {
         containerEl.innerHTML = `<div class="glass-card" style="grid-column:1 / -1; text-align:center; font-size:12px; color:#65676b;">${escapeHtml(emptyMessage)}</div>`;
         return;
       }
+
       containerEl.innerHTML = mediaPosts.map(post => {
         const imgs = getPostImagesList(post);
         const ytId = post.youtubeId || extractYoutubeId(post.caption);
         const isVideo = !!(post.video || post.videoId || ytId);
+        const viewsCount = Number(post.views) || 0;
+        const likesCount = Number(post.likes) || 0;
+
         let thumbHtml = '';
-        if (imgs.length > 0) thumbHtml = `<img src="${imgs[0]}" alt="" loading="lazy" />`;
-        else if (ytId) thumbHtml = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="" loading="lazy" />`;
-        else if (post.video) thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
-        else thumbHtml = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
-        const badgeHtml = imgs.length > 1 ? `<div class="media-grid-badge">1/${imgs.length}</div>` : (isVideo ? `<div class="media-grid-badge">▶</div>` : '');
-        return `<div class="media-grid-cell" onclick="window.openGalleryItem('${post.id}')">${thumbHtml}${badgeHtml}<div class="media-grid-bottom-meta"><span>@${escapeHtml(post.handle)}</span><span>${isVideo ? Number(post.views || 0) : Number(post.likes || 0)}</span></div></div>`;
+        if (imgs.length > 0) {
+          thumbHtml = `<img src="${imgs[0]}" alt="@${escapeHtml(post.handle)}" loading="lazy" />`;
+        } else if (ytId) {
+          thumbHtml = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube" loading="lazy" />`;
+        } else if (post.video) {
+          thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        } else {
+          thumbHtml = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
+        }
+
+        const badgeHtml = imgs.length > 1
+          ? `<div class="media-grid-badge">1/${imgs.length}</div>`
+          : (isVideo ? `<div class="media-grid-badge">▶</div>` : '');
+
+        return `
+          <div class="media-grid-cell" onclick="window.openGalleryItem('${post.id}')">
+            ${thumbHtml}
+            ${badgeHtml}
+            <div class="media-grid-bottom-meta">
+              <span>@${escapeHtml(post.handle)}</span>
+              <span>${isVideo ? `${viewsCount}` : `${likesCount}`}</span>
+            </div>
+          </div>
+        `;
       }).join('');
     }
 
@@ -1335,7 +1463,10 @@
       const post = livePosts.find(p => p.id === postId);
       if (!post) return;
       const imgs = getPostImagesList(post);
-      if (imgs.length > 0) { window.openPhotoLightbox(imgs[0]); return; }
+      if (imgs.length > 0) {
+        window.openPhotoLightbox(imgs[0]);
+        return;
+      }
       const shortsList = getShortVideoPosts();
       const idx = shortsList.findIndex(p => p.id === postId);
       if (idx >= 0) window.openShortsPlayer(idx);
@@ -1347,6 +1478,1430 @@
       const idx = Math.min(totalSlides, Math.max(1, Math.round(trackEl.scrollLeft / w) + 1));
       const badge = document.getElementById(`carousel-cnt-${postId}`);
       if (badge) badge.textContent = `${idx}/${totalSlides}`;
+    };
+
+    window.handleComposerInputChange = function(val) {
+      const ytId = extractYoutubeId(val);
+      const previewBox = document.getElementById('composerYoutubePreview');
+      if (!previewBox) return;
+
+      if (ytId) {
+        if (selectedYoutubeId !== ytId) {
+          selectedYoutubeId = ytId;
+          previewBox.style.display = 'block';
+          previewBox.innerHTML = `<div class="youtube-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+        }
+      } else {
+        selectedYoutubeId = '';
+        previewBox.style.display = 'none';
+        previewBox.innerHTML = '';
+      }
+    };
+
+    function checkAndHandleIncomingShare() {
+      if (!hasIncomingShare) return;
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+
+      const combinedPieces = [];
+      if (sharedTitleParam) combinedPieces.push(sharedTitleParam);
+      if (sharedTextParam && sharedTextParam !== sharedTitleParam) combinedPieces.push(sharedTextParam);
+      if (sharedUrlParam && !sharedTextParam.includes(sharedUrlParam)) combinedPieces.push(sharedUrlParam);
+
+      const finalSharedContent = combinedPieces.join(' • ').trim();
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({ argonInApp: true }, "", cleanUrl);
+      if (!finalSharedContent) return;
+
+      window.switchTab('feed');
+      const inputEl = document.getElementById('newPostInput');
+      if (inputEl) {
+        inputEl.value = finalSharedContent;
+        window.handleComposerInputChange(finalSharedContent);
+        inputEl.focus();
+      }
+      showToast(extractYoutubeId(finalSharedContent) ? '✓ Video de YouTube listo. Toca "Publicar"' : '✓ Enlace recibido. Toca "Publicar"');
+    }
+
+    async function checkAndCreditStripeReturn() {
+      if (!paidPackParam || paidPackParam <= 0) return;
+      const cleanUrl = window.location.origin + window.location.pathname;
+      window.history.replaceState({ argonInApp: true }, "", cleanUrl);
+
+      const pendingCheckoutTs = Number(localStorage.getItem('argon_stripe_pending_ts') || 0);
+      localStorage.removeItem('argon_stripe_pending_ts');
+
+      const now = Date.now();
+      if ((!pendingCheckoutTs || (now - pendingCheckoutTs > 45 * 60 * 1000)) && !isUserAdmin()) return;
+
+      const coinsToCredit = paidPackParam === 6000 ? 6000 : paidPackParam;
+      currentUser.balance = (Number(currentUser.balance) || 0) + coinsToCredit;
+      saveLocalSession();
+      updateUI();
+      window.switchTab('boveda');
+
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+
+      if (currentUser.registered && currentUser.userHandle) {
+        try {
+          const promoterHandle = (currentUser.invitedBy || FOUNDER_HANDLE).toUpperCase();
+          await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(coinsToCredit), lastPurchaseAt: now }, { merge: true });
+          await addDoc(collection(db, "purchases"), {
+            buyer: currentUser.userHandle, promoter: promoterHandle, coins: coinsToCredit,
+            amountUSD: 1.99, promoterCommissionUSD: 0.10, createdAt: now
+          });
+          showToast(`✓ Pago confirmado: +${coinsToCredit.toLocaleString()} A-Coins acreditadas`);
+        } catch (e) {
+          showToast(`✓ +${coinsToCredit.toLocaleString()} A-Coins acreditadas en tu Bóveda`);
+        }
+      } else {
+        showToast(`✓ +${coinsToCredit.toLocaleString()} A-Coins listas. Completa tu registro`);
+      }
+    }
+
+    function isPostOrAuthorFeatured(post) {
+      if (!post) return false;
+      const now = Date.now();
+      if ((post.promotedUntil || 0) > now) return true;
+      const uDoc = usersMap[post.handle] || {};
+      return (uDoc.promotedUntil || 0) > now;
+    }
+
+    window.registerVideoView = async function(postId) {
+      if (!postId) return;
+      const now = Date.now();
+      if (now - (viewCooldownMap[postId] || 0) < 60000) return;
+      viewCooldownMap[postId] = now;
+
+      const postObj = livePosts.find(p => p.id === postId);
+      if (postObj) postObj.views = (Number(postObj.views) || 0) + 1;
+
+      const inlineLbl = document.getElementById(`views-lbl-${postId}`);
+      if (inlineLbl && postObj) inlineLbl.textContent = `${(postObj.views || 1).toLocaleString()} Views`;
+      const shortRailLbl = document.getElementById(`short-views-lbl-${postId}`);
+      if (shortRailLbl && postObj) shortRailLbl.textContent = (postObj.views || 1).toLocaleString();
+
+      try { await updateDoc(doc(db, "posts", postId), { views: increment(1) }); } catch (e) {}
+    };
+
+    function syncCurrentUserFromDoc(data) {
+      if (typeof data.balance === 'number') currentUser.balance = data.balance;
+      if (typeof data.subs === 'number') currentUser.subs = data.subs;
+      if (data.avatar) currentUser.avatar = data.avatar;
+      if (data.email) currentUser.email = data.email;
+      if (typeof data.ageVerified === 'boolean') currentUser.ageVerified = data.ageVerified;
+      if (data.legalContractVersion) currentUser.legalContractVersion = data.legalContractVersion;
+      if (data.invitedBy) currentUser.invitedBy = data.invitedBy;
+      if (typeof data.promotedUntil === 'number') currentUser.promotedUntil = data.promotedUntil;
+      if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
+      if (Array.isArray(data.subscribersList)) currentUser.subscribersList = data.subscribersList;
+      if (Array.isArray(data.blockedUsers)) currentUser.blockedUsers = data.blockedUsers;
+      if (Array.isArray(data.reportedPosts)) currentUser.reportedPosts = data.reportedPosts;
+      saveLocalSession();
+    }
+
+    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0 || hasIncomingShare) {
+      sessionStorage.removeItem('argon_fast_refresh');
+      const sp = document.getElementById('vaultSplashScreen');
+      if (sp) sp.classList.add('hidden');
+      setTimeout(() => {
+        const g = document.getElementById('edgeRefreshGlow');
+        if (g) g.classList.add('blinking');
+      }, 80);
+    }
+
+    window.triggerManualBlinkRefresh = async function() {
+      const glow = document.getElementById('edgeRefreshGlow');
+      if (glow) {
+        glow.classList.remove('pulling', 'blinking');
+        void glow.offsetWidth;
+        glow.classList.add('blinking');
+      }
+      if (navigator.vibrate) { try { navigator.vibrate(35); } catch (e) {} }
+
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const r of regs) await r.update();
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const k of keys) await caches.delete(k);
+        }
+
+        const [uSnap, pSnap] = await Promise.all([
+          getDocs(collection(db, "users")),
+          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")))
+        ]);
+
+        const nextUsers = {};
+        uSnap.forEach((docSnap) => {
+          const data = docSnap.data();
+          const h = (data.userHandle || docSnap.id).toUpperCase();
+          if (isLegacyAiRecord(data, h)) return;
+          nextUsers[h] = data;
+          if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
+        });
+        usersMap = nextUsers;
+
+        const arr = [];
+        pSnap.forEach(d => {
+          const pd = Object.assign({ id: d.id }, d.data());
+          if (!isLegacyAiRecord(pd, pd.handle)) arr.push(pd);
+        });
+        livePosts = arr;
+
+        updateUI();
+        renderFeed();
+        renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+        showToast('✓ Muro y galería sincronizados');
+      } catch (e) {
+        sessionStorage.setItem('argon_fast_refresh', '1');
+        window.location.reload();
+      }
+    };
+
+    (function setupPullToBlinkRefresh() {
+      let startY = 0, currentPull = 0, tracking = false;
+      document.addEventListener('touchstart', (e) => {
+        if (document.querySelector('.shorts-fullscreen-modal.open, .dm-modal-overlay.open, .user-profile-modal.open, .confirm-modal-overlay.open, .lightbox-overlay.open')) {
+          tracking = false;
+          return;
+        }
+        const st = window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (st <= 5 && e.touches && e.touches.length === 1) {
+          startY = e.touches[0].screenY;
+          currentPull = 0;
+          tracking = true;
+        } else {
+          tracking = false;
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchmove', (e) => {
+        if (!tracking || !e.touches || e.touches.length !== 1) return;
+        if ((window.pageYOffset || document.documentElement.scrollTop || 0) > 5) {
+          tracking = false;
+          return;
+        }
+        currentPull = e.touches[0].screenY - startY;
+        const glow = document.getElementById('edgeRefreshGlow');
+        if (currentPull > 45) {
+          if (glow && !glow.classList.contains('blinking')) glow.classList.add('pulling');
+        } else if (glow) {
+          glow.classList.remove('pulling');
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', () => {
+        if (!tracking) return;
+        const glow = document.getElementById('edgeRefreshGlow');
+        if (glow) glow.classList.remove('pulling');
+        if (currentPull > 120) window.triggerManualBlinkRefresh();
+        tracking = false;
+        currentPull = 0;
+      }, { passive: true });
+    })();
+
+    const refBanner = document.getElementById('referralWelcomeBanner');
+    if (refBanner && invitedByParam) {
+      refBanner.textContent = `✓ Invitación oficial de @${invitedByParam} (+10 AC extra)`;
+    }
+
+    window.openEditProfileModal = function() {
+      pushAppHistoryState();
+      const inp = document.getElementById('editProfileNameInput');
+      if (inp) inp.value = currentUser.userName || '';
+      document.getElementById('editProfileModal').classList.add('open');
+    };
+
+    window.closeEditProfileModal = function() {
+      document.getElementById('editProfileModal').classList.remove('open');
+    };
+
+    window.saveEditedProfile = async function() {
+      const val = (document.getElementById('editProfileNameInput').value || '').trim().toUpperCase();
+      if (!val) { showToast('Escribe un nombre válido'); return; }
+      currentUser.userName = val;
+      saveLocalSession();
+      window.closeEditProfileModal();
+      updateUI();
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), { userName: val, updatedAt: Date.now() }, { merge: true });
+          showToast('✓ Nombre actualizado en tu perfil y tarjeta');
+        } catch (e) {
+          showToast('✓ Nombre guardado');
+        }
+      }
+    };
+
+    window.toggleSoundSetting = function() {
+      soundAlertsEnabled = !soundAlertsEnabled;
+      localStorage.setItem('argon_sound_enabled', soundAlertsEnabled ? '1' : '0');
+      updateUI();
+      showToast(soundAlertsEnabled ? '✓ Sonido de notificaciones activado' : 'Sonido silenciado');
+    };
+
+    window.logoutMyAccount = function() {
+      localStorage.removeItem(LOCAL_USER_KEY);
+      currentUser.registered = false;
+      document.getElementById('onboardingScreen').classList.remove('hidden');
+      window.switchTab('feed');
+      showToast('Sesión cerrada. Puedes ingresar con otra cuenta.');
+    };
+
+    window.openLegalModal = function() {
+      pushAppHistoryState();
+      document.getElementById('legalTermsModal').classList.add('open');
+    };
+
+    window.closeLegalModal = function() {
+      document.getElementById('legalTermsModal').classList.remove('open');
+    };
+
+    window.openFriendsModal = function() {
+      pushAppHistoryState();
+      renderMySubscribers();
+      document.getElementById('friendsListModal').classList.add('open');
+    };
+
+    window.closeFriendsModal = function() {
+      document.getElementById('friendsListModal').classList.remove('open');
+    };
+
+    window.openAgeEmailVerifyModal = function() {
+      pushAppHistoryState();
+      const inp = document.getElementById('verifyModalEmailInput');
+      const chk = document.getElementById('verifyModalAgeCheck');
+      if (inp) inp.value = currentUser.email || '';
+      if (chk) chk.checked = !!currentUser.ageVerified;
+      document.getElementById('ageEmailVerifyModal').classList.add('open');
+    };
+
+    window.saveExistingUserVerification = async function() {
+      const emailVal = (document.getElementById('verifyModalEmailInput').value || '').trim().toLowerCase();
+      const ageChecked = document.getElementById('verifyModalAgeCheck').checked;
+      if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) { showToast('Ingresa un correo electrónico válido'); return; }
+      if (!ageChecked) { showToast('Debes confirmar que eres mayor de 18 años y aceptar el contrato'); return; }
+
+      const signedTimestamp = Date.now();
+      currentUser.email = emailVal;
+      currentUser.ageVerified = true;
+      currentUser.legalContractVersion = 'v2.1-PR';
+      currentUser.legalAcceptedAt = signedTimestamp;
+      saveLocalSession();
+      document.getElementById('ageEmailVerifyModal').classList.remove('open');
+      updateUI();
+
+      if (currentUser.userHandle) {
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            email: emailVal, ageVerified: true, legalContractVersion: 'v2.1-PR',
+            legalAcceptedAt: signedTimestamp, legalAcceptedDateISO: new Date(signedTimestamp).toISOString(),
+            legalUserAgent: navigator.userAgent || 'mobile-app', updatedAt: signedTimestamp
+          }, { merge: true });
+          showToast('✓ Contrato legal y mayoría de edad (+18) certificados');
+        } catch (e) {
+          showToast('✓ Certificación guardada');
+        }
+      }
+    };
+
+    function getUserRankTitle(subsCount) {
+      const s = Number(subsCount) || 0;
+      if (s >= 100000) return 'RANGO ARGON';
+      if (s >= 20000) return 'RANGO DIAMANTE';
+      if (s >= 10000) return 'RANGO PLATINO';
+      if (s >= 5000) return 'RANGO TITANIO';
+      if (s >= 1000) return 'RANGO BRONCE';
+      return 'RANGO INICIAL';
+    }
+
+    function getNextRankTarget(subsCount) {
+      const s = Number(subsCount) || 0;
+      if (s < 1000) return 1000;
+      if (s < 5000) return 5000;
+      if (s < 10000) return 10000;
+      if (s < 20000) return 20000;
+      return 100000;
+    }
+
+    window.updateVipCardPreview = function(val) {
+      const clean = (val || '').trim().toUpperCase().replace(/\s+/g, '_');
+      const el = document.getElementById('vipEngravedText');
+      if (el) el.textContent = clean || 'LEX_ARGON';
+    };
+
+    function runVaultSplashAnimation() {
+      const splash = document.getElementById('vaultSplashScreen');
+      const fill = document.getElementById('splashBarFill');
+      const pctTxt = document.getElementById('splashPctText');
+      if (!splash || !fill || !pctTxt || splash.classList.contains('hidden')) return;
+
+      let progress = 0;
+      const timer = setInterval(() => {
+        progress += Math.floor(Math.random() * 9) + 5;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(timer);
+          fill.style.width = '100%';
+          pctTxt.textContent = '100%';
+          setTimeout(() => {
+            splash.classList.add('hidden');
+            splash.style.display = 'none';
+            if (!currentUser.registered) {
+              document.getElementById('onboardingScreen').classList.remove('hidden');
+            } else if (!currentUser.email || !currentUser.ageVerified) {
+              window.openAgeEmailVerifyModal();
+            }
+          }, 260);
+        } else {
+          fill.style.width = progress + '%';
+          pctTxt.textContent = progress + '%';
+        }
+      }, 65);
+    }
+
+    function isUserAdmin() {
+      const h = (currentUser.userHandle || '').toUpperCase();
+      const n = (currentUser.userName || '').toUpperCase();
+      return ADMIN_HANDLES.includes(h) || n.includes('ALBERTO SOTO');
+    }
+
+    function loadLocalSession() {
+      try {
+        const saved = localStorage.getItem(LOCAL_USER_KEY);
+        if (saved) currentUser = Object.assign({}, currentUser, JSON.parse(saved));
+      } catch (e) {}
+    }
+
+    function saveLocalSession() {
+      try { localStorage.setItem(LOCAL_USER_KEY, JSON.stringify(currentUser)); } catch (e) {}
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 3200);
+    }
+
+    function animateLiveBalance(el, startVal, endVal, duration = 650) {
+      if (!el) return;
+      const startTime = performance.now();
+      function tick(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(startVal + (endVal - startVal) * eased).toLocaleString();
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function getOrderedPostsWithPromotions() {
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const reportedSet = new Set(Array.isArray(currentUser.reportedPosts) ? currentUser.reportedPosts : []);
+
+      return [...livePosts]
+        .filter(p => !isLegacyAiRecord(p, p.handle) && !blockedSet.has(p.handle) && !reportedSet.has(p.id) && canCurrentUserViewPost(p))
+        .sort((a, b) => {
+          const aPromo = isPostOrAuthorFeatured(a) ? 1 : 0;
+          const bPromo = isPostOrAuthorFeatured(b) ? 1 : 0;
+          if (aPromo !== bPromo) return bPromo - aPromo;
+          return (b.createdAt || 0) - (a.createdAt || 0);
+        });
+    }
+
+    function getShortVideoPosts() {
+      const ordered = getOrderedPostsWithPromotions();
+      const vids = ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || extractYoutubeId(p.caption)));
+      return vids.length > 0 ? vids : ordered.filter(p => !!(p.video || p.videoId || p.youtubeId || getPostImagesList(p).length > 0));
+    }
+
+    function renderShortsTray() {
+      const tray = document.getElementById('shortsTrayScroll');
+      if (!tray) return;
+
+      const myAvatarHtml = currentUser.avatar
+        ? `<img src="${currentUser.avatar}" alt="Yo" />`
+        : `<svg width="38" height="38"><use href="#argon-crown-a"></use></svg>`;
+
+      const createCardHtml = `<label class="short-card-item create-card" title="Subir un nuevo Short"><div class="short-create-top">${myAvatarHtml}</div><div class="short-plus-circle">+</div><div class="short-create-label">Subir Short</div><input type="file" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event)" /></label>`;
+
+      const items = getShortVideoPosts().slice(0, 15);
+      const cardsHtml = items.map((post, idx) => {
+        const uDoc = usersMap[post.handle] || {};
+        const avSrc = uDoc.avatar || post.avatar || '';
+        const isPromo = isPostOrAuthorFeatured(post);
+        const viewsCount = Number(post.views) || 0;
+        const ytId = post.youtubeId || extractYoutubeId(post.caption);
+        const postImgs = getPostImagesList(post);
+        const miniAv = avSrc ? `<img src="${avSrc}" alt="${escapeHtml(post.handle)}" />` : escapeHtml((post.handle || 'AR').slice(0, 2));
+
+        let mediaPreview = '';
+        if (post.video) mediaPreview = `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        else if (ytId) mediaPreview = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube Short" />`;
+        else if (postImgs.length > 0) mediaPreview = `<img class="short-thumb-img" src="${postImgs[0]}" alt="${escapeHtml(post.handle)}" />`;
+        else mediaPreview = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
+
+        const goldCornerHtml = isPromo ? `<div class="short-gold-corner-badge"><svg width="16" height="16"><use href="#argon-crown-a-gold"></use></svg></div>` : '';
+
+        return `<div class="short-card-item ${isPromo ? 'promoted-short' : ''}" onclick="window.openShortsPlayer(${idx})">${goldCornerHtml}${mediaPreview}<div class="short-card-overlay"><div class="short-mini-avatar">${miniAv}</div><div><div class="short-card-handle">@${escapeHtml(post.handle)}</div><div class="short-views-pill"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-eye"></use></svg><span>${viewsCount.toLocaleString()}</span></div></div></div></div>`;
+      }).join('');
+
+      tray.innerHTML = createCardHtml + cardsHtml;
+    }
+
+    window.promotePostWithCoins = async function(postId) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if ((currentUser.balance || 0) < 500) { showToast('Necesitas al menos 500 A-Coins en tu Bóveda para impulsar'); window.switchTab('boveda'); return; }
+      const promoUntil = Date.now() + 24 * 60 * 60 * 1000;
+      currentUser.balance = (currentUser.balance || 0) - 500;
+      saveLocalSession();
+      updateUI();
+      try {
+        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(-500) }, { merge: true });
+        await updateDoc(doc(db, "posts", postId), { promotedUntil: promoUntil });
+        showToast('✓ Destacado en 1er lugar con el Sello Argon Oro (-500 AC)');
+      } catch (e) { showToast('Error al activar impulso'); }
+    };
+
+    window.promoteMyProfilePage = async function() {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if ((currentUser.balance || 0) < 500) { showToast('Necesitas 500 A-Coins en tu Bóveda para impulsar'); window.switchTab('boveda'); return; }
+      const promoUntil = Date.now() + 24 * 60 * 60 * 1000;
+      currentUser.balance = (currentUser.balance || 0) - 500;
+      currentUser.promotedUntil = promoUntil;
+      saveLocalSession();
+
+      const myLatestPost = livePosts.find(p => p.handle === currentUser.userHandle);
+      if (myLatestPost) myLatestPost.promotedUntil = promoUntil;
+      updateUI();
+      renderFeed();
+
+      try {
+        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(-500), promotedUntil: promoUntil }, { merge: true });
+        if (myLatestPost && myLatestPost.id) await updateDoc(doc(db, "posts", myLatestPost.id), { promotedUntil: promoUntil });
+        showToast('✓ Tus publicaciones lucen el Sello Argon Oro arriba en el Feed (-500 AC)');
+        window.switchTab('feed');
+      } catch (e) { showToast('Error al activar impulso VIP'); }
+    };
+
+    window.openShortsPlayer = function(startIndex = 0) {
+      const shortsList = getShortVideoPosts();
+      if (shortsList.length === 0) { showToast('Sube el primer Short tocando "+ Subir Short"'); return; }
+      pushAppHistoryState();
+      currentShortIndex = Math.max(0, Math.min(startIndex, shortsList.length - 1));
+      document.getElementById('shortsFullscreenModal').classList.add('open');
+      buildShortsSnapFeed(currentShortIndex);
+    };
+
+    window.closeShortsPlayer = function() {
+      if (shortsSnapObserver) { shortsSnapObserver.disconnect(); shortsSnapObserver = null; }
+      const feedEl = document.getElementById('shortsSnapFeed');
+      if (feedEl) {
+        feedEl.querySelectorAll('video').forEach(v => { v.pause(); v.src = ''; });
+        feedEl.innerHTML = '';
+      }
+      document.getElementById('shortsFullscreenModal').classList.remove('open');
+    };
+
+    function activateShortSlide(slideEl) {
+      if (!slideEl) return;
+      const postId = slideEl.getAttribute('data-post-id');
+      currentShortIndex = Number(slideEl.getAttribute('data-index') || 0);
+      if (postId) window.registerVideoView(postId);
+
+      const feedEl = document.getElementById('shortsSnapFeed');
+      if (!feedEl) return;
+      feedEl.querySelectorAll('.short-snap-slide').forEach(otherSlide => {
+        const isCurrent = otherSlide === slideEl;
+        const vid = otherSlide.querySelector('video');
+        const ytHolder = otherSlide.querySelector('.short-yt-holder');
+        const ytId = otherSlide.getAttribute('data-yt-id');
+        if (vid) {
+          if (isCurrent) { vid.currentTime = 0; vid.play().catch(() => {}); }
+          else vid.pause();
+        }
+        if (ytHolder && ytId) {
+          if (isCurrent) {
+            if (!ytHolder.querySelector('iframe')) {
+              ytHolder.innerHTML = `<iframe class="short-yt-frame" src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+            }
+          } else {
+            ytHolder.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:76%;object-fit:cover;opacity:0.65;" alt="YouTube" />`;
+          }
+        }
+      });
+    }
+
+    function setupSwipeShieldForYoutubeSlide(shieldEl, feedEl) {
+      if (!shieldEl || !feedEl) return;
+      let startY = 0, startTime = 0;
+      shieldEl.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length === 1) { startY = e.touches[0].clientY; startTime = Date.now(); }
+      }, { passive: true });
+      shieldEl.addEventListener('touchend', (e) => {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        const diffY = startY - e.changedTouches[0].clientY;
+        const elapsed = Date.now() - startTime;
+        if (Math.abs(diffY) > 42) {
+          const slideH = feedEl.clientHeight || window.innerHeight;
+          const nextIdx = diffY > 0 ? currentShortIndex + 1 : currentShortIndex - 1;
+          const totalSlides = feedEl.querySelectorAll('.short-snap-slide').length;
+          feedEl.scrollTo({ top: Math.max(0, Math.min(nextIdx, totalSlides - 1)) * slideH, behavior: 'smooth' });
+        } else if (elapsed < 260) {
+          shieldEl.style.pointerEvents = 'none';
+          setTimeout(() => { shieldEl.style.pointerEvents = 'auto'; }, 2500);
+        }
+      }, { passive: true });
+    }
+
+    function buildShortsSnapFeed(initialIndex = 0) {
+      const feedEl = document.getElementById('shortsSnapFeed');
+      if (!feedEl) return;
+      const shortsList = getShortVideoPosts();
+      if (shortsSnapObserver) shortsSnapObserver.disconnect();
+
+      feedEl.innerHTML = shortsList.map((post, idx) => {
+        const ytId = post.youtubeId || extractYoutubeId(post.caption);
+        const postImgs = getPostImagesList(post);
+        const alreadyLiked = (currentUser.likedPosts || []).includes(post.id);
+        const alreadySub = (currentUser.subscribedTo || []).includes(post.handle);
+        const isOwn = post.handle === currentUser.userHandle;
+        const isPromo = isPostOrAuthorFeatured(post);
+        const commentsCount = Array.isArray(post.comments) ? post.comments.length : 0;
+        const viewsCount = Number(post.views) || 1;
+
+        let mediaStageHtml = '';
+        if (post.video) mediaStageHtml = `<video class="shorts-fs-video" src="${post.video}" playsinline loop controls preload="metadata"></video>`;
+        else if (ytId) mediaStageHtml = `<div class="short-yt-holder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"></div><div class="short-swipe-shield"></div>`;
+        else if (postImgs.length > 0) mediaStageHtml = `<img class="shorts-fs-video" style="object-fit:contain;" src="${postImgs[0]}" alt="@${escapeHtml(post.handle)}" />`;
+
+        return `<div class="short-snap-slide" data-index="${idx}" data-post-id="${post.id}" data-yt-id="${ytId || ''}">${mediaStageHtml}<div class="shorts-fs-right-rail"><div style="text-align:center;"><div class="short-rail-btn"><svg class="ico-stroke"><use href="#ico-eye"></use></svg></div><div class="short-rail-lbl" id="short-views-lbl-${post.id}">${viewsCount.toLocaleString()}</div></div><div style="text-align:center;"><button class="short-rail-btn" id="short-like-btn-${post.id}" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLikeInShorts('${post.id}')"><svg class="ico-stroke"><use href="#ico-heart"></use></svg></button><div class="short-rail-lbl" id="short-likes-lbl-${post.id}">${Math.max(0, Number(post.likes) || 0)}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');"><svg class="ico-stroke"><use href="#ico-comment"></use></svg></button><div class="short-rail-lbl">${commentsCount}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg></button><div class="short-rail-lbl">Enviar</div></div>${!isOwn ? `<div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.openReportModal('${post.id}', '${post.handle}');"><svg class="ico-stroke"><use href="#ico-flag"></use></svg></button><div class="short-rail-lbl">Reportar</div></div>` : ''}</div><div class="shorts-fs-bottom-info"><div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;"><span style="font-size:15px; font-weight:900; color:#fff; cursor:pointer; text-shadow:0 2px 6px #000;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${escapeHtml(post.handle)}</span>${isPromo ? `<div class="argon-gold-corner-badge"><svg width="18" height="18"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button>` : (!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : '')}</div><div style="font-size:13px; color:#f1f5f9; text-shadow:0 2px 6px #000; line-height:1.35; max-height:66px; overflow:hidden;">${escapeHtml(post.caption || '')}</div></div></div>`;
+      }).join('');
+
+      feedEl.querySelectorAll('.short-swipe-shield').forEach(shield => setupSwipeShieldForYoutubeSlide(shield, feedEl));
+      setTimeout(() => {
+        const slideH = feedEl.clientHeight || window.innerHeight;
+        feedEl.scrollTop = initialIndex * slideH;
+        const allSlides = feedEl.querySelectorAll('.short-snap-slide');
+        if (allSlides[initialIndex]) activateShortSlide(allSlides[initialIndex]);
+      }, 40);
+
+      shortsSnapObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting && entry.intersectionRatio >= 0.6) activateShortSlide(entry.target); });
+      }, { root: feedEl, threshold: [0.65] });
+
+      feedEl.querySelectorAll('.short-snap-slide').forEach(slide => shortsSnapObserver.observe(slide));
+    }
+
+    window.toggleLikeInShorts = async function(postId) {
+      await window.toggleLike(postId);
+      const post = livePosts.find(p => p.id === postId);
+      const alreadyLiked = (currentUser.likedPosts || []).includes(postId);
+      const btn = document.getElementById(`short-like-btn-${postId}`);
+      const lbl = document.getElementById(`short-likes-lbl-${postId}`);
+      if (btn) {
+        btn.style.color = alreadyLiked ? '#f43f5e' : '#ffffff';
+        btn.style.borderColor = alreadyLiked ? '#f43f5e' : 'rgba(255,255,255,0.22)';
+      }
+      if (lbl && post) lbl.textContent = Math.max(0, Number(post.likes) || 0);
+    };
+    window.askConfirmDeletePost = function(postId, authorHandle) {
+      if (!postId || postId === 'welcome') return;
+      const isMine = authorHandle === currentUser.userHandle;
+      if (!isMine && !isUserAdmin()) return;
+      pushAppHistoryState();
+      pendingDeletePostId = postId;
+      document.getElementById('confirmModalTitle').textContent = '¿Estás seguro?';
+      document.getElementById('confirmModalDesc').textContent = isMine
+        ? 'Tu publicación se eliminará permanentemente de tu muro y del feed de ARGON.'
+        : `Vas a eliminar permanentemente la publicación de @${authorHandle} como Administrador.`;
+      document.getElementById('confirmDeleteModal').classList.add('open');
+    };
+
+    window.closeConfirmModal = function() {
+      pendingDeletePostId = '';
+      document.getElementById('confirmDeleteModal').classList.remove('open');
+    };
+
+    window.executeConfirmedDelete = async function() {
+      const postId = pendingDeletePostId;
+      window.closeConfirmModal();
+      if (!postId) return;
+      try {
+        const postObj = livePosts.find(p => p.id === postId);
+        if (postObj && postObj.videoId && postObj.chunkCount) {
+          for (let i = 0; i < postObj.chunkCount; i++) deleteDoc(doc(db, "video_chunks", `${postObj.videoId}_${i}`)).catch(() => {});
+        }
+        await deleteDoc(doc(db, "posts", postId));
+        showToast('✓ Publicación eliminada correctamente');
+      } catch (e) { showToast('No se pudo eliminar la publicación'); }
+    };
+
+    function playNotificationSound() {
+      if (!soundAlertsEnabled) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!sharedAudioCtx) sharedAudioCtx = new AudioCtx();
+        if (sharedAudioCtx.state === 'suspended') sharedAudioCtx.resume().catch(() => {});
+        const osc = sharedAudioCtx.createOscillator();
+        const gain = sharedAudioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, sharedAudioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1320, sharedAudioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.08, sharedAudioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, sharedAudioCtx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(sharedAudioCtx.destination);
+        osc.start();
+        osc.stop(sharedAudioCtx.currentTime + 0.25);
+      } catch (e) {}
+    }
+
+    window.enableBrowserPushNotifications = async function() {
+      if (!("Notification" in window)) { showToast('Tu dispositivo usa las notificaciones internas de la campana'); return; }
+      const perm = await Notification.requestPermission();
+      if (perm === "granted") {
+        showToast('✓ Alertas Push activadas en tu dispositivo');
+        new Notification("ARGON • Alertas Activas", { body: "Recibirás avisos inmediatos cuando tus creadores suban videos o fotos." });
+      } else showToast('Permiso denegado');
+    };
+
+    async function dispatchNotification({ toList, type, text, postId = '' }) {
+      if (!Array.isArray(toList) || toList.length === 0) return;
+      const cleanTargets = Array.from(new Set(toList.filter(h => h && h !== currentUser.userHandle)));
+      for (const targetHandle of cleanTargets) {
+        try {
+          await addDoc(collection(db, "notifications"), { to: targetHandle, from: currentUser.userHandle, type, text, postId, createdAt: Date.now() });
+        } catch (e) {}
+      }
+    }
+
+    window.openNotificationsModal = function() {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      pushAppHistoryState();
+      lastSeenNotifTime = Date.now();
+      previousUnreadNotifCount = 0;
+      localStorage.setItem('argon_last_notif_ts', String(lastSeenNotifTime));
+      const badge = document.getElementById('notifBadge');
+      if (badge) badge.style.display = 'none';
+      document.getElementById('notifModal').classList.add('open');
+      renderNotificationsList();
+    };
+
+    window.closeNotificationsModal = function() {
+      document.getElementById('notifModal').classList.remove('open');
+    };
+
+    function renderNotificationsList() {
+      const box = document.getElementById('notifListBox');
+      if (!box) return;
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const myNotifs = allNotifications.filter(n => (n.to === currentUser.userHandle || n.to === 'ALL') && !blockedSet.has(n.from) && !isLegacyAiRecord(null, n.from));
+      if (myNotifs.length === 0) {
+        box.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; padding:45px 20px;">Aún no tienes notificaciones nuevas.</div>`;
+        return;
+      }
+      box.innerHTML = myNotifs.map(n => {
+        const isUnread = (n.createdAt || 0) > lastSeenNotifTime;
+        const iconHref = n.type === 'video' ? '#ico-reels' : (n.type === 'sub' ? '#ico-friends' : '#ico-comment');
+        return `<div class="notif-item-row ${isUnread ? 'unread' : ''}" onclick="window.closeNotificationsModal(); window.openUserProfile('${n.from}')"><div style="display:flex; align-items:center; gap:12px;"><svg class="ico-stroke"><use href="${iconHref}"></use></svg><div><div style="font-size:12px; color:#050505; font-weight:800;">@${escapeHtml(n.from)}</div><div style="font-size:12px; color:#374151; margin-top:2px;">${escapeHtml(n.text)}</div></div></div><span style="font-size:10px; color:#059669; font-weight:800;">Ver →</span></div>`;
+      }).join('');
+    }
+
+    let lbScale = 1, lbPointX = 0, lbPointY = 0, lbStartX = 0, lbStartY = 0, lbPinchStartDist = 0, lbPinchStartScale = 1, lbIsPanning = false, lbLastTapTime = 0;
+
+    function applyLightboxTransform() {
+      const img = document.getElementById('lightboxImg');
+      if (img) img.style.transform = `translate3d(${lbPointX}px, ${lbPointY}px, 0) scale(${lbScale})`;
+    }
+
+    window.openPhotoLightbox = function(imgSrc) {
+      if (!imgSrc) return;
+      pushAppHistoryState();
+      lbScale = 1; lbPointX = 0; lbPointY = 0;
+      document.getElementById('lightboxImg').src = imgSrc;
+      applyLightboxTransform();
+      document.getElementById('photoLightbox').classList.add('open');
+    };
+
+    window.closePhotoLightbox = function() {
+      document.getElementById('photoLightbox').classList.remove('open');
+      const img = document.getElementById('lightboxImg');
+      if (img) { img.src = ''; img.style.transform = ''; }
+    };
+
+    (function setupLightboxZoomGestures() {
+      const overlay = document.getElementById('photoLightbox');
+      if (!overlay) return;
+      overlay.addEventListener('touchstart', (e) => {
+        if (e.target.closest('.lightbox-close-x')) return;
+        if (e.touches.length === 2) {
+          lbIsPanning = false;
+          lbPinchStartDist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          lbPinchStartScale = lbScale;
+        } else if (e.touches.length === 1) {
+          const now = Date.now();
+          if (now - lbLastTapTime < 280) {
+            lbScale = lbScale > 1.1 ? 1 : 2.6; lbPointX = 0; lbPointY = 0;
+            applyLightboxTransform(); lbLastTapTime = 0; return;
+          }
+          lbLastTapTime = now;
+          if (lbScale > 1.05) { lbIsPanning = true; lbStartX = e.touches[0].clientX - lbPointX; lbStartY = e.touches[0].clientY - lbPointY; }
+        }
+      }, { passive: true });
+      overlay.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2 && lbPinchStartDist > 0) {
+          const dist = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+          lbScale = Math.min(Math.max(1, lbPinchStartScale * (dist / lbPinchStartDist)), 4.5);
+          if (lbScale <= 1.05) { lbPointX = 0; lbPointY = 0; }
+          applyLightboxTransform();
+        } else if (e.touches.length === 1 && lbIsPanning && lbScale > 1.05) {
+          lbPointX = e.touches[0].clientX - lbStartX; lbPointY = e.touches[0].clientY - lbStartY;
+          applyLightboxTransform();
+        }
+      }, { passive: true });
+      overlay.addEventListener('touchend', (e) => {
+        if (e.touches.length < 2) lbPinchStartDist = 0;
+        if (e.touches.length === 0) {
+          lbIsPanning = false;
+          if (lbScale <= 1.05) { lbScale = 1; lbPointX = 0; lbPointY = 0; applyLightboxTransform(); }
+        }
+      }, { passive: true });
+    })();
+
+    window.openUserProfile = function(handle) {
+      if (!handle) return;
+      pushAppHistoryState();
+      viewedPublicHandle = handle.replace(/^@/, '').toUpperCase();
+      document.getElementById('publicProfileModal').classList.add('open');
+      renderPublicProfileModal();
+    };
+
+    window.closePublicProfile = function() {
+      document.getElementById('publicProfileModal').classList.remove('open');
+      viewedPublicHandle = '';
+    };
+
+    function renderPublicProfileModal() {
+      if (!viewedPublicHandle) return;
+      const uDoc = usersMap[viewedPublicHandle] || {};
+      const reportedSet = new Set(Array.isArray(currentUser.reportedPosts) ? currentUser.reportedPosts : []);
+      const visibleAuthorPosts = livePosts.filter(p => p.handle === viewedPublicHandle && !reportedSet.has(p.id) && canCurrentUserViewPost(p));
+
+      const displayName = uDoc.userName || viewedPublicHandle;
+      const avatarSrc = uDoc.avatar || (visibleAuthorPosts[0] && visibleAuthorPosts[0].avatar) || '';
+      const subsCount = uDoc.subs || (Array.isArray(uDoc.subscribersList) ? uDoc.subscribersList.length : 0);
+      const followingCount = Array.isArray(uDoc.subscribedTo) ? uDoc.subscribedTo.length : 0;
+
+      document.getElementById('upmHeaderHandle').textContent = '@' + viewedPublicHandle;
+      document.getElementById('upmFullName').textContent = displayName;
+      document.getElementById('upmHandleSub').textContent = `@${viewedPublicHandle} • ${getUserRankTitle(subsCount)}`;
+      document.getElementById('upmStatPosts').textContent = visibleAuthorPosts.length.toLocaleString();
+      document.getElementById('upmStatSubs').textContent = subsCount.toLocaleString();
+      document.getElementById('upmStatFollowing').textContent = followingCount.toLocaleString();
+
+      const avBox = document.getElementById('upmAvatarBox');
+      avBox.innerHTML = avatarSrc
+        ? `<img src="${avatarSrc}" alt="${escapeHtml(viewedPublicHandle)}" onclick="window.openPhotoLightbox('${avatarSrc}')" />`
+        : `<span style="font-size:26px; font-weight:900; color:#050505;">${escapeHtml(viewedPublicHandle.slice(0, 2))}</span>`;
+
+      const actionsBox = document.getElementById('upmActionButtons');
+      const isMe = viewedPublicHandle === currentUser.userHandle;
+      const alreadySub = (currentUser.subscribedTo || []).includes(viewedPublicHandle);
+      const isBlocked = (currentUser.blockedUsers || []).includes(viewedPublicHandle);
+
+      actionsBox.innerHTML = isMe
+        ? `<button class="btn-subscribe subscribed" onclick="window.closePublicProfile(); window.switchTab('perfil');">Editar Mi Perfil</button>`
+        : `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" style="padding:10px 16px; font-size:12px;" onclick="window.toggleSubscribe('${viewedPublicHandle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button><button class="btn-dm-icon" style="padding:10px 14px; font-size:12px; gap:6px;" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg><span>Mensaje</span></button><button class="btn-mini-danger" style="padding:9px 12px; border-radius:999px; font-size:11px; gap:5px;" onclick="window.toggleBlockUser('${viewedPublicHandle}')"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-ban"></use></svg><span>${isBlocked ? 'Desbloquear' : 'Bloquear'}</span></button>`;
+
+      const wallBox = document.getElementById('upmWallPosts');
+      const gridBox = document.getElementById('upmGalleryGrid');
+      if (visibleAuthorPosts.length === 0) {
+        wallBox.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">@${escapeHtml(viewedPublicHandle)} aún no tiene publicaciones públicas en su muro.</div>`;
+      } else {
+        wallBox.innerHTML = '';
+        visibleAuthorPosts.forEach(post => wallBox.appendChild(buildPostCardElement(post)));
+      }
+      renderMediaGrid3x3(visibleAuthorPosts, gridBox, `@${viewedPublicHandle} aún no tiene fotos ni videos públicos.`);
+      window.setPublicProfileLayout(publicProfileLayoutMode);
+    }
+
+    function renderAvatarElements() {
+      const pairs = [
+        ['profileAvatarImg', 'profileAvatarSvg', 'block'],
+        ['onboardingAvatarImg', 'onboardingAvatarIcon', 'inline-flex'],
+        ['composerAvatarImg', 'composerAvatarSvg', 'block'],
+        ['menuUserAvatarImg', 'menuUserAvatarSvg', 'block'],
+        ['deskLeftAvatarImg', 'deskLeftAvatarSvg', 'block']
+      ];
+      pairs.forEach(([imgId, svgId, fallbackDisp]) => {
+        const imgEl = document.getElementById(imgId);
+        const svgEl = document.getElementById(svgId);
+        if (currentUser.avatar) {
+          if (imgEl) { imgEl.src = currentUser.avatar; imgEl.style.display = imgId === 'onboardingAvatarImg' ? 'inline-block' : 'block'; }
+          if (svgEl) svgEl.style.display = 'none';
+        } else {
+          if (imgEl) imgEl.style.display = 'none';
+          if (svgEl) svgEl.style.display = fallbackDisp;
+        }
+      });
+    }
+
+    function updateUI() {
+      if (currentUser.registered) document.getElementById('onboardingScreen').classList.add('hidden');
+      const alertBar = document.getElementById('complianceAlertBar');
+      if (alertBar) alertBar.classList.toggle('show', currentUser.registered && (!currentUser.email || !currentUser.ageVerified));
+
+      const newBal = Number(currentUser.balance) || 0;
+      const topBalEl = document.getElementById('topBalance');
+      const vaultBalEl = document.getElementById('vaultBigBalance');
+      const deskBalEl = document.getElementById('deskRightBalance');
+      const tickerEl = document.getElementById('vaultLiveTicker');
+
+      if (previousLiveBalance !== null && previousLiveBalance !== newBal) {
+        const diff = newBal - previousLiveBalance;
+        const pct = previousLiveBalance > 0 ? ((Math.abs(diff) / previousLiveBalance) * 100).toFixed(2) : '0.01';
+        animateLiveBalance(vaultBalEl, previousLiveBalance, newBal);
+        animateLiveBalance(topBalEl, previousLiveBalance, newBal);
+        animateLiveBalance(deskBalEl, previousLiveBalance, newBal);
+        if (tickerEl) {
+          tickerEl.className = diff > 0 ? 'live-ticker-badge up' : 'live-ticker-badge down';
+          tickerEl.textContent = diff > 0 ? `▲ +${diff.toLocaleString()} AC (+${pct}%)` : `▼ ${diff.toLocaleString()} AC (-${pct}%)`;
+        }
+      } else {
+        if (topBalEl) topBalEl.textContent = newBal.toLocaleString();
+        if (vaultBalEl) vaultBalEl.textContent = newBal.toLocaleString();
+        if (deskBalEl) deskBalEl.textContent = newBal.toLocaleString();
+      }
+      previousLiveBalance = newBal;
+
+      const subsNow = Number(currentUser.subs) || 0;
+      const rankTitle = getUserRankTitle(subsNow);
+      const target = getNextRankTarget(subsNow);
+
+      document.getElementById('vaultUserName').textContent = `${currentUser.userName || 'MI CUENTA'} • ${rankTitle}`;
+      document.getElementById('profileName').textContent = currentUser.userName || 'MI CUENTA';
+      document.getElementById('profileHandle').textContent = `@${currentUser.userHandle || 'USUARIO'} • ${rankTitle}`;
+
+      const menuNameEl = document.getElementById('menuUserName');
+      const menuHandleEl = document.getElementById('menuUserHandle');
+      if (menuNameEl) menuNameEl.textContent = currentUser.userName || 'MI CUENTA';
+      if (menuHandleEl) menuHandleEl.textContent = `@${currentUser.userHandle || 'USUARIO'} • ${rankTitle}`;
+
+      const dLeftName = document.getElementById('deskLeftName');
+      const dLeftHandle = document.getElementById('deskLeftHandle');
+      const dRightRank = document.getElementById('deskRightRank');
+      if (dLeftName) dLeftName.textContent = currentUser.userName || 'ALBERTO SOTO';
+      if (dLeftHandle) dLeftHandle.textContent = `@${currentUser.userHandle || 'BELTO43'} • ${rankTitle}`;
+      if (dRightRank) dRightRank.textContent = `@${currentUser.userHandle || 'BELTO43'} • ${rankTitle}`;
+
+      renderComposerPrivacyButton();
+
+      const myPostsArr = livePosts.filter(p => p.handle === currentUser.userHandle);
+      const myTotalViews = myPostsArr.reduce((acc, p) => acc + (Number(p.views) || 0), 0);
+      const myTotalLikes = myPostsArr.reduce((acc, p) => acc + (Number(p.likes) || 0), 0);
+
+      const mViewsEl = document.getElementById('menuTotalViews');
+      const mLikesEl = document.getElementById('menuTotalLikes');
+      const mSubsEl = document.getElementById('menuTotalSubs');
+      if (mViewsEl) mViewsEl.textContent = myTotalViews.toLocaleString();
+      if (mLikesEl) mLikesEl.textContent = myTotalLikes.toLocaleString();
+      if (mSubsEl) mSubsEl.textContent = subsNow.toLocaleString();
+
+      const soundBadge = document.getElementById('menuSoundStatusBadge');
+      if (soundBadge) {
+        soundBadge.textContent = soundAlertsEnabled ? 'ACTIVO' : 'SILENCIO';
+        soundBadge.style.color = soundAlertsEnabled ? '#059669' : '#65676b';
+      }
+
+      const blockedSubEl = document.getElementById('menuBlockedUsersSub');
+      if (blockedSubEl) {
+        const bCount = Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers.length : 0;
+        blockedSubEl.textContent = bCount > 0 ? `${bCount} bloqueado(s) • Toca para desbloquear` : '0 usuarios bloqueados';
+      }
+
+      const emailEl = document.getElementById('profileVerifiedEmail');
+      const menuEmailSub = document.getElementById('menuVerifiedEmailSub');
+      if (emailEl) {
+        if (currentUser.email && currentUser.ageVerified) {
+          emailEl.style.color = '#059669';
+          emailEl.textContent = `✓ Email verificado (${currentUser.email}) • +18`;
+          if (menuEmailSub) menuEmailSub.textContent = `${currentUser.email} • Certificado +18`;
+        } else {
+          emailEl.style.color = '#d97706';
+          emailEl.textContent = `Toca aquí para verificar tu Correo y Edad (+18)`;
+          if (menuEmailSub) menuEmailSub.textContent = `Pendiente de verificar`;
+        }
+      }
+
+      document.getElementById('vaultCardEngravedName').textContent = currentUser.userName || 'ALBERTO SOTO';
+      document.getElementById('vaultCardEngravedHandle').textContent = `@${currentUser.userHandle || 'BELTO43'} • ${rankTitle}`;
+      document.getElementById('vaultSubsCounter').textContent = subsNow.toLocaleString() + ' / ' + target.toLocaleString();
+      document.getElementById('vaultProgressBar').style.width = Math.min(100, Math.round((subsNow / target) * 100)) + '%';
+
+      document.getElementById('myStatPosts').textContent = myPostsArr.length.toLocaleString();
+      document.getElementById('myStatSubs').textContent = subsNow.toLocaleString();
+      document.getElementById('myStatFollowing').textContent = (currentUser.subscribedTo || []).length.toLocaleString();
+
+      const adminNavBtn = document.getElementById('nav-admin');
+      const deskAdminBtn = document.getElementById('dnav-admin');
+      if (adminNavBtn) adminNavBtn.style.display = isUserAdmin() ? 'flex' : 'none';
+      if (deskAdminBtn) deskAdminBtn.style.display = isUserAdmin() ? 'flex' : 'none';
+
+      renderAvatarElements();
+      renderMySubscribers();
+      renderShortsTray();
+    }
+
+    window.openDirectMessages = function(partnerHandle) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      pushAppHistoryState();
+      lastSeenDmTime = Date.now();
+      localStorage.setItem('argon_last_dm_ts', String(lastSeenDmTime));
+      const badge = document.getElementById('inboxBadge');
+      if (badge) badge.style.display = 'none';
+      if (partnerHandle && partnerHandle !== currentUser.userHandle) activeDmPartner = partnerHandle;
+      document.getElementById('dmModal').classList.add('open');
+      renderDmModal();
+    };
+
+    window.closeDirectMessages = function() {
+      document.getElementById('dmModal').classList.remove('open');
+      window.clearDmSelectedPhoto();
+    };
+
+    window.selectDmPartner = function(handle) { activeDmPartner = handle; renderDmModal(); };
+
+    window.previewDmPhoto = async function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      selectedDmPhotoDataUrl = await compressImageFileToDataUrl(file, 680, 0.72);
+      document.getElementById('dmPhotoPreviewThumb').src = selectedDmPhotoDataUrl;
+      document.getElementById('dmPhotoPreviewBar').classList.add('active');
+    };
+
+    window.clearDmSelectedPhoto = function() {
+      selectedDmPhotoDataUrl = '';
+      const inp = document.getElementById('dmPhotoInput');
+      if (inp) inp.value = '';
+      const bar = document.getElementById('dmPhotoPreviewBar');
+      if (bar) bar.classList.remove('active');
+    };
+
+    function getAllKnownHandles() {
+      const setH = new Set(Object.keys(usersMap));
+      livePosts.forEach(p => { if (p.handle && !isLegacyAiRecord(p, p.handle)) setH.add(p.handle); });
+      setH.delete('ARGON_OFICIAL');
+      return Array.from(setH).filter(h => !isLegacyAiRecord(usersMap[h], h));
+    }
+
+    function renderDmModal() {
+      const contactsBar = document.getElementById('dmContactsBar');
+      const messagesBox = document.getElementById('dmMessagesBox');
+      const titleEl = document.getElementById('dmTargetTitle');
+      const subEl = document.getElementById('dmTargetSubtitle');
+      const blockBtn = document.getElementById('dmBlockPartnerBtn');
+
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const otherUsers = getAllKnownHandles().filter(h => h !== currentUser.userHandle && !blockedSet.has(h));
+      if ((!activeDmPartner || blockedSet.has(activeDmPartner)) && otherUsers.length > 0) activeDmPartner = otherUsers[0];
+
+      contactsBar.innerHTML = otherUsers.length === 0
+        ? `<span style="font-size:11px; color:#65676b;">Aún no hay otros usuarios disponibles.</span>`
+        : otherUsers.map(h => `<button class="dm-user-pill ${activeDmPartner === h ? 'active' : ''}" onclick="window.selectDmPartner('${h}')">@${escapeHtml(h)}</button>`).join('');
+
+      if (!activeDmPartner) {
+        titleEl.textContent = 'Mensajes Directos';
+        subEl.textContent = 'Selecciona un miembro';
+        if (blockBtn) blockBtn.style.display = 'none';
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Elige un usuario arriba para conversar en privado.</div>`;
+        return;
+      }
+
+      if (blockBtn) blockBtn.style.display = 'inline-flex';
+      titleEl.innerHTML = `Chat con <span style="text-decoration:underline; cursor:pointer;" onclick="window.closeDirectMessages(); window.openUserProfile('${activeDmPartner}');">@${escapeHtml(activeDmPartner)}</span>`;
+      subEl.textContent = 'Toca su @usuario arriba para ver su perfil';
+
+      const conversation = allDirectMessages.filter(m => (m.from === currentUser.userHandle && m.to === activeDmPartner) || (m.from === activeDmPartner && m.to === currentUser.userHandle));
+      if (conversation.length === 0) {
+        messagesBox.innerHTML = `<div style="font-size:12px; color:#65676b; text-align:center; margin-top:40px;">Aún no hay mensajes con @${escapeHtml(activeDmPartner)}.</div>`;
+      } else {
+        messagesBox.innerHTML = conversation.map(m => `<div class="dm-bubble ${m.from === currentUser.userHandle ? 'mine' : 'theirs'}"><div class="dm-bubble-meta">@${escapeHtml(m.from)}</div>${m.image ? `<img class="dm-bubble-img" src="${m.image}" alt="Foto" onclick="window.openPhotoLightbox('${m.image}')" />` : ''}${m.text ? `<div>${escapeHtml(m.text)}</div>` : ''}</div>`).join('');
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+      }
+    }
+
+    window.sendDirectMessage = async function() {
+      if (!activeDmPartner) { showToast('Selecciona primero a quién enviarle el mensaje'); return; }
+      const input = document.getElementById('dmTextInput');
+      const text = input.value.trim();
+      const photoToSend = selectedDmPhotoDataUrl;
+      if (!text && !photoToSend) { showToast('Escribe un mensaje o adjunta una foto'); return; }
+      input.value = '';
+      window.clearDmSelectedPhoto();
+      try {
+        await addDoc(collection(db, "messages"), { from: currentUser.userHandle, to: activeDmPartner, text, image: photoToSend || '', createdAt: Date.now() });
+      } catch (e) { showToast('Error al enviar el mensaje privado'); }
+    };
+
+    function renderMySubscribers() {
+      const sqCountEl = document.getElementById('profileFriendsBtnCount');
+      const menuFriendsLbl = document.getElementById('menuFriendsCountLabel');
+      const modalListBox = document.getElementById('friendsModalListBox');
+      const modalTitle = document.getElementById('friendsModalTitle');
+
+      const blockedSet = new Set(Array.isArray(currentUser.blockedUsers) ? currentUser.blockedUsers : []);
+      const myDoc = usersMap[currentUser.userHandle] || {};
+      const fromDoc = Array.isArray(myDoc.subscribersList) ? myDoc.subscribersList.filter(h => !isLegacyAiRecord(null, h)) : [];
+      const allKnown = getAllKnownHandles().filter(h => h !== currentUser.userHandle && !blockedSet.has(h));
+      const combined = Array.from(new Set([...fromDoc.filter(h => !blockedSet.has(h)), ...allKnown]));
+
+      if (sqCountEl) sqCountEl.textContent = combined.length.toLocaleString();
+      if (menuFriendsLbl) menuFriendsLbl.textContent = `Friends (${combined.length} online)`;
+      if (modalTitle) modalTitle.textContent = `Mi Comunidad y Amigos (${combined.length})`;
+      if (!modalListBox) return;
+
+      modalListBox.innerHTML = combined.length === 0
+        ? `<div style="font-size:12px; color:#65676b; text-align:center; padding:40px 16px;">Aún no tienes otros miembros en tu lista.</div>`
+        : combined.map(h => {
+          const u = usersMap[h] || {};
+          const avHtml = u.avatar ? `<img src="${u.avatar}" alt="${escapeHtml(h)}" />` : `<span>${escapeHtml(h.slice(0, 2))}</span>`;
+          return `<div class="admin-user-row" style="background:#ffffff; margin-bottom:8px;"><div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1; cursor:pointer;" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');"><div class="avatar-circle" style="width:38px; height:38px;">${avHtml}</div><div style="min-width:0; flex:1;"><div style="font-size:13px; font-weight:800; color:#050505;">@${escapeHtml(h)} ${fromDoc.includes(h) ? '<span style="color:#059669;">✓</span>' : ''}</div><div style="font-size:11px; color:#65676b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(u.userName || h)} • ${getUserRankTitle(u.subs)}</div></div></div><div style="display:flex; gap:6px;"><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">Ver Perfil</button><button class="btn-mini-admin" onclick="window.closeFriendsModal(); window.openDirectMessages('${h}');"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button></div></div>`;
+        }).join('');
+    }
+
+    window.adminSyncAllToFounder = async function() {
+      if (!isUserAdmin()) return;
+      const allHandles = getAllKnownHandles().filter(h => h !== FOUNDER_HANDLE);
+      if (allHandles.length === 0) { showToast('No hay otros usuarios para vincular aún'); return; }
+      try {
+        for (const h of allHandles) await setDoc(doc(db, "users", h), { userHandle: h, subscribedTo: arrayUnion(FOUNDER_HANDLE) }, { merge: true });
+        await setDoc(doc(db, "users", FOUNDER_HANDLE), { subs: allHandles.length, subscribersList: allHandles }, { merge: true });
+        showToast(`✓ ${allHandles.length} miembros suscritos a @${FOUNDER_HANDLE}`);
+      } catch (e) { showToast('Error al sincronizar suscriptores'); }
+    };
+
+    function renderAdminAndLeaderboard() {
+      const allUsers = getAllKnownHandles().map(h => Object.assign({ userHandle: h, userName: h, subs: 0, balance: 5000 }, usersMap[h] || {})).sort((a, b) => (b.subs || 0) - (a.subs || 0));
+      const rankBox = document.getElementById('liveLeaderboardList');
+      const deskRankBox = document.getElementById('deskRightLeaderboard');
+
+      const leaderboardHtml = allUsers.length === 0
+        ? '<div style="font-size:12px; color:#475569;">Cargando creadores...</div>'
+        : allUsers.slice(0, 12).map((u, idx) => `<div class="tier-item" style="cursor:pointer; padding:9px 10px; margin-bottom:7px;" onclick="window.openUserProfile('${u.userHandle}')"><div style="display:flex; align-items:center; gap:8px; min-width:0;"><span style="font-size:12px; font-weight:900; color:#059669;">#${idx + 1}</span><div style="min-width:0;"><div class="rank-title-text" style="font-size:12.5px;">@${escapeHtml(u.userHandle)}</div><div class="rank-sub-text" style="font-size:10px;">${getUserRankTitle(u.subs)}</div></div></div><span class="rank-reward-text" style="font-size:11.5px;">${(u.subs || 0).toLocaleString()} Subs</span></div>`).join('');
+
+      if (rankBox) rankBox.innerHTML = leaderboardHtml;
+      if (deskRankBox) deskRankBox.innerHTML = leaderboardHtml;
+      if (!isUserAdmin()) return;
+
+      document.getElementById('admTotalUsers').textContent = allUsers.length.toLocaleString();
+      document.getElementById('admTotalPosts').textContent = livePosts.length.toLocaleString();
+      document.getElementById('admTotalCoins').textContent = allUsers.reduce((acc, u) => acc + (Number(u.balance) || 0), 0).toLocaleString();
+
+      const repBox = document.getElementById('adminReportsList');
+      if (repBox) {
+        repBox.innerHTML = allUgcReports.length === 0
+          ? `<div style="font-size:11.5px; color:#059669; font-weight:700; padding:8px 10px; background:#ecfdf5; border-radius:10px;">✓ 0 reportes pendientes. Comunidad limpia.</div>`
+          : allUgcReports.map(r => `<div class="admin-user-row" style="border-color:#fecaca; background:#fef2f2;"><div style="min-width:0; flex:1;"><div style="font-size:12px; font-weight:900; color:#e41e3f;">Motivo: ${escapeHtml(r.reason || 'Reporte UGC')}</div><div style="font-size:11px; color:#050505; margin-top:2px;">Autor: <strong>@${escapeHtml(r.reportedAuthor || 'N/A')}</strong> • Reportado por: @${escapeHtml(r.reportedBy || 'N/A')}</div></div><div style="display:flex; gap:5px;"><button class="btn-mini-danger" onclick="window.adminDeleteReportedPost('${r.postId}', '${r.id}')">Borrar Post</button><button class="btn-mini-admin" onclick="window.adminDismissReport('${r.id}')">Ignorar</button></div></div>`).join('');
+      }
+
+      const dirBox = document.getElementById('adminUsersDirectory');
+      if (dirBox) {
+        dirBox.innerHTML = allUsers.map(u => {
+          const emailInfo = u.email ? `${escapeHtml(u.email)} (+18)` : 'Sin correo verificado';
+          const refInfo = u.invitedBy ? ` • Ref: @${escapeHtml(u.invitedBy)}` : '';
+          return `<div class="admin-user-row"><div style="min-width:0; flex:1; cursor:pointer;" onclick="window.openUserProfile('${u.userHandle}')"><div style="font-size:13px; font-weight:800; color:#050505; text-decoration:underline;">@${escapeHtml(u.userHandle)} <span style="font-size:11px; color:#65676b; font-weight:600;">(${escapeHtml(u.userName || '')})</span></div><div style="font-size:11px; color:#059669; font-weight:700; margin-top:2px;">${(u.subs || 0).toLocaleString()} Subs • ${(u.balance || 0).toLocaleString()} AC • ${getUserRankTitle(u.subs)}</div><div style="font-size:10px; color:#475569; margin-top:2px;">${emailInfo}${refInfo}</div></div><div style="display:flex; gap:5px;"><button class="btn-mini-admin" onclick="window.openUserProfile('${u.userHandle}')">Perfil</button><button class="btn-mini-admin" onclick="window.openDirectMessages('${u.userHandle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-mini-admin" onclick="window.adminGiveCoins('${u.userHandle}', 1000)">+1K</button></div></div>`;
+        }).join('');
+      }
+    }
+
+    window.adminGiveCoins = async function(targetHandle, amount) {
+      if (!isUserAdmin() || !targetHandle) return;
+      try {
+        await setDoc(doc(db, "users", targetHandle), { balance: increment(amount) }, { merge: true });
+        showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
+      } catch (e) { showToast('Error al enviar monedas'); }
+    };
+    window.uploadAvatarPhoto = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = async function() {
+          const canvas = document.createElement('canvas');
+          canvas.width = 260; canvas.height = 260;
+          const minSide = Math.min(img.width, img.height);
+          canvas.getContext('2d').drawImage(img, (img.width - minSide) / 2, (img.height - minSide) / 2, minSide, minSide, 0, 0, 260, 260);
+          currentUser.avatar = canvas.toDataURL('image/jpeg', 0.78);
+          saveLocalSession(); updateUI(); renderFeed();
+          if (currentUser.userHandle) {
+            try { await setDoc(doc(db, "users", currentUser.userHandle), { avatar: currentUser.avatar }, { merge: true }); showToast('✓ Foto de perfil actualizada'); } catch (err) {}
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    function compressImageFileToDataUrl(file, maxW = 720, quality = 0.7) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const scale = img.width > maxW ? maxW / img.width : 1;
+            canvas.width = img.width * scale; canvas.height = img.height * scale;
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.previewSelectedPhoto = async function(event) {
+      const files = Array.from((event.target && event.target.files) || []).slice(0, 6);
+      if (files.length === 0) return;
+      selectedVideoFile = null;
+      const vidPrev = document.getElementById('videoPreview');
+      if (vidPrev) { vidPrev.style.display = 'none'; vidPrev.src = ''; }
+
+      const compressedList = [];
+      for (const f of files) {
+        const dUrl = await compressImageFileToDataUrl(f, files.length > 1 ? 640 : 720, files.length > 1 ? 0.66 : 0.72);
+        if (dUrl) compressedList.push(dUrl);
+      }
+      selectedPhotosArray = compressedList;
+      selectedPhotoDataUrl = compressedList[0] || '';
+
+      const singlePreview = document.getElementById('photoPreview');
+      const stripEl = document.getElementById('composerMultiPhotoStrip');
+      if (compressedList.length === 1) {
+        if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
+        if (singlePreview) { singlePreview.src = compressedList[0]; singlePreview.style.display = 'block'; }
+      } else if (compressedList.length > 1) {
+        if (singlePreview) { singlePreview.style.display = 'none'; singlePreview.src = ''; }
+        if (stripEl) {
+          stripEl.classList.add('active');
+          stripEl.innerHTML = compressedList.map((src, i) => `<div class="composer-multi-item"><img src="${src}" alt="Foto ${i + 1}" /></div>`).join('');
+        }
+        showToast(`✓ ${compressedList.length} fotos listas`);
+      }
+    };
+
+    window.previewSelectedVideo = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      if (file.size > 95 * 1024 * 1024) { showToast('Elige un video menor a 95 MB'); event.target.value = ''; return; }
+      selectedPhotoDataUrl = ''; selectedPhotosArray = [];
+      const imgPrev = document.getElementById('photoPreview');
+      if (imgPrev) { imgPrev.style.display = 'none'; imgPrev.src = ''; }
+      const stripEl = document.getElementById('composerMultiPhotoStrip');
+      if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
+
+      selectedVideoFile = file;
+      const vidPrev = document.getElementById('videoPreview');
+      vidPrev.src = URL.createObjectURL(file);
+      vidPrev.style.display = 'block';
+      window.switchTab('feed');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      showToast('Video listo. Toca "Publicar" para subirlo');
+    };
+
+    async function uploadVideoToCloudinary(file) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        const fd = new FormData();
+        fd.append('file', file);
+        fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+        const wrap = document.getElementById('uploadProgressWrap');
+        const bar = document.getElementById('uploadProgressBar');
+        const txt = document.getElementById('uploadStatusText');
+        if (wrap) wrap.style.display = 'block';
+        if (txt) txt.style.display = 'block';
+
+        xhr.upload.onprogress = function(e) {
+          if (e.lengthComputable) {
+            const pct = Math.round((e.loaded / e.total) * 100);
+            if (bar) bar.style.width = pct + '%';
+            if (txt) txt.textContent = `Subiendo video... ${pct}%`;
+          }
+        };
+        xhr.onload = function() {
+          if (wrap) wrap.style.display = 'none';
+          if (txt) txt.style.display = 'none';
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try { resolve(JSON.parse(xhr.responseText).secure_url); } catch (err) { reject(err); }
+          } else reject(new Error('Error subiendo video'));
+        };
+        xhr.onerror = function() {
+          if (wrap) wrap.style.display = 'none';
+          if (txt) txt.style.display = 'none';
+          reject(new Error('Error de red'));
+        };
+        xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, true);
+        xhr.send(fd);
+      });
+    }
+
+    async function hydrateChunkedVideo(videoId, chunkCount, containerEl, postId = '') {
+      if (!videoId || !chunkCount) return;
+      if (videoBlobCache[videoId]) {
+        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
+        return;
+      }
+      try {
+        const chunks = [];
+        for (let i = 0; i < chunkCount; i++) {
+          const snap = await getDoc(doc(db, "video_chunks", `${videoId}_${i}`));
+          if (snap.exists()) chunks.push(snap.data().data || '');
+        }
+        const fullDataUrl = chunks.join('');
+        if (fullDataUrl.startsWith('data:video')) {
+          videoBlobCache[videoId] = fullDataUrl;
+          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
+        }
+      } catch (e) { containerEl.innerHTML = `<div class="video-loading-placeholder">No se pudo cargar el video</div>`; }
+    }
+
+    window.publishPost = async function() {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if (!currentUser.email || !currentUser.ageVerified) { window.openAgeEmailVerifyModal(); return; }
+
+      const input = document.getElementById('newPostInput');
+      const caption = input.value.trim();
+      const btn = document.getElementById('publishBtn');
+      const detectedYtId = selectedYoutubeId || extractYoutubeId(caption);
+
+      if (!caption && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile && !detectedYtId) {
+        showToast('Escribe algo, pega un link de YouTube o adjunta fotos/video');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Publicando...';
+
+      try {
+        let videoUrl = '';
+        if (selectedVideoFile) videoUrl = await uploadVideoToCloudinary(selectedVideoFile);
+        const finalPhotos = selectedPhotosArray.length > 0 ? selectedPhotosArray : (selectedPhotoDataUrl ? [selectedPhotoDataUrl] : []);
+
+        const newPost = {
+          handle: currentUser.userHandle, userName: currentUser.userName, avatar: currentUser.avatar || '',
+          caption, image: '', images: finalPhotos, video: videoUrl || '',
+          youtubeId: detectedYtId || '', visibility: selectedPostVisibility === 'private' ? 'private' : 'public',
+          likes: 0, views: detectedYtId ? 1 : 0, likedBy: [], comments: [], promotedUntil: 0, createdAt: Date.now()
+        };
+
+        const docRef = await addDoc(collection(db, "posts"), newPost);
+        input.value = ''; selectedPhotoDataUrl = ''; selectedPhotosArray = []; selectedVideoFile = null;
+        selectedYoutubeId = ''; selectedPostVisibility = 'public'; renderComposerPrivacyButton();
+
+        ['photoPreview', 'videoPreview', 'composerYoutubePreview'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.style.display = 'none'; if (id === 'composerYoutubePreview') el.innerHTML = ''; else el.src = ''; }
+        });
+        const stripEl = document.getElementById('composerMultiPhotoStrip');
+        if (stripEl) { stripEl.classList.remove('active'); stripEl.innerHTML = ''; }
+        const pInp = document.getElementById('photoInput'); if (pInp) pInp.value = '';
+        const vInp = document.getElementById('videoInput'); if (vInp) vInp.value = '';
+
+        const mySubs = Array.isArray((usersMap[currentUser.userHandle] || {}).subscribersList) ? usersMap[currentUser.userHandle].subscribersList : [];
+        if (mySubs.length > 0 && newPost.visibility === 'public') {
+          dispatchNotification({ toList: mySubs, type: (videoUrl || detectedYtId) ? 'video' : 'post', text: (videoUrl || detectedYtId) ? 'compartió un nuevo Video en su muro' : 'publicó en su muro', postId: docRef.id });
+        }
+        showToast(newPost.visibility === 'private' ? '✓ Guardado como Privado en tu perfil' : '✓ Publicación compartida en tiempo real');
+      } catch (e) {
+        showToast('Error al publicar. Intenta de nuevo.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Publicar';
+      }
+    };
+
+    window.toggleLike = async function(postId) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      const post = livePosts.find(p => p.id === postId);
+      if (!post) return;
+      const likedPosts = currentUser.likedPosts || [];
+      const alreadyLiked = likedPosts.includes(postId);
+      currentUser.likedPosts = alreadyLiked ? likedPosts.filter(id => id !== postId) : [...likedPosts, postId];
+      post.likes = Math.max(0, (Number(post.likes) || 0) + (alreadyLiked ? -1 : 1));
+      saveLocalSession(); renderFeed();
+      try { await updateDoc(doc(db, "posts", postId), { likes: increment(alreadyLiked ? -1 : 1) }); } catch (e) {}
+    };
+
+    window.toggleSubscribe = async function(targetHandle) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      if (!targetHandle || targetHandle === currentUser.userHandle) return;
+      if ((currentUser.subscribedTo || []).includes(targetHandle)) { showToast(`Ya estás suscrito a @${targetHandle}`); return; }
+      currentUser.subscribedTo.push(targetHandle);
+      currentUser.balance = (currentUser.balance || 0) + 10;
+      saveLocalSession(); updateUI(); renderFeed();
+      if (viewedPublicHandle) renderPublicProfileModal();
+      try {
+        await setDoc(doc(db, "users", currentUser.userHandle), { subscribedTo: arrayUnion(targetHandle), balance: increment(10) }, { merge: true });
+        await setDoc(doc(db, "users", targetHandle), { subs: increment(1), subscribersList: arrayUnion(currentUser.userHandle) }, { merge: true });
+        dispatchNotification({ toList: [targetHandle], type: 'sub', text: 'se suscribió a tu perfil (+1 Suscriptor)' });
+        showToast(`✓ Suscrito a @${targetHandle} (+10 AC acreditadas)`);
+      } catch (e) {}
+    };
+
+    window.toggleCommentsDrawer = function(postId) {
+      openCommentDrawers[postId] = !openCommentDrawers[postId];
+      renderFeed();
+      if (viewedPublicHandle) renderPublicProfileModal();
+    };
+
+    window.submitComment = async function(postId) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      const inp = document.getElementById(`comment-input-${postId}`);
+      if (!inp || !inp.value.trim()) return;
+      const text = inp.value.trim();
+      inp.value = '';
+      try {
+        await updateDoc(doc(db, "posts", postId), { comments: arrayUnion({ id: 'c_' + Date.now(), handle: currentUser.userHandle, text, createdAt: Date.now() }) });
+        const post = livePosts.find(p => p.id === postId);
+        if (post && post.handle && post.handle !== currentUser.userHandle) dispatchNotification({ toList: [post.handle], type: 'comment', text: `comentó: "${text.slice(0, 40)}"`, postId });
+      } catch (e) { showToast('No se pudo publicar el comentario'); }
+    };
+
+    window.sharePost = function(handle) {
+      const shareUrl = `${window.location.origin}/?ref=${encodeURIComponent(currentUser.userHandle || FOUNDER_HANDLE)}`;
+      const text = `Mira la publicación de @${handle} en ARGON y recibe +5,000 A-Coins de apertura:`;
+      if (navigator.share) navigator.share({ title: 'ARGON', text, url: shareUrl }).catch(() => {});
+      else { navigator.clipboard.writeText(`${text} ${shareUrl}`); showToast('✓ Enlace copiado al portapapeles'); }
+    };
+
+    window.shareMyProfileLink = function() {
+      const myHandle = currentUser.userHandle || FOUNDER_HANDLE;
+      const shareUrl = `${window.location.origin}/?ref=${encodeURIComponent(myHandle)}`;
+      const text = `Únete a mi imperio oficial en ARGON (@${myHandle}) y recibe +5,000 A-Coins de apertura con auto-suscripción:`;
+      if (navigator.share) navigator.share({ title: `ARGON • @${myHandle}`, text, url: shareUrl }).catch(() => {});
+      else { navigator.clipboard.writeText(`${text} ${shareUrl}`); showToast('✓ Tu link de invitación fue copiado'); }
+    };
+
+    window.buyPack = function() {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      localStorage.setItem('argon_stripe_pending_ts', String(Date.now()));
+      showToast('Abriendo pasarela segura de Stripe ($1.99)...');
+      let checkoutUrl = STRIPE_PAYMENT_LINK_6000;
+      const params = [];
+      if (currentUser.userHandle) params.push(`client_reference_id=${encodeURIComponent(currentUser.userHandle)}`);
+      if (currentUser.email) params.push(`prefilled_email=${encodeURIComponent(currentUser.email)}`);
+      if (params.length > 0) checkoutUrl += (checkoutUrl.includes('?') ? '&' : '?') + params.join('&');
+      window.location.href = checkoutUrl;
     };
 
     function buildPostCardElement(post) {
@@ -1380,52 +2935,9 @@
       const commentsArr = Array.isArray(post.comments) ? post.comments : [];
       const isOpen = !!openCommentDrawers[post.id];
       const commentsHtml = commentsArr.map(c => `<div class="comment-row"><div><strong onclick="window.openUserProfile('${c.handle}')">@${escapeHtml(c.handle)}</strong><span>${escapeHtml(c.text)}</span></div></div>`).join('');
-      
-      // CABECERA ESTILO FB (LÍNEA HORIZONTAL COMPACTA)
-      const visBadgeHtml = `<span class="privacy-badge-inline ${effVis === 'private' ? 'is-private' : ''}" ${isOwn ? `style="cursor:pointer;" onclick="event.stopPropagation(); window.togglePostVisibility('${post.id}');" title="Toca para cambiar entre Público y Privado"` : ''}><svg class="ico-stroke-sm" style="width:10px;height:10px;"><use href="${visMeta.icon}"></use></svg><span>${visMeta.label}</span></span>`;
+      const visBadgeHtml = `<span class="privacy-badge-inline ${effVis === 'private' ? 'is-private' : ''}" ${isOwn ? `style="cursor:pointer;" onclick="event.stopPropagation(); window.togglePostVisibility('${post.id}');" title="Toca para cambiar entre Público y Privado"` : ''}><svg class="ico-stroke-sm" style="width:11px;height:11px;"><use href="${visMeta.icon}"></use></svg><span>${visMeta.label}</span></span>`;
 
-      card.innerHTML = `
-        <div class="post-header">
-          <div class="post-user-left" onclick="window.openUserProfile('${post.handle}')">
-            <div class="avatar-circle">${avatarHtml}</div>
-            <div class="user-meta">
-              <div class="user-handle-row">
-                <div class="user-handle">@${escapeHtml(post.handle)}</div>
-                ${visBadgeHtml}
-              </div>
-              <div class="user-subtitle-inline">${subsCount.toLocaleString()} Subs • ${getUserRankTitle(subsCount)}</div>
-            </div>
-          </div>
-          <div class="sub-action-Wrap">
-            ${!isOwn ? `
-              <button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse'}</button>
-              <button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button>
-              <button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-flag"></use></svg></button>
-            ` : `${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar</button>` : ''}`}
-            ${isPromo ? `<div class="argon-gold-corner-badge"><svg width="17" height="17"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}
-            ${canDelete ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg></button>` : ''}
-          </div>
-        </div>
-        ${mediaHtml}
-        <div class="post-actions">
-          <div class="post-actions-left">
-            <button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg><span>${Math.max(0, Number(post.likes) || 0)}</span></button>
-            <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${commentsArr.length}</span></button>
-            ${isVideoPost ? `<span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>` : ''}
-            <button class="action-item" onclick="window.sharePost('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span></button>
-          </div>
-        </div>
-        <div class="post-body">
-          ${post.caption ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong><span>${escapeHtml(post.caption)}</span></div>` : ''}
-          <div class="comments-drawer ${isOpen ? 'open' : ''}">
-            ${commentsHtml}
-            <div class="comment-input-wrap">
-              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" />
-              <button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button>
-            </div>
-          </div>
-        </div>
-      `;
+      card.innerHTML = `<div class="post-header"><div class="post-user-left" onclick="window.openUserProfile('${post.handle}')"><div class="avatar-circle">${avatarHtml}</div><div class="user-meta"><div class="user-handle">@${escapeHtml(post.handle)} ${visBadgeHtml}</div><div class="user-subs-line">${subsCount.toLocaleString()} Subs • ${getUserRankTitle(subsCount)}</div></div></div><div class="sub-action-Wrap">${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button><button class="btn-dm-icon" onclick="window.openDirectMessages('${post.handle}')"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg></button><button class="btn-dm-icon" onclick="window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg></button>` : `${!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : ''}`}${isPromo ? `<div class="argon-gold-corner-badge"><svg width="19" height="19"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${canDelete ? `<button class="btn-mini-danger" onclick="window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-trash"></use></svg></button>` : ''}</div></div>${mediaHtml}<div class="post-actions"><div class="post-actions-left"><button class="action-item ${alreadyLiked ? 'liked' : ''}" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-heart"></use></svg><span>${Math.max(0, Number(post.likes) || 0)}</span></button><button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${commentsArr.length}</span></button>${isVideoPost ? `<span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>` : ''}<button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span></button></div></div><div class="post-body">${post.caption ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong><span>${escapeHtml(post.caption)}</span></div>` : ''}<div class="comments-drawer ${isOpen ? 'open' : ''}">${commentsHtml}<div class="comment-input-wrap"><input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.submitComment('${post.id}')" /><button class="comment-send-btn" onclick="window.submitComment('${post.id}')">Enviar</button></div></div></div>`;
 
       if (post.videoId && !post.video) {
         setTimeout(() => {
@@ -1465,9 +2977,9 @@
       const emailVal = (document.getElementById('regEmail').value || '').trim().toLowerCase();
       const ageChecked = document.getElementById('regAgeCheck').checked;
 
-      if (!nameVal) { showToast('Escribe tu Nombre o Alias de Imperio'); return; }
+      if (!nameVal) { showToast('Escribe tu Nombre o Alias de Imperio en la tarjeta'); return; }
       if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) { showToast('Ingresa un correo electrónico válido'); return; }
-      if (!ageChecked) { showToast('Debes confirmar que eres mayor de 18 años'); return; }
+      if (!ageChecked) { showToast('Debes confirmar que eres mayor de 18 años y aceptar el contrato'); return; }
 
       const cleanHandle = (rawHandle || nameVal).replace(/^@/, '').toUpperCase().replace(/[^A-Z0-9_]/g, '_').slice(0, 20) || 'USUARIO_ARGON';
       const existingDoc = usersMap[cleanHandle];
