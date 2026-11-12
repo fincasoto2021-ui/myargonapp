@@ -62,6 +62,12 @@
     .desktop-left-rail, .desktop-right-rail { display: none; }
     .desktop-main-col { width: 100%; min-width: 0; }
 
+    @media (orientation: landscape) and (max-width: 959px) {
+      .app-shell { max-width: 100%; border-left: none; border-right: none; }
+      .bottom-nav { max-width: 100% !important; }
+      .post-image, .post-video { max-height: 82vh; }
+    }
+
     @media (min-width: 960px) {
       .app-shell { max-width: 1320px; border-left: none; border-right: none; padding-bottom: 30px; background: #f0f2f5; }
       .topbar { padding: 12px 28px !important; }
@@ -88,6 +94,9 @@
 
     .youtube-embed-wrap { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000000; overflow: hidden; }
     .youtube-embed-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .yt-thumb-box { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; background: #000000; overflow: hidden; cursor: pointer; }
+    .yt-thumb-box img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+    .yt-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 44px; border-radius: 12px; background: rgba(228, 30, 63, 0.92); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); border: none; pointer-events: none; }
     .composer-yt-preview { display: none; margin-top: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #dadde1; background: #000000; }
 
     .profile-view-switcher { display: grid; grid-template-columns: 1fr 1fr; background: #ffffff; border: 1px solid #dadde1; border-radius: 12px; margin: 10px 0; overflow: hidden; }
@@ -1037,6 +1046,7 @@
       onSnapshot,
       query,
       orderBy,
+      limit,
       increment,
       arrayUnion
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
@@ -1103,6 +1113,7 @@
     const viewCooldownMap = {};
     let currentShortIndex = 0;
     let shortsSnapObserver = null;
+    let feedVideoObserver = null;
     let previousLiveBalance = null;
 
     let currentUser = {
@@ -1479,7 +1490,7 @@
         if (selectedYoutubeId !== ytId) {
           selectedYoutubeId = ytId;
           previewBox.style.display = 'block';
-          previewBox.innerHTML = `<div class="youtube-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+          previewBox.innerHTML = `<div class="youtube-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen="true"></iframe></div>`;
         }
       } else {
         selectedYoutubeId = '';
@@ -1611,7 +1622,7 @@
 
         const [uSnap, pSnap] = await Promise.all([
           getDocs(collection(db, "users")),
-          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc")))
+          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(35)))
         ]);
 
         const nextUsers = {};
@@ -1923,8 +1934,8 @@
 
         let mediaPreview = '';
         if (post.video) mediaPreview = `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
-        else if (ytId) mediaPreview = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube Short" />`;
-        else if (postImgs.length > 0) mediaPreview = `<img class="short-thumb-img" src="${postImgs[0]}" alt="${escapeHtml(post.handle)}" />`;
+        else if (ytId) mediaPreview = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube Short" loading="lazy" />`;
+        else if (postImgs.length > 0) mediaPreview = `<img class="short-thumb-img" src="${postImgs[0]}" alt="${escapeHtml(post.handle)}" loading="lazy" />`;
         else mediaPreview = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#050505;"><svg class="ico-stroke"><use href="#ico-reels"></use></svg></div>`;
 
         const goldCornerHtml = isPromo ? `<div class="short-gold-corner-badge"><svg width="16" height="16"><use href="#argon-crown-a-gold"></use></svg></div>` : '';
@@ -1973,6 +1984,7 @@
     window.openShortsPlayer = function(startIndex = 0) {
       const shortsList = getShortVideoPosts();
       if (shortsList.length === 0) { showToast('Sube el primer Short tocando "+ Subir Short"'); return; }
+      window.stopAllFeedMedia();
       pushAppHistoryState();
       currentShortIndex = Math.max(0, Math.min(startIndex, shortsList.length - 1));
       document.getElementById('shortsFullscreenModal').classList.add('open');
@@ -2009,7 +2021,7 @@
         if (ytHolder && ytId) {
           if (isCurrent) {
             if (!ytHolder.querySelector('iframe')) {
-              ytHolder.innerHTML = `<iframe class="short-yt-frame" src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+              ytHolder.innerHTML = `<iframe class="short-yt-frame" src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen="true"></iframe>`;
             }
           } else {
             ytHolder.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:76%;object-fit:cover;opacity:0.65;" alt="YouTube" />`;
@@ -2259,6 +2271,7 @@
 
     window.openUserProfile = function(handle) {
       if (!handle) return;
+      window.stopAllFeedMedia();
       pushAppHistoryState();
       viewedPublicHandle = handle.replace(/^@/, '').toUpperCase();
       document.getElementById('publicProfileModal').classList.add('open');
@@ -2274,7 +2287,7 @@
       if (!viewedPublicHandle) return;
       const uDoc = usersMap[viewedPublicHandle] || {};
       const reportedSet = new Set(Array.isArray(currentUser.reportedPosts) ? currentUser.reportedPosts : []);
-      const visibleAuthorPosts = livePosts.filter(p => p.handle === viewedPublicHandle && !reportedSet.has(p.id) && canCurrentUserViewPost(p));
+      const visibleAuthorPosts = livePosts.filter(p => (p.handle || '').toUpperCase() === viewedPublicHandle && !reportedSet.has(p.id) && canCurrentUserViewPost(p));
 
       const displayName = uDoc.userName || viewedPublicHandle;
       const avatarSrc = uDoc.avatar || (visibleAuthorPosts[0] && visibleAuthorPosts[0].avatar) || '';
@@ -2616,6 +2629,56 @@
         showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
       } catch (e) { showToast('Error al enviar monedas'); }
     };
+    window.stopAllFeedMedia = function(exceptEl = null) {
+      document.querySelectorAll('#feedContainer video, #upmWallPosts video, #myOwnPostsWall video').forEach(v => {
+        if (v !== exceptEl) { try { v.pause(); } catch (e) {} }
+      });
+      document.querySelectorAll('#feedContainer .youtube-embed-wrap[data-yt-id], #upmWallPosts .youtube-embed-wrap[data-yt-id], #myOwnPostsWall .youtube-embed-wrap[data-yt-id]').forEach(wrap => {
+        if (wrap === exceptEl) return;
+        const ytId = wrap.getAttribute('data-yt-id');
+        const postId = wrap.getAttribute('data-post-id');
+        if (!ytId) return;
+        wrap.className = 'yt-thumb-box';
+        wrap.setAttribute('onclick', `window.playInlineYoutube(this, '${postId}', '${ytId}')`);
+        wrap.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy" alt="YouTube" /><button type="button" class="yt-play-btn" aria-label="Reproducir">▶</button>`;
+      });
+    };
+
+    window.playInlineYoutube = function(el, postId, ytId) {
+      if (!el || !ytId) return;
+      window.stopAllFeedMedia(el);
+      el.className = 'youtube-embed-wrap';
+      el.removeAttribute('onclick');
+      el.innerHTML = `<iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen="true"></iframe>`;
+      window.registerVideoView(postId);
+    };
+
+    function setupFeedVideoAutoPause() {
+      if (feedVideoObserver) feedVideoObserver.disconnect();
+      feedVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) {
+            const el = entry.target;
+            if (el.tagName === 'VIDEO') {
+              try { el.pause(); } catch (e) {}
+            } else if (el.classList.contains('youtube-embed-wrap')) {
+              const ytId = el.getAttribute('data-yt-id');
+              const postId = el.getAttribute('data-post-id');
+              if (ytId) {
+                el.className = 'yt-thumb-box';
+                el.setAttribute('onclick', `window.playInlineYoutube(this, '${postId}', '${ytId}')`);
+                el.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy" alt="YouTube" /><button type="button" class="yt-play-btn" aria-label="Reproducir">▶</button>`;
+              }
+            }
+          }
+        });
+      }, { threshold: 0.25 });
+
+      document.querySelectorAll('#feedContainer video, #feedContainer .yt-thumb-box[data-yt-id], #feedContainer .youtube-embed-wrap[data-yt-id]').forEach(el => {
+        feedVideoObserver.observe(el);
+      });
+    }
+
     window.uploadAvatarPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -2744,7 +2807,7 @@
     async function hydrateChunkedVideo(videoId, chunkCount, containerEl, postId = '') {
       if (!videoId || !chunkCount) return;
       if (videoBlobCache[videoId]) {
-        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
+        containerEl.innerHTML = `<video class="post-video" src="${videoBlobCache[videoId]}" controls playsinline preload="metadata" onplay="window.stopAllFeedMedia(this); window.registerVideoView('${postId}')"></video>`;
         return;
       }
       try {
@@ -2756,7 +2819,7 @@
         const fullDataUrl = chunks.join('');
         if (fullDataUrl.startsWith('data:video')) {
           videoBlobCache[videoId] = fullDataUrl;
-          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata" onplay="window.registerVideoView('${postId}')"></video>`;
+          containerEl.innerHTML = `<video class="post-video" src="${fullDataUrl}" controls playsinline preload="metadata" onplay="window.stopAllFeedMedia(this); window.registerVideoView('${postId}')"></video>`;
         }
       } catch (e) { containerEl.innerHTML = `<div class="video-loading-placeholder">No se pudo cargar el video</div>`; }
     }
@@ -2909,14 +2972,14 @@
       const postImgs = getPostImagesList(post);
       const isVideoPost = !!(post.video || post.videoId || ytId);
       const viewsCount = Number(post.views) || 0;
-      const avatarHtml = avatarSrc ? `<img src="${avatarSrc}" alt="${escapeHtml(post.handle)}" />` : `<span>${escapeHtml((post.handle || 'AR').slice(0, 2))}</span>`;
+      const avatarHtml = avatarSrc ? `<img src="${avatarSrc}" loading="lazy" alt="${escapeHtml(post.handle)}" />` : `<span>${escapeHtml((post.handle || 'AR').slice(0, 2))}</span>`;
 
       let mediaHtml = '';
-      if (post.video) mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
-      else if (ytId) mediaHtml = `<div class="youtube-embed-wrap" onclick="window.registerVideoView('${post.id}')"><iframe src="https://www.youtube.com/embed/${ytId}?playsinline=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+      if (post.video) mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.stopAllFeedMedia(this); window.registerVideoView('${post.id}')"></video>`;
+      else if (ytId) mediaHtml = `<div class="yt-thumb-box" data-yt-id="${ytId}" data-post-id="${post.id}" onclick="window.playInlineYoutube(this, '${post.id}', '${ytId}')"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" loading="lazy" alt="YouTube" /><button type="button" class="yt-play-btn" aria-label="Reproducir">▶</button></div>`;
       else if (post.videoId) mediaHtml = `<div id="vid-chunk-${post.id}" class="video-loading-placeholder">Cargando video...</div>`;
-      else if (postImgs.length > 1) mediaHtml = `<div class="post-carousel-wrap"><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${postImgs.length})">${postImgs.map((imgUrl, idx) => `<div class="post-carousel-slide"><img class="post-image" src="${imgUrl}" alt="Foto ${idx + 1}" onclick="window.openPhotoLightbox('${imgUrl}')" /></div>`).join('')}</div><div id="carousel-cnt-${post.id}" class="post-carousel-counter">1/${postImgs.length}</div></div>`;
-      else if (postImgs.length === 1) mediaHtml = `<img class="post-image" src="${postImgs[0]}" alt="Publicación" onclick="window.openPhotoLightbox('${postImgs[0]}')" />`;
+      else if (postImgs.length > 1) mediaHtml = `<div class="post-carousel-wrap"><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${postImgs.length})">${postImgs.map((imgUrl, idx) => `<div class="post-carousel-slide"><img class="post-image" src="${imgUrl}" loading="lazy" alt="Foto ${idx + 1}" onclick="window.openPhotoLightbox('${imgUrl}')" /></div>`).join('')}</div><div id="carousel-cnt-${post.id}" class="post-carousel-counter">1/${postImgs.length}</div></div>`;
+      else if (postImgs.length === 1) mediaHtml = `<img class="post-image" src="${postImgs[0]}" loading="lazy" alt="Publicación" onclick="window.openPhotoLightbox('${postImgs[0]}')" />`;
 
       const commentsArr = Array.isArray(post.comments) ? post.comments : [];
       const isOpen = !!openCommentDrawers[post.id];
@@ -2963,6 +3026,7 @@
       renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos a tu galería.');
       renderMediaGrid3x3(orderedPosts, globalGrid, 'Cargando galería global de ARGON...');
       window.setMyProfileLayout(myProfileLayoutMode);
+      setupFeedVideoAutoPause();
     }
 
     window.completeRegistration = async function() {
@@ -3030,6 +3094,7 @@
     };
 
     window.switchTab = function(tabName) {
+      window.stopAllFeedMedia();
       pushAppHistoryState();
       if (tabName === 'ranking') tabName = 'boveda';
       ['feed', 'boveda', 'perfil', 'galeria', 'menu', 'admin'].forEach(v => {
@@ -3053,11 +3118,11 @@
           if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
         });
         usersMap = nextUsers;
-        updateUI(); renderFeed(); renderAdminAndLeaderboard();
+        updateUI(); renderAdminAndLeaderboard();
         if (viewedPublicHandle) renderPublicProfileModal();
       });
 
-      onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snap) => {
+      onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(35)), (snap) => {
         const arr = [];
         snap.forEach(d => {
           arr.push(Object.assign({ id: d.id }, d.data()));
@@ -3083,7 +3148,7 @@
         if (isDmOpen) renderDmModal();
       });
 
-      onSnapshot(query(collection(db, "notifications"), orderBy("createdAt", "desc")), (snap) => {
+      onSnapshot(query(collection(db, "notifications"), orderBy("createdAt", "desc"), limit(40)), (snap) => {
         const arr = [];
         snap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
         allNotifications = arr;
