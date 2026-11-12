@@ -215,7 +215,7 @@
     .shorts-snap-feed::-webkit-scrollbar { display: none; }
     .short-snap-slide { width: 100%; height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; position: relative; display: flex; align-items: center; justify-content: center; background: #000000; overflow: hidden; }
     .shorts-fs-video { width: 100%; height: 100%; object-fit: cover; background: #000000; }
-    .short-yt-frame { width: 100%; height: 76%; border: 0; background: #000000; pointer-events: auto; }
+    .short-yt-frame { width: 100%; height: 60%; margin-bottom: 115px; border: 0; background: #000000; pointer-events: auto; }
     .short-swipe-shield { position: absolute; top: 0; left: 0; right: 76px; bottom: 130px; z-index: 12; background: transparent; }
     .shorts-fs-right-rail { position: absolute; right: 12px; bottom: 85px; z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 13px; }
     .short-rail-btn { background: rgba(15, 18, 26, 0.72); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.22); width: 44px; height: 44px; border-radius: 50%; color: #ffffff; font-size: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
@@ -980,6 +980,7 @@
             <button class="btn-logout-gray" onclick="window.logoutMyAccount()">Log out / Cambiar de Cuenta</button>
           </div>
         </section>
+
         <section id="view-admin" class="view-section">
           <div class="glass-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -2045,7 +2046,7 @@
               ytHolder.innerHTML = `<iframe class="short-yt-frame" src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&rel=0&controls=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen="true"></iframe>`;
             }
           } else {
-            ytHolder.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:76%;object-fit:cover;opacity:0.65;" alt="YouTube" />`;
+            ytHolder.innerHTML = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:60%;margin-bottom:115px;object-fit:cover;opacity:0.65;" alt="YouTube" />`;
           }
         }
       });
@@ -2088,13 +2089,14 @@
         const isPromo = isPostOrAuthorFeatured(post);
         const commentsCount = Array.isArray(post.comments) ? post.comments.length : 0;
         const viewsCount = Number(post.views) || 1;
+        const cleanShortCaption = (post.caption || '').replace(/https?:\/\/\S+/g, '').trim();
 
         let mediaStageHtml = '';
         if (post.video) mediaStageHtml = `<video class="shorts-fs-video" src="${post.video}" playsinline loop controls preload="metadata"></video>`;
         else if (ytId) mediaStageHtml = `<div class="short-yt-holder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;"></div><div class="short-swipe-shield"></div>`;
         else if (postImgs.length > 0) mediaStageHtml = `<img class="shorts-fs-video" style="object-fit:contain;" src="${postImgs[0]}" alt="@${escapeHtml(post.handle)}" />`;
 
-        return `<div class="short-snap-slide" data-index="${idx}" data-post-id="${post.id}" data-yt-id="${ytId || ''}">${mediaStageHtml}<div class="shorts-fs-right-rail"><div style="text-align:center;"><div class="short-rail-btn"><svg class="ico-stroke"><use href="#ico-eye"></use></svg></div><div class="short-rail-lbl" id="short-views-lbl-${post.id}">${viewsCount.toLocaleString()}</div></div><div style="text-align:center;"><button class="short-rail-btn" id="short-like-btn-${post.id}" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLikeInShorts('${post.id}')"><svg class="ico-stroke"><use href="#ico-heart"></use></svg></button><div class="short-rail-lbl" id="short-likes-lbl-${post.id}">${Math.max(0, Number(post.likes) || 0)}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');"><svg class="ico-stroke"><use href="#ico-comment"></use></svg></button><div class="short-rail-lbl">${commentsCount}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg></button><div class="short-rail-lbl">Enviar</div></div>${!isOwn ? `<div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.openReportModal('${post.id}', '${post.handle}');"><svg class="ico-stroke"><use href="#ico-flag"></use></svg></button><div class="short-rail-lbl">Reportar</div></div>` : ''}</div><div class="shorts-fs-bottom-info"><div style="display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;"><span style="font-size:15px; font-weight:900; color:#fff; cursor:pointer; text-shadow:0 2px 6px #000;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${escapeHtml(post.handle)}</span>${isPromo ? `<div class="argon-gold-corner-badge"><svg width="18" height="18"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button>` : (!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : '')}</div><div style="font-size:13px; color:#f1f5f9; text-shadow:0 2px 6px #000; line-height:1.35; max-height:66px; overflow:hidden;">${escapeHtml(post.caption || '')}</div></div></div>`;
+        return `<div class="short-snap-slide" data-index="${idx}" data-post-id="${post.id}" data-yt-id="${ytId || ''}">${mediaStageHtml}<div class="shorts-fs-right-rail"><div style="text-align:center;"><div class="short-rail-btn"><svg class="ico-stroke"><use href="#ico-eye"></use></svg></div><div class="short-rail-lbl" id="short-views-lbl-${post.id}">${viewsCount.toLocaleString()}</div></div><div style="text-align:center;"><button class="short-rail-btn" id="short-like-btn-${post.id}" style="${alreadyLiked ? 'color:#f43f5e; border-color:#f43f5e;' : ''}" onclick="window.toggleLikeInShorts('${post.id}')"><svg class="ico-stroke"><use href="#ico-heart"></use></svg></button><div class="short-rail-lbl" id="short-likes-lbl-${post.id}">${Math.max(0, Number(post.likes) || 0)}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.toggleCommentsDrawer('${post.id}');"><svg class="ico-stroke"><use href="#ico-comment"></use></svg></button><div class="short-rail-lbl">${commentsCount}</div></div><div style="text-align:center;"><button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg></button><div class="short-rail-lbl">Enviar</div></div>${!isOwn ? `<div style="text-align:center;"><button class="short-rail-btn" onclick="window.closeShortsPlayer(); window.openReportModal('${post.id}', '${post.handle}');"><svg class="ico-stroke"><use href="#ico-flag"></use></svg></button><div class="short-rail-lbl">Reportar</div></div>` : ''}</div><div class="shorts-fs-bottom-info"><div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;"><span style="font-size:15px; font-weight:900; color:#fff; cursor:pointer; text-shadow:0 2px 6px #000;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${escapeHtml(post.handle)}</span>${isPromo ? `<div class="argon-gold-corner-badge"><svg width="18" height="18"><use href="#argon-crown-a-gold"></use></svg></div>` : ''}${!isOwn ? `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${post.handle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirse (+10 AC)'}</button>` : (!isPromo ? `<button class="btn-promote-post" onclick="window.promotePostWithCoins('${post.id}')">Impulsar (500 AC)</button>` : '')}</div><div style="font-size:12.5px; color:#f1f5f9; text-shadow:0 2px 6px #000; line-height:1.35; max-height:42px; overflow:hidden;">${escapeHtml(cleanShortCaption)}</div></div></div>`;
       }).join('');
 
       feedEl.querySelectorAll('.short-swipe-shield').forEach(shield => setupSwipeShieldForYoutubeSlide(shield, feedEl));
@@ -3204,17 +3206,15 @@
         : '';
 
       let mediaHtml = '';
-      if (imgs.length > 1) {
-        const slidesHtml = imgs.map(src => `<div class="post-carousel-slide"><img class="post-image" src="${src}" alt="Foto" loading="lazy" onclick="window.openPhotoLightbox('${src}')" /></div>`).join('');
-        mediaHtml += `<div class="post-carousel-wrap"><div class="post-carousel-counter" id="carousel-cnt-${post.id}">1/${imgs.length}</div><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${imgs.length})">${slidesHtml}</div></div>`;
-      } else if (imgs.length === 1) {
-        mediaHtml += `<img class="post-image" src="${imgs[0]}" alt="Foto" loading="lazy" onclick="window.openPhotoLightbox('${imgs[0]}')" />`;
-      }
-
       if (post.video) {
         mediaHtml += `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
       } else if (ytId) {
         mediaHtml += `<div class="yt-thumb-box" onclick="window.playInlineYoutube(this, '${ytId}'); window.registerVideoView('${post.id}');"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="Video de YouTube" loading="lazy" /><button class="yt-play-btn" type="button">▶</button></div>`;
+      } else if (imgs.length > 1) {
+        const slidesHtml = imgs.map(src => `<div class="post-carousel-slide"><img class="post-image" src="${src}" alt="Foto" loading="lazy" onclick="window.openPhotoLightbox('${src}')" /></div>`).join('');
+        mediaHtml += `<div class="post-carousel-wrap"><div class="post-carousel-counter" id="carousel-cnt-${post.id}">1/${imgs.length}</div><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${imgs.length})">${slidesHtml}</div></div>`;
+      } else if (imgs.length === 1) {
+        mediaHtml += `<img class="post-image" src="${imgs[0]}" alt="Foto" loading="lazy" onclick="window.openPhotoLightbox('${imgs[0]}')" />`;
       }
 
       const viewsPillHtml = (post.video || ytId)
