@@ -250,8 +250,8 @@
 
     .post-card { background: #ffffff; border: 1px solid #dadde1; border-radius: 14px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); position: relative; }
     .post-card.promoted-post { border: 1.5px solid #fbbf24; box-shadow: 0 2px 12px rgba(245, 158, 11, 0.14); }
-    .post-header { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .post-user-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; cursor: pointer; }
+    .post-header { padding: 12px 14px; display: flex; flex-direction: column; align-items: stretch; gap: 9px; }
+    .post-user-left { display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; cursor: pointer; }
     .avatar-circle { width: 40px; height: 40px; border-radius: 50%; background: #e4e6eb; border: 1px solid #dadde1; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #050505; flex-shrink: 0; overflow: hidden; }
     .avatar-circle img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .fb-cover-banner { height: 95px; border-radius: 14px 14px 0 0; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #059669 100%); margin: -15px -15px 0 -15px; position: relative; }
@@ -267,9 +267,9 @@
     .btn-pro-friends-sq { height: 40px; min-width: 56px; padding: 0 10px; border-radius: 10px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; flex-shrink: 0; }
     .btn-avatar-upload { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; margin-bottom: 4px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 800; cursor: pointer; }
     .user-meta { flex: 1; min-width: 0; }
-    .user-handle { font-size: 14px; font-weight: 800; color: #050505; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .user-subs-line { font-size: 11.5px; color: #65676b; margin-top: 1px; }
-    .sub-action-Wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+    .user-handle { font-size: 14.5px; font-weight: 800; color: #050505; display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+    .user-subs-line { font-size: 11.5px; color: #65676b; margin-top: 2px; white-space: nowrap; }
+    .sub-action-Wrap { display: flex; align-items: center; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
     .btn-subscribe { background: #1877f2; color: #ffffff; border: none; border-radius: 999px; padding: 7px 12px; font-size: 11px; font-weight: 800; cursor: pointer; white-space: nowrap; }
     .btn-subscribe.subscribed { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
     .btn-promote-post { background: #fffbeb; border: 1px solid #f59e0b; color: #b45309; border-radius: 999px; padding: 5px 10px; font-size: 10.5px; font-weight: 800; cursor: pointer; white-space: nowrap; }
@@ -422,7 +422,7 @@
         <symbol id="ico-menu" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></symbol>
         <symbol id="ico-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
         <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><polyline points="3,7 12,13 21,7"/></symbol>
-        <symbol id="ico-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.05 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+        <symbol id="ico-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.05 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
         <symbol id="ico-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><line x1="8" y1="16" x2="8" y2="11"/><line x1="12" y1="16" x2="12" y2="8"/><line x1="16" y1="16" x2="16" y2="13"/></symbol>
         <symbol id="ico-upgrades" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.2"/><circle cx="17.2" cy="6.8" r="3.3"/><polygon points="6.8,13.5 10.5,20 3.2,20"/><path d="M17.2 14.2c1.2-1.2 3.1-.3 3.1 1.3 0 1.8-3.1 4-3.1 4s-3.1-2.2-3.1-4c0-1.6 1.9-2.5 3.1-1.3z"/></symbol>
         <symbol id="ico-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
@@ -722,7 +722,6 @@
       <span>Reglamentario: Verifica tu correo y edad (+18)</span>
       <span style="background:#f59e0b; color:#fff; padding:4px 9px; border-radius:999px; font-size:10px;">Verificar →</span>
     </div>
-
     <div class="desktop-workspace">
       <aside class="desktop-left-rail">
         <div class="desk-nav-card" style="cursor:pointer;" onclick="window.switchTab('perfil')">
@@ -1591,17 +1590,6 @@
       if (Array.isArray(data.reportedPosts)) currentUser.reportedPosts = data.reportedPosts;
       saveLocalSession();
     }
-
-    if (sessionStorage.getItem('argon_fast_refresh') === '1' || paidPackParam > 0 || hasIncomingShare) {
-      sessionStorage.removeItem('argon_fast_refresh');
-      const sp = document.getElementById('vaultSplashScreen');
-      if (sp) sp.classList.add('hidden');
-      setTimeout(() => {
-        const g = document.getElementById('edgeRefreshGlow');
-        if (g) g.classList.add('blinking');
-      }, 80);
-    }
-
     window.triggerManualBlinkRefresh = async function() {
       const glow = document.getElementById('edgeRefreshGlow');
       if (glow) {
@@ -1900,8 +1888,8 @@
       return [...livePosts]
         .filter(p => !isLegacyAiRecord(p, p.handle) && !blockedSet.has(p.handle) && !reportedSet.has(p.id) && canCurrentUserViewPost(p))
         .sort((a, b) => {
-          const aPromo = isPostOrAuthorFeatured(a) ? 1 : 0;
-          const bPromo = isPostOrAuthorFeatured(b) ? 1 : 0;
+          const aPromo = isPostOrAuthorFeatured(post) ? 1 : 0;
+          const bPromo = isPostOrAuthorFeatured(post) ? 1 : 0;
           if (aPromo !== bPromo) return bPromo - aPromo;
           return (b.createdAt || 0) - (a.createdAt || 0);
         });
