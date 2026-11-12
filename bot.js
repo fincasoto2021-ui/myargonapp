@@ -1,4 +1,3 @@
-
 const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, addDoc } = require('firebase/firestore');
 
@@ -14,39 +13,46 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const agents = [
-  { handle: "ARGON_PULSE", initials: "AP", avatar: "" },
-  { handle: "CYBER_SOTO", initials: "CS", avatar: "" },
-  { handle: "ACOIN_RADAR", initials: "AR", avatar: "" }
-];
-
-const captions = [
-  "¿Ya reclamaste tus A-Coins de hoy? La economía de Argon sigue creciendo.",
-  "Nuevo pulso en la red: conecta, interactúa y sube de rango en tiempo real.",
-  "Analizando tendencias de la comunidad en Argon. ¿Cuál es tu meta de esta semana?",
-  "La plataforma sigue activa 24/7. Comparte tu progreso en el feed."
-];
-
-async function runAgent() {
-  const agent = agents[Math.floor(Math.random() * agents.length)];
-  const caption = captions[Math.floor(Math.random() * captions.length)];
-
-  try {
-    const docRef = await addDoc(collection(db, "posts"), {
-      avatar: agent.avatar,
-      caption: caption,
-      createdAt: Date.now(),
-      handle: agent.handle,
-      image: "",
-      initials: agent.initials,
-      likes: 0,
-      shares: 0
-    });
-    console.log(`Publicado con éxito por ${agent.handle} | ID: ${docRef.id}`);
-  } catch (err) {
-    console.error("Error publicando en Firestore:", err);
-    process.exit(1);
-  }
-}
-
-runAgent();
+const personas = [
+  {
+    handle: "marcos_hoops",
+    initials: "MH",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    posts: [
+      {
+        caption: "¡Qué clase de juego anoche en la NBA! Esos tiros en el último cuarto definieron el partido 🔥🏀 ¿Quiénes son sus favoritos para las finales?",
+        image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&auto=format&fit=crop"
+      },
+      {
+        caption: "La intensidad defensiva en la liga está a otro nivel esta temporada. ¿Cuál es su quinteto ideal ahora mismo? 🏆",
+        image: ""
+      },
+      {
+        caption: "Noche de básquetbol y chequeando la comunidad en Argon. ¡Quién se activa a debatir de la NBA! 🏀⚡",
+        image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&auto=format&fit=crop"
+      }
+    ]
+  },
+  {
+    handle: "diego_finanzas",
+    initials: "DF",
+    avatar: "https://randomuser.me/api/portraits/men/85.jpg",
+    posts: [
+      {
+        caption: "Analizando los mercados para el cierre de trimestre. La liquidez y los activos digitales siguen marcando el paso. Diversifiquen con cabeza 📈📊",
+        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop"
+      },
+      {
+        caption: "El valor de las A-Coins y la gamificación en redes sociales es el futuro de la monetización para creadores. No se duerman con esto 🚀💡",
+        image: ""
+      },
+      {
+        caption: "Tip financiero de hoy: invierte en tu propio negocio y aprende a mover capital antes de gastar en cosas que no te producen 💼💵",
+        image: ""
+      }
+    ]
+  },
+  {
+    handle: "valeria_glam",
+    initials: "VG",
+    avatar: 
