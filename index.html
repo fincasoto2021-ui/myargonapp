@@ -3367,6 +3367,62 @@
       allUgcReports = arr;
       if (isUserAdmin()) renderAdminAndLeaderboard();
     });
+    onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(500)), (snap) => {
+      const arr = [];
+      snap.forEach((d) => {
+        const pd = Object.assign({ id: d.id }, d.data());
+        if (!isLegacyAiRecord(pd, pd.handle)) arr.push(pd);
+      });
+      livePosts = arr;
+      renderFeed();
+      renderShortsTray();
+      updateUI();
+      if (viewedPublicHandle) renderPublicProfileModal();
+    });
+
+    window.triggerManualBlinkRefresh = async function() {
+      const glow = document.getElementById('edgeRefreshGlow');
+      if (glow) { glow.classList.remove('pulling', 'blinking'); void glow.offsetWidth; glow.classList.add('blinking'); }
+      try {
+        if ('caches' in window) { const keys = await caches.keys(); for (const k of keys) await caches.delete(k); }
+        const [uSnap, pSnap] = await Promise.all([
+          getDocs(collection(db, "users")),
+          getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(500)))
+        ]);
+        const nextUsers = {};
+        uSnap.forEach(d => {
+          const data = d.data(), h = (data.userHandle || d.id).toUpperCase();
+          nextUsers[h] = data;
+          if (currentUser.registered && h === currentUser.userHandle) syncCurrentUserFromDoc(data);
+        });
+        usersMap = nextUsers;
+        const arr = [];
+        pSnap.forEach(d => arr.push(Object.assign({ id: d.id }, d.data())));
+        livePosts = arr;
+        updateUI(); renderFeed(); renderAdminAndLeaderboard();
+        if (viewedPublicHandle) renderPublicProfileModal();
+        showToast('✓ Galería y feed sincronizados');
+      } catch (e) { window.location.reload(); }
+    };
+
+    window.playInlineYoutube = function(boxEl, ytId) {
+      if (!boxEl || !ytId) return;
+      boxEl.outerHTML = `<div class="youtube-embed-wrap"><iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&playsinline=1&fs=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div>`;
+    };
+
+    function handleFullscreenRotation() {
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      if (fsEl) {
+        const isVertical = fsEl.tagName === 'VIDEO' && fsEl.videoHeight > fsEl.videoWidth;
+        if (!isVertical && screen.orientation && screen.orientation.lock) {
+          screen.orientation.lock('landscape').catch(() => {});
+        }
+      } else if (screen.orientation && screen.orientation.unlock) {
+        try { screen.orientation.unlock(); } catch (e) {}
+      }
+    }
+    document.addEventListener('fullscreenchange', handleFullscreenRotation);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenRotation);
 
     loadLocalSession();
     runVaultSplashAnimation();
