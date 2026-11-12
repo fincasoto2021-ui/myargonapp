@@ -48,12 +48,12 @@ const CHANNELS = [
   { handle: 'NATGEO_ESP', name: 'NatGeo Mundo', ytId: 'UCpyYUq9kcBMLPlfE8EzguvA', bio: 'Ciencia, naturaleza y exploración.', avatar: 'https://api.dicebear.com/7.x/bottts/png?seed=NATGEO_ESP', subs: 3420, tone: 'ciencia' },
   { handle: 'MOLUSCOTV_PR', name: 'MoluscoTV PR', ytId: 'UCBfg3Yc_8iIJ0e0MeMKg2Bw', bio: 'Cultura urbana y entrevistas PR.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=MOLUSCOTV_PR', subs: 4100, tone: 'pr' },
   { handle: 'TRAILERS_VIP', name: 'Cine & Trailers', ytId: 'UCi8e0iOVk1fEOogdfu4YgfA', bio: 'Estrenos y trailers oficiales.', avatar: 'https://api.dicebear.com/7.x/bottts/png?seed=TRAILERS_VIP', subs: 2780, tone: 'cine' },
-  { handle: 'VALERIA_GLAM', name: 'Valeria Glam PR', wikiQuery: 'fashion street style portrait', bio: 'Moda, estilo y lifestyle desde PR.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=VALERIA_GLAM', subs: 1650, tone: 'moda', captions: ['Nuevo look de hoy desde la isla ✨', 'Vibras de fin de semana en PR 🌴', 'Detalles que hacen la diferencia 💫', 'Estilo urbano y fresco para hoy 🔥'] },
-  { handle: 'CARLOS_FIT_PR', name: 'Carlos Fit PR', wikiQuery: 'gym workout fitness training', extraYtId: 'UCIjiWiNemxUg0YAQA-7C8rQ', bio: 'Entrenamiento, rutina y disciplina.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=CARLOS_FIT_PR', subs: 1420, tone: 'fitness', captions: ['No se falla hoy 💪🔥', 'Rutina completada. Constancia diaria.', 'Energía al 100% en el gym ⚡', 'Un día más sumando progreso 🏋️'] },
-  { handle: 'SOFIA_COCINA_PR', name: 'Sofía Cocina PR', wikiQuery: 'gourmet food dish plate', extraYtId: 'UCVf-uzV0XR-3DLtRs1sg6Og', bio: 'Recetas y platos deliciosos.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=SOFIA_COCINA_PR', subs: 1980, tone: 'cocina', captions: ['Receta fresca recién salida 🔥🍽️', 'El sabor de hoy está a otro nivel 😋', '¿Quién se apunta a probar esto?', 'Cocina casera con toque gourmet ✨'] },
-  { handle: 'RAUL_MERCADO', name: 'Raúl Mercado', wikiQuery: 'zodiac stars galaxy astrology', extraYtId: 'UCCPhW2xxkH4PSLacqKcp95Q', bio: 'Horóscopo diario, signos y energía astral.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=RAUL_MERCADO', subs: 2300, tone: 'horoscopo', captions: HOROSCOPOS },
-  { handle: 'EVANGELISTA_CORDERO', name: 'Evangelista Cordero', wikiQuery: 'open bible church sunlight', extraYtId: 'UCnE7BNsN2A5GPEAuDBPQvqg', bio: 'Palabra de Dios, fe cristiana protestante y esperanza.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=EVANGELISTA_CORDERO', subs: 2640, tone: 'fe', captions: VERSICULOS },
-  { handle: 'LA_NUEVA_ERA', name: 'La Nueva Era', wikiQuery: 'concert stage spotlight crowd', extraYtId: 'UCXAO-BsguYdT77p4Y9497dw', bio: 'Promoción oficial de los influencers más pegados en ARGON.', avatar: 'https://api.dicebear.com/7.x/bottts/png?seed=LA_NUEVA_ERA', subs: 3150, tone: 'promo', isPromoChannel: true }
+  { handle: 'VALERIA_GLAM', name: 'Valeria Glam PR', wikiQuery: 'fashion street style', bio: 'Moda, estilo y lifestyle desde PR.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=VALERIA_GLAM', subs: 1650, tone: 'moda', captions: ['Nuevo look de hoy desde la isla ✨', 'Vibras de fin de semana en PR 🌴', 'Detalles que hacen la diferencia 💫', 'Estilo urbano y fresco para hoy 🔥'] },
+  { handle: 'CARLOS_FIT_PR', name: 'Carlos Fit PR', wikiQuery: 'gym fitness workout', extraYtId: 'UCIjiWiNemxUg0YAQA-7C8rQ', bio: 'Entrenamiento, rutina y disciplina.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=CARLOS_FIT_PR', subs: 1420, tone: 'fitness', captions: ['No se falla hoy 💪🔥', 'Rutina completada. Constancia diaria.', 'Energía al 100% en el gym ⚡', 'Un día más sumando progreso 🏋️'] },
+  { handle: 'SOFIA_COCINA_PR', name: 'Sofía Cocina PR', wikiQuery: 'gourmet food dish', extraYtId: 'UCVf-uzV0XR-3DLtRs1sg6Og', bio: 'Recetas y platos deliciosos.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=SOFIA_COCINA_PR', subs: 1980, tone: 'cocina', captions: ['Receta fresca recién salida 🔥🍽️', 'El sabor de hoy está a otro nivel 😋', '¿Quién se apunta a probar esto?', 'Cocina casera con toque gourmet ✨'] },
+  { handle: 'RAUL_MERCADO', name: 'Raúl Mercado', wikiQuery: 'astrology zodiac', extraYtId: 'UCCPhW2xxkH4PSLacqKcp95Q', bio: 'Horóscopo diario, signos y energía astral.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=RAUL_MERCADO', subs: 2300, tone: 'horoscopo', captions: HOROSCOPOS },
+  { handle: 'EVANGELISTA_CORDERO', name: 'Evangelista Cordero', wikiQuery: 'holy bible church', extraYtId: 'UCnE7BNsN2A5GPEAuDBPQvqg', bio: 'Palabra de Dios, fe cristiana protestante y esperanza.', avatar: 'https://api.dicebear.com/7.x/avataaars/png?seed=EVANGELISTA_CORDERO', subs: 2640, tone: 'fe', captions: VERSICULOS },
+  { handle: 'LA_NUEVA_ERA', name: 'La Nueva Era', wikiQuery: 'concert stage spotlight', extraYtId: 'UCXAO-BsguYdT77p4Y9497dw', bio: 'Promoción oficial de los influencers más pegados en ARGON.', avatar: 'https://api.dicebear.com/7.x/bottts/png?seed=LA_NUEVA_ERA', subs: 3150, tone: 'promo', isPromoChannel: true }
 ];
 
 const CHANNEL_MAP = Object.fromEntries(CHANNELS.map(c => [c.handle, c]));
@@ -177,7 +177,7 @@ async function postYoutubeForChannel(ch, ytChannelId, usedYtIds, offsetMs) {
 async function run() {
   for (const ch of CHANNELS) await ensureChannelProfile(ch);
 
-  const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(100)));
+  const snap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(120)));
   const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
 
   const usedImages = new Set();
@@ -228,30 +228,34 @@ async function run() {
   }
 
   let createdCount = 0;
-  const underfilled = CHANNELS.filter(c => (countByHandle[c.handle] || 0) < 4);
+  const underfilled = CHANNELS
+    .filter(c => (countByHandle[c.handle] || 0) < 4)
+    .sort((a, b) => (countByHandle[a.handle] || 0) - (countByHandle[b.handle] || 0));
   const targets = underfilled.length > 0 ? underfilled : [CHANNELS[Math.floor(Math.random() * CHANNELS.length)]];
 
   for (const ch of targets) {
-    if (createdCount >= 8) break;
+    if (createdCount >= 12) break;
     if (ch.ytId) {
       if (await postYoutubeForChannel(ch, ch.ytId, usedYtIds, createdCount * 1000)) createdCount++;
     } else if (ch.extraYtId && Math.random() < 0.35) {
       if (await postYoutubeForChannel(ch, ch.extraYtId, usedYtIds, createdCount * 1000)) createdCount++;
     } else if (ch.wikiQuery) {
       const imgUrl = await fetchUniqueWikiImage(ch.wikiQuery, usedImages);
-      if (imgUrl) {
-        usedImages.add(imgUrl);
-        const cap = ch.isPromoChannel
-          ? await buildTopInfluencersCaption()
-          : ch.captions[Math.floor(Math.random() * ch.captions.length)];
-        await addDoc(collection(db, 'posts'), {
-          handle: ch.handle, userName: ch.name, avatar: ch.avatar, isAiAgent: true,
-          caption: cap, image: imgUrl, images: [imgUrl], video: '', youtubeId: '',
-          visibility: 'public', likes: Math.floor(Math.random() * 25) + 4, views: 0,
-          likedBy: [], comments: [], promotedUntil: 0, createdAt: Date.now() - createdCount * 1000
-        });
-        createdCount++;
+      if (imgUrl) usedImages.add(imgUrl);
+      if (!imgUrl && ch.extraYtId) {
+        if (await postYoutubeForChannel(ch, ch.extraYtId, usedYtIds, createdCount * 1000)) createdCount++;
+        continue;
       }
+      const cap = ch.isPromoChannel
+        ? await buildTopInfluencersCaption()
+        : ch.captions[Math.floor(Math.random() * ch.captions.length)];
+      await addDoc(collection(db, 'posts'), {
+        handle: ch.handle, userName: ch.name, avatar: ch.avatar, isAiAgent: true,
+        caption: cap, image: imgUrl || '', images: imgUrl ? [imgUrl] : [], video: '', youtubeId: '',
+        visibility: 'public', likes: Math.floor(Math.random() * 25) + 4, views: 0,
+        likedBy: [], comments: [], promotedUntil: 0, createdAt: Date.now() - createdCount * 1000
+      });
+      createdCount++;
     }
   }
 }
