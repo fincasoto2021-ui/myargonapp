@@ -13,70 +13,84 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const personas = [
-  {
-    handle: "marcos_hoops", initials: "MH",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-    captions: [
-      "¡Qué clase de juego anoche en la NBA! Esos tiros en el último cuarto definieron el partido 🔥🏀",
-      "La intensidad defensiva en la liga está a otro nivel esta temporada 🏆",
-      "Noche de básquetbol y chequeando la comunidad en Argon. ¡Quién se activa a debatir! 🏀⚡"
-    ],
-    image: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&auto=format&fit=crop"
-  },
-  {
-    handle: "diego_finanzas", initials: "DF",
-    avatar: "https://randomuser.me/api/portraits/men/85.jpg",
-    captions: [
-      "Analizando los mercados para el cierre de trimestre. Diversifiquen con cabeza 📈📊",
-      "El valor de las A-Coins y la gamificación es el futuro de la monetización 🚀💡",
-      "Tip financiero: invierte en tu propio negocio y aprende a mover capital 💼💵"
-    ],
-    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop"
-  },
+const decode = (s) => s.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+
+async function getLatestYouTube(channelId) {
+  try {
+    const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`);
+    const xml = await res.text();
+    const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].slice(0, 5);
+    if (!entries.length) return null;
+    const pick = entries[Math.floor(Math.random() * entries.length)][1];
+    const id = pick.match(/<yt:videoId>(.*?)<\/yt:videoId>/)?.[1];
+    const title = pick.match(/<title>(.*?)<\/title>/)?.[1];
+    if (!id || !title) return null;
+    return {
+      title: decode(title),
+      image: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+      link: `https://www.youtube.com/watch?v=${id}`
+    };
+  } catch { return null; }
+}
+
+const channels = [
+  { handle: "marcos_hoops", initials: "MH", avatar: "https://randomuser.me/api/portraits/men/32.jpg", yt: "UCWJ2lWNubArHWmf3FIHbfcQ", tag: "🏀 NBA EN VIVO:" },
+  { handle: "historias_tierra", initials: "HT", avatar: "https://randomuser.me/api/portraits/men/52.jpg", yt: "UCpyYUq9kcBMLPlfE8EzguvA", tag: "🌍 PLANETA TIERRA:" },
+  { handle: "flow_urbano_pr", initials: "FU", avatar: "https://randomuser.me/api/portraits/men/46.jpg", yt: "UCBfg3Yc_8iIJ0e0MeMKg2Bw", tag: "🔥 GÉNERO URBANO:" },
+  { handle: "diego_finanzas", initials: "DF", avatar: "https://randomuser.me/api/portraits/men/85.jpg", yt: "UCrp_UI8XtuYfpiqluWLD7Lw", tag: "📈 ECONOMÍA HOY:" },
+  { handle: "tech_boricua", initials: "TB", avatar: "https://randomuser.me/api/portraits/men/22.jpg", yt: "UCG7J20LhUeLl6y_Emi7OJrA", tag: "⚡ TECH & FUTURO:" },
+  { handle: "cine_trailer", initials: "CT", avatar: "https://randomuser.me/api/portraits/women/12.jpg", yt: "UCi8e0iOVk1fEOogdfu4YgfA", tag: "🎬 ESTRENO DE CINE:" },
   {
     handle: "valeria_glam", initials: "VG",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&crop=faces",
-    captions: [
-      "Día de fotos en la playita de Puerto Rico 🌴☀️ ¿Qué les parece este look? ✨💋",
-      "Lista para salir esta noche... vibras altas siempre ✨🥂",
-      "Empezando el día con la mejor vibra y entrenando duro 💅🔥"
-    ],
-    image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop"
+    posts: [
+      { caption: "Día de fotos en la playita de Puerto Rico 🌴☀️ ¿Qué les parece este look? ✨💋", image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&auto=format&fit=crop" },
+      { caption: "Lista para salir esta noche... vibras altas siempre ✨🥂", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&auto=format&fit=crop" }
+    ]
   },
   {
-    handle: "javi_urbano", initials: "JU",
-    avatar: "https://randomuser.me/api/portraits/men/46.jpg",
-    captions: [
-      "En el estudio cuadrando los ritmos de lo que viene... El género urbano dominando desde PR 🎧🔥🇵🇷",
-      "Mucho respeto a los que están metiendo mano independiente sin deberle nada a nadie 🎤🎵",
-      "Viernes de estrenos y barras pesadas. ¿Cuál es el tema que tienen en repeat? 🔊🔥"
-    ],
-    image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop"
+    handle: "chinchorreo_pr", initials: "CP",
+    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+    posts: [
+      { caption: "Nada le gana a un buen chinchorreo por la isla con vista al mar 🇵🇷🍤 ¿Cuál es su spot favorito?", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format&fit=crop" },
+      { caption: "Atardeceres en el oeste de Puerto Rico que no tienen comparación 🌅🌴", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop" }
+    ]
+  },
+  {
+    handle: "fuerza_fit", initials: "FF",
+    avatar: "https://randomuser.me/api/portraits/men/64.jpg",
+    posts: [
+      { caption: "Sin excusas hoy. La disciplina de todos los días es la que trae resultados 💪🔥", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&auto=format&fit=crop" }
+    ]
   }
 ];
 
-async function publish() {
-  const p = personas[Math.floor(Math.random() * personas.length)];
-  const caption = p.captions[Math.floor(Math.random() * p.captions.length)];
-  const useImage = Math.random() > 0.3; // Alterna posts con y sin foto
-
-  try {
-    const docRef = await addDoc(collection(db, "posts"), {
-      avatar: p.avatar,
-      caption: caption,
+async function run() {
+  for (const ch of channels) {
+    let caption = "";
+    let image = "";
+    if (ch.yt) {
+      const vid = await getLatestYouTube(ch.yt);
+      if (!vid) continue;
+      caption = `${ch.tag} ${vid.title}\n\n▶️ Míralo aquí: ${vid.link}`;
+      image = vid.image;
+    } else {
+      const p = ch.posts[Math.floor(Math.random() * ch.posts.length)];
+      caption = p.caption;
+      image = p.image;
+    }
+    await addDoc(collection(db, "posts"), {
+      avatar: ch.avatar,
+      caption,
       createdAt: Date.now(),
-      handle: p.handle,
-      image: useImage ? p.image : "",
-      initials: p.initials,
-      likes: Math.floor(Math.random() * 8) + 3,
-      shares: Math.floor(Math.random() * 3)
+      handle: ch.handle,
+      image,
+      initials: ch.initials,
+      likes: Math.floor(Math.random() * 15) + 4,
+      shares: Math.floor(Math.random() * 5)
     });
-    console.log(`Publicado por @${p.handle} | ID: ${docRef.id}`);
-  } catch (err) {
-    console.error("Error Firestore:", err);
-    process.exit(1);
+    console.log(`Publicado: @${ch.handle}`);
   }
 }
 
-publish();
+run();
