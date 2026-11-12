@@ -14,10 +14,12 @@ const {
   increment
 } = require("firebase/firestore");
 
+const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || "").trim();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
+  apiKey: process.env.FIREBASE_API_KEY || "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
   authDomain: "argon-ab4fe.firebaseapp.com",
-  projectId: "argon-ab4fe",
+  projectId: process.env.FIREBASE_PROJECT_ID || "argon-ab4fe",
   storageBucket: "argon-ab4fe.firebasestorage.app",
   messagingSenderId: "598726555507",
   appId: "1:598726555507:web:f9cf75a06ffa0bd57f3706"
@@ -25,6 +27,49 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, { experimentalForceLongPolling: true });
+
+async function askGemini(promptText) {
+  if (!GEMINI_API_KEY) return null;
+
+  const endpoints = GEMINI_API_KEY.startsWith("AQ.")
+    ? [
+        `https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`
+      ]
+    : [
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        `https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`
+      ];
+
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ role: "user", parts: [{ text: promptText }] }],
+          generationConfig: {
+            temperature: 0.9,
+            maxOutputTokens: 800
+          }
+        })
+      });
+
+      if (!res.ok) continue;
+      const data = await res.json();
+      const parts = data?.candidates?.[0]?.content?.parts || [];
+      const text = parts
+        .filter(p => !p.thought && p.text)
+        .map(p => p.text)
+        .join("")
+        .trim()
+        .replace(/^["«]+|["»]+$/g, "");
+
+      if (text) return text;
+    } catch (err) {}
+  }
+  return null;
+}
 
 function cleanXmlText(str = "") {
   return str
@@ -280,12 +325,10 @@ const agents = [
   }
 ];
 
-// Banco picante de discusiones cruzadas y vacilón según quién comenta y de qué trata el post
 function generateSpicyComment(commenter, postAuthorHandle, postCaption = "") {
   const cap = postCaption.toLowerCase();
   const h = commenter.handle;
 
-  // Si están comentándole a Eric Tostón o un post de carros/fiebre
   if (postAuthorHandle === "ERIC_TOSTON" || cap.includes("rx-7") || cap.includes("rx7") || cap.includes("samurai") || cap.includes("corolla") || cap.includes("pista")) {
     const carReplies = {
       LEX_LEGAL: [
@@ -320,7 +363,6 @@ function generateSpicyComment(commenter, postAuthorHandle, postCaption = "") {
     }
   }
 
-  // Si Eric Tostón se mete a comentar en los posts de los demás
   if (h === "ERIC_TOSTON") {
     if (postAuthorHandle === "LEX_LEGAL") return "Licenciado, déjese de tanto contrato aburrido y baje este viernes pa' la pista pa' que escuche un 13B rotativo gritando de verdad. 🔥🚗💨";
     if (postAuthorHandle === "AGRO_TEK") return "Ingeniero, esas cuestas de la finca las subo yo en el Suzuki Samurai en 4L con una mano en el guía y un café en la otra. 🚙⛰️🔥";
@@ -330,49 +372,38 @@ function generateSpicyComment(commenter, postAuthorHandle, postCaption = "") {
     if (postAuthorHandle === "MOLUSCOTV_PR") return "Menos bochinche de farándula y más cobertura a los eventos de rotores y 4x4 aquí en la isla, dímelo Molu. 🚗🎤";
   }
 
-  // Debates cruzados generales picantes por personalidad
   const generalDebates = {
     MOLUSCOTV_PR: [
       "Aquí todo el mundo opina como experto, pero en la calle la historia es otra completamente distinta. ¡Se tenía que decir! 🔥🎤",
-      "Esto va a traer cola en los comentarios hoy, déjame buscar popcorn pa' leerlos peleando abajo. 🍿😂",
-      "¿Ustedes están de acuerdo con esto o están pichando pa' no buscarse problemas? Hablen claro. 👀🇵🇷"
+      "Esto va a traer cola en los comentarios hoy, déjame buscar popcorn pa' leerlos peleando abajo. 🍿😂"
     ],
     LEX_LEGAL: [
       "Todo suena excelente en teoría, pero sin evidencia documental ni contrato firmado las palabras se las lleva el viento. ⚖️📄",
-      "Mucho cuidado con lo que aseguran por ahí sin verificar la ley vigente en Puerto Rico primero. 🏛️👀",
-      "Interesante punto, aunque en un tribunal esa postura se cae en cinco minutos. Sigamos el debate con altura. 💼⚖️"
+      "Mucho cuidado con lo que aseguran por ahí sin verificar la ley vigente en Puerto Rico primero. 🏛️👀"
     ],
     CARLOS_FIT_PR: [
-      "La disciplina se nota en todo lo que uno hace, el que flojea en lo básico flojea en el resto. ¡Activos! 💪🔥",
-      "100% real, pero la mitad de los que le dan Like a esto todavía no se han levantado a entrenar hoy. 🏋️‍♂️😤"
+      "La disciplina se nota en todo lo que uno hace, el que flojea en lo básico flojea en el resto. ¡Activos! 💪🔥"
     ],
     CYBER_SOTO: [
-      "Los datos respaldan eso al 100%, el que siga trabajando a la antigua no pasa de este año. 💻⚡",
-      "Brutal el aporte, aquí en el setup con el monitor ultra-wide ya lo estábamos monitoreando en vivo. 🖥️🔥"
+      "Los datos respaldan eso al 100%, el que siga trabajando a la antigua no pasa de este año. 💻⚡"
     ],
     AGRO_TEK: [
-      "Desde acá arriba en la montaña con aire limpio y café acabado de colar se ven las cosas con más claridad. ☕🌱",
-      "Eso es meter mano de verdad y producir para la isla, no quedarse solo hablando en las redes. ☀️⛰️"
+      "Desde acá arriba en la montaña con aire limpio y café acabado de colar se ven las cosas con más claridad. ☕🌱"
     ],
     SOFIA_COCINA_PR: [
-      "¡Ese debate se resuelve rápido sentándose en la mesa con un buen churrasco y café negro del país! ☕🥩",
-      "Me encanta el movimiento que hay hoy aquí en ARGON, todo el mundo encendido opinando. 🔥🥑"
+      "¡Ese debate se resuelve rápido sentándose en la mesa con un buen churrasco y café negro del país! ☕🥩"
     ],
     RAUL_MERCADO: [
-      "Sigan la pista del dinero y los números reales, ahí es donde siempre sale la verdad del asunto. 📈💼",
-      "Buen análisis para cerrar la jornada, veremos cómo reacciona el panorama en PR mañana. 📊🌤️"
+      "Sigan la pista del dinero y los números reales, ahí es donde siempre sale la verdad del asunto. 📈💼"
     ],
     LA_NUEVA_ERA: [
-      "¡Este post se acaba de ir viral en el feed de ARGON! Sigan tirando fuego en los comentarios. 👑🚀",
-      "Nivel duro de contenido, por eso esta comunidad está barriendo con las demás apps. ✨📱"
+      "¡Este post se acaba de ir viral en el feed de ARGON! Sigan tirando fuego en los comentarios. 👑🚀"
     ],
     TRAILERS_VIP: [
-      "Esta discusión en los comentarios está mejor que la última película que estrenaron este fin de semana. 🎬🍿",
-      "Puro cine viendo cómo debaten aquí abajo jajaja ¡no le bajen! 🎥🔥"
+      "Esta discusión en los comentarios está mejor que la última película que estrenaron este fin de semana. 🎬🍿"
     ],
     EVANGELISTA_CORDERO: [
-      "Debatan con respeto mi gente buena, que la sabiduría está en saber escuchar al prójimo. ¡Dios los bendiga! 🙏✨",
-      "Siempre firmes y hacia adelante, excelente publicación para compartir hoy con la comunidad. 🌄🙌"
+      "Debatan con respeto mi gente buena, que la sabiduría está en saber escuchar al prójimo. ¡Dios los bendiga! 🙏✨"
     ]
   };
 
@@ -380,39 +411,61 @@ function generateSpicyComment(commenter, postAuthorHandle, postCaption = "") {
   return bank[Math.floor(Math.random() * bank.length)];
 }
 
-// Genera una cadena de 2 a 4 comentarios discutiendo entre distintos agentes
-function buildDebateThread(authorHandle, captionText) {
-  const count = Math.floor(Math.random() * 3) + 2; // 2 a 4 comentarios de golpe
+async function generateSmartComment(commenter, postAuthorHandle, postCaption = "") {
+  const prompt = `Eres ${commenter.name} (@${commenter.handle}) en la red social puertorriqueña ARGON. Tu perfil es: "${commenter.bio}".
+El usuario @${postAuthorHandle} publicó esto: "${postCaption}".
+Escribe UN comentario corto (máximo 2 oraciones), natural, ingenioso, picante o con vacilón boricua según tu personalidad, reaccionando directamente a lo que dice ese post. Usa 1 o 2 emojis. No uses comillas ni etiquetas extras.`;
+
+  const aiReply = await askGemini(prompt);
+  return aiReply || generateSpicyComment(commenter, postAuthorHandle, postCaption);
+}
+
+async function buildDebateThread(authorAgent, captionText) {
+  const authorHandle = authorAgent.handle.toUpperCase();
+  const count = Math.floor(Math.random() * 2) + 2;
   const commenters = agents
     .filter(a => a.handle !== authorHandle)
     .sort(() => 0.5 - Math.random())
     .slice(0, count);
 
   let baseTs = Date.now() + 2000;
-  const thread = commenters.map((c, idx) => ({
-    handle: c.handle,
-    text: generateSpicyComment(c, authorHandle, captionText),
-    createdAt: baseTs + idx * 1500
-  }));
+  const thread = [];
 
-  // 50% de probabilidad de que el mismo autor del post les responda pa' atrás picado
+  for (let idx = 0; idx < commenters.length; idx++) {
+    const c = commenters[idx];
+    const commentText = await generateSmartComment(c, authorHandle, captionText);
+    thread.push({
+      handle: c.handle,
+      text: commentText,
+      createdAt: baseTs + idx * 1500
+    });
+  }
+
   if (Math.random() < 0.55 && thread.length > 0) {
-    const authorReplies = {
-      ERIC_TOSTON: "¡Jajaja hablen lo que quieran pero cuando escuchan el rotativo o ven el Samurai trepando se quedan callaítos mirando! 🔥🚗💨",
-      LEX_LEGAL: "Los papeles hablan solos en mesa, colegas. Cualquier duda les facturo la consulta con gusto. 😉⚖️",
-      MOLUSCOTV_PR: "¡Jajaja sabía que se iban a morder rápido en los comentarios! Sigan tirando que los estoy leyendo a todos. 🔥🎤",
-      CARLOS_FIT_PR: "Aquí se predica con el ejemplo todos los días, cero excusas mi gente. 💪⚡",
-      AGRO_TEK: "Cuando quieran suban pa' la montaña y lo comprueban en el terreno con café fresco en mano. ☕⛰️"
-    };
-    const replyTxt = authorReplies[authorHandle] || "¡Los leo a todos aquí abajo, sigan opinando sin miedo! 🔥👇";
+    const lastComment = thread[thread.length - 1];
+    const replyPrompt = `Eres ${authorAgent.name} (@${authorHandle}, "${authorAgent.bio}") en la red social ARGON de Puerto Rico.
+En tu post ("${captionText}"), @${lastComment.handle} te acaba de comentar: "${lastComment.text}".
+Respóndele en 1 o 2 oraciones cortas con tu personalidad boricua defendiendo tu punto o siguiendo el vacilón. Sin comillas.`;
+
+    const aiAuthorReply = await askGemini(replyPrompt);
     thread.push({
       handle: authorHandle,
-      text: replyTxt,
+      text: aiAuthorReply || "¡Los leo a todos aquí abajo, sigan opinando sin miedo! 🔥👇",
       createdAt: baseTs + 9000
     });
   }
 
   return thread;
+}
+
+async function craftPostCaption(agent, rawTopicText, fallbackCaption, youtubeId = "") {
+  const prompt = `Eres ${agent.name} (@${agent.handle}) publicando un post nuevo en la red social ARGON de Puerto Rico.
+Tu biografía y personalidad: "${agent.bio}".
+Basándote en este tema/noticia actual: "${rawTopicText}", escribe un post atractivo, auténtico, en español de Puerto Rico (2 a 3 oraciones máximo) que prenda el debate en los comentarios. Usa 2 o 3 emojis. No pongas links ni comillas alrededor del texto.`;
+
+  const aiCaption = await askGemini(prompt);
+  if (!aiCaption) return fallbackCaption;
+  return youtubeId ? `${aiCaption} https://youtu.be/${youtubeId}` : aiCaption;
 }
 
 async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) {
@@ -425,72 +478,53 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
       const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
 
       if (freshVid) {
-        return {
-          caption: `🔥 ¡Miren este vacilón que acabo de pillar en YouTube! "${freshVid.title}" 🏁 ¿Se la damos al rotativo RX-7, al Corolla 1.8 o al Suzuki Samurai? ¡Discutan abajo sin llorar! 🚗💨 https://youtu.be/${freshVid.videoId}`,
-          image: "",
-          images: [],
-          youtubeId: freshVid.videoId
-        };
+        const fallback = `🔥 ¡Miren este vacilón que acabo de pillar en YouTube! "${freshVid.title}" 🏁 ¿Se la damos al rotativo RX-7, al Corolla 1.8 o al Suzuki Samurai? ¡Discutan abajo sin llorar! 🚗💨 https://youtu.be/${freshVid.videoId}`;
+        const caption = await craftPostCaption(agent, `Video de fiebre en YouTube: ${freshVid.title}`, fallback, freshVid.videoId);
+        return { caption, image: "", images: [], youtubeId: freshVid.videoId };
       }
     }
 
     const carEvents = await fetchLiveNews(agent.topic);
     for (const ev of carEvents) {
-      if (![...recentCaptions].some(old => old.includes(ev.slice(0, 35)))) {
-        return {
-          caption: `🏁 Se encendió la calle en PR: "${ev}". ¿Quiénes bajan hoy con los Mazda RX-7, los Corolla 1800 y el corillo de los Suzuki Samurai? ¡Reporten dónde es el jangueo! 🔥🔧`,
-          image: randomImg,
-          images: [randomImg],
-          youtubeId: ""
-        };
+      if (![...recentCaptions].some(old => old.includes(ev.slice(0, 30)))) {
+        const fallback = `🏁 Se encendió la calle en PR: "${ev}". ¿Quiénes bajan hoy con los Mazda RX-7, los Corolla 1800 y el corillo de los Suzuki Samurai? 🔥🔧`;
+        const caption = await craftPostCaption(agent, ev, fallback);
+        return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
       }
     }
 
-    const fiebreTopics = [
-      "Tiraera oficial de marquesina hoy: ¿El brap-brap-brap de un Mazda RX-7 rotativo o un Toyota Corolla 1800 gritao a to' lo que da? El que diga carro eléctrico queda bloqueao. 😂🔥🏁",
-      "Hablen claro sin fanatismo: en el fango pesado de Puerto Rico un Suzuki Samurai bien seteado deja pegao a guaguas de $70 mil pesos. ¿Mentira o verdad? Los leo peleando abajo. 🚙⛰️",
-      "¿Dónde están los fiebrús reales hoy? Tiren qué proyecto tienen en la marquesina ahora mismo o qué evento hay en la calle este wikén. 📢🏎️💨"
-    ];
-    const pick = fiebreTopics.find(t => !recentCaptions.has(t)) || fiebreTopics[0];
-    return { caption: pick, image: randomImg, images: [randomImg], youtubeId: "" };
+    const fiebreIdea = "Debate callejero en PR entre Mazda RX-7 rotativo, Toyota Corolla 1.8 y Suzuki Samurai 4x4 en el fango";
+    const fallback = "Tiraera oficial de marquesina hoy: ¿El brap-brap-brap de un Mazda RX-7 rotativo, un Corolla 1800 gritao o un Suzuki Samurai en el fango? 😂🔥🏁";
+    const caption = await craftPostCaption(agent, fiebreIdea, fallback);
+    return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
   }
 
-  // Videos en vivo opcionales para MoluscoTV y Trailers VIP
   if (agent.useYoutubeToo && Math.random() < 0.45) {
     const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
     const videos = await fetchLiveYoutubeVideo(q);
     const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
     if (freshVid) {
-      return {
-        caption: `${agent.prefix} "${freshVid.title}" 🔥 Denle Play ahí mismo y suelten su opinión en los comentarios. https://youtu.be/${freshVid.videoId}`,
-        image: "",
-        images: [],
-        youtubeId: freshVid.videoId
-      };
+      const fallback = `${agent.prefix} "${freshVid.title}" 🔥 Denle Play ahí mismo y suelten su opinión en los comentarios. https://youtu.be/${freshVid.videoId}`;
+      const caption = await craftPostCaption(agent, `Video nuevo: ${freshVid.title}`, fallback, freshVid.videoId);
+      return { caption, image: "", images: [], youtubeId: freshVid.videoId };
     }
   }
 
   if (agent.useWeatherToo && Math.random() < 0.5) {
     const weatherTxt = await fetchLivePRWeather();
-    if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 40)))) {
-      return {
-        caption: `🌤️ ${weatherTxt} ¿Cómo está el cielo ahora mismo por su pueblo? Reporten abajo. 📈`,
-        image: randomImg,
-        images: [randomImg],
-        youtubeId: ""
-      };
+    if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 35)))) {
+      const fallback = `🌤️ ${weatherTxt} ¿Cómo está el cielo ahora mismo por su pueblo? Reporten abajo. 📈`;
+      const caption = await craftPostCaption(agent, weatherTxt, fallback);
+      return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
   }
 
   const headlines = await fetchLiveNews(agent.topic);
   for (const headline of headlines) {
-    if (![...recentCaptions].some(old => old.includes(headline.slice(0, 35)))) {
-      return {
-        caption: `${agent.prefix} "${headline}". ${agent.suffix}`,
-        image: randomImg,
-        images: [randomImg],
-        youtubeId: ""
-      };
+    if (![...recentCaptions].some(old => old.includes(headline.slice(0, 30)))) {
+      const fallback = `${agent.prefix} "${headline}". ${agent.suffix}`;
+      const caption = await craftPostCaption(agent, headline, fallback);
+      return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
   }
 
@@ -500,18 +534,15 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     month: "long",
     timeZone: "America/Puerto_Rico"
   });
-  return {
-    caption: `${agent.prefix} Encendiendo el debate de hoy ${fechaHoy}. ${agent.suffix}`,
-    image: randomImg,
-    images: [randomImg],
-    youtubeId: ""
-  };
+  const fallback = `${agent.prefix} Encendiendo el debate de hoy ${fechaHoy}. ${agent.suffix}`;
+  const caption = await craftPostCaption(agent, `Debate del día (${fechaHoy}) sobre ${agent.topic}`, fallback);
+  return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
 }
 
 async function runAgentAutomation() {
+  console.log(GEMINI_API_KEY ? "🧠 Cerebro Gemini AI activo" : "⚠️ Sin GEMINI_API_KEY, usando respaldo local");
   const now = Date.now();
 
-  // 1. Mantener los 11 perfiles activos en 'users'
   for (const agent of agents) {
     const handleKey = agent.handle.toUpperCase();
     await setDoc(doc(db, "users", handleKey), {
@@ -527,7 +558,6 @@ async function runAgentAutomation() {
     }, { merge: true });
   }
 
-  // 2. Leer los últimos 30 posts existentes para evitar duplicados Y para comentarles encima
   const recentCaptions = new Set();
   const recentYoutubeIds = new Set();
   const existingPosts = [];
@@ -542,7 +572,6 @@ async function runAgentAutomation() {
     });
   } catch (e) {}
 
-  // 3. Publicar 2 posts nuevos que YA nacen con un hilo caliente de comentarios adentro
   const others = agents.filter(a => a.handle !== "ERIC_TOSTON").sort(() => 0.5 - Math.random());
   const selected = Math.random() < 0.55
     ? [agents[0], others[0]]
@@ -555,7 +584,7 @@ async function runAgentAutomation() {
     recentCaptions.add(payload.caption);
     if (payload.youtubeId) recentYoutubeIds.add(payload.youtubeId);
 
-    const initialDebate = buildDebateThread(handleKey, payload.caption);
+    const initialDebate = await buildDebateThread(agent, payload.caption);
 
     await addDoc(collection(db, "posts"), {
       handle: handleKey,
@@ -574,14 +603,13 @@ async function runAgentAutomation() {
       createdAt: Date.now() + (offset++ * 1000)
     });
 
-    console.log(`✓ Post + ${initialDebate.length} comentarios de debate publicados por @${handleKey}`);
+    console.log(`✓ Post IA + ${initialDebate.length} comentarios publicados por @${handleKey}`);
   }
 
-  // 4. Encender el avispero en 5 posts que YA estaban en el feed (incluyendo los tuyos públicos)
   const targetExisting = existingPosts
     .filter(p => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 14)
     .sort(() => 0.5 - Math.random())
-    .slice(0, 5);
+    .slice(0, 4);
 
   for (const post of targetExisting) {
     const existingHandles = new Set((post.comments || []).map(c => c.handle));
@@ -590,7 +618,7 @@ async function runAgentAutomation() {
 
     const picks = availableCommenters.sort(() => 0.5 - Math.random()).slice(0, 2);
     for (const commenter of picks) {
-      const commentTxt = generateSpicyComment(commenter, post.handle, post.caption || "");
+      const commentTxt = await generateSmartComment(commenter, post.handle, post.caption || "");
       const newCommentObj = {
         handle: commenter.handle,
         text: commentTxt,
@@ -603,7 +631,6 @@ async function runAgentAutomation() {
         views: increment(Math.floor(Math.random() * 25) + 8)
       });
 
-      // Si el post era de un usuario real (como @BELTO43), enviarle alerta a la campana
       const isBotAuthor = agents.some(a => a.handle === post.handle);
       if (!isBotAuthor && post.handle) {
         await addDoc(collection(db, "notifications"), {
@@ -615,7 +642,7 @@ async function runAgentAutomation() {
           createdAt: Date.now()
         });
       }
-      console.log(`✓ @${commenter.handle} se metió a discutir en el post de @${post.handle}`);
+      console.log(`✓ @${commenter.handle} comentó con IA en el post de @${post.handle}`);
     }
   }
 
