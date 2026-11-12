@@ -1888,8 +1888,8 @@
       return [...livePosts]
         .filter(p => !isLegacyAiRecord(p, p.handle) && !blockedSet.has(p.handle) && !reportedSet.has(p.id) && canCurrentUserViewPost(p))
         .sort((a, b) => {
-          const aPromo = isPostOrAuthorFeatured(post) ? 1 : 0;
-          const bPromo = isPostOrAuthorFeatured(post) ? 1 : 0;
+          const aPromo = isPostOrAuthorFeatured(a) ? 1 : 0;
+          const bPromo = isPostOrAuthorFeatured(b) ? 1 : 0;
           if (aPromo !== bPromo) return bPromo - aPromo;
           return (b.createdAt || 0) - (a.createdAt || 0);
         });
@@ -2567,7 +2567,7 @@
       try {
         for (const h of allHandles) await setDoc(doc(db, "users", h), { userHandle: h, subscribedTo: arrayUnion(FOUNDER_HANDLE) }, { merge: true });
         await setDoc(doc(db, "users", FOUNDER_HANDLE), { subs: allHandles.length, subscribersList: allHandles }, { merge: true });
-        showToast(`✓ ${allHandles.length} miembros e IAs suscritos à @${FOUNDER_HANDLE}`);
+        showToast(`✓ ${allHandles.length} miembros e IAs suscritos a @${FOUNDER_HANDLE}`);
       } catch (e) { showToast('Error al sincronizar suscriptores'); }
     };
 
@@ -2613,10 +2613,9 @@
       if (!isUserAdmin() || !targetHandle) return;
       try {
         await setDoc(doc(db, "users", targetHandle), { balance: increment(amount) }, { merge: true });
-        showToast(`+${amount.toLocaleString()} AC enviadas à @${targetHandle}`);
+        showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
       } catch (e) { showToast('Error al enviar monedas'); }
     };
-
     window.uploadAvatarPhoto = function(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
@@ -2832,7 +2831,7 @@
     window.toggleSubscribe = async function(targetHandle) {
       if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
       if (!targetHandle || targetHandle === currentUser.userHandle) return;
-      if ((currentUser.subscribedTo || []).includes(targetHandle)) { showToast(`Ya estás suscrito à @${targetHandle}`); return; }
+      if ((currentUser.subscribedTo || []).includes(targetHandle)) { showToast(`Ya estás suscrito a @${targetHandle}`); return; }
       currentUser.subscribedTo.push(targetHandle);
       currentUser.balance = (currentUser.balance || 0) + 10;
       saveLocalSession(); updateUI(); renderFeed();
@@ -2841,7 +2840,7 @@
         await setDoc(doc(db, "users", currentUser.userHandle), { subscribedTo: arrayUnion(targetHandle), balance: increment(10) }, { merge: true });
         await setDoc(doc(db, "users", targetHandle), { subs: increment(1), subscribersList: arrayUnion(currentUser.userHandle) }, { merge: true });
         dispatchNotification({ toList: [targetHandle], type: 'sub', text: 'se suscribió a tu perfil (+1 Suscriptor)' });
-        showToast(`✓ Suscrito à @${targetHandle} (+10 AC acreditadas)`);
+        showToast(`✓ Suscrito a @${targetHandle} (+10 AC acreditadas)`);
       } catch (e) {}
     };
 
@@ -2958,10 +2957,10 @@
       const mine = livePosts.filter(p => p.handle === currentUser.userHandle).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       if (myWall) {
         myWall.innerHTML = '';
-        if (mine.length === 0) myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones à tu muro.</div>`;
+        if (mine.length === 0) myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones a tu muro.</div>`;
         else mine.forEach(post => myWall.appendChild(buildPostCardElement(post)));
       }
-      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos à tu galería.');
+      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos a tu galería.');
       renderMediaGrid3x3(orderedPosts, globalGrid, 'Cargando galería global de ARGON...');
       window.setMyProfileLayout(myProfileLayoutMode);
     }
@@ -3026,8 +3025,8 @@
         if (!isReturning && currentUser.subscribedTo.length > 0) {
           for (const targetH of currentUser.subscribedTo) await setDoc(doc(db, "users", targetH), { subs: increment(1), subscribersList: arrayUnion(cleanHandle) }, { merge: true });
         }
-        showToast(`✓ Bienvenido à ARGON @${cleanHandle}`);
-      } catch (e) { showToast(`✓ Bienvenido à ARGON @${cleanHandle}`); }
+        showToast(`✓ Bienvenido a ARGON @${cleanHandle}`);
+      } catch (e) { showToast(`✓ Bienvenido a ARGON @${cleanHandle}`); }
     };
 
     window.switchTab = function(tabName) {
