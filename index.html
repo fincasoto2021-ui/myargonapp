@@ -361,7 +361,7 @@
     .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; background: #ffffff; border-top: 1px solid #dadde1; display: flex; justify-content: space-around; padding: 8px 0 16px; z-index: 50; box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.04); }
     .nav-btn { background: none; border: none; color: #050505; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; letter-spacing: 0.6px; cursor: pointer; flex: 1; opacity: 0.72; }
     .nav-btn.active { color: #1877f2; opacity: 1; }
-    .toast { position: fixed; top: 72px; left: 50%; transform: translateX(-50%); background: #050505; color: #ffffff; font-weight: 800; font-size: 12px; padding: 9px 16px; border-radius: 999px; z-index: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); display: none; white-space: nowrap; }
+    .toast { position: fixed; top:72px; left: 50%; transform: translateX(-50%); background: #050505; color: #ffffff; font-weight: 800; font-size: 12px; padding: 9px 16px; border-radius: 999px; z-index: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25); display: none; white-space: nowrap; }
   </style>
 </head>
 <body>
@@ -447,7 +447,6 @@
         <symbol id="rank-argon" viewBox="0 0 40 40"><polygon points="20,3 35,11 35,29 20,37 5,29 5,11" fill="#0b0d13" stroke="url(#goldGrad)" stroke-width="2.5"/><use href="#argon-crown-a-gold" x="6" y="5" width="28" height="28"/></symbol>
       </defs>
     </svg>
-
     <div id="vaultSplashScreen" class="vault-splash-screen">
       <div style="height:10px;"></div>
       <div class="splash-center-logo">
@@ -579,6 +578,7 @@
         </div>
       </div>
     </div>
+
     <div id="friendsListModal" class="dm-modal-overlay">
       <div class="dm-sheet" style="height:80vh;">
         <div class="dm-header">
@@ -693,7 +693,6 @@
         </div>
       </div>
     </div>
-
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box"><svg width="26" height="26"><use href="#argon-crown-a"></use></svg></div>
@@ -748,7 +747,6 @@
           <button class="desk-nav-btn" id="dnav-admin" style="display:none; color:#059669;" onclick="window.switchTab('admin')"><svg class="ico-stroke"><use href="#ico-crown-line"></use></svg><span>Panel Admin</span></button>
         </div>
       </aside>
-
       <main class="desktop-main-col">
         <section id="view-boveda" class="view-section">
           <div class="glass-card">
@@ -859,7 +857,6 @@
 
           <div id="feedContainer"></div>
         </section>
-
         <section id="view-perfil" class="view-section">
           <div class="glass-card" style="text-align:center;">
             <div class="fb-cover-banner"></div>
@@ -967,23 +964,23 @@
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <div>
                 <div style="font-size:14px; font-weight:900; color:#050505;">PANEL DE CONTROL ARGON</div>
-                <div style="font-size:11px; color:#65676b;">Auditoría de Usuarios, Agentes IA y Moderación UGC</div>
+                <div style="font-size:11px; color:#65676b;">Auditoría de Usuarios y Moderación UGC</div>
               </div>
               <span class="badge-active">ADMIN</span>
             </div>
 
             <div class="admin-stats-grid">
-              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">USUARIOS / IA</div></div>
+              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">USUARIOS</div></div>
               <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalPosts">0</div><div class="admin-stat-label">POSTS</div></div>
               <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalCoins">0</div><div class="admin-stat-label">A-COINS</div></div>
             </div>
 
-            <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">VINCULAR TODOS LOS MIEMBROS E IAs A MI CUENTA (@BELTO43)</button>
+            <button class="btn-primary-platinum" style="margin-bottom:14px; background:#059669;" onclick="window.adminSyncAllToFounder()">VINCULAR TODOS LOS INVITADOS A MI CUENTA (@BELTO43)</button>
 
             <div style="font-size:12px; font-weight:800; color:#e41e3f; margin-bottom:8px; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm" style="width:15px;height:15px;"><use href="#ico-flag"></use></svg><span>REPORTES UGC & DMCA RECIBIDOS</span></div>
             <div id="adminReportsList" style="margin-bottom:14px;"></div>
 
-            <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">DIRECTORIO COMPLETO DE USUARIOS Y AGENTES IA</div>
+            <div style="font-size:12px; font-weight:800; color:#050505; margin-bottom:8px;">DIRECTORIO COMPLETO DE USUARIOS</div>
             <div id="adminUsersDirectory"></div>
           </div>
         </section>
@@ -1004,12 +1001,11 @@
         </div>
 
         <div class="desk-nav-card">
-          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px; letter-spacing:0.5px;">TOP CREADORES & AGENTES EN VIVO</div>
+          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px; letter-spacing:0.5px;">TOP CREADORES EN VIVO</div>
           <div id="deskRightLeaderboard"></div>
         </div>
       </aside>
     </div>
-
     <nav class="bottom-nav">
       <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')"><svg class="ico-stroke"><use href="#ico-home"></use></svg><span>FEED</span></button>
       <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>SHORTS</span></button>
@@ -1143,7 +1139,6 @@
         .replace(/'/g, '&#39;');
     }
 
-    // DESBLOQUEADO: ARGON ahora recibe y conserva Agentes de IA autónomos
     function isLegacyAiRecord(item, handleStr = '') {
       return false;
     }
@@ -1406,6 +1401,7 @@
       if (wallBox) wallBox.style.display = publicProfileLayoutMode === 'wall' ? 'block' : 'none';
       if (gridBox) gridBox.style.display = publicProfileLayoutMode === 'grid' ? 'grid' : 'none';
     };
+
     function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay fotos ni videos en esta galería.') {
       if (!containerEl) return;
       const mediaPosts = (postsList || []).filter(p => {
@@ -2583,7 +2579,7 @@
       try {
         for (const h of allHandles) await setDoc(doc(db, "users", h), { userHandle: h, subscribedTo: arrayUnion(FOUNDER_HANDLE) }, { merge: true });
         await setDoc(doc(db, "users", FOUNDER_HANDLE), { subs: allHandles.length, subscribersList: allHandles }, { merge: true });
-        showToast(`✓ ${allHandles.length} miembros e IAs suscritos a @${FOUNDER_HANDLE}`);
+        showToast(`✓ ${allHandles.length} miembros e IAs suscritos à @${FOUNDER_HANDLE}`);
       } catch (e) { showToast('Error al sincronizar suscriptores'); }
     };
 
@@ -2629,7 +2625,7 @@
       if (!isUserAdmin() || !targetHandle) return;
       try {
         await setDoc(doc(db, "users", targetHandle), { balance: increment(amount) }, { merge: true });
-        showToast(`+${amount.toLocaleString()} AC enviadas a @${targetHandle}`);
+        showToast(`+${amount.toLocaleString()} AC enviadas à @${targetHandle}`);
       } catch (e) { showToast('Error al enviar monedas'); }
     };
 
@@ -2848,7 +2844,7 @@
     window.toggleSubscribe = async function(targetHandle) {
       if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
       if (!targetHandle || targetHandle === currentUser.userHandle) return;
-      if ((currentUser.subscribedTo || []).includes(targetHandle)) { showToast(`Ya estás suscrito a @${targetHandle}`); return; }
+      if ((currentUser.subscribedTo || []).includes(targetHandle)) { showToast(`Ya estás suscrito à @${targetHandle}`); return; }
       currentUser.subscribedTo.push(targetHandle);
       currentUser.balance = (currentUser.balance || 0) + 10;
       saveLocalSession(); updateUI(); renderFeed();
@@ -2857,7 +2853,7 @@
         await setDoc(doc(db, "users", currentUser.userHandle), { subscribedTo: arrayUnion(targetHandle), balance: increment(10) }, { merge: true });
         await setDoc(doc(db, "users", targetHandle), { subs: increment(1), subscribersList: arrayUnion(currentUser.userHandle) }, { merge: true });
         dispatchNotification({ toList: [targetHandle], type: 'sub', text: 'se suscribió a tu perfil (+1 Suscriptor)' });
-        showToast(`✓ Suscrito a @${targetHandle} (+10 AC acreditadas)`);
+        showToast(`✓ Suscrito à @${targetHandle} (+10 AC acreditadas)`);
       } catch (e) {}
     };
 
@@ -2974,10 +2970,10 @@
       const mine = livePosts.filter(p => p.handle === currentUser.userHandle).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
       if (myWall) {
         myWall.innerHTML = '';
-        if (mine.length === 0) myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones a tu muro.</div>`;
+        if (mine.length === 0) myWall.innerHTML = `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has subido publicaciones à tu muro.</div>`;
         else mine.forEach(post => myWall.appendChild(buildPostCardElement(post)));
       }
-      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos a tu galería.');
+      renderMediaGrid3x3(mine, myGrid, 'Aún no has subido fotos ni videos à tu galería.');
       renderMediaGrid3x3(orderedPosts, globalGrid, 'Cargando galería global de ARGON...');
       window.setMyProfileLayout(myProfileLayoutMode);
     }
@@ -3042,8 +3038,8 @@
         if (!isReturning && currentUser.subscribedTo.length > 0) {
           for (const targetH of currentUser.subscribedTo) await setDoc(doc(db, "users", targetH), { subs: increment(1), subscribersList: arrayUnion(cleanHandle) }, { merge: true });
         }
-        showToast(`✓ Bienvenido a ARGON @${cleanHandle}`);
-      } catch (e) { showToast(`✓ Bienvenido a ARGON @${cleanHandle}`); }
+        showToast(`✓ Bienvenido à ARGON @${cleanHandle}`);
+      } catch (e) { showToast(`✓ Bienvenido à ARGON @${cleanHandle}`); }
     };
 
     window.switchTab = function(tabName) {
