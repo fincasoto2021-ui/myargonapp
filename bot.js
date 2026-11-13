@@ -28,8 +28,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
+let geminiHealthy = false;
+let geminiLastError = "";
+
 async function askGemini(promptText) {
-  if (!GEMINI_API_KEY) return null;
+  if (!GEMINI_API_KEY) {
+    geminiLastError = "GEMINI_API_KEY vacía o no configurada en Secrets";
+    return null;
+  }
 
   const endpoints = GEMINI_API_KEY.startsWith("AQ.")
     ? [
@@ -49,13 +55,19 @@ async function askGemini(promptText) {
         body: JSON.stringify({
           contents: [{ role: "user", parts: [{ text: promptText }] }],
           generationConfig: {
-            temperature: 0.9,
-            maxOutputTokens: 800
+            temperature: 0.95,
+            topP: 0.95,
+            maxOutputTokens: 350
           }
         })
       });
 
-      if (!res.ok) continue;
+      if (!res.ok) {
+        const errBody = await res.text();
+        geminiLastError = `HTTP ${res.status}: ${errBody.slice(0, 140)}`;
+        continue;
+      }
+
       const data = await res.json();
       const parts = data?.candidates?.[0]?.content?.parts || [];
       const text = parts
@@ -65,8 +77,13 @@ async function askGemini(promptText) {
         .trim()
         .replace(/^["«]+|["»]+$/g, "");
 
-      if (text) return text;
-    } catch (err) {}
+      if (text) {
+        geminiHealthy = true;
+        return text;
+      }
+    } catch (err) {
+      geminiLastError = err.message || "Error de red";
+    }
   }
   return null;
 }
@@ -145,20 +162,17 @@ const agents = [
   {
     handle: "ERIC_TOSTON",
     name: "Eric Tostón",
-    bio: "Fiebrú 100% PR • RX-7, Suzuki Samurai, Corolla 1.8 y Eventos de Calle",
+    bio: "Fiebrú 100% PR • RX-7 rotativo, Suzuki Samurai 4x4, Corolla 1.8 y eventos de pista en Salinas",
+    style: "Habla bien callejero de Puerto Rico, apasionado de los motores rotativos 13B, el fango en el monte y la fiebre de carros. Le encanta picar a los que hablan de leyes o dinero.",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=250",
-    category: "fiebre",
     isFiebruAgent: true,
     topic: "car show Puerto Rico OR Salinas Speedway OR fiebre carros Puerto Rico OR 4x4 Puerto Rico",
     ytQueries: [
       "Mazda RX7 Puerto Rico rotativo",
       "Toyota Corolla 1.8 Puerto Rico fiebre",
       "Suzuki Samurai 4x4 Puerto Rico",
-      "Salinas Speedway Puerto Rico rotores",
-      "Car Show Puerto Rico calle fiebre"
+      "Salinas Speedway Puerto Rico rotores"
     ],
-    prefix: "🏁 Activo en la Fiebre:",
-    suffix: "¡Abran paso que llegó la presión! ¿Dónde se activa el corillo hoy? 🔥🚗💨",
     images: [
       "https://images.pexels.com/photos/337909/pexels-photo-337909.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -168,127 +182,104 @@ const agents = [
   {
     handle: "MOLUSCOTV_PR",
     name: "MoluscoTV PR",
-    bio: "Cultura urbana, debates calientes y entrevistas PR",
+    bio: "Cultura urbana, debates calientes, farándula y entrevistas sin filtro en PR",
+    style: "Estilo locutor de radio/podcast boricua controversial. Siempre busca prender la polémica, hacer preguntas incómodas y señalar contradicciones de los demás.",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=250&q=80",
-    category: "urbano",
     useYoutubeToo: true,
     ytQueries: [
       "entrevista reggaeton Puerto Rico debate",
       "concierto Coliseo de Puerto Rico urbano"
     ],
     topic: "música urbana reggaeton conciertos Coliseo Puerto Rico",
-    prefix: "🎤 Debate Abierto en PR:",
-    suffix: "No se muerdan en los comentarios, tírenla sin filtro abajo. 🔥🎧",
     images: [
       "https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/3784221/pexels-photo-3784221.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/3784221/pexels-photo-3784221.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "LEX_LEGAL",
     name: "Lic. Lex Argon",
-    bio: "Derecho corporativo, contratos y subastas PR",
+    bio: "Abogado corporativo, contratos, permisos y subastas públicas en PR",
+    style: "Abogado sarcástico, analítico y formal pero con calle boricua. Siempre encuentra el fallo legal, la falta de permisos, multas o riesgos de demanda en lo que dicen los otros.",
     avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=250&q=80",
-    category: "legal",
     topic: "subastas OR infraestructura OR leyes construcción Puerto Rico",
-    prefix: "⚖️ Actualidad Legal y Contratos:",
-    suffix: "El que no lee la letra chiquita del pliego pierde antes de empezar. 📋🏛️",
     images: [
       "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "AGRO_TEK",
     name: "Ing. Agro Tek",
-    bio: "Agricultura tropical, café y sistemas solares",
+    bio: "Agricultura tropical, café de altura en Adjuntas y sistemas solares off-grid",
+    style: "Ingeniero agrónomo orgulloso de la montaña de Puerto Rico. Critica la vida superficial de la ciudad y defiende la tierra, el café colao y la autosuficiencia.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=250&q=80",
-    category: "agro",
     topic: "agricultura OR cosecha café OR energía solar Puerto Rico",
-    prefix: "🌱 Reporte del Campo y Energía:",
-    suffix: "Mientras en la ciudad pelean por tapón, en la montaña producimos de verdad. ☕☀️",
     images: [
       "https://images.pexels.com/photos/2132171/pexels-photo-2132171.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/1695052/pexels-photo-1695052.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "CYBER_SOTO",
     name: "Cyber Studio Tech",
-    bio: "Tecnología, gadgets y setups",
+    bio: "Ingeniería de software, inteligencia artificial, gadgets y setups",
+    style: "Tech geek directo, lógico y un poco arrogante con los métodos antiguos. Usa datos, eficiencia y automatización para refutar argumentos emocionales.",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=250&q=80",
-    category: "tech",
     topic: "inteligencia artificial OR procesadores OR lanzamiento tecnología",
-    prefix: "💻 Radar Tech del Día:",
-    suffix: "El que no automatice este año se quedó en la era de piedra. ⚡🖥️",
     images: [
       "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "SOFIA_COCINA_PR",
     name: "Sofia Cocina PR",
-    bio: "Recetas y sazón del caribe",
+    bio: "Chef criolla, recetas con sofrito real y crítica gastronómica en PR",
+    style: "Chef boricua apasionada, jocosa y directa. Todo lo conecta con la comida, critica la comida chatarra y baja la tensión con humor criollo.",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=250&q=80",
-    category: "cocina",
     topic: "gastronomía restaurantes cocina Puerto Rico",
-    prefix: "🥑 Sazón y Gastronomía:",
-    suffix: "¡Dejen la comida chatarra que aquí se cocina con sofrito de verdad! 🍳🇵🇷",
     images: [
       "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/103124/pexels-photo-103124.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "CARLOS_FIT_PR",
     name: "Carlos Fit PR",
-    bio: "Entrenamiento, rutina y disciplina",
+    bio: "Entrenador personal, fuerza, disciplina y nutrición deportiva en PR",
+    style: "Coach intenso y sin filtros. Cero excusas, critica la vagancia y reta a los demás usuarios a tener disciplina física y mental.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
-    category: "fit",
     topic: "entrenamiento fuerza salud ejercicio nutrición deportiva",
-    prefix: "💪 Nota Fitness de Hoy:",
-    suffix: "Menos excusas baratas en las redes y más hierro en el gym. 🔥🏋️‍♂️",
     images: [
       "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "TRAILERS_VIP",
     name: "Cine & Trailers",
-    bio: "Estrenos y trailers oficiales",
+    bio: "Crítico de cine, estrenos de taquilla y series en PR",
+    style: "Cinéfilo crítico y analítico. Compara las situaciones de la vida real o los dramas de los comentarios con películas y guiones de Hollywood.",
     avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=250&q=80",
-    category: "cine",
     useYoutubeToo: true,
     ytQueries: [
       "trailer oficial español estreno 2026 pelicula",
       "nuevo trailer accion español cine"
     ],
     topic: "estrenos cine películas taquilla series",
-    prefix: "🎬 Cartelera & Estrenos:",
-    suffix: "¿Vale la pena la taquilla o está sobrevalorada? Hablen claro. 🍿🎥",
     images: [
       "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/7991158/pexels-photo-7991158.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "LA_NUEVA_ERA",
     name: "La Nueva Era",
-    bio: "Promoción oficial de los influencers más pegados en ARGON",
+    bio: "Radar de tendencias virales, creadores digitales y cultura pop en ARGON",
+    style: "Joven, aguda, moderna y competitiva. Evalúa qué tiene impacto real en redes y qué es puro ruido viejo.",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80",
-    category: "urbano",
     topic: "creadores digitales redes sociales tendencias virales",
-    prefix: "👑 Tendencia Digital:",
-    suffix: "Aquí se sabe rápido quién tiene números reales y quién compra pauta. ✨📱",
     images: [
       "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -297,206 +288,144 @@ const agents = [
   {
     handle: "EVANGELISTA_CORDERO",
     name: "Evangelista Cordero",
-    bio: "Palabra de Dios, fe cristiana, predicación y esperanza",
+    bio: "Fe cristiana, valores, sabiduría y reflexión comunitaria en PR",
+    style: "Predicador sabio, calmado pero firme. Aporta perspectiva moral y humana cuando los demás se están tirando muy duro.",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=250&q=80",
-    category: "fe",
     topic: "solidaridad ayuda comunitaria fe esperanza Puerto Rico",
-    prefix: "🙏 Reflexión del Día:",
-    suffix: "Bajen dos rayitas a la pelea y agradezcan que estamos vivos hoy. 🌄✨",
     images: [
-      "https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/289586/pexels-photo-289586.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   },
   {
     handle: "RAUL_MERCADO",
     name: "Raúl Mercado",
-    bio: "Clima, mercados y finanzas",
+    bio: "Economía, mercados, costo de vida y pronóstico del tiempo en PR",
+    style: "Analista financiero pragmático y realista. Todo lo mide por costo, retorno de inversión, inflación y realidad económica de Puerto Rico.",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=250&q=80",
-    category: "finanzas",
     topic: "economía bolsa valores tasas interés Puerto Rico",
-    prefix: "📈 Clima & Mercados Hoy:",
-    suffix: "Cuiden el bolsillo que los números no mienten esta semana. 🌤️💼",
     useWeatherToo: true,
     images: [
-      "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=800",
-      "https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg?auto=compress&cs=tinysrgb&w=800"
+      "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
   }
 ];
 
-function generateSpicyComment(commenter, postAuthorHandle, postCaption = "") {
-  const cap = postCaption.toLowerCase();
-  const h = commenter.handle;
-
-  if (postAuthorHandle === "ERIC_TOSTON" || cap.includes("rx-7") || cap.includes("rx7") || cap.includes("samurai") || cap.includes("corolla") || cap.includes("pista")) {
-    const carReplies = {
-      LEX_LEGAL: [
-        "Todo muy bonito con el rotativo y el voceteo, pero después me llaman a las 2 AM cuando les dan el boleto en la calle y les confiscan el marbete. 😂⚖️",
-        "Pónganle papeles al día a ese proyecto antes de bajar pa' Salinas, primer aviso legal gratis. 📋🚓"
-      ],
-      MOLUSCOTV_PR: [
-        "Papi, el fiebrú de RX-7 gasta más en aceite y bujías que en la casa, ¡pero cuando prende ese rotativo se cae la calle! 🔥😂",
-        "Hablemos claro: ¿cuántos de esos Corolla 1.8 llegan guiando y cuántos regresan en grúa? No me maten jajaja 🎤🚗"
-      ],
-      AGRO_TEK: [
-        "En la pista ganará el RX-7, pero métele fango en una cuesta de Adjuntas a ver quién sube... ahí el Suzuki Samurai les pasa por encima sin sudar. 🚙⛰️",
-        "Tráiganse ese Samurai pa' la finca a cargar sacos de café por el monte a ver si está tan duro na'. 🌱💪"
-      ],
-      RAUL_MERCADO: [
-        "Entre piezas racing, gomas y gasolina VP ahí se fue el presupuesto del trimestre entero, pero nadie les quita lo bailao. 💸🏁",
-        "Esos Suzuki Samurai limpios ya están subiendo de valor más rápido que las acciones tecnológicas. 📈🚙"
-      ],
-      CARLOS_FIT_PR: [
-        "Le meten 20 mil pesos en hierro al motor y cero libras al pecho en el gimnasio... ¡entrenen el chofer también, mi gente! 😂🏋️‍♂️"
-      ],
-      SOFIA_COCINA_PR: [
-        "Fijo terminan el Car Meet a las 12 de la noche comiendo tripletas grasosas en la guagüita. ¡Después no se quejen! 🥪😂"
-      ],
-      EVANGELISTA_CORDERO: [
-        "Disfruten sus máquinas con prudencia muchachos, que en la casa los esperan sanos y salvos. Bendiciones a la fiebre. 🙏🚗"
-      ]
-    };
-    if (carReplies[h]) {
-      const opts = carReplies[h];
-      return opts[Math.floor(Math.random() * opts.length)];
-    }
+function formatThreadContext(comments = []) {
+  if (!Array.isArray(comments) || comments.length === 0) {
+    return "Nadie ha comentado todavía. Eres el primero en abrir el debate.";
   }
-
-  if (h === "ERIC_TOSTON") {
-    if (postAuthorHandle === "LEX_LEGAL") return "Licenciado, déjese de tanto contrato aburrido y baje este viernes pa' la pista pa' que escuche un 13B rotativo gritando de verdad. 🔥🚗💨";
-    if (postAuthorHandle === "AGRO_TEK") return "Ingeniero, esas cuestas de la finca las subo yo en el Suzuki Samurai en 4L con una mano en el guía y un café en la otra. 🚙⛰️🔥";
-    if (postAuthorHandle === "CARLOS_FIT_PR") return "Mera @CARLOS_FIT_PR, guiar un Samurai sin power steering en el monte hace más brazos que tus mancuernas del gym. 😂💪";
-    if (postAuthorHandle === "SOFIA_COCINA_PR") return "Guárdame un plato de eso pa' después del jangueo de los Corolla 1800, que la fiebre da hambre de la mala. 🥩🔥";
-    if (postAuthorHandle === "RAUL_MERCADO") return "Si no llueve esta noche hay calle segura con los RX-7, gracias por el reporte meteorológico caballo. 🏁🌤️";
-    if (postAuthorHandle === "MOLUSCOTV_PR") return "Menos bochinche de farándula y más cobertura a los eventos de rotores y 4x4 aquí en la isla, dímelo Molu. 🚗🎤";
-  }
-
-  const generalDebates = {
-    MOLUSCOTV_PR: [
-      "Aquí todo el mundo opina como experto, pero en la calle la historia es otra completamente distinta. ¡Se tenía que decir! 🔥🎤",
-      "Esto va a traer cola en los comentarios hoy, déjame buscar popcorn pa' leerlos peleando abajo. 🍿😂"
-    ],
-    LEX_LEGAL: [
-      "Todo suena excelente en teoría, pero sin evidencia documental ni contrato firmado las palabras se las lleva el viento. ⚖️📄",
-      "Mucho cuidado con lo que aseguran por ahí sin verificar la ley vigente en Puerto Rico primero. 🏛️👀"
-    ],
-    CARLOS_FIT_PR: [
-      "La disciplina se nota en todo lo que uno hace, el que flojea en lo básico flojea en el resto. ¡Activos! 💪🔥"
-    ],
-    CYBER_SOTO: [
-      "Los datos respaldan eso al 100%, el que siga trabajando a la antigua no pasa de este año. 💻⚡"
-    ],
-    AGRO_TEK: [
-      "Desde acá arriba en la montaña con aire limpio y café acabado de colar se ven las cosas con más claridad. ☕🌱"
-    ],
-    SOFIA_COCINA_PR: [
-      "¡Ese debate se resuelve rápido sentándose en la mesa con un buen churrasco y café negro del país! ☕🥩"
-    ],
-    RAUL_MERCADO: [
-      "Sigan la pista del dinero y los números reales, ahí es donde siempre sale la verdad del asunto. 📈💼"
-    ],
-    LA_NUEVA_ERA: [
-      "¡Este post se acaba de ir viral en el feed de ARGON! Sigan tirando fuego en los comentarios. 👑🚀"
-    ],
-    TRAILERS_VIP: [
-      "Esta discusión en los comentarios está mejor que la última película que estrenaron este fin de semana. 🎬🍿"
-    ],
-    EVANGELISTA_CORDERO: [
-      "Debatan con respeto mi gente buena, que la sabiduría está en saber escuchar al prójimo. ¡Dios los bendiga! 🙏✨"
-    ]
-  };
-
-  const bank = generalDebates[h] || ["¡Fuego en el feed hoy! ¿Qué opina el resto del corillo aquí en ARGON? 🔥👀"];
-  return bank[Math.floor(Math.random() * bank.length)];
+  return comments
+    .slice(-6)
+    .map(c => `- @${c.handle}: "${c.text}"`)
+    .join("\n");
 }
 
-async function generateSmartComment(commenter, postAuthorHandle, postCaption = "") {
-  const prompt = `Eres ${commenter.name} (@${commenter.handle}) en la red social puertorriqueña ARGON. Tu perfil es: "${commenter.bio}".
-El usuario @${postAuthorHandle} publicó esto: "${postCaption}".
-Escribe UN comentario corto (máximo 2 oraciones), natural, ingenioso, picante o con vacilón boricua según tu personalidad, reaccionando directamente a lo que dice ese post. Usa 1 o 2 emojis. No uses comillas ni etiquetas extras.`;
+async function generateContextualComment(commenter, postAuthorHandle, postCaption, existingComments = [], stanceDirective = "") {
+  const threadHistory = formatThreadContext(existingComments);
+  const lastComment = existingComments.length > 0 ? existingComments[existingComments.length - 1] : null;
+  const targetMention = lastComment && lastComment.handle !== commenter.handle
+    ? `Si tiene sentido, menciónale directamente a @${lastComment.handle} para responderle a su punto.`
+    : `Dirígete al tema de @${postAuthorHandle}.`;
 
-  const aiReply = await askGemini(prompt);
-  return aiReply || generateSpicyComment(commenter, postAuthorHandle, postCaption);
+  const prompt = `Eres ${commenter.name} (@${commenter.handle}) participando en un debate real dentro de la red social puertorriqueña ARGON.
+Tu perfil: ${commenter.bio}
+Tu forma de hablar y pensar: ${commenter.style}
+
+PUBLICACIÓN ORIGINAL DE @${postAuthorHandle}:
+"${postCaption}"
+
+COMENTARIOS PREVIOS EN ESTE HILO:
+${threadHistory}
+
+TU MISIÓN EN ESTE COMENTARIO:
+- ${stanceDirective || "Reacciona con una postura clara desde tu especialidad."}
+- ${targetMention}
+- PROHIBIDO repetir frases genéricas o lo mismo que ya dijeron arriba. Responde a un detalle concreto del post o del comentario anterior.
+- Escribe máximo 2 oraciones cortas, naturales, en español de Puerto Rico, con 1 emoji. Sin comillas ni prefijos.`;
+
+  return await askGemini(prompt);
 }
 
 async function buildDebateThread(authorAgent, captionText) {
   const authorHandle = authorAgent.handle.toUpperCase();
-  const count = Math.floor(Math.random() * 2) + 2;
   const commenters = agents
     .filter(a => a.handle !== authorHandle)
     .sort(() => 0.5 - Math.random())
-    .slice(0, count);
+    .slice(0, 3);
+
+  const stances = [
+    "Lleva la contraria con sarcasmo o cuestiona el punto principal del post desde tu área.",
+    "Responde directamente al comentario anterior, sea para refutarlo o llevar la discusión a otro ángulo práctico.",
+    "Tira un comentario picante o una pregunta incómoda que obligue al autor del post a defenderse."
+  ];
 
   let baseTs = Date.now() + 2000;
   const thread = [];
 
   for (let idx = 0; idx < commenters.length; idx++) {
     const c = commenters[idx];
-    const commentText = await generateSmartComment(c, authorHandle, captionText);
+    const commentText = await generateContextualComment(c, authorHandle, captionText, thread, stances[idx]);
+    if (!commentText) continue;
+
     thread.push({
       handle: c.handle,
       text: commentText,
-      createdAt: baseTs + idx * 1500
+      createdAt: baseTs + idx * 2000
     });
   }
 
-  if (Math.random() < 0.55 && thread.length > 0) {
+  // El autor original responde al último comentario que le tiraron
+  if (thread.length > 0) {
     const lastComment = thread[thread.length - 1];
-    const replyPrompt = `Eres ${authorAgent.name} (@${authorHandle}, "${authorAgent.bio}") en la red social ARGON de Puerto Rico.
-En tu post ("${captionText}"), @${lastComment.handle} te acaba de comentar: "${lastComment.text}".
-Respóndele en 1 o 2 oraciones cortas con tu personalidad boricua defendiendo tu punto o siguiendo el vacilón. Sin comillas.`;
+    const authorReply = await generateContextualComment(
+      authorAgent,
+      authorHandle,
+      captionText,
+      thread,
+      `Este es TU propio post. Respóndele directamente a @${lastComment.handle} defendiendo tu postura con orgullo boricua y un toque de vacilón.`
+    );
 
-    const aiAuthorReply = await askGemini(replyPrompt);
-    thread.push({
-      handle: authorHandle,
-      text: aiAuthorReply || "¡Los leo a todos aquí abajo, sigan opinando sin miedo! 🔥👇",
-      createdAt: baseTs + 9000
-    });
+    if (authorReply) {
+      thread.push({
+        handle: authorHandle,
+        text: authorReply,
+        createdAt: baseTs + 8000
+      });
+    }
   }
 
   return thread;
 }
 
-async function craftPostCaption(agent, rawTopicText, fallbackCaption, youtubeId = "") {
-  const prompt = `Eres ${agent.name} (@${agent.handle}) publicando un post nuevo en la red social ARGON de Puerto Rico.
-Tu biografía y personalidad: "${agent.bio}".
-Basándote en este tema/noticia actual: "${rawTopicText}", escribe un post atractivo, auténtico, en español de Puerto Rico (2 a 3 oraciones máximo) que prenda el debate en los comentarios. Usa 2 o 3 emojis. No pongas links ni comillas alrededor del texto.`;
+async function craftPostCaption(agent, rawTopicText, youtubeId = "") {
+  const prompt = `Eres ${agent.name} (@${agent.handle}) en la red social ARGON de Puerto Rico.
+Tu perfil: ${agent.bio}
+Tu estilo: ${agent.style}
+
+Noticia o tema real de hoy: "${rawTopicText}"
+
+Redacta una publicación original de 2 a 3 oraciones en español de Puerto Rico que exponga una opinión fuerte o una pregunta polémica sobre ese tema específico para que la gente debata abajo.
+- No uses saludos robóticos ni frases clichés repetitivas.
+- Usa 1 o 2 emojis.
+- No pongas enlaces ni comillas alrededor del texto.`;
 
   const aiCaption = await askGemini(prompt);
-  if (!aiCaption) return fallbackCaption;
+  if (!aiCaption) return null;
   return youtubeId ? `${aiCaption} https://youtu.be/${youtubeId}` : aiCaption;
 }
 
 async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) {
   const randomImg = agent.images[Math.floor(Math.random() * agent.images.length)];
 
-  if (agent.isFiebruAgent) {
-    if (Math.random() < 0.65) {
-      const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
-      const videos = await fetchLiveYoutubeVideo(q);
-      const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
+  if (agent.isFiebruAgent && Math.random() < 0.65) {
+    const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
+    const videos = await fetchLiveYoutubeVideo(q);
+    const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
 
-      if (freshVid) {
-        const fallback = `🔥 ¡Miren este vacilón que acabo de pillar en YouTube! "${freshVid.title}" 🏁 ¿Se la damos al rotativo RX-7, al Corolla 1.8 o al Suzuki Samurai? ¡Discutan abajo sin llorar! 🚗💨 https://youtu.be/${freshVid.videoId}`;
-        const caption = await craftPostCaption(agent, `Video de fiebre en YouTube: ${freshVid.title}`, fallback, freshVid.videoId);
-        return { caption, image: "", images: [], youtubeId: freshVid.videoId };
-      }
+    if (freshVid) {
+      const caption = await craftPostCaption(agent, `Video recién salido de fiebre de carros en PR: "${freshVid.title}"`, freshVid.videoId);
+      if (caption) return { caption, image: "", images: [], youtubeId: freshVid.videoId };
     }
-
-    const carEvents = await fetchLiveNews(agent.topic);
-    for (const ev of carEvents) {
-      if (![...recentCaptions].some(old => old.includes(ev.slice(0, 30)))) {
-        const fallback = `🏁 Se encendió la calle en PR: "${ev}". ¿Quiénes bajan hoy con los Mazda RX-7, los Corolla 1800 y el corillo de los Suzuki Samurai? 🔥🔧`;
-        const caption = await craftPostCaption(agent, ev, fallback);
-        return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
-      }
-    }
-
-    const fiebreIdea = "Debate callejero en PR entre Mazda RX-7 rotativo, Toyota Corolla 1.8 y Suzuki Samurai 4x4 en el fango";
-    const fallback = "Tiraera oficial de marquesina hoy: ¿El brap-brap-brap de un Mazda RX-7 rotativo, un Corolla 1800 gritao o un Suzuki Samurai en el fango? 😂🔥🏁";
-    const caption = await craftPostCaption(agent, fiebreIdea, fallback);
-    return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
   }
 
   if (agent.useYoutubeToo && Math.random() < 0.45) {
@@ -504,45 +433,37 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     const videos = await fetchLiveYoutubeVideo(q);
     const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
     if (freshVid) {
-      const fallback = `${agent.prefix} "${freshVid.title}" 🔥 Denle Play ahí mismo y suelten su opinión en los comentarios. https://youtu.be/${freshVid.videoId}`;
-      const caption = await craftPostCaption(agent, `Video nuevo: ${freshVid.title}`, fallback, freshVid.videoId);
-      return { caption, image: "", images: [], youtubeId: freshVid.videoId };
+      const caption = await craftPostCaption(agent, `Video tendencia en YouTube: "${freshVid.title}"`, freshVid.videoId);
+      if (caption) return { caption, image: "", images: [], youtubeId: freshVid.videoId };
     }
   }
 
   if (agent.useWeatherToo && Math.random() < 0.5) {
     const weatherTxt = await fetchLivePRWeather();
     if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 35)))) {
-      const fallback = `🌤️ ${weatherTxt} ¿Cómo está el cielo ahora mismo por su pueblo? Reporten abajo. 📈`;
-      const caption = await craftPostCaption(agent, weatherTxt, fallback);
-      return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
+      const caption = await craftPostCaption(agent, weatherTxt);
+      if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
   }
 
   const headlines = await fetchLiveNews(agent.topic);
   for (const headline of headlines) {
     if (![...recentCaptions].some(old => old.includes(headline.slice(0, 30)))) {
-      const fallback = `${agent.prefix} "${headline}". ${agent.suffix}`;
-      const caption = await craftPostCaption(agent, headline, fallback);
-      return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
+      const caption = await craftPostCaption(agent, headline);
+      if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
   }
 
-  const fechaHoy = new Date().toLocaleDateString("es-PR", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    timeZone: "America/Puerto_Rico"
-  });
-  const fallback = `${agent.prefix} Encendiendo el debate de hoy ${fechaHoy}. ${agent.suffix}`;
-  const caption = await craftPostCaption(agent, `Debate del día (${fechaHoy}) sobre ${agent.topic}`, fallback);
+  const caption = await craftPostCaption(agent, `Un tema caliente de hoy en Puerto Rico relacionado con: ${agent.bio}`);
+  if (!caption) return null;
   return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
 }
 
 async function runAgentAutomation() {
-  console.log(GEMINI_API_KEY ? "🧠 Cerebro Gemini AI activo" : "⚠️ Sin GEMINI_API_KEY, usando respaldo local");
   const now = Date.now();
+  const botHandles = new Set(agents.map(a => a.handle.toUpperCase()));
 
+  // 1. Mantener perfiles actualizados
   for (const agent of agents) {
     const handleKey = agent.handle.toUpperCase();
     await setDoc(doc(db, "users", handleKey), {
@@ -558,6 +479,7 @@ async function runAgentAutomation() {
     }, { merge: true });
   }
 
+  // 2. Leer los últimos 30 posts
   const recentCaptions = new Set();
   const recentYoutubeIds = new Set();
   const existingPosts = [];
@@ -572,15 +494,23 @@ async function runAgentAutomation() {
     });
   } catch (e) {}
 
-  const others = agents.filter(a => a.handle !== "ERIC_TOSTON").sort(() => 0.5 - Math.random());
-  const selected = Math.random() < 0.55
-    ? [agents[0], others[0]]
-    : [others[0], others[1]];
+  // 3. Prueba rápida de Gemini antes de generar contenido
+  const healthCheck = await askGemini("Responde solo con la palabra: OK");
+  if (!healthCheck) {
+    console.error(`❌ GEMINI FALLÓ Y NO GENERARÁ FRASES REPETIDAS. Motivo: ${geminiLastError}`);
+    process.exit(1);
+  }
+  console.log("🧠 Gemini 2.5 Flash verificado y respondiendo con memoria contextual.");
 
+  // 4. Publicar 2 posts nuevos con hilo de debate real de 4 turnos
+  const shuffledAgents = [...agents].sort(() => 0.5 - Math.random()).slice(0, 2);
   let offset = 0;
-  for (const agent of selected) {
+
+  for (const agent of shuffledAgents) {
     const handleKey = agent.handle.toUpperCase();
     const payload = await buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds);
+    if (!payload) continue;
+
     recentCaptions.add(payload.caption);
     if (payload.youtubeId) recentYoutubeIds.add(payload.youtubeId);
 
@@ -603,27 +533,48 @@ async function runAgentAutomation() {
       createdAt: Date.now() + (offset++ * 1000)
     });
 
-    console.log(`✓ Post IA + ${initialDebate.length} comentarios publicados por @${handleKey}`);
+    console.log(`✓ Nuevo debate IA publicado por @${handleKey} (${initialDebate.length} respuestas cruzadas)`);
   }
 
-  const targetExisting = existingPosts
-    .filter(p => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 14)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 4);
+  // 5. Prioridad a posts donde escribieron usuarios reales (no bots) o posts recientes
+  const publicPosts = existingPosts.filter(
+    p => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 16
+  );
+
+  const humanPosts = publicPosts.filter(p => {
+    const isHumanAuthor = p.handle && !botHandles.has(p.handle.toUpperCase());
+    const hasHumanComment = Array.isArray(p.comments) && p.comments.some(c => c.handle && !botHandles.has(c.handle.toUpperCase()));
+    return isHumanAuthor || hasHumanComment;
+  });
+
+  const botPosts = publicPosts.filter(p => !humanPosts.includes(p)).sort(() => 0.5 - Math.random());
+  const targetExisting = [...humanPosts, ...botPosts].slice(0, 4);
 
   for (const post of targetExisting) {
-    const existingHandles = new Set((post.comments || []).map(c => c.handle));
-    const availableCommenters = agents.filter(a => a.handle !== post.handle && !existingHandles.has(a.handle));
+    const currentComments = Array.isArray(post.comments) ? [...post.comments] : [];
+    const lastAuthor = currentComments.length > 0 ? currentComments[currentComments.length - 1].handle : post.handle;
+    const availableCommenters = agents.filter(a => a.handle !== lastAuthor);
     if (availableCommenters.length === 0) continue;
 
     const picks = availableCommenters.sort(() => 0.5 - Math.random()).slice(0, 2);
+
     for (const commenter of picks) {
-      const commentTxt = await generateSmartComment(commenter, post.handle, post.caption || "");
+      const commentTxt = await generateContextualComment(
+        commenter,
+        post.handle,
+        post.caption || "",
+        currentComments,
+        "Lee el último comentario de la lista y respóndele directamente para avanzar la conversación."
+      );
+      if (!commentTxt) continue;
+
       const newCommentObj = {
         handle: commenter.handle,
         text: commentTxt,
         createdAt: Date.now() + Math.floor(Math.random() * 3000)
       };
+
+      currentComments.push(newCommentObj);
 
       await updateDoc(doc(db, "posts", post.id), {
         comments: arrayUnion(newCommentObj),
@@ -631,18 +582,18 @@ async function runAgentAutomation() {
         views: increment(Math.floor(Math.random() * 25) + 8)
       });
 
-      const isBotAuthor = agents.some(a => a.handle === post.handle);
+      const isBotAuthor = botHandles.has((post.handle || "").toUpperCase());
       if (!isBotAuthor && post.handle) {
         await addDoc(collection(db, "notifications"), {
           to: post.handle,
           from: commenter.handle,
           type: "comment",
-          text: `comentó en tu post: "${commentTxt.slice(0, 45)}..."`,
+          text: `respondió en tu post: "${commentTxt.slice(0, 50)}..."`,
           postId: post.id,
           createdAt: Date.now()
         });
       }
-      console.log(`✓ @${commenter.handle} comentó con IA en el post de @${post.handle}`);
+      console.log(`✓ @${commenter.handle} continuó el hilo en el post de @${post.handle}`);
     }
   }
 
