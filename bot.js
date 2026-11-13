@@ -14,6 +14,12 @@ const {
   increment
 } = require("firebase/firestore");
 
+// Seguro global anti-friseo: cierra limpio a los 3 minutos pase lo que pase
+setTimeout(() => {
+  console.log("⏱️ Tiempo máximo alcanzado, cerrando proceso limpio.");
+  process.exit(0);
+}, 180000);
+
 const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || "").trim();
 
 const firebaseConfig = {
@@ -28,78 +34,103 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
-let geminiHealthy = false;
 let geminiLastError = "";
-let activeModelUsed = "";
+let workingEndpoint = null;
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function safeFetch(url, options = {}, timeoutMs = 12000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 async function askGemini(promptText) {
   if (!GEMINI_API_KEY) {
-    geminiLastError = "GEMINI_API_KEY vacía o no configurada en Secrets";
+    geminiLastError = "GEMINI_API_KEY vacía en Secrets";
     return null;
   }
 
-  const models = ["gemini-2.5-flash-lite", "gemini-3-flash-preview", "gemini-2.0-flash"];
-  const endpoints = [];
+  const models = ["gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-3-flash-preview"];
+  let candidates = [];
 
-  for (const model of models) {
-    if (GEMINI_API_KEY.startsWith("AQ.")) {
-      endpoints.push({
-        model,
-        url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
-      });
-      endpoints.push({
-        model,
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
-      });
-    } else {
-      endpoints.push({
-        model,
-        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
-      });
-      endpoints.push({
-        model,
-        url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
-      });
+  if (workingEndpoint) {
+    candidates = [workingEndpoint];
+  } else {
+    for (const model of models) {
+      if (GEMINI_API_KEY.startsWith("AQ.")) {
+        candidates.push({
+          model,
+          url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+        });
+        candidates.push({
+          model,
+          url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+        });
+      } else {
+        candidates.push({
+          model,
+          url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+        });
+        candidates.push({
+          model,
+          url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+        });
+      }
     }
   }
 
-  for (const ep of endpoints) {
+  for (const ep of candidates) {
     try {
-      const res = await fetch(ep.url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ role: "user", parts: [{ text: promptText }] }],
-          generationConfig: {
-            temperature: 0.9,
-            topP: 0.95,
-            maxOutputTokens: 380
-          }
-        })
-      });
+      await sleep(1200);
+      const res = await safeFetch(
+        ep.url,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ role: "user", parts: [{ text: promptText }] }],
+            generationConfig: {
+              temperature: 0.9,
+              topP: 0.95,
+              maxOutputTokens: 320
+            }
+          })
+        },
+        15000
+      );
+
+      if (res.status === 429) {
+        console.log("⏳ Pausa breve por límite de velocidad de Gemini...");
+        await sleep(5000);
+        continue;
+      }
 
       if (!res.ok) {
         const errBody = await res.text();
-        geminiLastError = `HTTP ${res.status} (${ep.model}): ${errBody.slice(0, 140)}`;
+        geminiLastError = `HTTP ${res.status} (${ep.model}): ${errBody.slice(0, 120)}`;
         continue;
       }
 
       const data = await res.json();
       const parts = data?.candidates?.[0]?.content?.parts || [];
       const text = parts
-        .filter(p => !p.thought && p.text)
-        .map(p => p.text)
+        .filter((p) => !p.thought && p.text)
+        .map((p) => p.text)
         .join("")
         .trim()
         .replace(/^["«]+|["»]+$/g, "");
 
       if (text) {
-        geminiHealthy = true;
-        activeModelUsed = ep.model;
+        workingEndpoint = ep;
         return text;
       }
     } catch (err) {
-      geminiLastError = err.message || "Error de red";
+      geminiLastError = err.name === "AbortError" ? `Timeout en ${ep.model}` : err.message;
     }
   }
   return null;
@@ -121,12 +152,12 @@ function cleanXmlText(str = "") {
 async function fetchLiveNews(searchQuery) {
   try {
     const url = `https://news.google.com/rss/search?q=${encodeURIComponent(searchQuery)}&hl=es-419&gl=PR&ceid=PR:es-419`;
-    const res = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" } });
+    const res = await safeFetch(url, { headers: { "User-Agent": "Mozilla/5.0" } }, 8000);
     const xml = await res.text();
-    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, 8);
+    const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].slice(0, 6);
 
     return items
-      .map(match => {
+      .map((match) => {
         const titleMatch = match[1].match(/<title>([\s\S]*?)<\/title>/);
         return titleMatch ? cleanXmlText(titleMatch[1]) : "";
       })
@@ -139,17 +170,17 @@ async function fetchLiveNews(searchQuery) {
 async function fetchLiveSportsScores(sportPath) {
   try {
     const url = `https://site.api.espn.com/apis/site/v2/sports/${sportPath}/scoreboard`;
-    const res = await fetch(url, { headers: { "User-Agent": "ArgonAppPR/1.0" } });
+    const res = await safeFetch(url, { headers: { "User-Agent": "ArgonAppPR/1.0" } }, 8000);
     if (!res.ok) return null;
     const data = await res.json();
     const events = (data?.events || []).slice(0, 6);
     if (events.length === 0) return null;
 
-    const lines = events.map(ev => {
+    const lines = events.map((ev) => {
       const comp = ev.competitions?.[0];
       const teams = comp?.competitors || [];
-      const away = teams.find(t => t.homeAway === "away") || teams[0];
-      const home = teams.find(t => t.homeAway === "home") || teams[1];
+      const away = teams.find((t) => t.homeAway === "away") || teams[0];
+      const home = teams.find((t) => t.homeAway === "home") || teams[1];
       const status = ev.status?.type?.shortDetail || "";
       if (!away || !home) return ev.name;
       return `${away.team?.shortDisplayName || away.team?.name} ${away.score || 0} - ${home.team?.shortDisplayName || home.team?.name} ${home.score || 0} (${status})`;
@@ -164,17 +195,21 @@ async function fetchLiveSportsScores(sportPath) {
 async function fetchLiveYoutubeVideo(searchQuery) {
   try {
     const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}&sp=CAI%253D`;
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Accept-Language": "es-419,es;q=0.9"
-      }
-    });
+    const res = await safeFetch(
+      url,
+      {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "Accept-Language": "es-419,es;q=0.9"
+        }
+      },
+      8000
+    );
     const html = await res.text();
     const regex = /"videoRenderer":\{"videoId":"([a-zA-Z0-9_-]{11})".*?"title":\{"runs":\[\{"text":"([^"]+)"\}/g;
     const results = [];
     let match;
-    while ((match = regex.exec(html)) !== null && results.length < 8) {
+    while ((match = regex.exec(html)) !== null && results.length < 6) {
       results.push({
         videoId: match[1],
         title: match[2].replace(/\\u0026/g, "&")
@@ -188,9 +223,11 @@ async function fetchLiveYoutubeVideo(searchQuery) {
 
 async function fetchLivePRWeather() {
   try {
-    const res = await fetch("https://api.weather.gov/gridpoints/SJU/110,45/forecast", {
-      headers: { "User-Agent": "ArgonAppPR/1.0" }
-    });
+    const res = await safeFetch(
+      "https://api.weather.gov/gridpoints/SJU/110,45/forecast",
+      { headers: { "User-Agent": "ArgonAppPR/1.0" } },
+      8000
+    );
     const data = await res.json();
     const period = data?.properties?.periods?.[0];
     if (period) {
@@ -267,11 +304,7 @@ const agents = [
     style: "Habla bien callejero de Puerto Rico, apasionado de los motores rotativos 13B, el fango en el monte y la fiebre de carros.",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=250",
     topic: "car show Puerto Rico OR Salinas Speedway OR fiebre carros Puerto Rico OR 4x4 Puerto Rico",
-    ytQueries: [
-      "Mazda RX7 Puerto Rico rotativo",
-      "Toyota Corolla 1.8 Puerto Rico fiebre",
-      "Suzuki Samurai 4x4 Puerto Rico"
-    ],
+    ytQueries: ["Mazda RX7 Puerto Rico rotativo", "Toyota Corolla 1.8 Puerto Rico fiebre"],
     images: [
       "https://images.pexels.com/photos/337909/pexels-photo-337909.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -284,10 +317,7 @@ const agents = [
     bio: "Cultura urbana, debates calientes, farándula y entrevistas sin filtro en PR",
     style: "Estilo locutor de radio/podcast boricua controversial. Siempre busca prender la polémica y hacer preguntas incómodas.",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=250&q=80",
-    ytQueries: [
-      "entrevista reggaeton Puerto Rico debate",
-      "concierto Coliseo de Puerto Rico urbano"
-    ],
+    ytQueries: ["entrevista reggaeton Puerto Rico debate"],
     topic: "música urbana reggaeton conciertos Coliseo Puerto Rico",
     images: [
       "https://images.pexels.com/photos/164938/pexels-photo-164938.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -417,33 +447,34 @@ function formatThreadContext(comments = []) {
     return "Nadie ha comentado todavía. Eres el primero en abrir el debate.";
   }
   return comments
-    .slice(-6)
-    .map(c => `- @${c.handle}: "${c.text}"`)
+    .slice(-5)
+    .map((c) => `- @${c.handle}: "${c.text}"`)
     .join("\n");
 }
 
 async function generateContextualComment(commenter, postAuthorHandle, postCaption, existingComments = [], stanceDirective = "") {
   const threadHistory = formatThreadContext(existingComments);
   const lastComment = existingComments.length > 0 ? existingComments[existingComments.length - 1] : null;
-  const targetMention = lastComment && lastComment.handle !== commenter.handle
-    ? `Si tiene sentido, menciónale directamente a @${lastComment.handle} para responderle a su punto.`
-    : `Dirígete al tema de @${postAuthorHandle}.`;
+  const targetMention =
+    lastComment && lastComment.handle !== commenter.handle
+      ? `Menciónale directamente a @${lastComment.handle} para responderle a su punto.`
+      : `Dirígete al tema de @${postAuthorHandle}.`;
 
-  const prompt = `Eres ${commenter.name} (@${commenter.handle}) participando en un debate real dentro de la red social puertorriqueña ARGON.
+  const prompt = `Eres ${commenter.name} (@${commenter.handle}) en la red social puertorriqueña ARGON.
 Tu perfil: ${commenter.bio}
-Tu forma de hablar y pensar: ${commenter.style}
+Tu estilo: ${commenter.style}
 
-PUBLICACIÓN ORIGINAL DE @${postAuthorHandle}:
+PUBLICACIÓN DE @${postAuthorHandle}:
 "${postCaption}"
 
-COMENTARIOS PREVIOS EN ESTE HILO:
+HILO PREVIO:
 ${threadHistory}
 
-TU MISIÓN EN ESTE COMENTARIO:
-- ${stanceDirective || "Reacciona con una postura clara desde tu especialidad."}
+INSTRUCCIÓN:
+- ${stanceDirective || "Reacciona con postura clara desde tu área."}
 - ${targetMention}
-- PROHIBIDO repetir frases genéricas o lo mismo que ya dijeron arriba. Responde a un detalle concreto del post o del comentario anterior.
-- Escribe máximo 2 oraciones cortas, naturales, en español de Puerto Rico, con 1 emoji. Sin comillas ni prefijos.`;
+- Prohibido repetir frases genéricas. Responde a un dato concreto del post o comentario anterior.
+- Máximo 2 oraciones cortas en español de Puerto Rico, con 1 emoji. Sin comillas.`;
 
   return await askGemini(prompt);
 }
@@ -451,14 +482,13 @@ TU MISIÓN EN ESTE COMENTARIO:
 async function buildDebateThread(authorAgent, captionText) {
   const authorHandle = authorAgent.handle.toUpperCase();
   const commenters = agents
-    .filter(a => a.handle !== authorHandle)
+    .filter((a) => a.handle !== authorHandle)
     .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
+    .slice(0, 2);
 
   const stances = [
-    "Lleva la contraria o cuestiona el punto principal del post desde tu área con argumentos concretos.",
-    "Responde directamente al comentario anterior, sea para refutarlo o llevar la discusión a otro ángulo práctico.",
-    "Tira un comentario picante o una pregunta incómoda que obligue al autor del post a defenderse."
+    "Cuestiona o lleva la contraria al punto principal con argumentos concretos de tu área.",
+    "Responde directamente al comentario anterior con un ángulo distinto o pregunta incómoda."
   ];
 
   let baseTs = Date.now() + 2000;
@@ -483,14 +513,14 @@ async function buildDebateThread(authorAgent, captionText) {
       authorHandle,
       captionText,
       thread,
-      `Este es TU propio post. Respóndele directamente a @${lastComment.handle} defendiendo tu postura con autoridad boricua.`
+      `Este es TU propio post. Respóndele directamente a @${lastComment.handle} defendiendo tu punto con autoridad boricua.`
     );
 
     if (authorReply) {
       thread.push({
         handle: authorHandle,
         text: authorReply,
-        createdAt: baseTs + 8000
+        createdAt: baseTs + 6000
       });
     }
   }
@@ -505,10 +535,9 @@ Tu estilo: ${agent.style}
 
 Información real / resultados / noticia de hoy: "${rawTopicText}"
 
-Redacta una publicación informativa y envolvente de 2 a 3 oraciones en español de Puerto Rico que comparta esos datos reales (si hay marcadores o nombres, menciónalos tal cual) y lance una pregunta directa para prender el debate en los comentarios.
-- No uses saludos robóticos ni frases clichés repetitivas.
-- Usa 1 o 2 emojis.
-- No pongas enlaces ni comillas alrededor del texto.`;
+Redacta una publicación informativa y directa de 2 a 3 oraciones en español de Puerto Rico compartiendo esos datos reales (si hay marcadores o nombres, inclúyelos) y cierra con una pregunta para prender el debate.
+- Cero saludos robóticos ni frases clichés.
+- Usa 1 o 2 emojis. Sin enlaces ni comillas.`;
 
   const aiCaption = await askGemini(prompt);
   if (!aiCaption) return null;
@@ -518,22 +547,22 @@ Redacta una publicación informativa y envolvente de 2 a 3 oraciones en español
 async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) {
   const randomImg = agent.images[Math.floor(Math.random() * agent.images.length)];
 
-  // 20% YouTube, 80% post informativo con foto y datos reales
+  // 80% Post informativo con foto, 20% YouTube
   const wantsYoutube = Array.isArray(agent.ytQueries) && agent.ytQueries.length > 0 && Math.random() < 0.20;
 
   if (wantsYoutube) {
     const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
     const videos = await fetchLiveYoutubeVideo(q);
-    const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
+    const freshVid = videos.find((v) => !recentYoutubeIds.has(v.videoId));
     if (freshVid) {
-      const caption = await craftPostCaption(agent, `Video recién publicado relacionado con tu tema: "${freshVid.title}"`, freshVid.videoId);
+      const caption = await craftPostCaption(agent, `Video recién publicado: "${freshVid.title}"`, freshVid.videoId);
       if (caption) return { caption, image: "", images: [], youtubeId: freshVid.videoId };
     }
   }
 
   if (agent.espnSport) {
     const scoresTxt = await fetchLiveSportsScores(agent.espnSport);
-    if (scoresTxt && ![...recentCaptions].some(c => c.includes(scoresTxt.slice(0, 45)))) {
+    if (scoresTxt && ![...recentCaptions].some((c) => c.includes(scoresTxt.slice(0, 45)))) {
       const caption = await craftPostCaption(agent, scoresTxt);
       if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
@@ -541,7 +570,7 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
 
   if (agent.useWeatherToo && Math.random() < 0.4) {
     const weatherTxt = await fetchLivePRWeather();
-    if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 35)))) {
+    if (weatherTxt && ![...recentCaptions].some((c) => c.includes(weatherTxt.slice(0, 35)))) {
       const caption = await craftPostCaption(agent, weatherTxt);
       if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
@@ -549,7 +578,7 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
 
   const headlines = await fetchLiveNews(agent.topic);
   for (const headline of headlines) {
-    if (![...recentCaptions].some(old => old.includes(headline.slice(0, 30)))) {
+    if (![...recentCaptions].some((old) => old.includes(headline.slice(0, 30)))) {
       const caption = await craftPostCaption(agent, headline);
       if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
     }
@@ -562,32 +591,46 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
 
 async function runAgentAutomation() {
   const now = Date.now();
-  const botHandles = new Set(agents.map(a => a.handle.toUpperCase()));
+  const botHandles = new Set(agents.map((a) => a.handle.toUpperCase()));
 
-  // 1. Mantener los 15 perfiles actualizados en 'users'
-  for (const agent of agents) {
-    const handleKey = agent.handle.toUpperCase();
-    await setDoc(doc(db, "users", handleKey), {
-      userName: agent.name,
-      userHandle: handleKey,
-      bio: agent.bio,
-      avatar: agent.avatar,
-      ageVerified: true,
-      invitedBy: "BELTO43",
-      subs: 1380,
-      balance: 10000,
-      updatedAt: now
-    }, { merge: true });
+  console.log("🚀 Iniciando verificación de Gemini...");
+  const healthCheck = await askGemini("Responde solo: OK");
+  if (!healthCheck) {
+    console.error(`❌ GEMINI FALLÓ. Motivo: ${geminiLastError}`);
+    process.exit(1);
   }
+  console.log(`🧠 Gemini activo (${workingEndpoint.model}) • Actualizando los 15 perfiles en paralelo...`);
 
-  // 2. Leer los últimos 35 posts
+  // 1. Actualizar los 15 perfiles en paralelo (toma menos de 1 segundo)
+  await Promise.all(
+    agents.map((agent) => {
+      const handleKey = agent.handle.toUpperCase();
+      return setDoc(
+        doc(db, "users", handleKey),
+        {
+          userName: agent.name,
+          userHandle: handleKey,
+          bio: agent.bio,
+          avatar: agent.avatar,
+          ageVerified: true,
+          invitedBy: "BELTO43",
+          subs: 1380,
+          balance: 10000,
+          updatedAt: now
+        },
+        { merge: true }
+      );
+    })
+  );
+
+  // 2. Leer últimos 30 posts
   const recentCaptions = new Set();
   const recentYoutubeIds = new Set();
   const existingPosts = [];
 
   try {
-    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(35)));
-    snap.forEach(d => {
+    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)));
+    snap.forEach((d) => {
       const data = d.data();
       if (data?.caption) recentCaptions.add(data.caption);
       if (data?.youtubeId) recentYoutubeIds.add(data.youtubeId);
@@ -595,19 +638,11 @@ async function runAgentAutomation() {
     });
   } catch (e) {}
 
-  // 3. Prueba rápida de Gemini antes de generar contenido
-  const healthCheck = await askGemini("Responde solo con la palabra: OK");
-  if (!healthCheck) {
-    console.error(`❌ GEMINI FALLÓ Y NO GENERARÁ FRASES REPETIDAS. Motivo: ${geminiLastError}`);
-    process.exit(1);
-  }
-  console.log(`🧠 Cerebro Gemini activo (${activeModelUsed}) • 15 agentes (Modelo, NBA, MLB, Boxeo y más) • 80% Posts / 20% YouTube.`);
-
-  // 4. Priorizar agentes que llevan más tiempo sin publicar
-  const recentAuthors = new Set(existingPosts.slice(0, 8).map(p => (p.handle || "").toUpperCase()));
-  const freshAgents = agents.filter(a => !recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
-  const otherAgents = agents.filter(a => recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
-  const selected = [...freshAgents, ...otherAgents].slice(0, 4);
+  // 3. Seleccionar 3 agentes priorizando los que no han salido recientemente
+  const recentAuthors = new Set(existingPosts.slice(0, 9).map((p) => (p.handle || "").toUpperCase()));
+  const freshAgents = agents.filter((a) => !recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
+  const otherAgents = agents.filter((a) => recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
+  const selected = [...freshAgents, ...otherAgents].slice(0, 3);
 
   let offset = 0;
   for (const agent of selected) {
@@ -634,78 +669,75 @@ async function runAgentAutomation() {
       likes: Math.floor(Math.random() * 85) + 28,
       views: Math.floor(Math.random() * 420) + 95,
       comments: initialDebate,
-      createdAt: Date.now() + (offset++ * 1000)
+      createdAt: Date.now() + offset++ * 1000
     });
 
     const tipo = payload.youtubeId ? "Video YT" : "Post Informativo + Foto";
-    console.log(`✓ ${tipo} publicado por @${handleKey} (${initialDebate.length} respuestas cruzadas)`);
+    console.log(`✓ ${tipo} publicado por @${handleKey} (${initialDebate.length} comentarios IA)`);
   }
 
-  // 5. Prioridad a posts donde escribieron usuarios reales + posts recientes
+  // 4. Responder en posts de humanos primero + posts recientes
   const publicPosts = existingPosts.filter(
-    p => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 16
+    (p) => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 16
   );
 
-  const humanPosts = publicPosts.filter(p => {
+  const humanPosts = publicPosts.filter((p) => {
     const isHumanAuthor = p.handle && !botHandles.has(p.handle.toUpperCase());
-    const hasHumanComment = Array.isArray(p.comments) && p.comments.some(c => c.handle && !botHandles.has(c.handle.toUpperCase()));
+    const hasHumanComment =
+      Array.isArray(p.comments) && p.comments.some((c) => c.handle && !botHandles.has(c.handle.toUpperCase()));
     return isHumanAuthor || hasHumanComment;
   });
 
-  const botPosts = publicPosts.filter(p => !humanPosts.includes(p)).sort(() => 0.5 - Math.random());
-  const targetExisting = [...humanPosts, ...botPosts].slice(0, 4);
+  const botPosts = publicPosts.filter((p) => !humanPosts.includes(p)).sort(() => 0.5 - Math.random());
+  const targetExisting = [...humanPosts, ...botPosts].slice(0, 3);
 
   for (const post of targetExisting) {
     const currentComments = Array.isArray(post.comments) ? [...post.comments] : [];
     const lastAuthor = currentComments.length > 0 ? currentComments[currentComments.length - 1].handle : post.handle;
-    const availableCommenters = agents.filter(a => a.handle !== lastAuthor);
+    const availableCommenters = agents.filter((a) => a.handle !== lastAuthor);
     if (availableCommenters.length === 0) continue;
 
-    const picks = availableCommenters.sort(() => 0.5 - Math.random()).slice(0, 2);
+    const commenter = availableCommenters[Math.floor(Math.random() * availableCommenters.length)];
+    const commentTxt = await generateContextualComment(
+      commenter,
+      post.handle,
+      post.caption || "",
+      currentComments,
+      "Lee el último comentario de la lista y respóndele directamente para avanzar la conversación."
+    );
+    if (!commentTxt) continue;
 
-    for (const commenter of picks) {
-      const commentTxt = await generateContextualComment(
-        commenter,
-        post.handle,
-        post.caption || "",
-        currentComments,
-        "Lee el último comentario de la lista y respóndele directamente para avanzar la conversación."
-      );
-      if (!commentTxt) continue;
+    const newCommentObj = {
+      handle: commenter.handle,
+      text: commentTxt,
+      createdAt: Date.now() + Math.floor(Math.random() * 2000)
+    };
 
-      const newCommentObj = {
-        handle: commenter.handle,
-        text: commentTxt,
-        createdAt: Date.now() + Math.floor(Math.random() * 3000)
-      };
+    await updateDoc(doc(db, "posts", post.id), {
+      comments: arrayUnion(newCommentObj),
+      likes: increment(Math.floor(Math.random() * 8) + 2),
+      views: increment(Math.floor(Math.random() * 25) + 8)
+    });
 
-      currentComments.push(newCommentObj);
-
-      await updateDoc(doc(db, "posts", post.id), {
-        comments: arrayUnion(newCommentObj),
-        likes: increment(Math.floor(Math.random() * 8) + 2),
-        views: increment(Math.floor(Math.random() * 25) + 8)
+    const isBotAuthor = botHandles.has((post.handle || "").toUpperCase());
+    if (!isBotAuthor && post.handle) {
+      await addDoc(collection(db, "notifications"), {
+        to: post.handle,
+        from: commenter.handle,
+        type: "comment",
+        text: `respondió en tu post: "${commentTxt.slice(0, 50)}..."`,
+        postId: post.id,
+        createdAt: Date.now()
       });
-
-      const isBotAuthor = botHandles.has((post.handle || "").toUpperCase());
-      if (!isBotAuthor && post.handle) {
-        await addDoc(collection(db, "notifications"), {
-          to: post.handle,
-          from: commenter.handle,
-          type: "comment",
-          text: `respondió en tu post: "${commentTxt.slice(0, 50)}..."`,
-          postId: post.id,
-          createdAt: Date.now()
-        });
-      }
-      console.log(`✓ @${commenter.handle} continuó el hilo en el post de @${post.handle}`);
     }
+    console.log(`✓ @${commenter.handle} continuó el hilo en el post de @${post.handle}`);
   }
 
-  setTimeout(() => process.exit(0), 1500);
+  console.log("✅ Ciclo completado sin trabas.");
+  process.exit(0);
 }
 
 runAgentAutomation().catch((err) => {
-  console.error(err);
+  console.error("❌ Error general:", err);
   process.exit(1);
 });
