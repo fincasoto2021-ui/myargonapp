@@ -30,6 +30,7 @@ const db = initializeFirestore(app, { experimentalForceLongPolling: true });
 
 let geminiHealthy = false;
 let geminiLastError = "";
+let activeModelUsed = "";
 
 async function askGemini(promptText) {
   if (!GEMINI_API_KEY) {
@@ -37,19 +38,34 @@ async function askGemini(promptText) {
     return null;
   }
 
-  const endpoints = GEMINI_API_KEY.startsWith("AQ.")
-    ? [
-        `https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`
-      ]
-    : [
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-        `https://aiplatform.googleapis.com/v1/publishers/google/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`
-      ];
+  const models = ["gemini-2.5-flash-lite", "gemini-3-flash-preview", "gemini-2.0-flash"];
+  const endpoints = [];
 
-  for (const url of endpoints) {
+  for (const model of models) {
+    if (GEMINI_API_KEY.startsWith("AQ.")) {
+      endpoints.push({
+        model,
+        url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+      });
+      endpoints.push({
+        model,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+      });
+    } else {
+      endpoints.push({
+        model,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+      });
+      endpoints.push({
+        model,
+        url: `https://aiplatform.googleapis.com/v1/publishers/google/models/${model}:generateContent?key=${GEMINI_API_KEY}`
+      });
+    }
+  }
+
+  for (const ep of endpoints) {
     try {
-      const res = await fetch(url, {
+      const res = await fetch(ep.url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -64,7 +80,7 @@ async function askGemini(promptText) {
 
       if (!res.ok) {
         const errBody = await res.text();
-        geminiLastError = `HTTP ${res.status}: ${errBody.slice(0, 140)}`;
+        geminiLastError = `HTTP ${res.status} (${ep.model}): ${errBody.slice(0, 140)}`;
         continue;
       }
 
@@ -79,6 +95,7 @@ async function askGemini(promptText) {
 
       if (text) {
         geminiHealthy = true;
+        activeModelUsed = ep.model;
         return text;
       }
     } catch (err) {
@@ -501,7 +518,7 @@ Redacta una publicación informativa y envolvente de 2 a 3 oraciones en español
 async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) {
   const randomImg = agent.images[Math.floor(Math.random() * agent.images.length)];
 
-  // Solo 20% de probabilidad de subir un video de YouTube; el 80% restante será post informativo con foto y datos reales
+  // 20% YouTube, 80% post informativo con foto y datos reales
   const wantsYoutube = Array.isArray(agent.ytQueries) && agent.ytQueries.length > 0 && Math.random() < 0.20;
 
   if (wantsYoutube) {
@@ -514,7 +531,6 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     }
   }
 
-  // Si es un agente deportivo con marcador en vivo (NBA o MLB), priorizar resultados reales de los partidos
   if (agent.espnSport) {
     const scoresTxt = await fetchLiveSportsScores(agent.espnSport);
     if (scoresTxt && ![...recentCaptions].some(c => c.includes(scoresTxt.slice(0, 45)))) {
@@ -523,7 +539,6 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     }
   }
 
-  // Si es Raúl Mercado, alternar con reporte meteorológico real de PR
   if (agent.useWeatherToo && Math.random() < 0.4) {
     const weatherTxt = await fetchLivePRWeather();
     if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 35)))) {
@@ -532,7 +547,6 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     }
   }
 
-  // Noticias reales de Google News PR sobre el tema específico del agente
   const headlines = await fetchLiveNews(agent.topic);
   for (const headline of headlines) {
     if (![...recentCaptions].some(old => old.includes(headline.slice(0, 30)))) {
@@ -587,9 +601,9 @@ async function runAgentAutomation() {
     console.error(`❌ GEMINI FALLÓ Y NO GENERARÁ FRASES REPETIDAS. Motivo: ${geminiLastError}`);
     process.exit(1);
   }
-  console.log("🧠 Gemini 2.5 Flash activo • 15 agentes (Modelo, NBA, MLB, Boxeo y más) • 80% Posts / 20% YouTube.");
+  console.log(`🧠 Cerebro Gemini activo (${activeModelUsed}) • 15 agentes (Modelo, NBA, MLB, Boxeo y más) • 80% Posts / 20% YouTube.`);
 
-  // 4. Priorizar agentes que llevan más tiempo sin publicar para que todos salgan en el feed
+  // 4. Priorizar agentes que llevan más tiempo sin publicar
   const recentAuthors = new Set(existingPosts.slice(0, 8).map(p => (p.handle || "").toUpperCase()));
   const freshAgents = agents.filter(a => !recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
   const otherAgents = agents.filter(a => recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
