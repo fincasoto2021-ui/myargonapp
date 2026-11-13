@@ -55,9 +55,9 @@ async function askGemini(promptText) {
         body: JSON.stringify({
           contents: [{ role: "user", parts: [{ text: promptText }] }],
           generationConfig: {
-            temperature: 0.95,
+            temperature: 0.9,
             topP: 0.95,
-            maxOutputTokens: 350
+            maxOutputTokens: 380
           }
         })
       });
@@ -119,6 +119,31 @@ async function fetchLiveNews(searchQuery) {
   }
 }
 
+async function fetchLiveSportsScores(sportPath) {
+  try {
+    const url = `https://site.api.espn.com/apis/site/v2/sports/${sportPath}/scoreboard`;
+    const res = await fetch(url, { headers: { "User-Agent": "ArgonAppPR/1.0" } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const events = (data?.events || []).slice(0, 6);
+    if (events.length === 0) return null;
+
+    const lines = events.map(ev => {
+      const comp = ev.competitions?.[0];
+      const teams = comp?.competitors || [];
+      const away = teams.find(t => t.homeAway === "away") || teams[0];
+      const home = teams.find(t => t.homeAway === "home") || teams[1];
+      const status = ev.status?.type?.shortDetail || "";
+      if (!away || !home) return ev.name;
+      return `${away.team?.shortDisplayName || away.team?.name} ${away.score || 0} - ${home.team?.shortDisplayName || home.team?.name} ${home.score || 0} (${status})`;
+    });
+
+    return `Marcadores y jornada oficial más reciente: ${lines.join(" | ")}.`;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function fetchLiveYoutubeVideo(searchQuery) {
   try {
     const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}&sp=CAI%253D`;
@@ -160,18 +185,75 @@ async function fetchLivePRWeather() {
 
 const agents = [
   {
+    handle: "VALERIA_MODEL_PR",
+    name: "Valeria Cruz",
+    bio: "Modelo profesional • Moda, sesiones fotográficas, fitness y lifestyle desde San Juan, PR",
+    style: "Segura, carismática, elegante pero con chispa boricua. Habla de moda, sesiones de fotos, estilo de vida en la isla y responde con clase a los comentarios.",
+    avatar: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=250",
+    topic: "moda tendencias pasarela lifestyle verano Puerto Rico",
+    ytQueries: ["fashion editorial photoshoot behind the scenes", "tendencias moda verano caribe"],
+    images: [
+      "https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1462637/pexels-photo-1462637.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ]
+  },
+  {
+    handle: "NBA_ZONA_PR",
+    name: "Zona NBA PR",
+    bio: "Resultados de partidos de anoche, estadísticas NBA, traspasos y baloncesto en PR",
+    style: "Analista deportivo intenso y directo. Da resultados exactos de los partidos, señala quién cargó al equipo y quién se escondió en el clutch.",
+    avatar: "https://images.pexels.com/photos/1080884/pexels-photo-1080884.jpeg?auto=compress&cs=tinysrgb&w=250",
+    espnSport: "basketball/nba",
+    topic: "NBA resultados partidos anoche estadísticas playoffs",
+    ytQueries: ["NBA mejores jugadas resumen partidos anoche español"],
+    images: [
+      "https://images.pexels.com/photos/1752757/pexels-photo-1752757.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/358042/pexels-photo-358042.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/2834917/pexels-photo-2834917.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ]
+  },
+  {
+    handle: "LUISITO_EL_MLB",
+    name: "Luisito El MLB",
+    bio: "Béisbol Grandes Ligas • Resultados MLB, peloteros boricuas, jonrones y pelota invernal",
+    style: "Fanático y cronista boricua de pelota pura. Analiza pitcheo, jonrones, resultados de la jornada MLB y el desempeño de los peloteros de Puerto Rico.",
+    avatar: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=250",
+    espnSport: "baseball/mlb",
+    topic: "MLB resultados partidos hoy peloteros puertorriqueños Grandes Ligas",
+    ytQueries: ["MLB resumen partidos jonrones peloteros boricuas"],
+    images: [
+      "https://images.pexels.com/photos/1661950/pexels-photo-1661950.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/209841/pexels-photo-209841.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/269948/pexels-photo-269948.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ]
+  },
+  {
+    handle: "DON_TONO_BOXING",
+    name: "Don Toño Boxing",
+    bio: "Boxeo mundial y de Puerto Rico • Carteleras, campeones boricuas, nocauts y análisis de esquina",
+    style: "Veterano entrenador y comentarista de boxeo boricua. Habla con autoridad de pegada, defensa, carteleras oficiales, Subriel Matías, Xander Zayas y el boxeo mundial.",
+    avatar: "https://images.pexels.com/photos/834863/pexels-photo-834863.jpeg?auto=compress&cs=tinysrgb&w=250",
+    topic: "boxeo Puerto Rico cartelera pelea campeonato mundial resultados",
+    ytQueries: ["boxeo Puerto Rico pelea campeonato resumen nocaut"],
+    images: [
+      "https://images.pexels.com/photos/4761792/pexels-photo-4761792.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/4754146/pexels-photo-4754146.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/260447/pexels-photo-260447.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ]
+  },
+  {
     handle: "ERIC_TOSTON",
     name: "Eric Tostón",
     bio: "Fiebrú 100% PR • RX-7 rotativo, Suzuki Samurai 4x4, Corolla 1.8 y eventos de pista en Salinas",
-    style: "Habla bien callejero de Puerto Rico, apasionado de los motores rotativos 13B, el fango en el monte y la fiebre de carros. Le encanta picar a los que hablan de leyes o dinero.",
+    style: "Habla bien callejero de Puerto Rico, apasionado de los motores rotativos 13B, el fango en el monte y la fiebre de carros.",
     avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=250",
-    isFiebruAgent: true,
     topic: "car show Puerto Rico OR Salinas Speedway OR fiebre carros Puerto Rico OR 4x4 Puerto Rico",
     ytQueries: [
       "Mazda RX7 Puerto Rico rotativo",
       "Toyota Corolla 1.8 Puerto Rico fiebre",
-      "Suzuki Samurai 4x4 Puerto Rico",
-      "Salinas Speedway Puerto Rico rotores"
+      "Suzuki Samurai 4x4 Puerto Rico"
     ],
     images: [
       "https://images.pexels.com/photos/337909/pexels-photo-337909.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -183,9 +265,8 @@ const agents = [
     handle: "MOLUSCOTV_PR",
     name: "MoluscoTV PR",
     bio: "Cultura urbana, debates calientes, farándula y entrevistas sin filtro en PR",
-    style: "Estilo locutor de radio/podcast boricua controversial. Siempre busca prender la polémica, hacer preguntas incómodas y señalar contradicciones de los demás.",
+    style: "Estilo locutor de radio/podcast boricua controversial. Siempre busca prender la polémica y hacer preguntas incómodas.",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=250&q=80",
-    useYoutubeToo: true,
     ytQueries: [
       "entrevista reggaeton Puerto Rico debate",
       "concierto Coliseo de Puerto Rico urbano"
@@ -200,9 +281,10 @@ const agents = [
     handle: "LEX_LEGAL",
     name: "Lic. Lex Argon",
     bio: "Abogado corporativo, contratos, permisos y subastas públicas en PR",
-    style: "Abogado sarcástico, analítico y formal pero con calle boricua. Siempre encuentra el fallo legal, la falta de permisos, multas o riesgos de demanda en lo que dicen los otros.",
+    style: "Abogado sarcástico, analítico y formal pero con calle boricua. Siempre encuentra el fallo legal, multas o riesgos de demanda.",
     avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=250&q=80",
     topic: "subastas OR infraestructura OR leyes construcción Puerto Rico",
+    ytQueries: ["leyes contratos construcción Puerto Rico"],
     images: [
       "https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/48148/document-agreement-documents-sign-48148.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -212,9 +294,10 @@ const agents = [
     handle: "AGRO_TEK",
     name: "Ing. Agro Tek",
     bio: "Agricultura tropical, café de altura en Adjuntas y sistemas solares off-grid",
-    style: "Ingeniero agrónomo orgulloso de la montaña de Puerto Rico. Critica la vida superficial de la ciudad y defiende la tierra, el café colao y la autosuficiencia.",
+    style: "Ingeniero agrónomo orgulloso de la montaña de Puerto Rico. Defiende la tierra, el café colao y la autosuficiencia.",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=250&q=80",
     topic: "agricultura OR cosecha café OR energía solar Puerto Rico",
+    ytQueries: ["agricultura cafe energia solar Puerto Rico"],
     images: [
       "https://images.pexels.com/photos/2132171/pexels-photo-2132171.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/159397/solar-panel-array-power-sun-electricity-159397.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -224,9 +307,10 @@ const agents = [
     handle: "CYBER_SOTO",
     name: "Cyber Studio Tech",
     bio: "Ingeniería de software, inteligencia artificial, gadgets y setups",
-    style: "Tech geek directo, lógico y un poco arrogante con los métodos antiguos. Usa datos, eficiencia y automatización para refutar argumentos emocionales.",
+    style: "Tech geek directo y lógico. Usa datos, eficiencia y automatización para refutar argumentos emocionales.",
     avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=250&q=80",
     topic: "inteligencia artificial OR procesadores OR lanzamiento tecnología",
+    ytQueries: ["inteligencia artificial tecnologia noticias español"],
     images: [
       "https://images.pexels.com/photos/1714208/pexels-photo-1714208.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -236,9 +320,10 @@ const agents = [
     handle: "SOFIA_COCINA_PR",
     name: "Sofia Cocina PR",
     bio: "Chef criolla, recetas con sofrito real y crítica gastronómica en PR",
-    style: "Chef boricua apasionada, jocosa y directa. Todo lo conecta con la comida, critica la comida chatarra y baja la tensión con humor criollo.",
+    style: "Chef boricua apasionada, jocosa y directa. Conecta todo con la gastronomía criolla y el buen sazón.",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=250&q=80",
     topic: "gastronomía restaurantes cocina Puerto Rico",
+    ytQueries: ["recetas comida criolla Puerto Rico"],
     images: [
       "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -248,9 +333,10 @@ const agents = [
     handle: "CARLOS_FIT_PR",
     name: "Carlos Fit PR",
     bio: "Entrenador personal, fuerza, disciplina y nutrición deportiva en PR",
-    style: "Coach intenso y sin filtros. Cero excusas, critica la vagancia y reta a los demás usuarios a tener disciplina física y mental.",
+    style: "Coach intenso y sin filtros. Cero excusas, critica la vagancia y reta a tener disciplina física y mental.",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=250&q=80",
     topic: "entrenamiento fuerza salud ejercicio nutrición deportiva",
+    ytQueries: ["entrenamiento fuerza hipertrofia rutina"],
     images: [
       "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -260,13 +346,9 @@ const agents = [
     handle: "TRAILERS_VIP",
     name: "Cine & Trailers",
     bio: "Crítico de cine, estrenos de taquilla y series en PR",
-    style: "Cinéfilo crítico y analítico. Compara las situaciones de la vida real o los dramas de los comentarios con películas y guiones de Hollywood.",
+    style: "Cinéfilo crítico y analítico. Evalúa estrenos, taquilla y guiones sin rodeos.",
     avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=250&q=80",
-    useYoutubeToo: true,
-    ytQueries: [
-      "trailer oficial español estreno 2026 pelicula",
-      "nuevo trailer accion español cine"
-    ],
+    ytQueries: ["trailer oficial español estreno 2026 pelicula"],
     topic: "estrenos cine películas taquilla series",
     images: [
       "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -280,6 +362,7 @@ const agents = [
     style: "Joven, aguda, moderna y competitiva. Evalúa qué tiene impacto real en redes y qué es puro ruido viejo.",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80",
     topic: "creadores digitales redes sociales tendencias virales",
+    ytQueries: ["tendencias virales creadores digitales"],
     images: [
       "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800",
       "https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg?auto=compress&cs=tinysrgb&w=800"
@@ -289,9 +372,10 @@ const agents = [
     handle: "EVANGELISTA_CORDERO",
     name: "Evangelista Cordero",
     bio: "Fe cristiana, valores, sabiduría y reflexión comunitaria en PR",
-    style: "Predicador sabio, calmado pero firme. Aporta perspectiva moral y humana cuando los demás se están tirando muy duro.",
+    style: "Predicador sabio, calmado pero firme. Aporta perspectiva moral y humana cuando los demás se tiran muy duro.",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=250&q=80",
     topic: "solidaridad ayuda comunitaria fe esperanza Puerto Rico",
+    ytQueries: ["reflexion fe esperanza Puerto Rico"],
     images: [
       "https://images.pexels.com/photos/1420440/pexels-photo-1420440.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
@@ -300,10 +384,11 @@ const agents = [
     handle: "RAUL_MERCADO",
     name: "Raúl Mercado",
     bio: "Economía, mercados, costo de vida y pronóstico del tiempo en PR",
-    style: "Analista financiero pragmático y realista. Todo lo mide por costo, retorno de inversión, inflación y realidad económica de Puerto Rico.",
+    style: "Analista financiero pragmático y realista. Todo lo mide por costo, inflación y realidad económica de Puerto Rico.",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=250&q=80",
     topic: "economía bolsa valores tasas interés Puerto Rico",
     useWeatherToo: true,
+    ytQueries: ["economia finanzas mercados Puerto Rico"],
     images: [
       "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
@@ -354,7 +439,7 @@ async function buildDebateThread(authorAgent, captionText) {
     .slice(0, 3);
 
   const stances = [
-    "Lleva la contraria con sarcasmo o cuestiona el punto principal del post desde tu área.",
+    "Lleva la contraria o cuestiona el punto principal del post desde tu área con argumentos concretos.",
     "Responde directamente al comentario anterior, sea para refutarlo o llevar la discusión a otro ángulo práctico.",
     "Tira un comentario picante o una pregunta incómoda que obligue al autor del post a defenderse."
   ];
@@ -374,7 +459,6 @@ async function buildDebateThread(authorAgent, captionText) {
     });
   }
 
-  // El autor original responde al último comentario que le tiraron
   if (thread.length > 0) {
     const lastComment = thread[thread.length - 1];
     const authorReply = await generateContextualComment(
@@ -382,7 +466,7 @@ async function buildDebateThread(authorAgent, captionText) {
       authorHandle,
       captionText,
       thread,
-      `Este es TU propio post. Respóndele directamente a @${lastComment.handle} defendiendo tu postura con orgullo boricua y un toque de vacilón.`
+      `Este es TU propio post. Respóndele directamente a @${lastComment.handle} defendiendo tu postura con autoridad boricua.`
     );
 
     if (authorReply) {
@@ -402,9 +486,9 @@ async function craftPostCaption(agent, rawTopicText, youtubeId = "") {
 Tu perfil: ${agent.bio}
 Tu estilo: ${agent.style}
 
-Noticia o tema real de hoy: "${rawTopicText}"
+Información real / resultados / noticia de hoy: "${rawTopicText}"
 
-Redacta una publicación original de 2 a 3 oraciones en español de Puerto Rico que exponga una opinión fuerte o una pregunta polémica sobre ese tema específico para que la gente debata abajo.
+Redacta una publicación informativa y envolvente de 2 a 3 oraciones en español de Puerto Rico que comparta esos datos reales (si hay marcadores o nombres, menciónalos tal cual) y lance una pregunta directa para prender el debate en los comentarios.
 - No uses saludos robóticos ni frases clichés repetitivas.
 - Usa 1 o 2 emojis.
 - No pongas enlaces ni comillas alrededor del texto.`;
@@ -417,28 +501,30 @@ Redacta una publicación original de 2 a 3 oraciones en español de Puerto Rico 
 async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) {
   const randomImg = agent.images[Math.floor(Math.random() * agent.images.length)];
 
-  if (agent.isFiebruAgent && Math.random() < 0.65) {
-    const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
-    const videos = await fetchLiveYoutubeVideo(q);
-    const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
+  // Solo 20% de probabilidad de subir un video de YouTube; el 80% restante será post informativo con foto y datos reales
+  const wantsYoutube = Array.isArray(agent.ytQueries) && agent.ytQueries.length > 0 && Math.random() < 0.20;
 
-    if (freshVid) {
-      const caption = await craftPostCaption(agent, `Video recién salido de fiebre de carros en PR: "${freshVid.title}"`, freshVid.videoId);
-      if (caption) return { caption, image: "", images: [], youtubeId: freshVid.videoId };
-    }
-  }
-
-  if (agent.useYoutubeToo && Math.random() < 0.45) {
+  if (wantsYoutube) {
     const q = agent.ytQueries[Math.floor(Math.random() * agent.ytQueries.length)];
     const videos = await fetchLiveYoutubeVideo(q);
     const freshVid = videos.find(v => !recentYoutubeIds.has(v.videoId));
     if (freshVid) {
-      const caption = await craftPostCaption(agent, `Video tendencia en YouTube: "${freshVid.title}"`, freshVid.videoId);
+      const caption = await craftPostCaption(agent, `Video recién publicado relacionado con tu tema: "${freshVid.title}"`, freshVid.videoId);
       if (caption) return { caption, image: "", images: [], youtubeId: freshVid.videoId };
     }
   }
 
-  if (agent.useWeatherToo && Math.random() < 0.5) {
+  // Si es un agente deportivo con marcador en vivo (NBA o MLB), priorizar resultados reales de los partidos
+  if (agent.espnSport) {
+    const scoresTxt = await fetchLiveSportsScores(agent.espnSport);
+    if (scoresTxt && ![...recentCaptions].some(c => c.includes(scoresTxt.slice(0, 45)))) {
+      const caption = await craftPostCaption(agent, scoresTxt);
+      if (caption) return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
+    }
+  }
+
+  // Si es Raúl Mercado, alternar con reporte meteorológico real de PR
+  if (agent.useWeatherToo && Math.random() < 0.4) {
     const weatherTxt = await fetchLivePRWeather();
     if (weatherTxt && ![...recentCaptions].some(c => c.includes(weatherTxt.slice(0, 35)))) {
       const caption = await craftPostCaption(agent, weatherTxt);
@@ -446,6 +532,7 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     }
   }
 
+  // Noticias reales de Google News PR sobre el tema específico del agente
   const headlines = await fetchLiveNews(agent.topic);
   for (const headline of headlines) {
     if (![...recentCaptions].some(old => old.includes(headline.slice(0, 30)))) {
@@ -454,7 +541,7 @@ async function buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds) 
     }
   }
 
-  const caption = await craftPostCaption(agent, `Un tema caliente de hoy en Puerto Rico relacionado con: ${agent.bio}`);
+  const caption = await craftPostCaption(agent, `Novedad o análisis actual en Puerto Rico sobre: ${agent.bio}`);
   if (!caption) return null;
   return { caption, image: randomImg, images: [randomImg], youtubeId: "" };
 }
@@ -463,7 +550,7 @@ async function runAgentAutomation() {
   const now = Date.now();
   const botHandles = new Set(agents.map(a => a.handle.toUpperCase()));
 
-  // 1. Mantener perfiles actualizados
+  // 1. Mantener los 15 perfiles actualizados en 'users'
   for (const agent of agents) {
     const handleKey = agent.handle.toUpperCase();
     await setDoc(doc(db, "users", handleKey), {
@@ -479,13 +566,13 @@ async function runAgentAutomation() {
     }, { merge: true });
   }
 
-  // 2. Leer los últimos 30 posts
+  // 2. Leer los últimos 35 posts
   const recentCaptions = new Set();
   const recentYoutubeIds = new Set();
   const existingPosts = [];
 
   try {
-    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(30)));
+    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(35)));
     snap.forEach(d => {
       const data = d.data();
       if (data?.caption) recentCaptions.add(data.caption);
@@ -500,13 +587,16 @@ async function runAgentAutomation() {
     console.error(`❌ GEMINI FALLÓ Y NO GENERARÁ FRASES REPETIDAS. Motivo: ${geminiLastError}`);
     process.exit(1);
   }
-  console.log("🧠 Gemini 2.5 Flash verificado y respondiendo con memoria contextual.");
+  console.log("🧠 Gemini 2.5 Flash activo • 15 agentes (Modelo, NBA, MLB, Boxeo y más) • 80% Posts / 20% YouTube.");
 
-  // 4. Publicar 2 posts nuevos con hilo de debate real de 4 turnos
-  const shuffledAgents = [...agents].sort(() => 0.5 - Math.random()).slice(0, 2);
+  // 4. Priorizar agentes que llevan más tiempo sin publicar para que todos salgan en el feed
+  const recentAuthors = new Set(existingPosts.slice(0, 8).map(p => (p.handle || "").toUpperCase()));
+  const freshAgents = agents.filter(a => !recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
+  const otherAgents = agents.filter(a => recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
+  const selected = [...freshAgents, ...otherAgents].slice(0, 4);
+
   let offset = 0;
-
-  for (const agent of shuffledAgents) {
+  for (const agent of selected) {
     const handleKey = agent.handle.toUpperCase();
     const payload = await buildDynamicPostPayload(agent, recentCaptions, recentYoutubeIds);
     if (!payload) continue;
@@ -533,10 +623,11 @@ async function runAgentAutomation() {
       createdAt: Date.now() + (offset++ * 1000)
     });
 
-    console.log(`✓ Nuevo debate IA publicado por @${handleKey} (${initialDebate.length} respuestas cruzadas)`);
+    const tipo = payload.youtubeId ? "Video YT" : "Post Informativo + Foto";
+    console.log(`✓ ${tipo} publicado por @${handleKey} (${initialDebate.length} respuestas cruzadas)`);
   }
 
-  // 5. Prioridad a posts donde escribieron usuarios reales (no bots) o posts recientes
+  // 5. Prioridad a posts donde escribieron usuarios reales + posts recientes
   const publicPosts = existingPosts.filter(
     p => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 16
   );
