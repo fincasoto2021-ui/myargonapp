@@ -76,7 +76,9 @@ async function discoverAllowedModels() {
       ];
 
       const ordered = preferred.filter((p) => all.includes(p));
-      const extraFlash = all.filter((m) => m.includes("flash") && !ordered.includes(m) && !m.includes("tts") && !m.includes("image"));
+      const extraFlash = all.filter(
+        (m) => m.includes("flash") && !ordered.includes(m) && !m.includes("tts") && !m.includes("image")
+      );
       availableModels = [...ordered, ...extraFlash];
     }
   } catch (e) {}
@@ -146,7 +148,6 @@ async function askGemini(promptText, expectJson = false) {
           .trim();
 
         if (text) {
-          // Fijar el modelo ganador primero para el resto de la corrida
           availableModels = [model, ...models.filter((m) => m !== model)];
           return text.replace(/^["«]+|["»]+$/g, "");
         }
@@ -260,7 +261,9 @@ async function fetchLivePRWeather() {
   return null;
 }
 
+// 15 Agentes Creadores + 5 Agentes Impulsadores de Humanos (20 en total)
 const agents = [
+  // === 15 CREADORES ESPECIALIZADOS ===
   {
     handle: "VALERIA_MODEL_PR",
     name: "Valeria Cruz",
@@ -462,6 +465,48 @@ const agents = [
     images: [
       "https://images.pexels.com/photos/210607/pexels-photo-210607.jpeg?auto=compress&cs=tinysrgb&w=800"
     ]
+  },
+
+  // === 5 NUEVOS AGENTES IMPULSADORES DE HUMANOS (BOOSTER SQUAD) ===
+  {
+    handle: "KIANA_VIBES_PR",
+    name: "Kiana Rivera",
+    bio: "Apoyando el talento local en ARGON 🇵🇷 • Shorts, música, vlogs y buena vibra",
+    style: "Joven boricua súper entusiasta, cercana y auténtica. Celebra los videos y posts nuevos, da ánimo genuino y hace preguntas amigables para que el autor responda.",
+    avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=250",
+    isBoosterOnly: true
+  },
+  {
+    handle: "TITO_FIEBRE_787",
+    name: "Tito 787",
+    bio: "De Carolina pa'l mundo • Activo 24/7 viendo Shorts y dando apoyo real en ARGON",
+    style: "Boricua callejero pero positivo, pana de todo el mundo. Usa jerga natural de PR ('duro eso', 'partiste', 'fuego'), mete hype y motiva a seguir subiendo contenido.",
+    avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=250",
+    isBoosterOnly: true
+  },
+  {
+    handle: "CAMILA_ESTILO",
+    name: "Camila Morales",
+    bio: "Fotografía, diseño visual y comunidad creativa de Puerto Rico ✨",
+    style: "Observadora, cálida y detallista. Se fija en la estética, edición, energía del video o el mensaje del post, dejando cumplidos reales que hacen sentir bien al creador.",
+    avatar: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=250",
+    isBoosterOnly: true
+  },
+  {
+    handle: "JAY_URBANO_PR",
+    name: "Jay El Real",
+    bio: "Cazando los mejores clips, Shorts y debates de la isla 🔥",
+    style: "Directo, energético y curioso. Siempre reacciona con fuego a los Shorts o videos de usuarios reales y tira una pregunta corta para prender los comentarios.",
+    avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=250",
+    isBoosterOnly: true
+  },
+  {
+    handle: "MATEO_EXPLORA",
+    name: "Mateo Colón",
+    bio: "Roadtrips por los 78 pueblos, proyectos locales y gente dura de PR 🌴",
+    style: "Amigable, solidario y orgulloso de lo hecho en Puerto Rico. Respalda los proyectos, videos y publicaciones de la comunidad en ARGON.",
+    avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=250",
+    isBoosterOnly: true
   }
 ];
 
@@ -512,7 +557,6 @@ async function getRealWorldTopic(agent, recentCaptions, recentYoutubeIds) {
   };
 }
 
-// Genera el post + 3 comentarios de debate en UNA SOLA llamada a Gemini (rápido y ahorra 75% de cuota)
 async function createCompletePostBundle(author, rawInfo, youtubeId = "") {
   const authorHandle = author.handle.toUpperCase();
   const [c1, c2] = agents
@@ -529,8 +573,8 @@ COMENTARISTA 1 (cuestiona o debate desde su área): ${c1.name} (@${c1.handle}) -
 COMENTARISTA 2 (le responde a @${c1.handle} con otro ángulo): ${c2.name} (@${c2.handle}) - Estilo: ${c2.style}
 
 Reglas estrictas:
-1. "caption": 2 a 3 oraciones informativas en español de Puerto Rico usando los datos reales (nombres, resultados o hechos) y cerrando con una pregunta picante. Usa 1-2 emojis.
-2. "reply1": Comentario de @${c1.handle} reaccionando a un detalle específico del post (máximo 2 oraciones, natural, sin frases repetidas).
+1. "caption": 2 a 3 oraciones informativas en español de Puerto Rico usando los datos reales y cerrando con una pregunta picante. Usa 1-2 emojis.
+2. "reply1": Comentario de @${c1.handle} reaccionando a un detalle específico del post (máximo 2 oraciones).
 3. "reply2": Comentario de @${c2.handle} mencionando a @${c1.handle} y debatiendo su punto (máximo 2 oraciones).
 4. "authorReply": Respuesta de @${authorHandle} contestándole a @${c2.handle} defendiendo su post (máximo 2 oraciones).
 
@@ -559,6 +603,59 @@ Devuelve ÚNICAMENTE este JSON exacto:
   }
 }
 
+// Genera 2 comentarios de apoyo genuino y hype en UNA sola llamada para posts/Shorts de humanos reales
+async function generateHumanBoostComments(humanPost, booster1, booster2) {
+  const existingComments = Array.isArray(humanPost.comments) ? humanPost.comments.slice(-5) : [];
+  const history =
+    existingComments.length > 0
+      ? existingComments.map((c) => `- @${c.handle}: "${c.text}"`).join("\n")
+      : "Aún no hay comentarios. Serán los primeros en apoyar el post.";
+
+  const mediaType = humanPost.isShort
+    ? "un Short (video corto vertical)"
+    : humanPost.video
+    ? "un video subido directamente"
+    : humanPost.youtubeId
+    ? "un video compartido"
+    : "una publicación con imagen/texto";
+
+  const captionContext =
+    humanPost.caption && humanPost.caption.trim().length > 0
+      ? `Texto del autor: "${humanPost.caption.trim()}"`
+      : `El autor subió ${mediaType} visual sin texto en la descripción (reacciona a que el clip/visual en ARGON se ve brutal y con buena energía).`;
+
+  const prompt = `Genera un objeto JSON válido con 2 comentarios reales, variados y entusiastas en español de Puerto Rico para apoyar la publicación de un usuario humano real (@${humanPost.handle}) en la red social ARGON.
+
+TIPO DE CONTENIDO: ${mediaType}
+${captionContext}
+COMENTARIOS PREVIOS EN EL POST:
+${history}
+
+AGENTE 1: ${booster1.name} (@${booster1.handle}) - Estilo: ${booster1.style}
+AGENTE 2: ${booster2.name} (@${booster2.handle}) - Estilo: ${booster2.style}
+
+Reglas:
+- Si el último comentario lo hizo un humano preguntando o diciendo algo, que AGENTE 1 le responda directamente mencionándolo con @.
+- Que ambos comentarios suenen 100% humanos, boricuas, distintos entre sí, dando apoyo real para motivar al creador (máximo 2 oraciones cortas cada uno, 1 emoji).
+- Devuelve ÚNICAMENTE este JSON exacto:
+{"c1":"...","c2":"..."}`;
+
+  const rawJson = await askGemini(prompt, true);
+  if (!rawJson) return null;
+
+  try {
+    const clean = rawJson.replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
+    const parsed = JSON.parse(clean);
+    const out = [];
+    const nowTs = Date.now();
+    if (parsed.c1) out.push({ handle: booster1.handle, text: parsed.c1, createdAt: nowTs + 800 });
+    if (parsed.c2) out.push({ handle: booster2.handle, text: parsed.c2, createdAt: nowTs + 3200 });
+    return out;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function generateSingleContextualReply(commenter, post) {
   const comments = Array.isArray(post.comments) ? post.comments.slice(-5) : [];
   const history =
@@ -581,17 +678,20 @@ Respóndele directamente a @${lastHandle} sobre lo que acaba de decir con un arg
 async function runAgentAutomation() {
   const now = Date.now();
   const botHandles = new Set(agents.map((a) => a.handle.toUpperCase()));
+  const creatorAgents = agents.filter((a) => !a.isBoosterOnly);
+  const boosterAgents = agents.filter((a) => a.isBoosterOnly);
 
   const models = await discoverAllowedModels();
-  console.log(`🔎 Modelos detectados en tu llave: ${models.slice(0, 4).join(", ")}`);
+  console.log(`🔎 Modelos detectados: ${models.slice(0, 4).join(", ")}`);
 
   const healthCheck = await askGemini("Responde solo: OK");
   if (!healthCheck) {
     console.error(`❌ GEMINI FALLÓ. Motivo: ${geminiLastError}`);
     process.exit(1);
   }
-  console.log(`🧠 Gemini conectado (${availableModels[0]}) • Actualizando los 15 perfiles...`);
+  console.log(`🧠 Gemini activo (${availableModels[0]}) • Sincronizando 20 agentes (15 creadores + 5 boosters)...`);
 
+  // 1. Mantener los 20 perfiles actualizados en 'users'
   await Promise.all(
     agents.map((agent) => {
       const handleKey = agent.handle.toUpperCase();
@@ -604,7 +704,7 @@ async function runAgentAutomation() {
           avatar: agent.avatar,
           ageVerified: true,
           invitedBy: "BELTO43",
-          subs: 1380,
+          subs: agent.isBoosterOnly ? 640 : 1380,
           balance: 10000,
           updatedAt: now
         },
@@ -613,12 +713,13 @@ async function runAgentAutomation() {
     })
   );
 
+  // 2. Leer últimos 50 posts/Shorts para detectar todos los de humanos reales
   const recentCaptions = new Set();
   const recentYoutubeIds = new Set();
   const existingPosts = [];
 
   try {
-    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(35)));
+    const snap = await getDocs(query(collection(db, "posts"), orderBy("createdAt", "desc"), limit(50)));
     snap.forEach((d) => {
       const data = d.data();
       if (data?.caption) recentCaptions.add(data.caption);
@@ -627,14 +728,104 @@ async function runAgentAutomation() {
     });
   } catch (e) {}
 
-  // Publicar 4 posts nuevos priorizando los agentes que no han salido recientemente
+  // =========================================================================
+  // 3. PRIORIDAD #1: ESCUADRÓN BOOSTER PARA POSTS Y SHORTS DE HUMANOS REALES
+  // =========================================================================
+  const humanAuthoredPosts = existingPosts.filter((p) => {
+    if (p.visibility === "private" || !p.handle) return false;
+    return !botHandles.has(p.handle.toUpperCase());
+  });
+
+  // Ordenar dando prioridad a los posts humanos con 0 likes / pocas views (recién subidos)
+  const prioritizedHumanPosts = [...humanAuthoredPosts].sort((a, b) => (a.likes || 0) - (b.likes || 0)).slice(0, 6);
+
+  for (const hPost of prioritizedHumanPosts) {
+    const currentLikes = Number(hPost.likes || 0);
+    const currentViews = Number(hPost.views || 0);
+    const currentComments = Array.isArray(hPost.comments) ? hPost.comments : [];
+
+    // Si el post humano está frío (< 15 likes o < 50 views), darle un empuje grande inicial; si ya tiene, sumarle crecimiento constante
+    const isColdPost = currentLikes < 15 || currentViews < 50;
+    const addedLikes = isColdPost ? Math.floor(Math.random() * 30) + 18 : Math.floor(Math.random() * 11) + 5;
+    const addedViews = isColdPost ? Math.floor(Math.random() * 155) + 85 : Math.floor(Math.random() * 45) + 20;
+
+    // Elegir boosters que aún no hayan comentado en este post humano (si ya comentaron los 5, permite mezclar con creadores)
+    const commentedHandles = new Set(currentComments.map((c) => (c.handle || "").toUpperCase()));
+    let availablePool = boosterAgents.filter((b) => !commentedHandles.has(b.handle.toUpperCase()));
+    if (availablePool.length < 2) {
+      const backupPool = creatorAgents.filter((c) => !commentedHandles.has(c.handle.toUpperCase()));
+      availablePool = [...availablePool, ...backupPool];
+    }
+
+    let generatedComments = [];
+    if (currentComments.length < 18 && availablePool.length >= 2) {
+      const [b1, b2] = availablePool.sort(() => 0.5 - Math.random()).slice(0, 2);
+      const boostPair = await generateHumanBoostComments(hPost, b1, b2);
+      if (boostPair && boostPair.length > 0) {
+        generatedComments = boostPair;
+      }
+    }
+
+    const updatePayload = {
+      likes: increment(addedLikes),
+      views: increment(addedViews)
+    };
+    if (generatedComments.length > 0) {
+      updatePayload.comments = arrayUnion(...generatedComments);
+    }
+
+    await updateDoc(doc(db, "posts", hPost.id), updatePayload);
+
+    // Subir también seguidores (subs) al usuario humano para que su cuenta crezca
+    try {
+      await setDoc(
+        doc(db, "users", hPost.handle.toUpperCase()),
+        { subs: increment(isColdPost ? Math.floor(Math.random() * 5) + 2 : 1) },
+        { merge: true }
+      );
+    } catch (e) {}
+
+    // Enviar notificaciones de like y de los nuevos comentarios al humano
+    const likeBooster = boosterAgents[Math.floor(Math.random() * boosterAgents.length)];
+    await addDoc(collection(db, "notifications"), {
+      to: hPost.handle,
+      from: likeBooster.handle,
+      type: "like",
+      text: ` y ${addedLikes - 1} personas más le dieron Me Gusta a tu publicación 🔥`,
+      postId: hPost.id,
+      createdAt: Date.now()
+    });
+
+    for (const cObj of generatedComments) {
+      await addDoc(collection(db, "notifications"), {
+        to: hPost.handle,
+        from: cObj.handle,
+        type: "comment",
+        text: `comentó en tu post: "${cObj.text.slice(0, 55)}..."`,
+        postId: hPost.id,
+        createdAt: Date.now() + 300
+      });
+    }
+
+    console.log(
+      `🚀 Boost humano a @${hPost.handle} (post ${hPost.id.slice(0, 6)}): +${addedViews} views, +${addedLikes} likes, +${generatedComments.length} comentarios`
+    );
+  }
+
+  // =========================================================================
+  // 4. PUBLICAR 3 POSTS INFORMATIVOS NUEVOS (SOLO LOS 15 CREADORES)
+  // =========================================================================
   const recentAuthors = new Set(existingPosts.slice(0, 10).map((p) => (p.handle || "").toUpperCase()));
-  const freshAgents = agents.filter((a) => !recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
-  const otherAgents = agents.filter((a) => recentAuthors.has(a.handle.toUpperCase())).sort(() => 0.5 - Math.random());
-  const selected = [...freshAgents, ...otherAgents].slice(0, 4);
+  const freshCreators = creatorAgents
+    .filter((a) => !recentAuthors.has(a.handle.toUpperCase()))
+    .sort(() => 0.5 - Math.random());
+  const otherCreators = creatorAgents
+    .filter((a) => recentAuthors.has(a.handle.toUpperCase()))
+    .sort(() => 0.5 - Math.random());
+  const selectedCreators = [...freshCreators, ...otherCreators].slice(0, 3);
 
   let offset = 0;
-  for (const agent of selected) {
+  for (const agent of selectedCreators) {
     const handleKey = agent.handle.toUpperCase();
     const topicData = await getRealWorldTopic(agent, recentCaptions, recentYoutubeIds);
     const bundle = await createCompletePostBundle(agent, topicData.rawInfo, topicData.youtubeId);
@@ -664,28 +855,41 @@ async function runAgentAutomation() {
     console.log(`✓ ${tipo} publicado por @${handleKey} (${bundle.comments.length} comentarios cruzados)`);
   }
 
-  // Responder a posts de humanos primero + posts recientes (3 respuestas en total = solo 8 llamadas a Gemini en toda la corrida)
-  const publicPosts = existingPosts.filter(
-    (p) => p.visibility !== "private" && (Array.isArray(p.comments) ? p.comments.length : 0) < 16
-  );
-
-  const humanPosts = publicPosts.filter((p) => {
-    const isHumanAuthor = p.handle && !botHandles.has(p.handle.toUpperCase());
+  // =========================================================================
+  // 5. RESPONDER A HUMANOS QUE COMENTARON EN POSTS DE BOTS + HILOS ACTIVOS
+  // =========================================================================
+  const botPostsWithHumanComments = existingPosts.filter((p) => {
+    if (p.visibility === "private" || !p.handle) return false;
+    const isBotPost = botHandles.has(p.handle.toUpperCase());
     const hasHumanComment =
       Array.isArray(p.comments) && p.comments.some((c) => c.handle && !botHandles.has(c.handle.toUpperCase()));
-    return isHumanAuthor || hasHumanComment;
+    return isBotPost && hasHumanComment && (p.comments?.length || 0) < 18;
   });
 
-  const botPosts = publicPosts.filter((p) => !humanPosts.includes(p)).sort(() => 0.5 - Math.random());
-  const targetExisting = [...humanPosts, ...botPosts].slice(0, 3);
+  const regularBotPosts = existingPosts
+    .filter((p) => p.visibility !== "private" && p.handle && botHandles.has(p.handle.toUpperCase()) && !botPostsWithHumanComments.includes(p))
+    .sort(() => 0.5 - Math.random());
 
-  for (const post of targetExisting) {
+  const targetThreads = [...botPostsWithHumanComments, ...regularBotPosts].slice(0, 2);
+
+  for (const post of targetThreads) {
     const currentComments = Array.isArray(post.comments) ? post.comments : [];
-    const lastAuthor = currentComments.length > 0 ? currentComments[currentComments.length - 1].handle : post.handle;
-    const availableCommenters = agents.filter((a) => a.handle !== lastAuthor);
-    if (availableCommenters.length === 0) continue;
+    const lastComment = currentComments.length > 0 ? currentComments[currentComments.length - 1] : null;
+    const lastAuthor = lastComment ? lastComment.handle.toUpperCase() : post.handle.toUpperCase();
 
-    const commenter = availableCommenters[Math.floor(Math.random() * availableCommenters.length)];
+    // Si un humano comentó en el post de un agente (ej. @NBA_ZONA_PR), que le conteste el MISMO dueño del post primero
+    const postOwnerAgent = agents.find((a) => a.handle.toUpperCase() === post.handle.toUpperCase());
+    const lastWasHuman = lastComment && !botHandles.has(lastAuthor);
+
+    const commenter =
+      lastWasHuman && postOwnerAgent
+        ? postOwnerAgent
+        : agents.filter((a) => a.handle.toUpperCase() !== lastAuthor)[
+            Math.floor(Math.random() * (agents.length - 1))
+          ];
+
+    if (!commenter) continue;
+
     const commentTxt = await generateSingleContextualReply(commenter, post);
     if (!commentTxt) continue;
 
@@ -697,17 +901,16 @@ async function runAgentAutomation() {
 
     await updateDoc(doc(db, "posts", post.id), {
       comments: arrayUnion(newCommentObj),
-      likes: increment(Math.floor(Math.random() * 8) + 2),
-      views: increment(Math.floor(Math.random() * 25) + 8)
+      likes: increment(Math.floor(Math.random() * 8) + 3),
+      views: increment(Math.floor(Math.random() * 28) + 10)
     });
 
-    const isBotAuthor = botHandles.has((post.handle || "").toUpperCase());
-    if (!isBotAuthor && post.handle) {
+    if (lastWasHuman && lastComment?.handle) {
       await addDoc(collection(db, "notifications"), {
-        to: post.handle,
+        to: lastComment.handle,
         from: commenter.handle,
         type: "comment",
-        text: `respondió en tu post: "${commentTxt.slice(0, 50)}..."`,
+        text: `te respondió en su hilo: "${commentTxt.slice(0, 55)}..."`,
         postId: post.id,
         createdAt: Date.now()
       });
