@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>ARGON</title>
+  <title>ARGON • Red Oficial de Contenido IA</title>
 
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#ffffff" />
@@ -86,7 +86,7 @@
     .desk-nav-btn:hover { background: #f0f2f5; }
     .desk-nav-btn.active { background: #fffbeb; color: #b45309; }
 
-    .privacy-pill-btn { display: inline-flex; align-items: center; gap: 5px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 7px 11px; border-radius: 9px; font-size: 11.5px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
+    .privacy-pill-btn { display: inline-flex; align-items: center; gap: 5px; background: #f0f2f5; border: 1px solid #dadde1; color: #050505; padding: 7px 10px; border-radius: 9px; font-size: 11px; font-weight: 800; cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
     .privacy-pill-btn.is-private { background: #0b0d13; border-color: #fbbf24; color: #fde68a; }
 
     .ico-stroke { width: 22px; height: 22px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
@@ -100,15 +100,28 @@
     .yt-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 44px; border-radius: 12px; background: rgba(228, 30, 63, 0.92); color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.5); border: none; pointer-events: none; }
     .composer-yt-preview { display: none; margin-top: 10px; border-radius: 10px; overflow: hidden; border: 1px solid #dadde1; background: #000000; }
 
-    .profile-view-switcher { display: grid; grid-template-columns: 1fr 1fr; background: #ffffff; border: 1px solid #dadde1; border-radius: 12px; margin: 10px 0; overflow: hidden; }
-    .profile-switch-tab { background: none; border: none; padding: 11px 10px; font-size: 12px; font-weight: 800; color: #65676b; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s ease; }
+    /* ESTUDIO IA: PILLS, REPRODUCTOR MP3 Y COLECCIÓN */
+    .ai-engine-pill { display: inline-flex; align-items: center; gap: 4px; background: #0b0d13; border: 1px solid #fbbf24; color: #fde68a; font-size: 9.5px; font-weight: 900; padding: 2px 7px; border-radius: 999px; letter-spacing: 0.4px; }
+    .composer-ai-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 9px; }
+    .composer-select-gold { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 9px; padding: 7px 10px; font-size: 11.5px; font-weight: 800; color: #050505; outline: none; }
+    .ai-audio-stage { background: radial-gradient(circle at 20% 20%, #242834 0%, #090b10 85%); border-top: 1px solid rgba(251, 191, 36, 0.35); border-bottom: 1px solid rgba(251, 191, 36, 0.35); padding: 16px 14px; color: #ffffff; }
+    .ai-audio-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ai-vinyl-disc { width: 54px; height: 54px; border-radius: 14px; background: linear-gradient(135deg, #1e293b 0%, #050505 100%); border: 1.5px solid #fbbf24; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 14px rgba(251, 191, 36, 0.25); overflow: hidden; }
+    .ai-vinyl-disc img { width: 100%; height: 100%; object-fit: cover; }
+    .ai-audio-player { width: 100%; height: 38px; border-radius: 999px; outline: none; }
+    .preview-audio-wrap { display: none; margin-top: 10px; background: #0b0d13; border: 1px solid #fbbf24; border-radius: 12px; padding: 10px 12px; color: #fde68a; }
+    .btn-unlock-ai { background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1px solid #fbbf24; color: #fde68a; border-radius: 999px; padding: 5px 11px; font-size: 11px; font-weight: 900; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .btn-unlock-ai.owned { background: #ecfdf5; border-color: #10b981; color: #059669; }
+
+    .profile-view-switcher { display: grid; grid-template-columns: repeat(3, 1fr); background: #ffffff; border: 1px solid #dadde1; border-radius: 12px; margin: 10px 0; overflow: hidden; }
+    .profile-switch-tab { background: none; border: none; padding: 11px 6px; font-size: 11.5px; font-weight: 800; color: #65676b; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; border-bottom: 2.5px solid transparent; transition: all 0.15s ease; }
     .profile-switch-tab.active { color: #050505; border-bottom-color: #d97706; background: #fffbeb; }
 
     .media-grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
-    .media-grid-cell { position: relative; aspect-ratio: 1 / 1; background: #e4e6eb; overflow: hidden; cursor: pointer; }
+    .media-grid-cell { position: relative; aspect-ratio: 1 / 1; background: #0b0d13; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .media-grid-cell img, .media-grid-cell video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .media-grid-badge { position: absolute; top: 6px; right: 6px; background: rgba(11, 13, 19, 0.82); border: 1px solid rgba(251, 191, 36, 0.5); color: #fde68a; border-radius: 6px; padding: 3px 5px; font-size: 9.5px; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; backdrop-filter: blur(4px); }
-    .media-grid-bottom-meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 6px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.78) 100%); color: #ffffff; font-size: 9.5px; font-weight: 800; display: flex; align-items: center; justify-content: space-between; }
+    .media-grid-badge { position: absolute; top: 6px; right: 6px; background: rgba(11, 13, 19, 0.85); border: 1px solid rgba(251, 191, 36, 0.55); color: #fde68a; border-radius: 6px; padding: 3px 5px; font-size: 9px; font-weight: 900; display: inline-flex; align-items: center; gap: 3px; backdrop-filter: blur(4px); }
+    .media-grid-bottom-meta { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 6px; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.82) 100%); color: #ffffff; font-size: 9.5px; font-weight: 800; display: flex; align-items: center; justify-content: space-between; }
 
     .post-carousel-wrap { position: relative; width: 100%; background: #000000; }
     .post-carousel-track { display: flex; flex-direction: column; height: 70vh; max-height: 580px; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior-y: contain; scrollbar-width: none; }
@@ -133,8 +146,6 @@
 
     .live-ticker-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 900; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.8px; transition: all 0.3s ease; }
     .live-ticker-badge.up { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.55); color: #34d399; }
-    .live-ticker-badge.down { background: rgba(244, 63, 94, 0.2); border: 1px solid rgba(244, 63, 94, 0.55); color: #fb7185; }
-
     .compliance-alert-bar { background: linear-gradient(90deg, #fffbeb 0%, #fef3c7 100%); border-bottom: 1px solid #f59e0b; padding: 9px 14px; display: none; align-items: center; justify-content: space-between; gap: 8px; font-size: 11.5px; font-weight: 800; color: #92400e; cursor: pointer; }
     .compliance-alert-bar.show { display: flex; }
 
@@ -158,7 +169,7 @@
     .vip-onboarding-wrap { width: 100%; max-width: 390px; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 10px 0; }
     .vip-top-crown { width: 66px; height: 66px; filter: drop-shadow(0 4px 12px rgba(217, 119, 6, 0.35)); margin-bottom: 2px; }
     .vip-main-logo-text { font-size: 29px; font-weight: 900; letter-spacing: 7px; color: #050505; margin-bottom: 4px; }
-    .vip-empire-subtitle { font-size: 11px; font-weight: 800; letter-spacing: 2.2px; color: #b45309; margin-bottom: 12px; text-transform: uppercase; }
+    .vip-empire-subtitle { font-size: 10.5px; font-weight: 800; letter-spacing: 2px; color: #b45309; margin-bottom: 12px; text-transform: uppercase; }
     .vip-metal-card-stage { width: 100%; perspective: 1100px; margin-bottom: 14px; }
     .vip-metal-card { width: 100%; border-radius: 20px; padding: 18px 18px 16px; background: radial-gradient(circle at 18% 15%, rgba(251, 191, 36, 0.14) 0%, transparent 48%), repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px), linear-gradient(145deg, #242834 0%, #101218 52%, #07080c 100%); border: 1.5px solid rgba(251, 191, 36, 0.52); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); transform: rotate(-1.5deg); transition: transform 0.3s ease; text-align: left; position: relative; overflow: hidden; color: #ffffff; }
     .vip-metal-card:focus-within { transform: rotate(0deg) scale(1.01); }
@@ -194,15 +205,15 @@
     .shorts-tray-title { font-size: 12px; font-weight: 900; letter-spacing: 0.6px; color: #050505; display: flex; align-items: center; gap: 6px; }
     .shorts-tray-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
     .shorts-tray-scroll::-webkit-scrollbar { display: none; }
-    .short-card-item { width: 106px; height: 182px; border-radius: 14px; background: #e4e6eb; border: 1px solid #dadde1; position: relative; overflow: hidden; flex-shrink: 0; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }
+    .short-card-item { width: 106px; height: 182px; border-radius: 14px; background: #0b0d13; border: 1px solid #dadde1; position: relative; overflow: hidden; flex-shrink: 0; cursor: pointer; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); }
     .short-card-item.promoted-short { border: 2px solid #fbbf24; }
     .short-card-item.create-card { border: 1px solid #dadde1; display: flex; flex-direction: column; justify-content: space-between; background: #ffffff; }
     .short-create-top { height: 64%; width: 100%; background: #0b0d13; display: flex; align-items: center; justify-content: center; overflow: hidden; }
     .short-create-top img { width: 100%; height: 100%; object-fit: cover; }
     .short-plus-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%); border: 3px solid #ffffff; color: #050505; font-size: 22px; font-weight: 900; display: flex; align-items: center; justify-content: center; margin: -18px auto 0; position: relative; z-index: 3; }
-    .short-create-label { text-align: center; font-size: 11.5px; font-weight: 800; color: #050505; padding: 0 6px 10px; line-height: 1.2; }
+    .short-create-label { text-align: center; font-size: 11px; font-weight: 800; color: #050505; padding: 0 6px 10px; line-height: 1.2; }
     .short-thumb-video, .short-thumb-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .short-card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.82) 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 8px; }
+    .short-card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.85) 100%); display: flex; flex-direction: column; justify-content: space-between; padding: 8px; }
     .short-mini-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fbbf24; background: #0b0d13; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; color: #fef08a; }
     .short-mini-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .short-card-handle { font-size: 11px; font-weight: 800; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
@@ -217,12 +228,11 @@
     .short-snap-slide { width: 100%; height: 100dvh; scroll-snap-align: start; scroll-snap-stop: always; position: relative; display: flex; align-items: center; justify-content: center; background: #000000; overflow: hidden; }
     .shorts-fs-video { width: 100%; height: 100%; object-fit: cover; background: #000000; }
     .short-yt-frame { width: 100%; height: 60%; margin-bottom: 115px; border: 0; background: #000000; pointer-events: auto; }
-    .short-swipe-shield { position: absolute; top: 0; left: 0; right: 76px; bottom: 130px; z-index: 12; background: transparent; }
     .shorts-fs-right-rail { position: absolute; right: 12px; bottom: 85px; z-index: 20; display: flex; flex-direction: column; align-items: center; gap: 13px; }
-    .short-rail-btn { background: rgba(15, 18, 26, 0.72); backdrop-filter: blur(8px); border: 1px solid rgba(251, 191, 36, 0.3); width: 44px; height: 44px; border-radius: 50%; color: #ffffff; font-size: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
+    .short-rail-btn { background: rgba(15, 18, 26, 0.72); backdrop-filter: blur(8px); border: 1px solid rgba(251, 191, 36, 0.35); width: 44px; height: 44px; border-radius: 50%; color: #ffffff; font-size: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; }
     .short-rail-lbl { font-size: 10px; font-weight: 800; color: #fff; margin-top: 3px; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
-    .shorts-fs-bottom-info { position: absolute; left: 14px; right: 76px; bottom: 28px; z-index: 20; pointer-events: auto; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.65) 100%); padding: 8px 6px; border-radius: 12px; }
-    .btn-promote-post { background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%); color: #050505; border: none; border-radius: 999px; padding: 6px 12px; font-size: 11px; font-weight: 900; cursor: pointer; }
+    .shorts-fs-bottom-info { position: absolute; left: 14px; right: 76px; bottom: 28px; z-index: 20; pointer-events: auto; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.72) 100%); padding: 8px 6px; border-radius: 12px; }
+    .btn-promote-post { background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%); color: #050505; border: none; border-radius: 999px; padding: 6px 11px; font-size: 11px; font-weight: 900; cursor: pointer; white-space: nowrap; }
 
     .view-section { display: none; padding: 8px 0; animation: fadeIn 0.2s ease; }
     .view-section.active { display: block; }
@@ -237,21 +247,22 @@
     .progress-fill { height: 100%; background: linear-gradient(90deg, #d97706 0%, #fbbf24 55%, #10b981 100%); border-radius: 999px; transition: width 0.35s ease; }
     .badge-active { display: inline-block; background: rgba(16, 185, 129, 0.14); border: 1px solid rgba(16, 185, 129, 0.4); color: #059669; font-size: 11px; font-weight: 800; padding: 6px 14px; border-radius: 999px; }
 
-    .single-stripe-btn { width: 100%; margin-top: 12px; padding: 14px 16px; border-radius: 14px; background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1.5px solid #fbbf24; color: #ffffff; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); transition: transform 0.12s ease; }
+    .single-stripe-btn { width: 100%; margin-top: 12px; padding: 14px 16px; border-radius: 14px; background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1.5px solid #fbbf24; color: #ffffff; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); transition: transform 0.12s ease, opacity 0.15s ease; }
     .single-stripe-btn:active { transform: scale(0.98); }
+    .single-stripe-btn.claimed { opacity: 0.72; border-color: #475569; }
     .stripe-btn-left { display: flex; align-items: center; gap: 10px; text-align: left; }
-    .stripe-price-pill { background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%); color: #050505; font-size: 14px; font-weight: 900; padding: 7px 14px; border-radius: 999px; white-space: nowrap; box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4); }
+    .stripe-price-pill { background: linear-gradient(135deg, #fef08a 0%, #fbbf24 55%, #d97706 100%); color: #050505; font-size: 13px; font-weight: 900; padding: 7px 13px; border-radius: 999px; white-space: nowrap; box-shadow: 0 2px 8px rgba(251, 191, 36, 0.4); }
 
     .composer-card { background: #ffffff; border-top: 1px solid #dadde1; border-bottom: 1px solid #dadde1; padding: 12px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04); }
     .composer-row { display: flex; align-items: center; gap: 9px; }
     .composer-avatar-mini { width: 40px; height: 40px; border-radius: 50%; background: #0b0d13; border: 1.5px solid #fbbf24; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; cursor: pointer; }
     .composer-avatar-mini img { width: 100%; height: 100%; object-fit: cover; }
-    .composer-input { flex: 1; min-width: 0; background: #f0f2f5; border: 1px solid #ced0d4; border-radius: 999px; padding: 10px 15px; color: #050505; font-size: 14px; outline: none; }
+    .composer-input { flex: 1; min-width: 0; background: #f0f2f5; border: 1px solid #ced0d4; border-radius: 999px; padding: 10px 15px; color: #050505; font-size: 13.5px; outline: none; }
     .composer-input::placeholder { color: #65676b; }
     .composer-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 8px; border-top: 1px solid #f0f2f5; gap: 6px; flex-wrap: wrap; }
-    .media-buttons-wrap { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
-    .photo-upload-label, .video-upload-label { font-size: 11.5px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 7px 11px; border-radius: 9px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-    .composer-btn { background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1px solid #fbbf24; color: #fef08a; border-radius: 9px; padding: 8px 16px; font-weight: 900; font-size: 12.5px; cursor: pointer; }
+    .media-buttons-wrap { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
+    .photo-upload-label, .video-upload-label { font-size: 11px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 7px 9px; border-radius: 9px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+    .composer-btn { background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%); border: 1px solid #fbbf24; color: #fef08a; border-radius: 9px; padding: 8px 14px; font-weight: 900; font-size: 12px; cursor: pointer; white-space: nowrap; }
     .composer-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .preview-thumb { width: 100%; max-height: 220px; object-fit: cover; border-radius: 10px; margin-top: 10px; display: none; border: 1px solid #dadde1; }
     .preview-video { width: 100%; max-height: 240px; border-radius: 10px; margin-top: 10px; display: none; background: #000; }
@@ -283,11 +294,9 @@
     .inline-sub-link { background: none; border: none; color: #b45309; font-size: 12.5px; font-weight: 900; cursor: pointer; padding: 0; }
     .inline-sub-link.subscribed { color: #059669; }
     .btn-post-more { width: 34px; height: 34px; border-radius: 50%; background: transparent; border: none; color: #65676b; font-size: 19px; font-weight: 900; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; letter-spacing: 1px; }
-    .btn-post-more:active { background: #f0f2f5; }
     .post-menu-card { background: #ffffff; border-radius: 14px; overflow: hidden; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .post-menu-item { width: 100%; background: #ffffff; border: none; border-bottom: 1px solid #f0f2f5; padding: 13px 16px; display: flex; align-items: center; gap: 13px; text-align: left; cursor: pointer; color: #050505; }
     .post-menu-item:last-child { border-bottom: none; }
-    .post-menu-item:active { background: #f0f2f5; }
     .post-menu-title { font-size: 14px; font-weight: 800; }
     .post-menu-sub { font-size: 11px; color: #65676b; margin-top: 1px; }
     .btn-subscribe { background: #0b0d13; border: 1px solid #fbbf24; color: #fef08a; border-radius: 999px; padding: 7px 12px; font-size: 11px; font-weight: 800; cursor: pointer; white-space: nowrap; }
@@ -295,11 +304,11 @@
     .btn-dm-icon { background: #f0f2f5; border: 1px solid #dadde1; color: #050505; border-radius: 999px; padding: 6px 9px; font-size: 11px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
     .post-image { width: 100%; max-height: 75vh; object-fit: cover; display: block; background: #e4e6eb; cursor: pointer; }
     .post-video { width: 100%; max-height: 75vh; display: block; background: #000000; outline: none; }
-    .post-actions { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; }
-    .post-actions-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .action-item { background: none; border: none; color: #050505; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 5px; cursor: pointer; }
+    .post-actions { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-top: 1px solid #f0f2f5; border-bottom: 1px solid #f0f2f5; gap: 8px; flex-wrap: wrap; }
+    .post-actions-left { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; }
+    .action-item { background: none; border: none; color: #050505; font-size: 12.5px; font-weight: 800; display: flex; align-items: center; gap: 5px; cursor: pointer; }
     .action-item.liked { color: #e41e3f; }
-    .views-counter-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 3px 9px; border-radius: 999px; }
+    .views-counter-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 800; color: #050505; background: #f0f2f5; border: 1px solid #dadde1; padding: 3px 9px; border-radius: 999px; }
     .post-body { padding: 10px 14px 13px; }
     .post-caption { font-size: 14px; line-height: 1.45; color: #050505; word-break: break-word; }
     .post-caption strong { color: #050505; margin-right: 5px; cursor: pointer; }
@@ -379,7 +388,7 @@
     .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; background: #ffffff; border-top: 1px solid #dadde1; display: flex; justify-content: space-around; padding: 8px 0 16px; z-index: 50; box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.04); }
     .nav-btn { background: none; border: none; color: #050505; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 800; letter-spacing: 0.6px; cursor: pointer; flex: 1; opacity: 0.72; }
     .nav-btn.active { color: #b45309; opacity: 1; }
-    .toast { position: fixed; top: 72px; left: 50%; transform: translateX(-50%); background: #0b0d13; border: 1px solid #fbbf24; color: #fef08a; font-weight: 800; font-size: 12px; padding: 9px 16px; border-radius: 999px; z-index: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); display: none; white-space: nowrap; }
+    .toast { position: fixed; top: 72px; left: 50%; transform: translateX(-50%); background: #0b0d13; border: 1px solid #fbbf24; color: #fef08a; font-weight: 800; font-size: 12px; padding: 9px 16px; border-radius: 999px; z-index: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); display: none; white-space: nowrap; max-width: 92vw; overflow: hidden; text-overflow: ellipsis; }
   </style>
 </head>
 <body>
@@ -438,6 +447,9 @@
         <symbol id="rank-shield-diamond" viewBox="0 0 32 32"><path d="M16 3L5 7.5v8.2c0 6.8 4.7 12.6 11 14.3 6.3-1.7 11-7.5 11-14.3V7.5L16 3z" fill="url(#diamondGrad)" stroke="#0369a1" stroke-width="1.2"/><polygon points="16,7.5 23,14.5 16,24.5 9,14.5" fill="#ffffff"/></symbol>
 
         <symbol id="ico-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.5z"/></symbol>
+        <symbol id="ico-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+        <symbol id="ico-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+        <symbol id="ico-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.9 5.8L20 10.8l-6.1 1.9L12 18.5l-1.9-5.8L4 10.8l6.1-2z"/><path d="M19 3v4"/><path d="M21 5h-4"/></symbol>
         <symbol id="ico-reels" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="8" y1="3" x2="11" y2="8"/><line x1="14" y1="3" x2="17" y2="8"/><polygon points="10,11.5 15.5,14.5 10,17.5"/></symbol>
         <symbol id="ico-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></symbol>
         <symbol id="ico-vault" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></symbol>
@@ -446,7 +458,6 @@
         <symbol id="ico-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
         <symbol id="ico-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><polyline points="3,7 12,13 21,7"/></symbol>
         <symbol id="ico-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.77 1.05 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
-        <symbol id="ico-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><line x1="8" y1="16" x2="8" y2="11"/><line x1="12" y1="16" x2="12" y2="8"/><line x1="16" y1="16" x2="16" y2="13"/></symbol>
         <symbol id="ico-upgrades" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.2"/><circle cx="17.2" cy="6.8" r="3.3"/><polygon points="6.8,13.5 10.5,20 3.2,20"/><path d="M17.2 14.2c1.2-1.2 3.1-.3 3.1 1.3 0 1.8-3.1 4-3.1 4s-3.1-2.2-3.1-4c0-1.6 1.9-2.5 3.1-1.3z"/></symbol>
         <symbol id="ico-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></symbol>
         <symbol id="ico-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></symbol>
@@ -460,7 +471,6 @@
         <symbol id="ico-crown-line" viewBox="0 0 24 24"><polygon points="3 18 5 7 9.5 12 12 5 14.5 12 19 7 21 18 3 18"/></symbol>
         <symbol id="ico-flag" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
         <symbol id="ico-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="5.7" y1="5.7" x2="18.3" y2="18.3"/></symbol>
-        <symbol id="ico-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M7.5 11V7a4.5 4.5 0 0 1 9 0v4"/></symbol>
       </defs>
     </svg>
 
@@ -469,11 +479,12 @@
       <div class="splash-center-logo">
         <svg class="splash-crown-glow" viewBox="0 0 100 60"><use href="#argon-crown-only"></use></svg>
         <div class="splash-title">ARGON</div>
+        <div style="font-size:10.5px; color:#fde68a; letter-spacing:3px; font-weight:800; margin-top:6px;">ESTUDIO & RED SOCIAL IA</div>
       </div>
       <div class="splash-bottom-box">
         <div class="splash-bar-track"><div id="splashBarFill" class="splash-bar-fill"></div></div>
-        <div class="splash-meta-row"><span>Conectando Bóveda Real...</span><span id="splashPctText">0%</span></div>
-        <div class="splash-copy">ARGON IMPERIAL © 2026</div>
+        <div class="splash-meta-row"><span>Abriendo Estudio IA...</span><span id="splashPctText">0%</span></div>
+        <div class="splash-copy">ARGON AI IMPERIAL © 2026</div>
       </div>
     </div>
 
@@ -481,35 +492,35 @@
       <div class="vip-onboarding-wrap">
         <svg class="vip-top-crown" viewBox="0 0 100 60"><use href="#argon-crown-only"></use></svg>
         <div class="vip-main-logo-text">ARGON</div>
-        <div class="vip-empire-subtitle">ACCESO VIP PLATINUM GOLD</div>
+        <div class="vip-empire-subtitle">RED OFICIAL DE VIDEO, MÚSICA Y ARTE IA</div>
         <label class="vip-avatar-mini-picker">
           <img id="onboardingAvatarImg" src="" alt="" style="display:none;" />
           <span id="onboardingAvatarIcon" style="display:inline-flex;"><svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg></span>
-          <span>Subir Foto de Perfil</span>
+          <span>Subir Avatar / Foto de Creador</span>
           <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
         </label>
         <div id="referralWelcomeBanner" style="font-size:11px; color:#b45309; font-weight:800; margin-bottom:8px;"></div>
         <div class="vip-metal-card-stage">
           <div class="vip-metal-card">
             <div class="vip-card-top-row">
-              <div class="vip-card-brand"><svg width="28" height="18" viewBox="0 0 100 60"><use href="#argon-crown-only"></use></svg><span class="vip-card-brand-txt">ARGON VAULT</span></div>
+              <div class="vip-card-brand"><svg width="28" height="18" viewBox="0 0 100 60"><use href="#argon-crown-only"></use></svg><span class="vip-card-brand-txt">ARGON AI</span></div>
               <div class="vip-emv-chip">VIP</div>
             </div>
-            <input type="text" id="regName" class="vip-card-input-box uppercase-input" placeholder="TU NOMBRE O ALIAS VIP" oninput="window.updateVipCardPreview(this.value)" />
-            <input type="text" id="regHandle" class="vip-card-input-box uppercase-input" style="font-size:11px; padding:8px 10px;" placeholder="@USUARIO PERSONALIZADO (OPCIONAL)" oninput="window.updateVipCardPreview(this.value || document.getElementById('regName').value)" />
+            <input type="text" id="regName" class="vip-card-input-box uppercase-input" placeholder="TU NOMBRE O SELLO ARTÍSTICO IA" oninput="window.updateVipCardPreview(this.value)" />
+            <input type="text" id="regHandle" class="vip-card-input-box uppercase-input" style="font-size:11px; padding:8px 10px;" placeholder="@USUARIO CREADOR (OPCIONAL)" oninput="window.updateVipCardPreview(this.value || document.getElementById('regName').value)" />
             <input type="email" id="regEmail" class="vip-card-input-box" style="font-size:11px; padding:8px 10px; text-transform:lowercase; margin-bottom:4px;" placeholder="CORREO ELECTRÓNICO REAL (OBLIGATORIO)" />
-            <div id="vipEngravedText" class="vip-engraved-preview">MIEMBRO_VIP</div>
+            <div id="vipEngravedText" class="vip-engraved-preview">CREADOR_IA</div>
             <div class="vip-card-bonus-lip">
-              <span>Bono de Bienvenida:</span>
+              <span>100% Gratis • Bono Inicial:</span>
               <span style="color:#34d399; font-weight:900;">+5,000 A-Coins</span>
             </div>
           </div>
         </div>
         <label class="age-compliance-box">
           <input type="checkbox" id="regAgeCheck" />
-          <span>Certifico bajo juramento que tengo <strong>18 años o más</strong> y acepto el <span style="color:#b45309; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial de Usuario, Reglas de Uso y Privacidad</span> de ARGON.</span>
+          <span>Certifico que tengo <strong>18 años o más</strong> y acepto las <span style="color:#b45309; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Reglas Exclusivas de Contenido IA y Privacidad</span> de ARGON.</span>
         </label>
-        <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">ACTIVAR MI PASE VIP →</button>
+        <button class="btn-activate-vip-pass" onclick="window.completeRegistration()">ENTRAR GRATIS AL ESTUDIO IA →</button>
       </div>
     </div>
 
@@ -517,12 +528,12 @@
       <div class="confirm-card" style="max-width:350px; text-align:left;">
         <div style="text-align:center; margin-bottom:12px;">
           <svg class="ico-stroke" style="width:28px;height:28px;"><use href="#ico-edit"></use></svg>
-          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Editar Mi Perfil</div>
-          <div style="font-size:11.5px; color:#65676b;">Cambia tu nombre visible cuando quieras</div>
+          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Editar Perfil de Creador</div>
+          <div style="font-size:11.5px; color:#65676b;">Actualiza tu nombre o sello creativo</div>
         </div>
         <div style="margin-bottom:12px;">
           <label style="font-size:11px; font-weight:800; color:#050505; display:block; margin-bottom:4px;">NOMBRE VISIBLE:</label>
-          <input type="text" id="editProfileNameInput" class="composer-input" style="width:100%; border-radius:10px; text-transform:uppercase;" placeholder="TU NOMBRE O ALIAS" />
+          <input type="text" id="editProfileNameInput" class="composer-input" style="width:100%; border-radius:10px; text-transform:uppercase;" placeholder="TU NOMBRE O ALIAS IA" />
         </div>
         <div class="confirm-actions">
           <button class="btn-confirm-cancel" onclick="window.closeEditProfileModal()">Cancelar</button>
@@ -535,8 +546,8 @@
       <div class="confirm-card" style="max-width:360px; text-align:left;">
         <div style="text-align:center; margin-bottom:10px;">
           <svg class="ico-stroke" style="width:30px;height:30px;color:#b45309;"><use href="#ico-shield"></use></svg>
-          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Verificación Oficial (+18)</div>
-          <div style="font-size:11.5px; color:#65676b; margin-top:3px;">Confirma tu correo electrónico real y mayoría de edad para proteger tu cuenta VIP.</div>
+          <div style="font-size:16px; font-weight:900; color:#050505; margin-top:4px;">Verificación de Creador (+18)</div>
+          <div style="font-size:11.5px; color:#65676b; margin-top:3px;">Confirma tu correo electrónico real y mayoría de edad para publicar y coleccionar en ARGON.</div>
         </div>
         <div style="margin-bottom:10px;">
           <label style="font-size:11px; font-weight:800; color:#050505; display:block; margin-bottom:4px;">CORREO ELECTRÓNICO OFICIAL:</label>
@@ -544,7 +555,7 @@
         </div>
         <label class="age-compliance-box" style="margin-bottom:14px;">
           <input type="checkbox" id="verifyModalAgeCheck" />
-          <span>Tengo <strong>18 años o más</strong> y acepto el <span style="color:#b45309; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial de Usuario y Privacidad</span> de ARGON.</span>
+          <span>Tengo <strong>18 años o más</strong> y acepto el <span style="color:#b45309; text-decoration:underline; font-weight:800; cursor:pointer;" onclick="event.preventDefault(); window.openLegalModal();">Contrato Oficial de Creadores IA</span>.</span>
         </label>
         <button class="btn-primary-platinum" style="margin-top:0;" onclick="window.saveExistingUserVerification()">✓ VERIFICAR MI CUENTA (+18)</button>
       </div>
@@ -554,16 +565,16 @@
       <div class="dm-sheet" style="height:84vh;">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm"><use href="#ico-shield"></use></svg><span>Contrato Oficial de Usuario y Privacidad</span></div>
-            <div style="font-size:11px; color:#b45309;">ARGON • Términos Legales Vinculantes (+18)</div>
+            <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm"><use href="#ico-shield"></use></svg><span>Reglas Oficiales • Comunidad 100% IA</span></div>
+            <div style="font-size:11px; color:#b45309;">ARGON AI • Plataforma Gratuita (+18)</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeLegalModal()">✕</button>
         </div>
         <div class="dm-messages-box" style="font-size:12px; color:#374151; line-height:1.55;">
-          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">1. Mayoría de Edad (+18)</div>El acceso y uso de ARGON está restringido exclusivamente a personas mayores de dieciocho (18) años con correo electrónico válido.</div>
-          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">2. Naturaleza Virtual de las A-Coins</div>Las A-Coins constituyen puntos digitales de entretenimiento social y estatus interno sin valor monetario fiduciario ni canje por efectivo.</div>
-          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">3. Conducta, Reportes y Moderación</div>Tolerancia cero ante abuso, acoso, fraude, desnudez ilegal o violación de derechos de autor. La Administración revisa reportes y puede suspender cuentas infractoras.</div>
-          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">4. Privacidad y Borrado de Datos</div>El usuario puede eliminar permanentemente su cuenta, publicaciones y datos en cualquier momento desde el Menú de Ajustes. Ley aplicable: Estado Libre Asociado de Puerto Rico.</div>
+          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">1. Regla de Oro: Solo Contenido con Inteligencia Artificial</div>ARGON es un espacio exclusivo para videos cortos, pistas musicales, animaciones, comedia y arte creados o asistidos por herramientas de Inteligencia Artificial (Veo, Sora, Suno, Kling, Udio, Midjourney, etc.).</div>
+          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">2. Acceso 100% Gratuito y Economía de A-Coins</div>El registro y uso de ARGON es completamente gratuito. Las A-Coins se obtienen gratis mediante bonos diarios, publicaciones y apoyo de la comunidad para coleccionar pistas/videos e impulsar obras en Oro VIP, sin valor monetario ni cobros en efectivo.</div>
+          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">3. Ética IA y Moderación (+18)</div>Quedan estrictamente prohibidos los deepfakes difamatorios de personas reales sin consentimiento, desnudez ilegal, fraude o acoso.</div>
+          <div class="glass-card"><div style="font-weight:900; color:#050505; margin-bottom:4px;">4. Privacidad y Control Total</div>El creador puede eliminar su cuenta y todas sus obras en cualquier momento desde el Menú de Ajustes. Ley aplicable: Estado Libre Asociado de Puerto Rico.</div>
         </div>
       </div>
     </div>
@@ -578,13 +589,13 @@
       <div class="confirm-card" style="max-width:360px; text-align:left;">
         <div style="text-align:center; margin-bottom:12px;">
           <div class="confirm-icon-ring"><svg class="ico-stroke"><use href="#ico-flag"></use></svg></div>
-          <div class="confirm-title">Reportar Contenido</div>
-          <div class="confirm-desc" style="margin-bottom:10px;">Selecciona el motivo para ocultar esta publicación y notificar a Moderación.</div>
+          <div class="confirm-title">Reportar Publicación</div>
+          <div class="confirm-desc" style="margin-bottom:10px;">Selecciona el motivo para ocultar esta obra y notificar a Moderación IA.</div>
         </div>
-        <button class="report-reason-btn" onclick="window.submitContentReport('Contenido inapropiado o desnudez')"><span>Contenido inapropiado / +18 explícito</span><span>›</span></button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('No es contenido creado con IA')"><span>No es contenido IA (selfie / video común)</span><span>›</span></button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('Contenido inapropiado o deepfake abusivo')"><span>Deepfake sin permiso / +18 explícito</span><span>›</span></button>
         <button class="report-reason-btn" onclick="window.submitContentReport('Spam, fraude o estafa')"><span>Spam, fraude o estafa</span><span>›</span></button>
-        <button class="report-reason-btn" onclick="window.submitContentReport('Acoso, odio o violencia')"><span>Acoso, discurso de odio o violencia</span><span>›</span></button>
-        <button class="report-reason-btn" onclick="window.submitContentReport('Infracción de derechos de autor (DMCA)')"><span>Derechos de autor / Música o Video ajeno</span><span>›</span></button>
+        <button class="report-reason-btn" onclick="window.submitContentReport('Robo de obra IA de otro creador')"><span>Copia de obra de otro creador</span><span>›</span></button>
         <div style="margin-top:8px;"><button class="btn-confirm-cancel" style="width:100%;" onclick="window.closeReportModal()">Cancelar</button></div>
       </div>
     </div>
@@ -592,8 +603,8 @@
     <div id="deleteAccountModal" class="confirm-modal-overlay">
       <div class="confirm-card" style="max-width:355px;">
         <div class="confirm-icon-ring"><svg class="ico-stroke"><use href="#ico-trash"></use></svg></div>
-        <div class="confirm-title">¿Eliminar tu cuenta y datos?</div>
-        <div class="confirm-desc">Esta acción borrará permanentemente tu perfil, tus publicaciones y tus A-Coins de ARGON sin posibilidad de recuperación.</div>
+        <div class="confirm-title">¿Eliminar tu cuenta y obras?</div>
+        <div class="confirm-desc">Esta acción borrará permanentemente tu perfil de creador, tus publicaciones y tus A-Coins en ARGON.</div>
         <div class="confirm-actions">
           <button class="btn-confirm-cancel" onclick="window.closeDeleteAccountModal()">Cancelar</button>
           <button class="btn-confirm-delete" onclick="window.executePermanentAccountDeletion()">Sí, borrar todo</button>
@@ -605,13 +616,13 @@
       <div class="dm-sheet" style="height:80vh;">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;" id="friendsModalTitle">Mis Amigos y Suscriptores</div>
-            <div style="font-size:11px; color:#b45309;">Toca cualquier usuario para ver su perfil o chatear</div>
+            <div style="font-size:14px; font-weight:900; color:#050505;" id="friendsModalTitle">Comunidad de Creadores IA</div>
+            <div style="font-size:11px; color:#b45309;">Toca cualquier creador para ver su estudio o chatear</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeFriendsModal()">✕</button>
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:10px 14px; background:#f7f8fa; border-bottom:1px solid #dadde1;">
-          <button id="tabBtnFollowers" class="dm-user-pill active" onclick="window.switchFriendsTab('followers')">Me siguen (<span id="cntFollowersTab">0</span>)</button>
+          <button id="tabBtnFollowers" class="dm-user-pill active" onclick="window.switchFriendsTab('followers')">Suscriptores (<span id="cntFollowersTab">0</span>)</button>
           <button id="tabBtnFollowing" class="dm-user-pill" onclick="window.switchFriendsTab('following')">Siguiendo (<span id="cntFollowingTab">0</span>)</button>
         </div>
         <div class="dm-messages-box" id="friendsModalListBox" style="padding:10px;"></div>
@@ -621,8 +632,8 @@
     <div id="shortsFullscreenModal" class="shorts-fullscreen-modal">
       <div class="shorts-fs-topbar">
         <div style="display:flex; align-items:center; gap:8px; color:#fde68a; text-shadow:0 2px 6px rgba(0,0,0,0.85);">
-          <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg>
-          <span style="font-size:15px; font-weight:900; letter-spacing:1.5px;">ARGON SHORTS</span>
+          <svg class="ico-stroke-sm"><use href="#ico-sparkles"></use></svg>
+          <span style="font-size:15px; font-weight:900; letter-spacing:1.5px;">ARGON AI SHORTS</span>
         </div>
         <button class="dm-close-btn" onclick="window.closeShortsPlayer()">✕</button>
       </div>
@@ -633,7 +644,7 @@
       <div class="confirm-card">
         <div class="confirm-icon-ring"><svg class="ico-stroke"><use href="#ico-trash"></use></svg></div>
         <div class="confirm-title" id="confirmModalTitle">¿Estás seguro?</div>
-        <div class="confirm-desc" id="confirmModalDesc">Esta publicación se eliminará permanentemente de ARGON.</div>
+        <div class="confirm-desc" id="confirmModalDesc">Esta creación se eliminará permanentemente de ARGON.</div>
         <div class="confirm-actions">
           <button class="btn-confirm-cancel" onclick="window.closeConfirmModal()">Cancelar</button>
           <button class="btn-confirm-delete" id="confirmModalActionBtn" onclick="window.executeConfirmedDelete()">Sí, eliminar</button>
@@ -645,25 +656,25 @@
       <div class="upm-inner">
         <div class="upm-topbar">
           <button class="upm-back-btn" onclick="window.closePublicProfile()">← Volver</button>
-          <div style="font-size:14px; font-weight:900; color:#050505;" id="upmHeaderHandle">@USUARIO</div>
+          <div style="font-size:14px; font-weight:900; color:#050505;" id="upmHeaderHandle">@CREADOR</div>
           <div style="width:65px;"></div>
         </div>
         <div style="padding:14px;">
           <div class="glass-card" style="text-align:center;">
             <div class="fb-cover-banner"></div>
             <div class="profile-avatar-wrap" id="upmAvatarBox"></div>
-            <div style="font-size:19px; font-weight:900; color:#050505;" id="upmFullName">USUARIO</div>
-            <div style="font-size:12px; color:#b45309; font-weight:800; margin-top:2px;" id="upmHandleSub">@USUARIO</div>
+            <div style="font-size:19px; font-weight:900; color:#050505;" id="upmFullName">CREADOR IA</div>
+            <div style="font-size:12px; color:#b45309; font-weight:800; margin-top:2px;" id="upmHandleSub">@CREADOR</div>
             <div class="ig-stats-row">
-              <div><div class="ig-stat-num" id="upmStatPosts">0</div><div class="ig-stat-lbl">POSTS</div></div>
+              <div><div class="ig-stat-num" id="upmStatPosts">0</div><div class="ig-stat-lbl">OBRAS IA</div></div>
               <div><div class="ig-stat-num" id="upmStatSubs">0</div><div class="ig-stat-lbl">SUSCRIPTORES</div></div>
               <div><div class="ig-stat-num" id="upmStatFollowing">0</div><div class="ig-stat-lbl">SIGUIENDO</div></div>
             </div>
             <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;" id="upmActionButtons"></div>
           </div>
 
-          <div class="profile-view-switcher">
-            <button id="upmTabWallBtn" class="profile-switch-tab active" onclick="window.setPublicProfileLayout('wall')"><svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg><span>Muro</span></button>
+          <div class="profile-view-switcher" style="grid-template-columns:1fr 1fr;">
+            <button id="upmTabWallBtn" class="profile-switch-tab active" onclick="window.setPublicProfileLayout('wall')"><svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg><span>Estudio</span></button>
             <button id="upmTabGridBtn" class="profile-switch-tab" onclick="window.setPublicProfileLayout('grid')"><svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg><span>Galería 3x3</span></button>
           </div>
           <div id="upmWallPosts"></div>
@@ -677,7 +688,7 @@
         <div class="dm-header">
           <div>
             <div style="font-size:14px; font-weight:900; color:#050505; display:flex; align-items:center; gap:6px;"><svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg><span>Centro de Notificaciones</span></div>
-            <div style="font-size:11px; color:#b45309;">Actividad en vivo en tus publicaciones</div>
+            <div style="font-size:11px; color:#b45309;">Descargas con A-Coins, likes y actividad en vivo</div>
           </div>
           <button class="dm-close-btn" onclick="window.closeNotificationsModal()">✕</button>
         </div>
@@ -693,8 +704,8 @@
       <div class="dm-sheet">
         <div class="dm-header">
           <div>
-            <div style="font-size:14px; font-weight:900; color:#050505;" id="dmTargetTitle">Mensajes Privados</div>
-            <div style="font-size:11px; color:#b45309;" id="dmTargetSubtitle">Conversación directa encriptada</div>
+            <div style="font-size:14px; font-weight:900; color:#050505;" id="dmTargetTitle">Mensajes entre Creadores</div>
+            <div style="font-size:11px; color:#b45309;" id="dmTargetSubtitle">Colaboraciones de música, prompts y videos IA</div>
           </div>
           <div style="display:flex; align-items:center; gap:6px;">
             <button id="dmBlockPartnerBtn" class="btn-mini-danger" style="display:none;" onclick="window.toggleBlockUser(window.getActiveDmPartner())"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-ban"></use></svg></button>
@@ -706,16 +717,16 @@
         <div id="dmPhotoPreviewBar" class="dm-preview-bar">
           <div style="display:flex; align-items:center; gap:10px;">
             <img id="dmPhotoPreviewThumb" class="dm-preview-img" src="" alt="Foto" />
-            <span style="font-size:11px; color:#b45309; font-weight:700;">Foto lista para enviar</span>
+            <span style="font-size:11px; color:#b45309; font-weight:700;">Imagen lista para enviar</span>
           </div>
           <button class="btn-mini-danger" onclick="window.clearDmSelectedPhoto()">✕ Quitar</button>
         </div>
         <div class="dm-footer">
-          <label class="dm-photo-btn" title="Enviar foto por mensaje">
+          <label class="dm-photo-btn" title="Enviar imagen por mensaje">
             <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg>
             <input type="file" id="dmPhotoInput" accept="image/*" style="display:none" onchange="window.previewDmPhoto(event)" />
           </label>
-          <input type="text" id="dmTextInput" class="composer-input" placeholder="Escribe un mensaje privado..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
+          <input type="text" id="dmTextInput" class="composer-input" placeholder="Escribe al creador..." onkeypress="if(event.key==='Enter') window.sendDirectMessage()" />
           <button class="composer-btn" onclick="window.sendDirectMessage()">Enviar</button>
         </div>
       </div>
@@ -723,18 +734,18 @@
     <header class="topbar">
       <div class="brand-wrap" onclick="window.triggerManualBlinkRefresh()">
         <div class="logo-box"><svg width="24" height="24"><use href="#argon-crown-a-gold"></use></svg></div>
-        <div><span class="brand-title">ARGON</span><span class="live-dot" title="En vivo"></span></div>
+        <div><span class="brand-title">ARGON</span><span class="live-dot" title="Estudio IA en vivo"></span></div>
       </div>
       <div class="top-right-actions">
         <button class="inbox-btn" onclick="window.openNotificationsModal()" title="Notificaciones">
           <svg class="ico-stroke-sm"><use href="#ico-bell"></use></svg>
           <span id="notifBadge" class="inbox-badge notif-badge">0</span>
         </button>
-        <button class="inbox-btn" onclick="window.openDirectMessages()" title="Mensajes Directos">
+        <button class="inbox-btn" onclick="window.openDirectMessages()" title="Mensajes entre Creadores">
           <svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg>
           <span id="inboxBadge" class="inbox-badge">0</span>
         </button>
-        <div class="wallet-pill" onclick="window.switchTab('boveda')" title="Abrir Bóveda VIP">
+        <div class="wallet-pill" onclick="window.switchTab('boveda')" title="Abrir Bóveda Gratis">
           <span class="wallet-amount" id="topBalance">5,000</span>
           <span class="wallet-label">A-COINS</span>
         </div>
@@ -761,13 +772,13 @@
           </div>
         </div>
         <div class="desk-nav-card">
-          <button class="desk-nav-btn active" id="dnav-feed" onclick="window.switchTab('feed')"><svg class="ico-stroke"><use href="#ico-home"></use></svg><span>Inicio / Muro</span></button>
-          <button class="desk-nav-btn" id="dnav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>Argon Shorts</span></button>
-          <button class="desk-nav-btn" id="dnav-galeria" onclick="window.switchTab('galeria')"><svg class="ico-stroke"><use href="#ico-grid"></use></svg><span>Galería 3x3</span></button>
-          <button class="desk-nav-btn" id="dnav-boveda" onclick="window.switchTab('boveda')"><svg class="ico-stroke"><use href="#ico-vault"></use></svg><span>Bóveda VIP</span></button>
-          <button class="desk-nav-btn" id="dnav-rangos" onclick="window.switchTab('rangos')"><svg class="ico-stroke"><use href="#ico-upgrades"></use></svg><span>Rangos & Premios</span></button>
-          <button class="desk-nav-btn" id="dnav-perfil" onclick="window.switchTab('perfil')"><svg class="ico-stroke"><use href="#ico-friends"></use></svg><span>Mi Perfil</span></button>
-          <button class="desk-nav-btn" id="dnav-menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-gear"></use></svg><span>Menú & Ajustes</span></button>
+          <button class="desk-nav-btn active" id="dnav-feed" onclick="window.switchTab('feed')"><svg class="ico-stroke"><use href="#ico-home"></use></svg><span>Estudio / Muro IA</span></button>
+          <button class="desk-nav-btn" id="dnav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>AI Shorts</span></button>
+          <button class="desk-nav-btn" id="dnav-galeria" onclick="window.switchTab('galeria')"><svg class="ico-stroke"><use href="#ico-grid"></use></svg><span>Vitrina IA 3x3</span></button>
+          <button class="desk-nav-btn" id="dnav-boveda" onclick="window.switchTab('boveda')"><svg class="ico-stroke"><use href="#ico-vault"></use></svg><span>Bóveda Gratis</span></button>
+          <button class="desk-nav-btn" id="dnav-rangos" onclick="window.switchTab('rangos')"><svg class="ico-stroke"><use href="#ico-upgrades"></use></svg><span>Rangos Creadores</span></button>
+          <button class="desk-nav-btn" id="dnav-perfil" onclick="window.switchTab('perfil')"><svg class="ico-stroke"><use href="#ico-friends"></use></svg><span>Mi Perfil & Colección</span></button>
+          <button class="desk-nav-btn" id="dnav-menu" onclick="window.switchTab('menu')"><svg class="ico-stroke"><use href="#ico-gear"></use></svg><span>Menú & Reglas IA</span></button>
           <button class="desk-nav-btn" id="dnav-admin" style="display:none; color:#b45309;" onclick="window.switchTab('admin')"><svg class="ico-stroke"><use href="#ico-crown-line"></use></svg><span>Panel Admin</span></button>
         </div>
       </aside>
@@ -778,45 +789,53 @@
             <div class="vip-metal-card" id="vaultMetalCard" style="transform:none;">
               <div class="vip-card-top-row">
                 <div class="vip-card-brand"><svg width="30" height="20" viewBox="0 0 100 60"><use href="#argon-crown-only"></use></svg><span class="vip-card-brand-txt">ARGON VAULT</span></div>
-                <div class="vip-emv-chip">VIP</div>
+                <div class="vip-emv-chip">AI</div>
               </div>
               <div style="text-align:center; padding:8px 0 10px;">
-                <div style="font-size:10px; font-weight:800; letter-spacing:2px; color:#fde68a;">SALDO DISPONIBLE A-COINS</div>
+                <div style="font-size:10px; font-weight:800; letter-spacing:2px; color:#fde68a;">SALDO GRATUITO A-COINS</div>
                 <div id="vaultBigBalance" style="font-size:34px; font-weight:900; color:#ffffff; margin-top:4px; text-shadow:0 2px 12px rgba(251,191,36,0.28);">5,000</div>
               </div>
               <div style="text-align:center; margin-bottom:6px;">
-                <span id="vaultLiveTicker" class="live-ticker-badge up">▲ BÓVEDA IMPERIAL ACTIVA</span>
+                <span id="vaultLiveTicker" class="live-ticker-badge up">✓ ECONOMÍA IA 100% GRATUITA</span>
               </div>
               <div id="vaultCardEngravedName" class="vip-engraved-preview" style="font-size:19px;">ALBERTO SOTO</div>
-              <div id="vaultCardEngravedHandle" style="text-align:center; font-size:11px; font-weight:800; letter-spacing:1.6px; color:#34d399; margin-bottom:4px;">@BELTO43 • MIEMBRO VIP</div>
+              <div id="vaultCardEngravedHandle" style="text-align:center; font-size:11px; font-weight:800; letter-spacing:1.6px; color:#34d399; margin-bottom:4px;">@BELTO43 • CREADOR IA</div>
               <div class="vip-card-bonus-lip">
-                <span>Impulsa tus posts, Shorts y sube en el Ranking Oficial</span>
+                <span>Colecciona canciones/videos IA o impulsa tus obras en Oro</span>
               </div>
             </div>
           </div>
 
           <div class="glass-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-              <span style="font-size:13px; font-weight:900; color:#050505;">RECARGA OFICIAL DE A-COINS</span>
-              <span style="font-size:11px; color:#059669; font-weight:800;">✓ Pago Seguro Stripe</span>
+              <span style="font-size:13px; font-weight:900; color:#050505;">RECOMPENSA DIARIA GRATUITA</span>
+              <span style="font-size:11px; color:#059669; font-weight:800;">✓ $0.00 • Sin Tarjeta</span>
             </div>
-            <div style="font-size:11.5px; color:#64748b;">Adquiere A-Coins al instante para promocionar tus publicaciones en Oro y destacar en ARGON:</div>
+            <div style="font-size:11.5px; color:#64748b;">Entra cada 24 horas a reclamar A-Coins gratis para descargar canciones y videos IA de la comunidad:</div>
 
-            <button class="single-stripe-btn" onclick="window.openStripeCheckout()">
+            <button id="dailyRewardVaultBtn" class="single-stripe-btn" onclick="window.claimDailyFreeCoins()">
               <div class="stripe-btn-left">
                 <div class="argon-gold-corner-badge" style="width:36px; height:36px;"><svg width="22" height="22"><use href="#argon-crown-a-gold"></use></svg></div>
                 <div>
-                  <div style="font-size:14.5px; font-weight:900; color:#fde68a;">PAQUETE VIP • +6,000 A-COINS</div>
-                  <div style="font-size:11px; color:#34d399; font-weight:800;">Acreditación inmediata en tu Bóveda</div>
+                  <div style="font-size:14.5px; font-weight:900; color:#fde68a;" id="dailyRewardTitleTxt">BONO DIARIO • +500 A-COINS</div>
+                  <div style="font-size:11px; color:#34d399; font-weight:800;" id="dailyRewardSubTxt">Disponible ahora para reclamar gratis</div>
                 </div>
               </div>
-              <span class="stripe-price-pill">$4.99</span>
+              <span class="stripe-price-pill" id="dailyRewardPillTxt">GRATIS</span>
             </button>
+
+            <div style="margin-top:12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:10px 12px; font-size:11.5px; color:#334155; line-height:1.5;">
+              <div style="font-weight:900; color:#050505; margin-bottom:3px;">¿Cómo ganas más A-Coins gratis en ARGON?</div>
+              <div>• Publicar un video, canción o arte IA: <strong style="color:#059669;">+100 AC</strong></div>
+              <div>• Cada nuevo suscriptor a tu estudio: <strong style="color:#059669;">+100 AC</strong></div>
+              <div>• Cuando alguien colecciona tu video/canción: <strong style="color:#b45309;">100% de las AC para ti</strong></div>
+              <div>• Invitar a un creador nuevo con tu enlace: <strong style="color:#059669;">+1,000 AC</strong></div>
+            </div>
           </div>
 
           <div class="glass-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <div style="font-size:13.5px; font-weight:900; color:#050505;">TOP MILLONARIOS A-COINS</div>
+              <div style="font-size:13.5px; font-weight:900; color:#050505;">TOP CREADORES IA & BÓVEDAS</div>
               <span style="font-size:11px; color:#b45309; font-weight:800; cursor:pointer;" onclick="window.switchTab('rangos')">Ver Rangos →</span>
             </div>
             <div id="liveLeaderboardList"></div>
@@ -827,8 +846,8 @@
           <div class="glass-card">
             <div class="progress-header">
               <div>
-                <div class="progress-user" id="rankUserHandle">@USUARIO</div>
-                <div class="progress-subtext" id="rankProgressSub">Sube de nivel sumando suscriptores reales</div>
+                <div class="progress-user" id="rankUserHandle">@CREADOR</div>
+                <div class="progress-subtext" id="rankProgressSub">Sube de nivel sumando suscriptores a tu Estudio IA</div>
               </div>
               <div class="progress-count" id="rankSubsCount">0 Subs</div>
             </div>
@@ -836,25 +855,25 @@
           </div>
 
           <div class="glass-card">
-            <div style="font-size:14px; font-weight:900; color:#050505; margin-bottom:10px;">ESCALERA IMPERIAL DE RANGOS</div>
+            <div style="font-size:14px; font-weight:900; color:#050505; margin-bottom:10px;">ESCALERA DE CREADORES IA</div>
             <div class="tier-item">
-              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-bronze"></use></svg><span>Rango Bronce</span></div><div class="rank-sub-text">Desde 0 suscriptores • Acceso completo al Muro y Shorts</div></div>
+              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-bronze"></use></svg><span>Creador Bronce</span></div><div class="rank-sub-text">Desde 0 suscriptores • Publica videos, MP3 y arte IA</div></div>
               <span class="rank-reward-text">Nivel 1</span>
             </div>
             <div class="tier-item">
-              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-silver"></use></svg><span>Rango Plata</span></div><div class="rank-sub-text">Al llegar a 10 suscriptores • Escudo Plata en perfil</div></div>
+              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-silver"></use></svg><span>Creador Plata</span></div><div class="rank-sub-text">Al llegar a 10 suscriptores • Escudo Plata verificado</div></div>
               <span class="rank-reward-text">+2,500 AC</span>
             </div>
             <div class="tier-item" style="border-color:#fbbf24; background:#fffbeb;">
-              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-gold"></use></svg><span>Rango Oro Imperial</span></div><div class="rank-sub-text">Al llegar a 50 suscriptores • Insignia Dorada Oficial</div></div>
+              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-gold"></use></svg><span>Productor Oro IA</span></div><div class="rank-sub-text">Al llegar a 50 suscriptores • Elegible para Auspicios</div></div>
               <span class="rank-reward-text">+10,000 AC</span>
             </div>
             <div class="tier-item">
-              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-titan"></use></svg><span>Rango Titán</span></div><div class="rank-sub-text">Al llegar a 200 suscriptores • Prioridad en Argon Shorts</div></div>
+              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-titan"></use></svg><span>Director Titán IA</span></div><div class="rank-sub-text">Al llegar a 200 suscriptores • Prioridad en AI Shorts</div></div>
               <span class="rank-reward-text">+25,000 AC</span>
             </div>
             <div class="tier-item" style="margin-bottom:0;">
-              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-diamond"></use></svg><span>Rango Diamante</span></div><div class="rank-sub-text">Al llegar a 1,000 suscriptores • Élite Máxima ARGON</div></div>
+              <div><div class="rank-title-text"><svg class="rank-shield-svg"><use href="#rank-shield-diamond"></use></svg><span>Leyenda Diamante IA</span></div><div class="rank-sub-text">Al llegar a 1,000 suscriptores • Élite Oficial ARGON</div></div>
               <span class="rank-reward-text">+100,000 AC</span>
             </div>
           </div>
@@ -866,39 +885,69 @@
                 <img id="composerAvatarImg" src="" alt="" style="display:none;" />
                 <svg id="composerAvatarSvg" width="22" height="22"><use href="#argon-crown-a-gold"></use></svg>
               </div>
-              <input type="text" id="newPostInput" class="composer-input" placeholder="¿Qué estás pensando o pega un link de YouTube?" oninput="window.detectComposerYouTube(this.value)" />
+              <input type="text" id="newPostInput" class="composer-input" placeholder="Título, prompt o pega un link IA de YouTube..." oninput="window.detectComposerYouTube(this.value)" />
+            </div>
+
+            <div class="composer-ai-bar">
+              <select id="composerAiTool" class="composer-select-gold" title="Herramienta de IA usada">
+                <option value="Veo AI">🎬 Motor: Veo AI</option>
+                <option value="Suno AI">🎵 Motor: Suno AI</option>
+                <option value="Sora AI">🎥 Motor: Sora AI</option>
+                <option value="Kling AI">⚡ Motor: Kling AI</option>
+                <option value="Udio AI">🎧 Motor: Udio AI</option>
+                <option value="Midjourney">🎨 Motor: Midjourney</option>
+                <option value="Runway">🎞️ Motor: Runway</option>
+                <option value="IA Híbrida">✨ Motor: IA Híbrida</option>
+              </select>
+              <select id="composerCoinPrice" class="composer-select-gold" title="Valor de descarga en A-Coins">
+                <option value="0">🔓 Descarga: Gratis (0 AC)</option>
+                <option value="100">🪙 Descarga: 100 A-Coins</option>
+                <option value="250">🪙 Descarga: 250 A-Coins</option>
+                <option value="500">👑 Descarga: 500 A-Coins</option>
+              </select>
             </div>
 
             <div id="composerYtPreview" class="composer-yt-preview"></div>
-            <img id="photoPreview" class="preview-thumb" alt="Vista previa foto" />
+            <img id="photoPreview" class="preview-thumb" alt="Vista previa arte IA" />
             <div id="composerMultiPhotoStrip" class="composer-multi-strip"></div>
             <video id="videoPreview" class="preview-video" controls playsinline></video>
+            <div id="audioPreviewWrap" class="preview-audio-wrap">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                <span style="font-size:11px; font-weight:900;" id="audioPreviewName">🎵 Pista IA lista para subir</span>
+                <button type="button" class="btn-mini-danger" onclick="window.clearComposerAudio()">✕ Quitar</button>
+              </div>
+              <audio id="audioPreview" class="ai-audio-player" controls></audio>
+            </div>
 
             <div id="uploadProgressWrap" class="upload-progress-wrap"><div id="uploadProgressBar" class="upload-progress-bar"></div></div>
-            <div id="uploadStatusText" class="upload-status-text">Subiendo video... 0%</div>
+            <div id="uploadStatusText" class="upload-status-text">Subiendo archivo IA... 0%</div>
 
             <div class="composer-actions">
               <div class="media-buttons-wrap">
-                <label class="photo-upload-label">
-                  <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg><span>Fotos</span>
+                <label class="photo-upload-label" title="Subir Arte o Portada IA">
+                  <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg><span>Arte</span>
                   <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="window.previewSelectedPhoto(event)" />
                 </label>
-                <label class="video-upload-label">
+                <label class="video-upload-label" title="Subir Video IA">
                   <svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg><span>Video</span>
                   <input type="file" id="videoInput" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event, false)" />
                 </label>
+                <label class="video-upload-label" title="Subir Canción o Pista IA (MP3/WAV/M4A)">
+                  <svg class="ico-stroke-sm"><use href="#ico-music"></use></svg><span>MP3 IA</span>
+                  <input type="file" id="audioInput" accept="audio/mpeg,audio/mp3,audio/wav,audio/mp4,audio/x-m4a,audio/*" style="display:none" onchange="window.previewSelectedAudio(event)" />
+                </label>
                 <button type="button" id="composerPrivacyBtn" class="privacy-pill-btn" onclick="window.toggleComposerPrivacy()">
-                  <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-eye"></use></svg>
+                  <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-eye"></use></svg>
                   <span id="composerPrivacyLabel">Público</span>
                 </button>
               </div>
-              <button id="publishBtn" class="composer-btn" onclick="window.publishPost()">Publicar</button>
+              <button id="publishBtn" class="composer-btn" onclick="window.publishPost()">Publicar IA</button>
             </div>
           </div>
 
           <div class="shorts-tray-wrap">
             <div class="shorts-tray-header">
-              <div class="shorts-tray-title"><svg class="ico-stroke-sm"><use href="#ico-reels"></use></svg><span>ARGON SHORTS • 24H VIP</span></div>
+              <div class="shorts-tray-title"><svg class="ico-stroke-sm"><use href="#ico-sparkles"></use></svg><span>ARGON AI SHORTS • VIDEO & MÚSICA</span></div>
               <span style="font-size:11px; color:#b45309; font-weight:800; cursor:pointer;" onclick="window.openShortsPlayer(0)">Ver todos →</span>
             </div>
             <div class="shorts-tray-scroll" id="shortsTrayScroll"></div>
@@ -910,57 +959,59 @@
         <section id="view-perfil" class="view-section">
           <div class="glass-card" style="text-align:center;">
             <div class="fb-cover-banner"></div>
-            <label class="profile-avatar-wrap" title="Cambiar foto de perfil">
+            <label class="profile-avatar-wrap" title="Cambiar foto de creador">
               <img id="profileAvatarImg" src="" alt="Foto de perfil" style="display:none;" />
               <svg id="profileAvatarSvg" width="46" height="46"><use href="#argon-crown-a-gold"></use></svg>
               <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
             </label>
             <div>
               <label class="btn-avatar-upload">
-                <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg><span>Cambiar Foto</span>
+                <svg class="ico-stroke-sm"><use href="#ico-camera"></use></svg><span>Cambiar Avatar</span>
                 <input type="file" accept="image/*" style="display:none" onchange="window.uploadAvatarPhoto(event)" />
               </label>
             </div>
-            <div style="font-size:18px; font-weight:900; margin-top:6px; color:#050505;" id="profileName">MI CUENTA</div>
-            <div style="font-size:12px; color:#b45309; font-weight:800; margin-top:2px;" id="profileHandle">@USUARIO</div>
+            <div style="font-size:18px; font-weight:900; margin-top:6px; color:#050505;" id="profileName">MI ESTUDIO IA</div>
+            <div style="font-size:12px; color:#b45309; font-weight:800; margin-top:2px;" id="profileHandle">@CREADOR</div>
             <div style="font-size:11.5px; color:#059669; font-weight:800; margin-top:4px; cursor:pointer;" id="profileVerifiedEmail" onclick="window.openAgeEmailVerifyModal()"></div>
 
             <div class="ig-stats-row">
-              <div><div class="ig-stat-num" id="myStatPosts">0</div><div class="ig-stat-lbl">POSTS</div></div>
+              <div><div class="ig-stat-num" id="myStatPosts">0</div><div class="ig-stat-lbl">OBRAS IA</div></div>
               <div class="ig-stat-box-clickable" onclick="window.openFriendsModal('followers')"><div class="ig-stat-num" id="myStatSubs">0</div><div class="ig-stat-lbl" style="color:#b45309;">SUSCRIPTORES</div></div>
               <div class="ig-stat-box-clickable" onclick="window.openFriendsModal('following')"><div class="ig-stat-num" id="myStatFollowing">0</div><div class="ig-stat-lbl">SIGUIENDO</div></div>
             </div>
 
             <div class="profile-pro-action-bar">
-              <button class="btn-pro-vip" onclick="window.switchTab('boveda')"><svg class="ico-stroke-sm"><use href="#ico-vault"></use></svg><span>Bóveda Gold</span></button>
-              <button class="btn-pro-share" onclick="window.shareMyProfileLink()"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Invitar VIP</span></button>
-              <button class="btn-pro-friends-sq" onclick="window.openFriendsModal('followers')" title="Amigos"><svg class="ico-stroke-sm"><use href="#ico-friends"></use></svg><span id="myFriendsBtnCount">0</span></button>
+              <button class="btn-pro-vip" onclick="window.switchTab('boveda')"><svg class="ico-stroke-sm"><use href="#ico-vault"></use></svg><span>Bono Gratis</span></button>
+              <button class="btn-pro-share" onclick="window.shareMyProfileLink()"><svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Invitar (+1K)</span></button>
+              <button class="btn-pro-friends-sq" onclick="window.openFriendsModal('followers')" title="Comunidad"><svg class="ico-stroke-sm"><use href="#ico-friends"></use></svg><span id="myFriendsBtnCount">0</span></button>
             </div>
           </div>
 
           <div class="profile-view-switcher">
-            <button id="myProfileTabWallBtn" class="profile-switch-tab active" onclick="window.setMyProfileLayout('wall')"><svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg><span>Mi Muro</span></button>
-            <button id="myProfileTabGridBtn" class="profile-switch-tab" onclick="window.setMyProfileLayout('grid')"><svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg><span>Galería 3x3</span></button>
+            <button id="myProfileTabWallBtn" class="profile-switch-tab active" onclick="window.setMyProfileLayout('wall')"><svg class="ico-stroke-sm"><use href="#ico-menu"></use></svg><span>Mis Obras</span></button>
+            <button id="myProfileTabGridBtn" class="profile-switch-tab" onclick="window.setMyProfileLayout('grid')"><svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg><span>Vitrina 3x3</span></button>
+            <button id="myProfileTabSavedBtn" class="profile-switch-tab" onclick="window.setMyProfileLayout('saved')"><svg class="ico-stroke-sm"><use href="#ico-download"></use></svg><span>Colección IA</span></button>
           </div>
 
           <div id="myOwnPostsWall"></div>
           <div id="myOwnGalleryGrid" class="media-grid-3x3" style="display:none;"></div>
+          <div id="mySavedPostsWall" style="display:none;"></div>
         </section>
 
         <section id="view-galeria" class="view-section">
           <div class="glass-card" style="padding:13px 15px; display:flex; align-items:center; justify-content:space-between;">
             <div>
-              <div style="font-size:15px; font-weight:900; color:#050505; display:flex; align-items:center; gap:7px;"><svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg><span>GALERÍA IMPERIAL 3X3</span></div>
-              <div style="font-size:11px; color:#65676b; margin-top:2px;">Explora todas las fotos y videos publicados en ARGON</div>
+              <div style="font-size:15px; font-weight:900; color:#050505; display:flex; align-items:center; gap:7px;"><svg class="ico-stroke-sm"><use href="#ico-grid"></use></svg><span>VITRINA GLOBAL IA 3X3</span></div>
+              <div style="font-size:11px; color:#65676b; margin-top:2px;">Explora videos, pistas musicales y arte generativo</div>
             </div>
-            <button class="btn-mini-admin" onclick="window.switchTab('feed')">← Muro</button>
+            <button class="btn-mini-admin" onclick="window.switchTab('feed')">← Estudio</button>
           </div>
           <div id="globalGalleryGrid" class="media-grid-3x3"></div>
         </section>
 
         <section id="view-menu" class="view-section">
           <div style="display:flex; justify-content:space-between; align-items:center; margin: 4px 12px 12px;">
-            <span style="font-size:22px; font-weight:900; color:#050505;">Menú & Ajustes</span>
+            <span style="font-size:22px; font-weight:900; color:#050505;">Menú & Estudio IA</span>
             <button style="background:none; border:none; color:#050505; cursor:pointer;" onclick="window.openEditProfileModal()"><svg class="ico-stroke"><use href="#ico-gear"></use></svg></button>
           </div>
 
@@ -973,7 +1024,7 @@
                 </div>
                 <div style="min-width:0;">
                   <div style="font-size:16px; font-weight:900; color:#050505;" id="menuUserName">ALBERTO SOTO</div>
-                  <div style="font-size:11.5px; color:#b45309; font-weight:800;" id="menuUserHandle">@BELTO43 • Ver mi perfil</div>
+                  <div style="font-size:11.5px; color:#b45309; font-weight:800;" id="menuUserHandle">@BELTO43 • Ver mi Estudio IA</div>
                 </div>
               </div>
               <button class="btn-mini-admin" onclick="event.stopPropagation(); window.openEditProfileModal();"><svg class="ico-stroke-sm"><use href="#ico-edit"></use></svg><span>Editar</span></button>
@@ -981,13 +1032,14 @@
           </div>
 
           <div class="glass-card" style="padding:10px 12px;">
-            <div class="fb-menu-row" onclick="window.switchTab('boveda')"><div class="fb-menu-left"><div class="fb-menu-icon" style="color:#b45309;"><svg class="ico-stroke"><use href="#ico-vault"></use></svg></div><div><div class="fb-menu-title">Bóveda Gold & Recargas VIP</div><div class="fb-menu-sub">Tu tarjeta metálica y saldo de A-Coins</div></div></div><span style="font-weight:900; color:#b45309;">Abrir ›</span></div>
-            <div class="fb-menu-row" onclick="window.switchTab('rangos')"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-upgrades"></use></svg></div><div><div class="fb-menu-title">Rangos & Escudos VIP</div><div class="fb-menu-sub">Recompensas por suscriptores en ARGON</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
-            <div class="fb-menu-row" onclick="window.switchTab('galeria')"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-grid"></use></svg></div><div><div class="fb-menu-title">Galería Multimedia 3x3</div><div class="fb-menu-sub">Cuadrícula rápida de fotos y videos</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
-            <div class="fb-menu-row" onclick="window.openLegalModal()"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-shield"></use></svg></div><div><div class="fb-menu-title">Contrato Oficial & Privacidad (+18)</div><div class="fb-menu-sub">Reglas de comunidad y términos de uso</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
+            <div class="fb-menu-row" onclick="window.switchTab('boveda')"><div class="fb-menu-left"><div class="fb-menu-icon" style="color:#b45309;"><svg class="ico-stroke"><use href="#ico-vault"></use></svg></div><div><div class="fb-menu-title">Bóveda Gratis & Bono Diario</div><div class="fb-menu-sub">Reclama +500 A-Coins gratis cada 24 horas</div></div></div><span style="font-weight:900; color:#b45309;">Abrir ›</span></div>
+            <div class="fb-menu-row" onclick="window.switchTab('perfil'); window.setMyProfileLayout('saved');"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-download"></use></svg></div><div><div class="fb-menu-title">Mi Colección IA Descargada</div><div class="fb-menu-sub">Videos y canciones desbloqueadas con A-Coins</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
+            <div class="fb-menu-row" onclick="window.switchTab('rangos')"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-upgrades"></use></svg></div><div><div class="fb-menu-title">Rangos de Creadores IA</div><div class="fb-menu-sub">Escudos y premios por suscriptores</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
+            <div class="fb-menu-row" onclick="window.switchTab('galeria')"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-grid"></use></svg></div><div><div class="fb-menu-title">Vitrina Global IA 3x3</div><div class="fb-menu-sub">Explora todo el catálogo creativo</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
+            <div class="fb-menu-row" onclick="window.openLegalModal()"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-shield"></use></svg></div><div><div class="fb-menu-title">Reglas Exclusivas IA (+18)</div><div class="fb-menu-sub">Normativa de contenido generativo y privacidad</div></div></div><span style="font-weight:900; color:#65676b;">›</span></div>
             <div class="fb-menu-row" onclick="window.toggleSoundSetting()"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-bell"></use></svg></div><div><div class="fb-menu-title">Sonido de Notificaciones</div><div class="fb-menu-sub">Campana sonora en alertas en vivo</div></div></div><span id="menuSoundStatusBadge" class="badge-active">ACTIVO</span></div>
-            <div class="fb-menu-row" onclick="window.triggerManualBlinkRefresh()"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-sync"></use></svg></div><div><div class="fb-menu-title">Sincronizar ARGON en Vivo</div><div class="fb-menu-sub">Refrescar muro y limpiar caché</div></div></div><span style="font-weight:900; color:#b45309;">Actualizar</span></div>
-            <div class="fb-menu-row" style="border-bottom:none;" onclick="window.openDeleteAccountModal()"><div class="fb-menu-left"><div class="fb-menu-icon" style="color:#e41e3f;"><svg class="ico-stroke"><use href="#ico-trash"></use></svg></div><div><div class="fb-menu-title" style="color:#e41e3f;">Eliminar Mi Cuenta</div><div class="fb-menu-sub">Borrado permanente de perfil y datos</div></div></div><span style="font-weight:900; color:#e41e3f;">›</span></div>
+            <div class="fb-menu-row" onclick="window.triggerManualBlinkRefresh()"><div class="fb-menu-left"><div class="fb-menu-icon"><svg class="ico-stroke"><use href="#ico-sync"></use></svg></div><div><div class="fb-menu-title">Sincronizar Estudio en Vivo</div><div class="fb-menu-sub">Refrescar muro y limpiar caché</div></div></div><span style="font-weight:900; color:#b45309;">Actualizar</span></div>
+            <div class="fb-menu-row" style="border-bottom:none;" onclick="window.openDeleteAccountModal()"><div class="fb-menu-left"><div class="fb-menu-icon" style="color:#e41e3f;"><svg class="ico-stroke"><use href="#ico-trash"></use></svg></div><div><div class="fb-menu-title" style="color:#e41e3f;">Eliminar Mi Cuenta</div><div class="fb-menu-sub">Borrado permanente de perfil y obras</div></div></div><span style="font-weight:900; color:#e41e3f;">›</span></div>
             <button class="btn-logout-gray" onclick="window.logoutMyAccount()">Cerrar Sesión / Cambiar de Cuenta</button>
           </div>
         </section>
@@ -996,22 +1048,22 @@
           <div class="glass-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
               <div>
-                <div style="font-size:14.5px; font-weight:900; color:#050505;">PANEL DE CONTROL IMPERIAL</div>
-                <div style="font-size:11px; color:#b45309; font-weight:700;">Administración de usuarios, A-Coins y moderación</div>
+                <div style="font-size:14.5px; font-weight:900; color:#050505;">PANEL IMPERIAL & PATROCINADORES</div>
+                <div style="font-size:11px; color:#b45309; font-weight:700;">Métricas para auspiciadores, bonos A-Coins y moderación IA</div>
               </div>
               <span class="badge-active">ADMIN @BELTO43</span>
             </div>
 
             <div class="admin-stats-grid">
-              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">USUARIOS</div></div>
-              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalPosts">0</div><div class="admin-stat-label">POSTS</div></div>
+              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalUsers">0</div><div class="admin-stat-label">CREADORES</div></div>
+              <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalPosts">0</div><div class="admin-stat-label">OBRAS IA</div></div>
               <div class="admin-stat-box"><div class="admin-stat-num" id="admTotalCoins">0</div><div class="admin-stat-label">A-COINS</div></div>
             </div>
 
-            <div style="font-size:12px; font-weight:900; color:#e41e3f; margin-bottom:8px;">1. REPORTES DE CONTENIDO PENDIENTES</div>
+            <div style="font-size:12px; font-weight:900; color:#e41e3f; margin-bottom:8px;">1. REPORTES DE CONTENIDO (NO-IA / ABUSO)</div>
             <div id="adminReportsList" style="margin-bottom:14px;"></div>
 
-            <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px;">2. DIRECTORIO DE MIEMBROS Y REGALO DE A-COINS</div>
+            <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px;">2. DIRECTORIO DE CREADORES Y PREMIOS A-COINS</div>
             <div id="adminUsersDirectory"></div>
           </div>
         </section>
@@ -1020,26 +1072,26 @@
       <aside class="desktop-right-rail">
         <div class="desk-nav-card" style="background:linear-gradient(145deg, #242834 0%, #090b10 100%); color:#ffffff; border:1.5px solid #fbbf24;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-            <span style="font-size:10px; font-weight:900; letter-spacing:2px; color:#fde68a;">ARGON VAULT GOLD</span>
+            <span style="font-size:10px; font-weight:900; letter-spacing:2px; color:#fde68a;">ARGON AI VAULT</span>
             <span class="live-dot"></span>
           </div>
           <div style="font-size:26px; font-weight:900; color:#ffffff;" id="deskRightBalance">5,000 AC</div>
-          <div style="font-size:11.5px; color:#fde68a; font-weight:700; margin-top:2px;">Saldo disponible para impulsar contenido</div>
-          <button class="single-stripe-btn" style="margin-top:10px; padding:10px 12px;" onclick="window.openStripeCheckout()">
-            <span style="font-size:12px; font-weight:900; color:#fde68a;">+6,000 A-COINS VIP</span>
-            <span class="stripe-price-pill" style="font-size:12px; padding:5px 10px;">$4.99</span>
+          <div style="font-size:11.5px; color:#fde68a; font-weight:700; margin-top:2px;">100% Gratis • Colecciona videos y canciones IA</div>
+          <button id="dailyRewardDeskBtn" class="single-stripe-btn" style="margin-top:10px; padding:10px 12px;" onclick="window.claimDailyFreeCoins()">
+            <span style="font-size:12px; font-weight:900; color:#fde68a;" id="dailyDeskTxt">+500 A-COINS DIARIAS</span>
+            <span class="stripe-price-pill" style="font-size:11.5px; padding:5px 10px;" id="dailyDeskPill">GRATIS</span>
           </button>
         </div>
 
         <div class="desk-nav-card">
-          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px;">TOP MIEMBROS VIP</div>
+          <div style="font-size:12px; font-weight:900; color:#050505; margin-bottom:8px;">TOP CREADORES IA</div>
           <div id="deskRightLeaderboard"></div>
         </div>
       </aside>
     </div>
 
     <nav class="bottom-nav">
-      <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')"><svg class="ico-stroke"><use href="#ico-home"></use></svg><span>INICIO</span></button>
+      <button class="nav-btn active" id="nav-feed" onclick="window.switchTab('feed')"><svg class="ico-stroke"><use href="#ico-home"></use></svg><span>ESTUDIO</span></button>
       <button class="nav-btn" id="nav-shorts" onclick="window.openShortsPlayer(0)"><svg class="ico-stroke"><use href="#ico-reels"></use></svg><span>SHORTS</span></button>
       <button class="nav-btn" id="nav-boveda" onclick="window.switchTab('boveda')"><svg class="ico-stroke"><use href="#ico-vault"></use></svg><span>BÓVEDA</span></button>
       <button class="nav-btn" id="nav-perfil" onclick="window.switchTab('perfil')"><svg class="ico-stroke"><use href="#ico-friends"></use></svg><span>PERFIL</span></button>
@@ -1083,7 +1135,6 @@
 
     const CLOUDINARY_CLOUD_NAME = "gsnwa8d1";
     const CLOUDINARY_UPLOAD_PRESET = "argon_videos";
-    const STRIPE_PAYMENT_LINK = ""; // Pega aquí tu link buy.stripe.com si deseas redirección directa
 
     const firebaseConfig = {
       apiKey: "AIzaSyBO2_WIATXnFIZHppz52D5CrbRLnT8_d4U",
@@ -1100,6 +1151,7 @@
     const LOCAL_USER_KEY = 'argon_vip_gold_v1';
     const FOUNDER_HANDLE = 'BELTO43';
     const ADMIN_HANDLES = ['BELTO43', 'ALBERTO_SOTO', 'ALBERTO', 'ADMIN'];
+    const DAILY_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
     const urlParams = new URLSearchParams(window.location.search);
     const invitedByParam = (urlParams.get('ref') || FOUNDER_HANDLE).replace(/^@/, '').toUpperCase();
@@ -1107,6 +1159,7 @@
     let selectedPhotoDataUrl = '';
     let selectedPhotosArray = [];
     let selectedVideoFile = null;
+    let selectedAudioFile = null;
     let selectedIsShort = false;
     let selectedYoutubeId = '';
     let composerPrivacy = 'public';
@@ -1144,9 +1197,11 @@
       avatar: '',
       balance: 5000,
       subs: 0,
+      lastDailyClaim: 0,
       subscribedTo: [],
       subscribersList: [],
       likedPosts: [],
+      unlockedPosts: [],
       blockedUsers: [],
       reportedPosts: []
     };
@@ -1175,9 +1230,9 @@
 
     function getRankShieldInfo(subsCount) {
       const s = Number(subsCount) || 0;
-      if (s >= 1000) return { name: 'Diamante', icon: '#rank-shield-diamond', next: 1000 };
-      if (s >= 200) return { name: 'Titán', icon: '#rank-shield-titan', next: 1000 };
-      if (s >= 50) return { name: 'Oro Imperial', icon: '#rank-shield-gold', next: 200 };
+      if (s >= 1000) return { name: 'Diamante IA', icon: '#rank-shield-diamond', next: 1000 };
+      if (s >= 200) return { name: 'Titán IA', icon: '#rank-shield-titan', next: 1000 };
+      if (s >= 50) return { name: 'Oro IA', icon: '#rank-shield-gold', next: 200 };
       if (s >= 10) return { name: 'Plata', icon: '#rank-shield-silver', next: 50 };
       return { name: 'Bronce', icon: '#rank-shield-bronze', next: 10 };
     }
@@ -1193,7 +1248,7 @@
       selectedYoutubeId = ytId;
       const box = document.getElementById('composerYtPreview');
       if (!box) return;
-      if (ytId && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile) {
+      if (ytId && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile && !selectedAudioFile) {
         box.style.display = 'block';
         box.innerHTML = `<div class="yt-thumb-box"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube" /><div class="yt-play-btn">▶</div></div>`;
       } else {
@@ -1209,6 +1264,7 @@
           || localStorage.getItem('argon_vip_user_v1');
         if (raw) {
           currentUser = Object.assign({}, currentUser, JSON.parse(raw));
+          if (!Array.isArray(currentUser.unlockedPosts)) currentUser.unlockedPosts = [];
           saveLocalSession();
         }
       } catch (e) {}
@@ -1250,13 +1306,13 @@
 
     const refBanner = document.getElementById('referralWelcomeBanner');
     if (refBanner && invitedByParam) {
-      refBanner.textContent = `✓ Invitación VIP activa por @${invitedByParam}`;
+      refBanner.textContent = `✓ Invitación de Creador IA activa por @${invitedByParam}`;
     }
 
     window.updateVipCardPreview = function(val) {
       const clean = (val || '').trim().toUpperCase().replace(/\s+/g, '_');
       const el = document.getElementById('vipEngravedText');
-      if (el) el.textContent = clean || 'MIEMBRO_VIP';
+      if (el) el.textContent = clean || 'CREADOR_IA';
     };
 
     function runVaultSplashAnimation() {
@@ -1295,8 +1351,8 @@
       const emailVal = (document.getElementById('regEmail').value || '').trim().toLowerCase();
       const ageChecked = document.getElementById('regAgeCheck').checked;
 
-      if (!nameVal) { showToast('Escribe tu nombre o alias VIP'); return; }
-      if (!handleVal) handleVal = nameVal.replace(/\s+/g, '_').replace(/[^A-Z0-9_]/g, '').slice(0, 18) || ('VIP_' + Math.floor(100 + Math.random() * 900));
+      if (!nameVal) { showToast('Escribe tu nombre o sello artístico IA'); return; }
+      if (!handleVal) handleVal = nameVal.replace(/\s+/g, '_').replace(/[^A-Z0-9_]/g, '').slice(0, 18) || ('AI_' + Math.floor(100 + Math.random() * 900));
       if (!emailVal || !emailVal.includes('@') || !emailVal.includes('.')) { showToast('Ingresa un correo electrónico real'); return; }
       if (!ageChecked) { showToast('Debes confirmar que tienes 18 años o más'); return; }
 
@@ -1316,7 +1372,9 @@
       currentUser.invitedBy = (existingData && existingData.invitedBy) || invitedByParam || FOUNDER_HANDLE;
       currentUser.balance = existingData && typeof existingData.balance === 'number' ? existingData.balance : 5000;
       currentUser.subs = existingData && typeof existingData.subs === 'number' ? existingData.subs : 0;
+      currentUser.lastDailyClaim = existingData && typeof existingData.lastDailyClaim === 'number' ? existingData.lastDailyClaim : 0;
       currentUser.subscribedTo = (existingData && Array.isArray(existingData.subscribedTo)) ? existingData.subscribedTo : [];
+      currentUser.unlockedPosts = (existingData && Array.isArray(existingData.unlockedPosts)) ? existingData.unlockedPosts : [];
       if (existingData && existingData.avatar && !currentUser.avatar) currentUser.avatar = existingData.avatar;
 
       saveLocalSession();
@@ -1333,31 +1391,76 @@
           avatar: currentUser.avatar || '',
           balance: currentUser.balance,
           subs: currentUser.subs,
+          lastDailyClaim: currentUser.lastDailyClaim,
           subscribedTo: currentUser.subscribedTo,
+          unlockedPosts: currentUser.unlockedPosts,
           createdAt: (existingData && existingData.createdAt) || now,
           updatedAt: now
         }, { merge: true });
 
         if (isNewUser && currentUser.invitedBy && currentUser.invitedBy !== handleVal) {
           await setDoc(doc(db, "users", currentUser.invitedBy), { balance: increment(1000) }, { merge: true });
+          await addDoc(collection(db, "notifications"), {
+            to: currentUser.invitedBy,
+            from: handleVal,
+            type: 'ref',
+            text: `se unió con tu invitación de creador (+1,000 A-Coins gratis).`,
+            createdAt: now
+          });
         }
       } catch (e) {}
-      showToast(`✓ Bienvenido a ARGON Gold, @${handleVal}`);
+      showToast(`✓ Bienvenido al Estudio IA, @${handleVal}`);
     };
 
-    window.openStripeCheckout = async function() {
+    function refreshDailyBonusButtons() {
+      const elapsed = Date.now() - (Number(currentUser.lastDailyClaim) || 0);
+      const canClaim = elapsed >= DAILY_COOLDOWN_MS;
+      const vBtn = document.getElementById('dailyRewardVaultBtn');
+      const dBtn = document.getElementById('dailyRewardDeskBtn');
+      const subTxt = document.getElementById('dailyRewardSubTxt');
+      const pillTxt = document.getElementById('dailyRewardPillTxt');
+      const dPill = document.getElementById('dailyDeskPill');
+
+      if (canClaim) {
+        if (vBtn) vBtn.classList.remove('claimed');
+        if (dBtn) dBtn.classList.remove('claimed');
+        if (subTxt) subTxt.textContent = 'Disponible ahora para reclamar gratis';
+        if (pillTxt) pillTxt.textContent = 'GRATIS';
+        if (dPill) dPill.textContent = 'GRATIS';
+      } else {
+        const remMs = DAILY_COOLDOWN_MS - elapsed;
+        const hrs = Math.floor(remMs / 3600000);
+        const mins = Math.max(1, Math.floor((remMs % 3600000) / 60000));
+        const waitStr = `${hrs}h ${mins}m`;
+        if (vBtn) vBtn.classList.add('claimed');
+        if (dBtn) dBtn.classList.add('claimed');
+        if (subTxt) subTxt.textContent = `Próximo bono gratuito en ${waitStr}`;
+        if (pillTxt) pillTxt.textContent = waitStr;
+        if (dPill) dPill.textContent = waitStr;
+      }
+    }
+
+    window.claimDailyFreeCoins = async function() {
       if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
-      if (STRIPE_PAYMENT_LINK && STRIPE_PAYMENT_LINK.startsWith('http')) {
-        window.location.href = STRIPE_PAYMENT_LINK;
+      const now = Date.now();
+      const elapsed = now - (Number(currentUser.lastDailyClaim) || 0);
+      if (elapsed < DAILY_COOLDOWN_MS) {
+        const hrs = Math.floor((DAILY_COOLDOWN_MS - elapsed) / 3600000);
+        const mins = Math.max(1, Math.floor(((DAILY_COOLDOWN_MS - elapsed) % 3600000) / 60000));
+        showToast(`Ya reclamaste hoy. Vuelve en ${hrs}h ${mins}m`);
         return;
       }
-      currentUser.balance = (Number(currentUser.balance) || 0) + 6000;
+      currentUser.lastDailyClaim = now;
+      currentUser.balance = (Number(currentUser.balance) || 0) + 500;
       saveLocalSession();
       updateUI();
       try {
-        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(6000) }, { merge: true });
+        await setDoc(doc(db, "users", currentUser.userHandle), {
+          balance: increment(500),
+          lastDailyClaim: now
+        }, { merge: true });
       } catch (e) {}
-      showToast('✓ +6,000 A-Coins acreditadas en tu Bóveda Gold');
+      showToast('✓ +500 A-Coins gratuitas acreditadas en tu Bóveda');
     };
     window.toggleComposerPrivacy = function() {
       composerPrivacy = composerPrivacy === 'public' ? 'private' : 'public';
@@ -1367,7 +1470,7 @@
       if (lbl) lbl.textContent = composerPrivacy === 'private' ? 'Solo Yo' : 'Público';
     };
 
-    function uploadVideoToCloudinary(file) {
+    function uploadMediaToCloudinary(file, labelTxt = 'Subiendo archivo IA') {
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
@@ -1378,13 +1481,13 @@
         const bar = document.getElementById('uploadProgressBar');
         const st = document.getElementById('uploadStatusText');
         if (wrap) wrap.style.display = 'block';
-        if (st) { st.style.display = 'block'; st.textContent = 'Subiendo video... 0%'; }
+        if (st) { st.style.display = 'block'; st.textContent = `${labelTxt}... 0%`; }
 
         xhr.upload.onprogress = (e) => {
           if (e.lengthComputable) {
             const pct = Math.round((e.loaded / e.total) * 100);
             if (bar) bar.style.width = pct + '%';
-            if (st) st.textContent = `Subiendo video... ${pct}%`;
+            if (st) st.textContent = `${labelTxt}... ${pct}%`;
           }
         };
         xhr.onload = () => {
@@ -1423,7 +1526,7 @@
         if (singlePrev) { singlePrev.style.display = 'none'; singlePrev.src = ''; }
         if (strip) {
           strip.classList.add('active');
-          strip.innerHTML = selectedPhotosArray.map(src => `<div class="composer-multi-item"><img src="${src}" alt="Foto" /></div>`).join('');
+          strip.innerHTML = selectedPhotosArray.map(src => `<div class="composer-multi-item"><img src="${src}" alt="Arte IA" /></div>`).join('');
         }
       }
     };
@@ -1434,6 +1537,7 @@
       const objUrl = URL.createObjectURL(file);
       selectedPhotoDataUrl = '';
       selectedPhotosArray = [];
+      window.clearComposerAudio();
       const pPrev = document.getElementById('photoPreview');
       const strip = document.getElementById('composerMultiPhotoStrip');
       if (pPrev) { pPrev.style.display = 'none'; pPrev.src = ''; }
@@ -1446,7 +1550,42 @@
       const vPrev = document.getElementById('videoPreview');
       if (vPrev) { vPrev.src = objUrl; vPrev.style.display = 'block'; }
       window.switchTab('feed');
-      showToast(fromShort ? '✓ Short listo. Toca Publicar arriba.' : '✓ Video listo para publicar.');
+      showToast(fromShort ? '✓ Short IA listo. Toca Publicar IA arriba.' : '✓ Video IA listo para publicar.');
+    };
+
+    window.previewSelectedAudio = function(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const objUrl = URL.createObjectURL(file);
+      selectedVideoFile = null;
+      selectedIsShort = false;
+      const vPrev = document.getElementById('videoPreview');
+      if (vPrev) { vPrev.style.display = 'none'; vPrev.src = ''; }
+      const ytBox = document.getElementById('composerYtPreview');
+      if (ytBox) { ytBox.style.display = 'none'; ytBox.innerHTML = ''; }
+
+      selectedAudioFile = file;
+      const toolSel = document.getElementById('composerAiTool');
+      if (toolSel && toolSel.value === 'Veo AI') toolSel.value = 'Suno AI';
+
+      const wrap = document.getElementById('audioPreviewWrap');
+      const nameLbl = document.getElementById('audioPreviewName');
+      const audEl = document.getElementById('audioPreview');
+      if (nameLbl) nameLbl.textContent = `🎵 ${file.name.slice(0, 34)}`;
+      if (audEl) audEl.src = objUrl;
+      if (wrap) wrap.style.display = 'block';
+      window.switchTab('feed');
+      showToast('✓ Pista MP3 IA lista (puedes añadirle Arte de portada si deseas)');
+    };
+
+    window.clearComposerAudio = function() {
+      selectedAudioFile = null;
+      const wrap = document.getElementById('audioPreviewWrap');
+      const audEl = document.getElementById('audioPreview');
+      const inp = document.getElementById('audioInput');
+      if (audEl) { audEl.pause(); audEl.src = ''; }
+      if (wrap) wrap.style.display = 'none';
+      if (inp) inp.value = '';
     };
 
     window.publishPost = async function() {
@@ -1454,9 +1593,11 @@
       const inp = document.getElementById('newPostInput');
       const caption = (inp.value || '').trim();
       const ytId = extractYouTubeId(caption) || selectedYoutubeId;
+      const aiTool = (document.getElementById('composerAiTool') && document.getElementById('composerAiTool').value) || 'IA Híbrida';
+      const coinPrice = Number((document.getElementById('composerCoinPrice') && document.getElementById('composerCoinPrice').value) || 0);
 
-      if (!caption && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile && !ytId) {
-        showToast('Escribe algo o sube una foto/video primero');
+      if (!caption && !selectedPhotoDataUrl && selectedPhotosArray.length === 0 && !selectedVideoFile && !selectedAudioFile && !ytId) {
+        showToast('Sube un video IA, canción MP3, arte o link primero');
         return;
       }
 
@@ -1464,11 +1605,25 @@
       if (pubBtn) pubBtn.disabled = true;
 
       let videoUrl = '';
+      let audioUrl = '';
+      let audioTitle = '';
+
       if (selectedVideoFile) {
         try {
-          videoUrl = await uploadVideoToCloudinary(selectedVideoFile);
+          videoUrl = await uploadMediaToCloudinary(selectedVideoFile, 'Subiendo video IA');
         } catch (e) {
-          showToast('Error al subir el video');
+          showToast('Error al subir el video IA');
+          if (pubBtn) pubBtn.disabled = false;
+          return;
+        }
+      }
+
+      if (selectedAudioFile) {
+        try {
+          audioTitle = selectedAudioFile.name.replace(/\.[^/.]+$/, '');
+          audioUrl = await uploadMediaToCloudinary(selectedAudioFile, 'Subiendo canción MP3 IA');
+        } catch (e) {
+          showToast('Error al subir la pista MP3 IA');
           if (pubBtn) pubBtn.disabled = false;
           return;
         }
@@ -1480,24 +1635,29 @@
         userName: currentUser.userName,
         avatar: currentUser.avatar || '',
         caption,
+        aiTool,
+        coinPrice,
         youtubeId: ytId || '',
         image: selectedPhotoDataUrl || '',
         images: selectedPhotosArray.length > 0 ? selectedPhotosArray : (selectedPhotoDataUrl ? [selectedPhotoDataUrl] : []),
         video: videoUrl,
+        audio: audioUrl,
+        audioTitle: audioTitle || '',
         isShort: Boolean(selectedIsShort && videoUrl),
         visibility: composerPrivacy,
         promotedUntil: 0,
         likes: 0,
         views: 1,
+        downloads: 0,
         comments: [],
         createdAt: now
       };
 
       try {
         await addDoc(collection(db, "posts"), newPostDoc);
-        currentUser.balance = (Number(currentUser.balance) || 0) + 50;
+        currentUser.balance = (Number(currentUser.balance) || 0) + 100;
         saveLocalSession();
-        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(50) }, { merge: true }).catch(() => {});
+        await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(100) }, { merge: true }).catch(() => {});
 
         inp.value = '';
         selectedPhotoDataUrl = '';
@@ -1505,25 +1665,110 @@
         selectedVideoFile = null;
         selectedIsShort = false;
         selectedYoutubeId = '';
+        window.clearComposerAudio();
         ['photoPreview', 'videoPreview', 'uploadProgressWrap', 'uploadStatusText', 'composerYtPreview'].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.style.display = 'none';
         });
         const strip = document.getElementById('composerMultiPhotoStrip');
         if (strip) { strip.classList.remove('active'); strip.innerHTML = ''; }
+        const coinSel = document.getElementById('composerCoinPrice');
+        if (coinSel) coinSel.value = '0';
         updateUI();
-        showToast('✓ Publicado en ARGON (+50 A-Coins)');
+        showToast('✓ Obra IA publicada (+100 A-Coins gratis)');
       } catch (e) {
-        showToast('Error al publicar en el muro');
+        showToast('Error al publicar en el estudio');
       }
       if (pubBtn) pubBtn.disabled = false;
+    };
+
+    function triggerDirectFileDownload(post) {
+      const targetUrl = post.audio || post.video || (Array.isArray(post.images) && post.images[0]) || post.image || '';
+      if (!targetUrl) {
+        if (post.youtubeId) window.open(`https://youtu.be/${post.youtubeId}`, '_blank');
+        return;
+      }
+      if (targetUrl.startsWith('data:image')) {
+        const a = document.createElement('a');
+        a.href = targetUrl;
+        a.download = `ARGON_${post.handle}_${post.id}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        return;
+      }
+      const dlUrl = targetUrl.includes('/upload/') ? targetUrl.replace('/upload/', '/upload/fl_attachment/') : targetUrl;
+      const a = document.createElement('a');
+      a.href = dlUrl;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    window.unlockOrDownloadAiPost = async function(postId) {
+      if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
+      const post = livePosts.find(p => p.id === postId);
+      if (!post) return;
+
+      if (!Array.isArray(currentUser.unlockedPosts)) currentUser.unlockedPosts = [];
+      const isMe = post.handle === currentUser.userHandle;
+      const alreadyUnlocked = isMe || currentUser.unlockedPosts.includes(postId);
+      const price = Math.max(0, Number(post.coinPrice) || 0);
+
+      if (!alreadyUnlocked && price > 0) {
+        if ((Number(currentUser.balance) || 0) < price) {
+          showToast(`Necesitas ${price} A-Coins. Reclama tu Bono Gratis en Bóveda.`);
+          window.switchTab('boveda');
+          return;
+        }
+        currentUser.balance -= price;
+        currentUser.unlockedPosts.push(postId);
+        saveLocalSession();
+        updateUI();
+        renderFeed();
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), {
+            balance: increment(-price),
+            unlockedPosts: arrayUnion(postId)
+          }, { merge: true });
+          await setDoc(doc(db, "users", post.handle), {
+            balance: increment(price)
+          }, { merge: true });
+          await updateDoc(doc(db, "posts", postId), { downloads: increment(1) });
+          await addDoc(collection(db, "notifications"), {
+            to: post.handle,
+            from: currentUser.userHandle,
+            type: 'unlock',
+            text: `coleccionó tu obra IA (+${price} A-Coins acreditadas en tu Bóveda).`,
+            postId,
+            createdAt: Date.now()
+          });
+        } catch (e) {}
+        showToast(`✓ Obra guardada en tu Colección IA (-${price} AC)`);
+        triggerDirectFileDownload(post);
+        return;
+      }
+
+      if (!alreadyUnlocked) {
+        currentUser.unlockedPosts.push(postId);
+        saveLocalSession();
+        renderFeed();
+        try {
+          await setDoc(doc(db, "users", currentUser.userHandle), { unlockedPosts: arrayUnion(postId) }, { merge: true });
+          await updateDoc(doc(db, "posts", postId), { downloads: increment(1) });
+        } catch (e) {}
+      }
+      showToast('✓ Descargando obra IA...');
+      triggerDirectFileDownload(post);
     };
 
     window.promotePostGold = async function(postId) {
       if (!currentUser.registered) { document.getElementById('onboardingScreen').classList.remove('hidden'); return; }
       const cost = 500;
       if ((Number(currentUser.balance) || 0) < cost) {
-        showToast('Necesitas 500 A-Coins en tu Bóveda Gold');
+        showToast('Necesitas 500 A-Coins. Reclama tu Bono Gratis en Bóveda.');
         window.switchTab('boveda');
         return;
       }
@@ -1534,7 +1779,7 @@
       try {
         await updateDoc(doc(db, "posts", postId), { promotedUntil: until });
         await setDoc(doc(db, "users", currentUser.userHandle), { balance: increment(-cost) }, { merge: true });
-        showToast('★ Publicación destacada en Oro VIP por 24h (-500 AC)');
+        showToast('★ Obra IA destacada en Oro por 24h (-500 AC)');
       } catch (e) {}
     };
 
@@ -1553,7 +1798,7 @@
       const postObj = livePosts.find(p => p.id === postId);
       if (postObj) postObj.views = (Number(postObj.views) || 0) + 1;
       const inlineLbl = document.getElementById(`views-lbl-${postId}`);
-      if (inlineLbl && postObj) inlineLbl.textContent = `${(postObj.views || 1).toLocaleString()} Views`;
+      if (inlineLbl && postObj) inlineLbl.textContent = `${(postObj.views || 1).toLocaleString()} Plays`;
       try { await updateDoc(doc(db, "posts", postId), { views: increment(1) }); } catch (e) {}
     };
 
@@ -1591,21 +1836,52 @@
       const imgs = getPostImagesList(post);
       const ytId = post.youtubeId || extractYouTubeId(post.caption || '');
       const viewsCount = Number(post.views) || 1;
+      const aiToolTag = post.aiTool || 'IA Studio';
+      const priceAC = Math.max(0, Number(post.coinPrice) || 0);
+      const isUnlocked = isMe || (currentUser.unlockedPosts || []).includes(post.id);
+      const hasDownloadable = Boolean(post.audio || post.video || imgs.length > 0);
 
       const avatarHtml = avSrc
         ? `<img src="${avSrc}" alt="@${escapeHtml(post.handle)}" loading="lazy" />`
         : escapeHtml((post.handle || 'AR').slice(0, 2));
 
       let mediaHtml = '';
-      if (post.video) {
-        mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" onplay="window.registerVideoView('${post.id}')"></video>`;
+      if (post.audio) {
+        const coverThumb = imgs[0]
+          ? `<img src="${imgs[0]}" alt="Portada IA" onclick="window.openPhotoLightbox('${imgs[0]}')" />`
+          : `<svg width="28" height="28" style="color:#fde68a;"><use href="#ico-music"></use></svg>`;
+        const trackTitle = post.caption || post.audioTitle || 'Pista Original IA';
+        mediaHtml = `
+          ${imgs[0] ? `<img class="post-image" style="max-height:340px;" src="${imgs[0]}" alt="Portada" loading="lazy" onclick="window.openPhotoLightbox('${imgs[0]}')" />` : ''}
+          <div class="ai-audio-stage">
+            <div class="ai-audio-top">
+              <div class="ai-vinyl-disc">${coverThumb}</div>
+              <div style="min-width:0; flex:1;">
+                <div style="font-size:10px; font-weight:900; color:#fbbf24; letter-spacing:1.2px;">CANCIÓN / AUDIO IA • ${escapeHtml(aiToolTag.toUpperCase())}</div>
+                <div style="font-size:14px; font-weight:900; color:#ffffff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(trackTitle)}</div>
+              </div>
+            </div>
+            <audio class="ai-audio-player" src="${post.audio}" controls preload="metadata" controlsList="${(!isUnlocked && priceAC > 0) ? 'nodownload' : ''}" onplay="window.registerVideoView('${post.id}')"></audio>
+          </div>
+        `;
+      } else if (post.video) {
+        mediaHtml = `<video class="post-video" src="${post.video}" controls playsinline preload="metadata" controlsList="${(!isUnlocked && priceAC > 0) ? 'nodownload' : ''}" onplay="window.registerVideoView('${post.id}')"></video>`;
       } else if (ytId && imgs.length === 0) {
         mediaHtml = `<div class="yt-thumb-box" onclick="window.activateYouTubeEmbed(this, '${ytId}', '${post.id}')"><img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YouTube" loading="lazy" /><div class="yt-play-btn">▶</div></div>`;
       } else if (imgs.length > 1) {
-        const slidesHtml = imgs.map(src => `<div class="post-carousel-slide"><img class="post-image" src="${src}" alt="Post" loading="lazy" onclick="window.openPhotoLightbox('${src}')" /></div>`).join('');
+        const slidesHtml = imgs.map(src => `<div class="post-carousel-slide"><img class="post-image" src="${src}" alt="Arte IA" loading="lazy" onclick="window.openPhotoLightbox('${src}')" /></div>`).join('');
         mediaHtml = `<div class="post-carousel-wrap"><div class="post-carousel-counter" id="carousel-cnt-${post.id}">1/${imgs.length}</div><div class="post-carousel-track" onscroll="window.updateCarouselCounter(this, '${post.id}', ${imgs.length})">${slidesHtml}</div></div>`;
       } else if (imgs.length === 1) {
-        mediaHtml = `<img class="post-image" src="${imgs[0]}" alt="Post" loading="lazy" onclick="window.openPhotoLightbox('${imgs[0]}')" />`;
+        mediaHtml = `<img class="post-image" src="${imgs[0]}" alt="Arte IA" loading="lazy" onclick="window.openPhotoLightbox('${imgs[0]}')" />`;
+      }
+
+      let unlockBtnHtml = '';
+      if (hasDownloadable) {
+        if (isUnlocked || priceAC === 0) {
+          unlockBtnHtml = `<button class="btn-unlock-ai ${isUnlocked && priceAC > 0 ? 'owned' : ''}" onclick="window.unlockOrDownloadAiPost('${post.id}')"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-download"></use></svg><span>${isMe ? 'Descargar' : (priceAC === 0 ? 'Gratis' : 'En Colección')}</span></button>`;
+        } else {
+          unlockBtnHtml = `<button class="btn-unlock-ai" onclick="window.unlockOrDownloadAiPost('${post.id}')"><svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-download"></use></svg><span>${priceAC} AC</span></button>`;
+        }
       }
 
       const rawComments = Array.isArray(post.comments) ? post.comments : [];
@@ -1623,7 +1899,8 @@
               <div class="user-handle">
                 <span>@${escapeHtml(post.handle)}</span>
                 <svg class="rank-shield-svg" style="width:18px;height:18px;"><use href="${shield.icon}"></use></svg>
-                ${isPromoted ? `<span class="argon-gold-corner-badge" style="width:20px;height:20px;" title="Destacado VIP Gold"><svg width="13" height="13"><use href="#argon-crown-a-gold"></use></svg></span>` : ''}
+                <span class="ai-engine-pill">✨ ${escapeHtml(aiToolTag)}</span>
+                ${isPromoted ? `<span class="argon-gold-corner-badge" style="width:20px;height:20px;" title="Destacado Oro"><svg width="13" height="13"><use href="#argon-crown-a-gold"></use></svg></span>` : ''}
                 ${post.visibility === 'private' ? `<span style="font-size:10px; background:#0b0d13; color:#fde68a; padding:2px 6px; border-radius:999px;">Solo Yo</span>` : ''}
               </div>
               <div class="user-subs-line">
@@ -1646,20 +1923,21 @@
             <button class="action-item" onclick="window.toggleCommentsDrawer('${post.id}')">
               <svg class="ico-stroke-sm"><use href="#ico-comment"></use></svg><span>${rawComments.length}</span>
             </button>
+            ${unlockBtnHtml}
             <button class="action-item" onclick="window.sharePost('${post.handle}', '${post.id}')">
-              <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg><span>Compartir</span>
+              <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg>
             </button>
-            ${isMe && !isPromoted ? `<button class="btn-promote-post" onclick="window.promotePostGold('${post.id}')">★ Impulsar</button>` : ''}
+            ${isMe && !isPromoted ? `<button class="btn-promote-post" onclick="window.promotePostGold('${post.id}')">★ Oro</button>` : ''}
           </div>
-          <span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Views</span></span>
+          <span class="views-counter-pill"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-eye"></use></svg><span id="views-lbl-${post.id}">${viewsCount.toLocaleString()} Plays</span></span>
         </div>
 
-        <div class="post-body" style="${!post.caption && rawComments.length === 0 ? 'padding-top:4px;' : ''}">
-          ${post.caption && mediaHtml ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong>${escapeHtml(post.caption)}</div>` : ''}
+        <div class="post-body" style="${(!post.caption || post.audio) && rawComments.length === 0 ? 'padding-top:4px;' : ''}">
+          ${post.caption && mediaHtml && !post.audio ? `<div class="post-caption"><strong onclick="window.openUserProfile('${post.handle}')">@${escapeHtml(post.handle)}</strong>${escapeHtml(post.caption)}</div>` : ''}
           <div id="comments-drawer-${post.id}" class="comments-drawer ${rawComments.length > 0 ? 'open' : ''}">
             ${commentsHtml}
             <div class="comment-input-wrap">
-              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Escribe un comentario..." onkeypress="if(event.key==='Enter') window.addComment('${post.id}')" />
+              <input type="text" id="comment-input-${post.id}" class="comment-input" placeholder="Comenta sobre esta obra IA..." onkeypress="if(event.key==='Enter') window.addComment('${post.id}')" />
               <button class="comment-send-btn" onclick="window.addComment('${post.id}')">Enviar</button>
             </div>
           </div>
@@ -1685,7 +1963,7 @@
             to: post.handle,
             from: currentUser.userHandle,
             type: 'like',
-            text: `le dio Me Gusta a tu publicación.`,
+            text: `le dio Me Gusta a tu obra IA.`,
             postId,
             createdAt: Date.now()
           });
@@ -1714,7 +1992,7 @@
             to: post.handle,
             from: currentUser.userHandle,
             type: 'comment',
-            text: `comentó: "${txt.slice(0, 50)}"`,
+            text: `comentó en tu obra IA: "${txt.slice(0, 50)}"`,
             postId,
             createdAt: Date.now()
           });
@@ -1742,14 +2020,14 @@
       const list = getVisibleFeedPosts();
       container.innerHTML = '';
       if (list.length === 0) {
-        container.innerHTML = `<div class="glass-card" style="text-align:center; padding:26px 16px;"><div style="font-size:15px; font-weight:900; color:#050505;">Sé el primero en publicar hoy en ARGON</div><div style="font-size:12px; color:#64748b; margin-top:4px;">Comparte una foto, un video o un enlace de YouTube arriba.</div></div>`;
+        container.innerHTML = `<div class="glass-card" style="text-align:center; padding:26px 16px;"><div style="font-size:15px; font-weight:900; color:#050505;">Inaugura el Estudio IA en ARGON</div><div style="font-size:12px; color:#64748b; margin-top:4px;">Sube tu primer video corto IA, una canción MP3 o arte generativo arriba (+100 A-Coins gratis).</div></div>`;
         return;
       }
       list.forEach(post => container.appendChild(buildPostCardElement(post)));
     }
 
     function getShortsFeedList() {
-      return getVisibleFeedPosts().filter(p => p.video || p.youtubeId || getPostImagesList(p).length > 0).slice(0, 20);
+      return getVisibleFeedPosts().filter(p => p.video || p.audio || p.youtubeId || getPostImagesList(p).length > 0).slice(0, 20);
     }
 
     function renderShortsTray() {
@@ -1763,7 +2041,7 @@
         <label class="short-card-item create-card">
           <div class="short-create-top">${myAv}</div>
           <div class="short-plus-circle">+</div>
-          <div class="short-create-label">Subir Short</div>
+          <div class="short-create-label">Subir AI Short</div>
           <input type="file" accept="video/mp4,video/webm,video/quicktime,video/*" style="display:none" onchange="window.previewSelectedVideo(event, true)" />
         </label>
       `;
@@ -1779,8 +2057,9 @@
 
         let mediaPrev = '';
         if (post.video) mediaPrev = `<video class="short-thumb-video" src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
-        else if (ytId) mediaPrev = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="Short" loading="lazy" />`;
-        else if (imgs[0]) mediaPrev = `<img class="short-thumb-img" src="${imgs[0]}" alt="Short" loading="lazy" />`;
+        else if (ytId) mediaPrev = `<img class="short-thumb-img" src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="Short IA" loading="lazy" />`;
+        else if (imgs[0]) mediaPrev = `<img class="short-thumb-img" src="${imgs[0]}" alt="Arte IA" loading="lazy" />`;
+        else if (post.audio) mediaPrev = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#242834 0%,#07080c 90%);"><svg width="36" height="36" style="color:#fde68a;"><use href="#ico-music"></use></svg></div>`;
 
         return `
           <div class="short-card-item ${isProm ? 'promoted-short' : ''}" onclick="window.openShortsPlayer(${idx})">
@@ -1790,7 +2069,7 @@
               <div class="short-mini-avatar">${miniAv}</div>
               <div>
                 <div class="short-card-handle">@${escapeHtml(post.handle)}</div>
-                <div class="short-views-pill">▶ ${(Number(post.views) || 1).toLocaleString()}</div>
+                <div class="short-views-pill">${post.audio ? '🎵' : '▶'} ${(Number(post.views) || 1).toLocaleString()}</div>
               </div>
             </div>
           </div>
@@ -1802,7 +2081,7 @@
 
     window.openShortsPlayer = function(startIndex = 0) {
       const shortsList = getShortsFeedList();
-      if (shortsList.length === 0) { showToast('Aún no hay videos ni fotos en Shorts'); return; }
+      if (shortsList.length === 0) { showToast('Aún no hay videos ni canciones en AI Shorts'); return; }
       pushAppHistoryState();
       currentShortIndex = Math.max(0, Math.min(startIndex, shortsList.length - 1));
       const feedEl = document.getElementById('shortsSnapFeed');
@@ -1811,13 +2090,26 @@
       feedEl.innerHTML = shortsList.map((post, idx) => {
         const imgs = getPostImagesList(post);
         const ytId = post.youtubeId || extractYouTubeId(post.caption || '');
+        const toolTag = post.aiTool || 'IA Studio';
         let mediaStage = '';
+
         if (post.video) {
           mediaStage = `<video class="shorts-fs-video" src="${post.video}" playsinline loop controls ${idx === currentShortIndex ? 'autoplay' : ''} onplay="window.registerVideoView('${post.id}')"></video>`;
+        } else if (post.audio) {
+          const coverBg = imgs[0]
+            ? `<img src="${imgs[0]}" alt="Portada" style="width:180px;height:180px;border-radius:22px;object-fit:cover;border:2px solid #fbbf24;margin-bottom:16px;box-shadow:0 12px 30px rgba(0,0,0,0.65);" />`
+            : `<div style="width:130px;height:130px;border-radius:26px;background:#111520;border:2px solid #fbbf24;display:flex;align-items:center;justify-content:center;margin-bottom:16px;"><svg width="54" height="54" style="color:#fde68a;"><use href="#ico-music"></use></svg></div>`;
+          mediaStage = `
+            <div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;background:radial-gradient(circle at 50% 35%, #242834 0%, #05060a 80%);">
+              ${coverBg}
+              <div style="font-size:11px;font-weight:900;color:#fbbf24;letter-spacing:1.5px;margin-bottom:6px;">PISTA IA • ${escapeHtml(toolTag.toUpperCase())}</div>
+              <audio style="width:88%;max-width:320px;" src="${post.audio}" controls ${idx === currentShortIndex ? 'autoplay' : ''} onplay="window.registerVideoView('${post.id}')"></audio>
+            </div>
+          `;
         } else if (ytId) {
           mediaStage = `<iframe class="short-yt-frame" src="https://www.youtube.com/embed/${ytId}?playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
         } else {
-          mediaStage = `<img class="shorts-fs-video" style="object-fit:contain;" src="${imgs[0] || ''}" alt="Short" />`;
+          mediaStage = `<img class="shorts-fs-video" style="object-fit:contain;" src="${imgs[0] || ''}" alt="Arte IA" />`;
         }
 
         return `
@@ -1826,11 +2118,16 @@
             <div class="shorts-fs-right-rail">
               <button class="short-rail-btn" onclick="window.toggleLike('${post.id}')"><svg class="ico-stroke"><use href="#ico-heart"></use></svg></button>
               <div class="short-rail-lbl">${Math.max(0, Number(post.likes) || 0)}</div>
+              <button class="short-rail-btn" onclick="window.unlockOrDownloadAiPost('${post.id}')"><svg class="ico-stroke"><use href="#ico-download"></use></svg></button>
+              <div class="short-rail-lbl">${(Number(post.coinPrice) || 0) > 0 ? (post.coinPrice + ' AC') : 'Gratis'}</div>
               <button class="short-rail-btn" onclick="window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg></button>
               <div class="short-rail-lbl">Enviar</div>
             </div>
             <div class="shorts-fs-bottom-info">
-              <div style="font-size:14.5px; font-weight:900; color:#fde68a; margin-bottom:4px; cursor:pointer;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${escapeHtml(post.handle)}</div>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+                <span style="font-size:14.5px; font-weight:900; color:#fde68a; cursor:pointer;" onclick="window.closeShortsPlayer(); window.openUserProfile('${post.handle}');">@${escapeHtml(post.handle)}</span>
+                <span class="ai-engine-pill">✨ ${escapeHtml(toolTag)}</span>
+              </div>
               ${post.caption ? `<div style="font-size:12.5px; color:#ffffff; line-height:1.35;">${escapeHtml(post.caption)}</div>` : ''}
             </div>
           </div>
@@ -1845,15 +2142,15 @@
     window.closeShortsPlayer = function() {
       const feedEl = document.getElementById('shortsSnapFeed');
       if (feedEl) {
-        feedEl.querySelectorAll('video').forEach(v => { v.pause(); v.src = ''; });
+        feedEl.querySelectorAll('video, audio').forEach(m => { try { m.pause(); m.src = ''; } catch (e) {} });
         feedEl.innerHTML = '';
       }
       document.getElementById('shortsFullscreenModal').classList.remove('open');
     };
 
-    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay contenido multimedia.') {
+    function renderMediaGrid3x3(postsList, containerEl, emptyMessage = 'Aún no hay obras IA publicadas.') {
       if (!containerEl) return;
-      const mediaPosts = (postsList || []).filter(p => getPostImagesList(p).length > 0 || p.video || p.youtubeId);
+      const mediaPosts = (postsList || []).filter(p => getPostImagesList(p).length > 0 || p.video || p.audio || p.youtubeId);
       if (mediaPosts.length === 0) {
         containerEl.innerHTML = `<div class="glass-card" style="grid-column:1 / -1; text-align:center; font-size:12px; color:#65676b;">${escapeHtml(emptyMessage)}</div>`;
         return;
@@ -1864,13 +2161,14 @@
         let thumbHtml = '';
         if (imgs.length > 0) thumbHtml = `<img src="${imgs[0]}" alt="@${escapeHtml(post.handle)}" loading="lazy" />`;
         else if (ytId) thumbHtml = `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" alt="YT" loading="lazy" />`;
-        else thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        else if (post.video) thumbHtml = `<video src="${post.video}#t=0.1" muted playsinline preload="metadata"></video>`;
+        else thumbHtml = `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;color:#fde68a;"><svg width="30" height="30"><use href="#ico-music"></use></svg><span style="font-size:9px;font-weight:900;">MP3 IA</span></div>`;
 
-        const badgeTxt = post.video || ytId ? '▶ VIDEO' : (imgs.length > 1 ? `1/${imgs.length}` : 'FOTO');
+        const badgeTxt = post.audio ? '🎵 MP3' : ((post.video || ytId) ? '▶ VIDEO' : (post.aiTool || 'ARTE IA'));
         return `
           <div class="media-grid-cell" onclick="window.openGalleryItem('${post.id}')">
             ${thumbHtml}
-            <div class="media-grid-badge">${badgeTxt}</div>
+            <div class="media-grid-badge">${escapeHtml(badgeTxt)}</div>
             <div class="media-grid-bottom-meta">
               <span>@${escapeHtml(post.handle)}</span>
               <span>♥ ${Math.max(0, Number(post.likes) || 0)}</span>
@@ -1884,7 +2182,7 @@
       const post = livePosts.find(p => p.id === postId);
       if (!post) return;
       const imgs = getPostImagesList(post);
-      if (imgs.length > 0 && !post.video) { window.openPhotoLightbox(imgs[0]); return; }
+      if (imgs.length > 0 && !post.video && !post.audio) { window.openPhotoLightbox(imgs[0]); return; }
       const idx = getShortsFeedList().findIndex(p => p.id === postId);
       if (idx >= 0) window.openShortsPlayer(idx);
     };
@@ -1892,9 +2190,9 @@
     window.sharePost = async function(handle, postId) {
       const shareUrl = `${window.location.origin}/?ref=${encodeURIComponent(currentUser.userHandle || handle)}`;
       if (navigator.share) {
-        try { await navigator.share({ title: 'ARGON VIP Gold', text: `Únete a ARGON con mi invitación VIP:`, url: shareUrl }); return; } catch (e) {}
+        try { await navigator.share({ title: 'ARGON • Estudio IA', text: `Únete gratis a ARGON (Videos y Música IA) y recibe +5,000 A-Coins:`, url: shareUrl }); return; } catch (e) {}
       }
-      try { await navigator.clipboard.writeText(shareUrl); showToast('✓ Enlace VIP copiado al portapapeles'); } catch (e) { showToast(shareUrl); }
+      try { await navigator.clipboard.writeText(shareUrl); showToast('✓ Enlace de invitación copiado (+1,000 AC por referido)'); } catch (e) { showToast(shareUrl); }
     };
 
     window.shareMyProfileLink = function() {
@@ -1911,7 +2209,7 @@
       if (currentUser.registered && currentUser.userHandle) {
         try { await setDoc(doc(db, "users", currentUser.userHandle), { avatar: compressed }, { merge: true }); } catch (e) {}
       }
-      showToast('✓ Foto de perfil actualizada');
+      showToast('✓ Avatar de creador actualizado');
     };
 
     function renderAvatarElements() {
@@ -1951,11 +2249,11 @@
       setTxt('vaultBigBalance', balAC.toLocaleString());
       setTxt('deskRightBalance', `${balAC.toLocaleString()} AC`);
 
-      const roleTag = isUserAdmin() ? 'ADMIN OFICIAL' : `RANGO ${shield.name.toUpperCase()}`;
-      setTxt('profileName', currentUser.userName || 'MI CUENTA');
-      setTxt('profileHandle', `@${currentUser.userHandle || 'USUARIO'} • ${roleTag}`);
-      setTxt('menuUserName', currentUser.userName || 'MI CUENTA');
-      setTxt('menuUserHandle', `@${currentUser.userHandle || 'USUARIO'} • ${roleTag}`);
+      const roleTag = isUserAdmin() ? 'ADMIN FUNDADOR' : `RANGO ${shield.name.toUpperCase()}`;
+      setTxt('profileName', currentUser.userName || 'MI ESTUDIO IA');
+      setTxt('profileHandle', `@${currentUser.userHandle || 'CREADOR'} • ${roleTag}`);
+      setTxt('menuUserName', currentUser.userName || 'MI ESTUDIO IA');
+      setTxt('menuUserHandle', `@${currentUser.userHandle || 'CREADOR'} • ${roleTag}`);
       setTxt('deskLeftName', currentUser.userName || 'ALBERTO SOTO');
       setTxt('deskLeftHandle', `@${currentUser.userHandle || 'BELTO43'} • ${roleTag}`);
       setTxt('vaultCardEngravedName', currentUser.userName || 'ALBERTO SOTO');
@@ -1966,7 +2264,7 @@
       setTxt('myStatFollowing', followingCount.toLocaleString());
       setTxt('myFriendsBtnCount', mySubs.toLocaleString());
 
-      setTxt('rankUserHandle', `@${currentUser.userHandle || 'USUARIO'} • Rango ${shield.name}`);
+      setTxt('rankUserHandle', `@${currentUser.userHandle || 'CREADOR'} • ${shield.name}`);
       setTxt('rankSubsCount', `${mySubs.toLocaleString()} / ${shield.next.toLocaleString()} Subs`);
       const rankBar = document.getElementById('rankProgressFill');
       if (rankBar) rankBar.style.width = Math.min(100, Math.max(6, Math.round((mySubs / shield.next) * 100))) + '%';
@@ -1975,7 +2273,7 @@
       if (emailEl) {
         emailEl.style.color = (currentUser.email && currentUser.ageVerified) ? '#059669' : '#d97706';
         emailEl.textContent = (currentUser.email && currentUser.ageVerified)
-          ? `✓ Cuenta Verificada (+18) • ${currentUser.email}`
+          ? `✓ Creador Verificado (+18) • ${currentUser.email}`
           : 'Toca aquí para verificar Correo y Edad (+18)';
       }
 
@@ -1990,12 +2288,13 @@
       if (adminNavBtn) adminNavBtn.style.display = isUserAdmin() ? 'flex' : 'none';
       if (deskAdminBtn) deskAdminBtn.style.display = isUserAdmin() ? 'flex' : 'none';
 
+      refreshDailyBonusButtons();
       renderAvatarElements();
       renderShortsTray();
     }
 
     window.switchTab = function(tabName) {
-      document.querySelectorAll('#feedContainer video, #myOwnPostsWall video, #upmWallPosts video').forEach(v => { try { v.pause(); } catch (e) {} });
+      document.querySelectorAll('#feedContainer video, #feedContainer audio, #myOwnPostsWall video, #myOwnPostsWall audio, #mySavedPostsWall video, #mySavedPostsWall audio, #upmWallPosts video, #upmWallPosts audio').forEach(m => { try { m.pause(); } catch (e) {} });
       document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.desk-nav-btn').forEach(b => b.classList.remove('active'));
@@ -2009,27 +2308,39 @@
 
       if (tabName === 'galeria') renderMediaGrid3x3(getVisibleFeedPosts(), document.getElementById('globalGalleryGrid'));
       if (tabName === 'perfil') window.setMyProfileLayout(myProfileLayoutMode);
-      if (tabName === 'admin' || tabName === 'boveda') renderAdminAndLeaderboard();
+      if (tabName === 'admin' || tabName === 'boveda') { renderAdminAndLeaderboard(); refreshDailyBonusButtons(); }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     window.setMyProfileLayout = function(mode) {
-      myProfileLayoutMode = mode === 'grid' ? 'grid' : 'wall';
+      myProfileLayoutMode = (mode === 'grid' || mode === 'saved') ? mode : 'wall';
       document.getElementById('myProfileTabWallBtn').classList.toggle('active', myProfileLayoutMode === 'wall');
       document.getElementById('myProfileTabGridBtn').classList.toggle('active', myProfileLayoutMode === 'grid');
+      const savedBtn = document.getElementById('myProfileTabSavedBtn');
+      if (savedBtn) savedBtn.classList.toggle('active', myProfileLayoutMode === 'saved');
+
       const wallBox = document.getElementById('myOwnPostsWall');
       const gridBox = document.getElementById('myOwnGalleryGrid');
+      const savedBox = document.getElementById('mySavedPostsWall');
       wallBox.style.display = myProfileLayoutMode === 'wall' ? 'block' : 'none';
       gridBox.style.display = myProfileLayoutMode === 'grid' ? 'grid' : 'none';
+      if (savedBox) savedBox.style.display = myProfileLayoutMode === 'saved' ? 'block' : 'none';
 
       const mine = livePosts.filter(p => p.handle === currentUser.userHandle);
       if (myProfileLayoutMode === 'wall') {
         wallBox.innerHTML = mine.length === 0
-          ? `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has hecho publicaciones en tu muro.</div>`
+          ? `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has publicado obras IA en tu estudio.</div>`
           : '';
         mine.forEach(p => wallBox.appendChild(buildPostCardElement(p)));
-      } else {
-        renderMediaGrid3x3(mine, gridBox, 'Sin fotos o videos en tu perfil.');
+      } else if (myProfileLayoutMode === 'grid') {
+        renderMediaGrid3x3(mine, gridBox, 'Sin videos, MP3 o arte IA en tu vitrina.');
+      } else if (savedBox) {
+        const unlockedSet = new Set(currentUser.unlockedPosts || []);
+        const collected = livePosts.filter(p => unlockedSet.has(p.id));
+        savedBox.innerHTML = collected.length === 0
+          ? `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">Aún no has coleccionado canciones ni videos IA con tus A-Coins.</div>`
+          : '';
+        collected.forEach(p => savedBox.appendChild(buildPostCardElement(p)));
       }
     };
 
@@ -2064,7 +2375,7 @@
 
       document.getElementById('upmHeaderHandle').textContent = '@' + viewedPublicHandle;
       document.getElementById('upmFullName').textContent = uDoc.userName || viewedPublicHandle;
-      document.getElementById('upmHandleSub').textContent = `@${viewedPublicHandle} • Rango ${shield.name}`;
+      document.getElementById('upmHandleSub').textContent = `@${viewedPublicHandle} • ${shield.name}`;
       document.getElementById('upmStatPosts').textContent = userPosts.length.toLocaleString();
       document.getElementById('upmStatSubs').textContent = subsCount.toLocaleString();
       document.getElementById('upmStatFollowing').textContent = (Array.isArray(uDoc.subscribedTo) ? uDoc.subscribedTo.length : 0).toLocaleString();
@@ -2076,12 +2387,12 @@
       const alreadySub = (currentUser.subscribedTo || []).includes(viewedPublicHandle);
       const isMe = viewedPublicHandle === currentUser.userHandle;
       document.getElementById('upmActionButtons').innerHTML = isMe
-        ? `<button class="btn-subscribe subscribed" onclick="window.closePublicProfile(); window.switchTab('perfil');">Ir a Mi Perfil</button>`
+        ? `<button class="btn-subscribe subscribed" onclick="window.closePublicProfile(); window.switchTab('perfil');">Ir a Mi Estudio</button>`
         : `<button class="btn-subscribe ${alreadySub ? 'subscribed' : ''}" onclick="window.toggleSubscribe('${viewedPublicHandle}')">${alreadySub ? '✓ Suscrito' : '+ Suscribirme'}</button><button class="btn-dm-icon" onclick="window.closePublicProfile(); window.openDirectMessages('${viewedPublicHandle}');"><svg class="ico-stroke-sm"><use href="#ico-mail"></use></svg><span style="margin-left:5px;">Mensaje</span></button>`;
 
       const wallBox = document.getElementById('upmWallPosts');
       wallBox.innerHTML = userPosts.length === 0
-        ? `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">@${escapeHtml(viewedPublicHandle)} aún no tiene publicaciones públicas.</div>`
+        ? `<div class="glass-card" style="text-align:center; font-size:12px; color:#65676b;">@${escapeHtml(viewedPublicHandle)} aún no tiene obras IA públicas.</div>`
         : '';
       userPosts.forEach(p => wallBox.appendChild(buildPostCardElement(p)));
       renderMediaGrid3x3(userPosts, document.getElementById('upmGalleryGrid'));
@@ -2114,7 +2425,7 @@
             to: cleanTarget,
             from: currentUser.userHandle,
             type: 'sub',
-            text: `se suscribió a tu perfil VIP (+100 A-Coins).`,
+            text: `se suscribió a tu Estudio IA (+100 A-Coins gratis).`,
             createdAt: Date.now()
           });
         }
@@ -2129,7 +2440,7 @@
           to: targetHandle,
           from: FOUNDER_HANDLE,
           type: 'gift',
-          text: `te acreditó un bono VIP de +${amount.toLocaleString()} A-Coins en tu Bóveda Gold.`,
+          text: `te otorgó un premio oficial de +${amount.toLocaleString()} A-Coins en tu Bóveda IA.`,
           createdAt: Date.now()
         });
         showToast(`✓ +${amount.toLocaleString()} A-Coins enviadas a @${targetHandle}`);
@@ -2145,7 +2456,7 @@
         .sort((a, b) => (Number(b.balance) || 0) - (Number(a.balance) || 0));
 
       const leaderboardHtml = allUsers.length === 0
-        ? '<div style="font-size:12px; color:#64748b;">Cargando ranking VIP...</div>'
+        ? '<div style="font-size:12px; color:#64748b;">Cargando ranking de creadores IA...</div>'
         : allUsers.slice(0, 8).map((u, i) => {
           const sh = getRankShieldInfo(u.subs);
           return `
@@ -2178,15 +2489,15 @@
       const repBox = document.getElementById('adminReportsList');
       if (repBox) {
         repBox.innerHTML = allUgcReports.length === 0
-          ? `<div style="font-size:11.5px; color:#059669; font-weight:700;">✓ 0 reportes pendientes de moderación.</div>`
+          ? `<div style="font-size:11.5px; color:#059669; font-weight:700;">✓ 0 reportes pendientes de moderación IA.</div>`
           : allUgcReports.map(r => `
             <div class="admin-user-row">
               <div>
                 <strong style="font-size:12px;">${escapeHtml(r.reason)}</strong>
-                <div style="font-size:10.5px; color:#64748b;">Autor: @${escapeHtml(r.reportedAuthor)}</div>
+                <div style="font-size:10.5px; color:#64748b;">Creador: @${escapeHtml(r.reportedAuthor)}</div>
               </div>
               <div style="display:flex;gap:5px;">
-                <button class="btn-mini-danger" onclick="window.adminDeleteReportedPost('${r.postId}','${r.id}')">Borrar Post</button>
+                <button class="btn-mini-danger" onclick="window.adminDeleteReportedPost('${r.postId}','${r.id}')">Borrar Obra</button>
                 <button class="btn-mini-admin" onclick="window.adminDismissReport('${r.id}')">Descartar</button>
               </div>
             </div>
@@ -2215,7 +2526,7 @@
     window.closeEditProfileModal = function() { document.getElementById('editProfileModal').classList.remove('open'); };
     window.saveEditedProfile = async function() {
       const nameVal = (document.getElementById('editProfileNameInput').value || '').trim().toUpperCase();
-      if (!nameVal) { showToast('Escribe un nombre válido'); return; }
+      if (!nameVal) { showToast('Escribe un nombre o sello válido'); return; }
       currentUser.userName = nameVal;
       saveLocalSession();
       window.closeEditProfileModal();
@@ -2223,7 +2534,7 @@
       if (currentUser.userHandle) {
         try { await setDoc(doc(db, "users", currentUser.userHandle), { userName: nameVal }, { merge: true }); } catch (e) {}
       }
-      showToast('✓ Perfil actualizado');
+      showToast('✓ Estudio actualizado');
     };
 
     window.openAgeEmailVerifyModal = function() {
@@ -2244,7 +2555,7 @@
       if (currentUser.userHandle) {
         try { await setDoc(doc(db, "users", currentUser.userHandle), { email: em, ageVerified: true }, { merge: true }); } catch (e) {}
       }
-      showToast('✓ Cuenta verificada (+18)');
+      showToast('✓ Creador verificado (+18)');
     };
 
     window.openLegalModal = function() { pushAppHistoryState(); document.getElementById('legalTermsModal').classList.add('open'); };
@@ -2270,10 +2581,10 @@
       const isProm = (post.promotedUntil || 0) > Date.now();
       let html = `<div class="post-menu-card">
         ${isMeHtml(isMine, isProm, post)}
-        <button class="post-menu-item" onclick="window.closePostOptionsModal(); window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg><div><div class="post-menu-title">Compartir Publicación</div><div class="post-menu-sub">Enviar enlace con tu código VIP</div></div></button>
-        ${!isMine ? `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke"><use href="#ico-flag"></use></svg><div><div class="post-menu-title">Reportar Contenido</div><div class="post-menu-sub">Notificar a moderación de ARGON</div></div></button>` : ''}
+        <button class="post-menu-item" onclick="window.closePostOptionsModal(); window.sharePost('${post.handle}', '${post.id}')"><svg class="ico-stroke"><use href="#ico-share"></use></svg><div><div class="post-menu-title">Compartir Obra IA</div><div class="post-menu-sub">Enviar enlace con tu código de invitación (+1,000 AC)</div></div></button>
+        ${!isMine ? `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.openReportModal('${post.id}', '${post.handle}')"><svg class="ico-stroke"><use href="#ico-flag"></use></svg><div><div class="post-menu-title">Reportar Publicación</div><div class="post-menu-sub">No es contenido IA o infringe las reglas</div></div></button>` : ''}
         ${!isMine ? `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.toggleBlockUser('${post.handle}')"><svg class="ico-stroke" style="color:#e41e3f;"><use href="#ico-ban"></use></svg><div><div class="post-menu-title" style="color:#e41e3f;">Bloquear a @${escapeHtml(post.handle)}</div></div></button>` : ''}
-        ${(isMine || isUserAdmin()) ? `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke" style="color:#e41e3f;"><use href="#ico-trash"></use></svg><div><div class="post-menu-title" style="color:#e41e3f;">Eliminar Publicación</div></div></button>` : ''}
+        ${(isMine || isUserAdmin()) ? `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.askConfirmDeletePost('${post.id}', '${post.handle}')"><svg class="ico-stroke" style="color:#e41e3f;"><use href="#ico-trash"></use></svg><div><div class="post-menu-title" style="color:#e41e3f;">Eliminar Obra IA</div></div></button>` : ''}
       </div>`;
       document.getElementById('postOptionsBody').innerHTML = html;
       document.getElementById('postOptionsModal').classList.add('open');
@@ -2281,7 +2592,7 @@
 
     function isMeHtml(isMine, isProm, post) {
       if (!isMine || isProm) return '';
-      return `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.promotePostGold('${post.id}')"><svg class="ico-stroke" style="color:#b45309;"><use href="#ico-crown-line"></use></svg><div><div class="post-menu-title" style="color:#b45309;">Destacar en Oro VIP (500 AC)</div><div class="post-menu-sub">Fijar arriba en el muro y Shorts por 24h</div></div></button>`;
+      return `<button class="post-menu-item" onclick="window.closePostOptionsModal(); window.promotePostGold('${post.id}')"><svg class="ico-stroke" style="color:#b45309;"><use href="#ico-crown-line"></use></svg><div><div class="post-menu-title" style="color:#b45309;">Destacar Obra en Oro (500 AC)</div><div class="post-menu-sub">Fijar arriba en el Estudio y AI Shorts por 24h</div></div></button>`;
     }
 
     window.closePostOptionsModal = function() { document.getElementById('postOptionsModal').classList.remove('open'); };
@@ -2296,7 +2607,7 @@
       const id = pendingDeletePostId;
       window.closeConfirmModal();
       if (!id) return;
-      try { await deleteDoc(doc(db, "posts", id)); showToast('✓ Publicación eliminada'); } catch (e) {}
+      try { await deleteDoc(doc(db, "posts", id)); showToast('✓ Obra eliminada'); } catch (e) {}
     };
 
     window.openReportModal = function(postId, authorH) {
@@ -2319,7 +2630,7 @@
       if (!isUserAdmin()) return;
       if (postId) await deleteDoc(doc(db, "posts", postId)).catch(() => {});
       if (repId) await deleteDoc(doc(db, "reports", repId)).catch(() => {});
-      showToast('✓ Publicación eliminada por moderación');
+      showToast('✓ Obra eliminada por moderación IA');
     };
     window.adminDismissReport = async function(repId) {
       if (!isUserAdmin() || !repId) return;
@@ -2362,13 +2673,13 @@
       const list = activeFriendsTab === 'followers' ? followers : following;
       const box = document.getElementById('friendsModalListBox');
       if (list.length === 0) {
-        box.innerHTML = `<div style="text-align:center; padding:32px 14px; font-size:12px; color:#64748b;">${activeFriendsTab === 'followers' ? 'Aún no tienes suscriptores registrados aquí.' : 'Aún no sigues a ningún miembro.'}</div>`;
+        box.innerHTML = `<div style="text-align:center; padding:32px 14px; font-size:12px; color:#64748b;">${activeFriendsTab === 'followers' ? 'Aún no tienes suscriptores en tu Estudio IA.' : 'Aún no sigues a ningún creador IA.'}</div>`;
         return;
       }
       box.innerHTML = list.map(h => `
         <div class="admin-user-row" style="background:#ffffff; cursor:pointer;" onclick="window.closeFriendsModal(); window.openUserProfile('${h}');">
           <strong>@${escapeHtml(h)}</strong>
-          <span style="font-size:11px; color:#b45309; font-weight:800;">Ver Perfil →</span>
+          <span style="font-size:11px; color:#b45309; font-weight:800;">Ver Estudio →</span>
         </div>
       `).join('');
     }
@@ -2428,7 +2739,7 @@
       const blockBtn = document.getElementById('dmBlockPartnerBtn');
       if (!activeDmPartner) {
         if (blockBtn) blockBtn.style.display = 'none';
-        box.innerHTML = `<div style="text-align:center; padding:30px; font-size:12px; color:#64748b;">Selecciona un miembro arriba para chatear.</div>`;
+        box.innerHTML = `<div style="text-align:center; padding:30px; font-size:12px; color:#64748b;">Selecciona un creador arriba para chatear.</div>`;
         return;
       }
       if (blockBtn) blockBtn.style.display = 'inline-flex';
@@ -2481,7 +2792,7 @@
     window.triggerManualBlinkRefresh = async function() {
       const glow = document.getElementById('edgeRefreshGlow');
       if (glow) { glow.classList.remove('blinking'); void glow.offsetWidth; glow.classList.add('blinking'); }
-      showToast('✓ ARGON Gold sincronizado en vivo');
+      showToast('✓ Estudio IA sincronizado en vivo');
       renderFeed();
       updateUI();
     };
@@ -2508,7 +2819,9 @@
     function syncCurrentUserFromDoc(data) {
       if (typeof data.balance === 'number') currentUser.balance = data.balance;
       if (typeof data.subs === 'number') currentUser.subs = data.subs;
+      if (typeof data.lastDailyClaim === 'number') currentUser.lastDailyClaim = data.lastDailyClaim;
       if (Array.isArray(data.subscribedTo)) currentUser.subscribedTo = data.subscribedTo;
+      if (Array.isArray(data.unlockedPosts)) currentUser.unlockedPosts = data.unlockedPosts;
       if (data.avatar) currentUser.avatar = data.avatar;
       if (data.userName) currentUser.userName = data.userName;
       saveLocalSession();
